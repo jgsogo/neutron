@@ -13,7 +13,6 @@ class CoarseWord(WordDatum):
     profane = models.BooleanField()
 
     class Meta(WordDatum.Meta):
-        abstract = False
         verbose_name = _('Coarse word')
         verbose_name_plural = _('Coarse words')
 

@@ -21,7 +21,6 @@ class WordUse(WordDatum):
     alternative = models.CharField(max_length=MAX_WORD_LENGTH, blank=True, null=True)
 
     class Meta(WordDatum.Meta):
-        abstract = False
         verbose_name = _('Alternate word')
         verbose_name_plural = _('Alternate words')
 

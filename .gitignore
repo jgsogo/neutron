@@ -6,6 +6,7 @@ include/
 lib/
 local/
 .idea/
+*.sqlite3
 
 # Compiled Object files
 *.slo
