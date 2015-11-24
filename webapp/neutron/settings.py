@@ -40,7 +40,8 @@ INSTALLED_APPS = (
 
     'mptt',
 
-    'core',
+    'informers',
+    'words',
 )
 
 MIDDLEWARE_CLASSES = (

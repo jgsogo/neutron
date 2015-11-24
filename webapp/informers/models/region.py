@@ -10,7 +10,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 @python_2_unicode_compatible
 class Region(MPTTModel):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255, unique=True, help_text=_('Name of the region'))
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
 
     # TODO: Añadir información GEO

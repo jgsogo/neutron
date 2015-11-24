@@ -5,6 +5,9 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
+from django.conf import settings
+
+MAX_WORD_LENGTH = getattr(settings, 'MAX_WORD_LENGTH', 64)
 
 
 @python_2_unicode_compatible
@@ -17,12 +20,12 @@ class Dictionary(models.Model):
 
 @python_2_unicode_compatible
 class Definition(models.Model):
-    word = models.CharField(max_length=64, db_index=True)  # TODO: (María) max length?
+    word = models.CharField(max_length=MAX_WORD_LENGTH, db_index=True)
 
     dictionary = models.ForeignKey(Dictionary)
 
     order = models.IntegerField(help_text=_('Definition order in the dictionary entry'))
-    definition = models.CharField(max_length=256)  # TODO: (María) max length?
+    definition = models.TextField(help_text=_('Text of the definition itself'))
 
     class Meta:
         verbose_name = _('Definition')
