@@ -36,3 +36,7 @@ local/
 *.exe
 *.out
 *.app
+
+# Secret files
+secret.py
+
