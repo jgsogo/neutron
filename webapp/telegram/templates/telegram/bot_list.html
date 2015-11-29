@@ -1,0 +1,11 @@
+{% extends 'telegram/base.html' %}
+
+{% block content %}
+
+    {% for bot in object_list %}
+        {% if forloop.first %}<ul>{% endif %}
+        <li><a href="{{ bot.get_absolute_url }}">{{ bot }}</a></li>
+        {% if forloop.last %}</ul>{% endif %}
+    {% endfor %}
+
+{% endblock %}

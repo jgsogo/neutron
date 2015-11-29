@@ -23,4 +23,5 @@ admin.site.site_header = 'Neutrón'
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^telegram/', include('telegram.urls')),
 ]

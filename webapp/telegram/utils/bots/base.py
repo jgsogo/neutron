@@ -5,12 +5,13 @@ from telebot import TeleBot
 
 from .exceptions import BotException
 from .anonymous import AllowAnonymousMixin
+from .deep_linking import DeepLinkingMixin
 
 import logging
 logger = logging.getLogger(__name__)
 
 
-class BaseBot(AllowAnonymousMixin, TeleBot):
+class BaseBot(AllowAnonymousMixin, DeepLinkingMixin, TeleBot):
 
     def __init__(self, pk, token):
         self.pk = pk
@@ -32,6 +33,7 @@ class BaseBot(AllowAnonymousMixin, TeleBot):
             logger.error("Exception %s is not handled: %s" % (type(e), str(e)))
 
     def register_messages(self):
+        DeepLinkingMixin.register_messages(self)
 
         self.message_handler(commands=['help'])(self.on_help)
 

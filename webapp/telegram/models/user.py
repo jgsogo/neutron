@@ -5,8 +5,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
-from django.contrib.auth import get_user_model
-
+from django.conf import settings
 
 
 @python_2_unicode_compatible
@@ -16,7 +15,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=64, blank=True, null=True)
     username = models.CharField(max_length=64, blank=True, null=True)
     is_bot = models.BooleanField(default=False)
-    user = models.ForeignKey(get_user_model(), blank=True, null=True,
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
                              help_text=_("Some of them may be associated to an user"))
 
     def __str__(self):

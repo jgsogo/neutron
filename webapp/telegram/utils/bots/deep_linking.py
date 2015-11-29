@@ -12,22 +12,23 @@ class DeepLinkingException(Exception):
     pass
 
 
-class DeepLinking(object):
+class DeepLinkingMixin(object):
 
     def register_messages(self):
         self.message_handler(commands=['start'])(self.send_welcome)
 
-    def extract_unique_code(text):
+    def extract_unique_code(self, text):
         # Extracts the unique_code from the sent /start command.
         return text.split()[1] if len(text.split()) > 1 else None
 
     def send_welcome(self, message):
+        logger.debug("DeepLinking::send_welcome(message=%s)" % message)
         unique_code = self.extract_unique_code(message.text)
         if unique_code:  # if the '/start' command contains a unique_code
             try:
                 user = DeepLinking.objects.get(code=unique_code)
                 # TODO: Create telegram.user, associate user to chat,...
-                User.objects.get_or_create(user=user, id=message.from_user.id, first_name=message.from_user.first_name)
+                User.objects.get_or_create(id=message.from_user.id, first_name=message.from_user.first_name)
                 self.reply_to(message, "Hello %s! Nice to see you here" % user)
             except DeepLinking.DoesNotExist:
                 raise DeepLinkingException("Invalid code provided")

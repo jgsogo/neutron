@@ -37,6 +37,10 @@ class Bot(User):
         if commit:
             self.save()
 
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return reverse('bot_detail', args=[str(self.id)])
+
     @property
     def bot(self):
         if not hasattr(self, '_bot'):

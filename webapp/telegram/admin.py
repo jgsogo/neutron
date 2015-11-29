@@ -4,7 +4,7 @@
 from django.contrib import admin
 from django import forms
 
-from .models import User, Bot
+from .models import User, Bot, DeepLinking
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -23,5 +23,10 @@ class BotAdmin(admin.ModelAdmin):
     readonly_fields = ('is_bot',)
 
 
+class DeepLinkingAdmin(admin.ModelAdmin):
+    list_display = ('user', 'bot', 'used',)
+    list_filter = ('expires', 'bot', 'used',)
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Bot, BotAdmin)
+admin.site.register(DeepLinking, DeepLinkingAdmin)

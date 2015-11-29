@@ -1,0 +1,9 @@
+{% extends 'telegram/base.html' %}
+
+{% block content %}
+    <h2>{{ bot }}</h2>
+    <p>Allow anon: {{ bot.allow_anonymous }}</p>
+    {% if user.is_authenticated %}
+        <p>Link deep: <a href="{% url 'bot_deep_linking' pk=bot.pk %}" target="_blank">link</a></p>
+    {% endif %}
+{% endblock %}
