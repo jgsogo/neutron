@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseBot(AllowAnonymousMixin, TeleBot):
+
     def __init__(self, pk, token):
         self.pk = pk
         super(BaseBot, self).__init__(token=token)
@@ -21,12 +22,14 @@ class BaseBot(AllowAnonymousMixin, TeleBot):
         try:
             return super(BaseBot, self)._test_message_handler(message_handler, message)
         except BotException as e:
-            self._handle_exception(e)
+            self._handle_exception(e, message)
 
-    def _handle_exception(self, e):
+    def _handle_exception(self, e, message):
         logger.debug("BaseBot::_handle_exception")
-        logger.debug(" - type %s" % type(e))
-        logger.debug(" - data %s" % str(e))
+        try:
+            super(BaseBot, self)._handle_exception(e, message)
+        except AttributeError:
+            logger.error("Exception %s is not handled: %s" % (type(e), str(e)))
 
     def register_messages(self):
 

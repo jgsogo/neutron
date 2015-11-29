@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from django.utils.translation import ugettext_lazy as _
 from telegram.models.user import User
 from telegram.models.bot import Bot
 
@@ -27,3 +28,10 @@ class AllowAnonymousMixin(object):
 
         return super(AllowAnonymousMixin, self).message_handler(func=allow_anonymous_filter, *args, **kwargs)
 
+    def _handle_exception(self, e, message):
+        logger.debug("AllowAnonymousMixin::_handle_exception(e=%s)" % type(e))
+        if isinstance(e, NoUserException):
+            resp = "You must must have an account at %s to use this bot" % 'http://neutron.com'  # TODO: Build url to bot
+            self.reply_to(message, resp)
+        else:
+            super(AllowAnonymousMixin, self)._handle_exception(e)
