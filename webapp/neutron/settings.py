@@ -42,7 +42,8 @@ INSTALLED_APPS = (
 
     'informers',
     'words',
-    'words.telegram',
+    'telegram',
+    #'words.telegram',
 )
 
 MIDDLEWARE_CLASSES = (

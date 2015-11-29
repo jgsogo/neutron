@@ -4,16 +4,15 @@
 from telebot import TeleBot
 
 
-class Bot(TeleBot):
+class BaseBot(TeleBot):
     def __init__(self, token):
-        super(Bot, self).__init__(token)
+        super(BaseBot, self).__init__(token)
         self.register_messages()
 
     def register_messages(self):
 
-        @self.message_handler(commands=['start', 'help'])
-        def send_welcome(message):
-            self.reply_to(message, "Howdy, how are you doing?")
+        self.message_handler(commands=['start'])(self.on_start)
+        self.message_handler(commands=['help'])(self.on_help)
 
         @self.message_handler(func=lambda m: True)
         def echo_all(message):
@@ -23,3 +22,8 @@ class Bot(TeleBot):
             pprint(vars(message.chat))
             self.reply_to(message, message.text)
 
+    def on_start(self, message):
+        self.reply_to(message, 'Start called')
+
+    def on_help(self, message):
+        self.reply_to(message, 'Help called')
