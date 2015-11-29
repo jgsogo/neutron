@@ -6,10 +6,14 @@ from telebot.util import extract_command
 from telegram.models.telegram_user import TelegramUser
 from telegram.models.bot import Bot
 
-from .exceptions import NoUserException
+from .exceptions import BotException
 
 import logging
 logger = logging.getLogger(__name__)
+
+
+class NoUserException(BotException):
+    pass
 
 
 class AllowAnonymousMixin(object):

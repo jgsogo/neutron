@@ -21,7 +21,7 @@ class DeepLinkingMixin(AllowAnonymousMixin):
     commands_excluded = ['start']
 
     def allow_anonymous(self):
-        return False
+        return False  # Using deep linking, users must be always identified
 
     def register_messages(self):
         self.message_handler(commands=['start'])(self.send_welcome)
@@ -40,8 +40,6 @@ class DeepLinkingMixin(AllowAnonymousMixin):
             if message.content_type == 'text' and extract_command(message.text) == 'start':
                 unique_code = self.extract_unique_code(message.text)
                 if unique_code:  # if the '/start' command contains a unique_code
-                    print("!"*20)
-                    print(unique_code)
                     try:
                         deeplink = DeepLinking.objects.valid().get(code=unique_code, bot=self.db_bot)
                         deeplink.used = now()
@@ -55,13 +53,12 @@ class DeepLinkingMixin(AllowAnonymousMixin):
                                                            }
                                                            )
                         # TODO: Associate user to chat,...
-                        self.reply_to(message, "Hello %s! Nice to see you here" % deeplink.user)
+                        return True
                     except DeepLinking.DoesNotExist as e:
                         raise DeepLinkingException("Invalid code provided")
             return func(message) if func else True
 
         return super(DeepLinkingMixin, self).message_handler(func=deep_linking_filter, *args, **kwargs)
-
 
     def send_welcome(self, message):
         logger.debug("DeepLinking::send_welcome(message=%s)" % message)
@@ -71,7 +68,7 @@ class DeepLinkingMixin(AllowAnonymousMixin):
     def _handle_exception(self, e, message):
         logger.debug("DeepLinking::_handle_exception(e=%s)" % type(e))
         if isinstance(e, DeepLinkingException):
-            resp = "There has been an error: %r. Please, try again from the website" % str(e)  # TODO: Rehacer
+            resp = "There has been an error: %r. Please, try again from the website" % str(e)  # TODO: Rehacer mensaje
             self.reply_to(message, resp)
         else:
             super(DeepLinking, self)._handle_exception(e)

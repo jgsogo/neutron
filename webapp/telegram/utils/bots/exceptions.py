@@ -6,5 +6,3 @@ class BotException(Exception):
     pass
 
 
-class NoUserException(BotException):
-    pass
