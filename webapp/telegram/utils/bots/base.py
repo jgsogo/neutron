@@ -43,21 +43,6 @@ class BaseBot(TeleBot):
         except BotException as e:
             self._handle_exception(e, message)
 
-    """
-    def _notify_command_handlers(self, new_messages):
-        logger.debug("BaseBot::_notify_command_handlers")
-        for message in new_messages:
-            try:
-                for message_handler in self.message_handlers:
-                    if self._test_message_handler(message_handler, message):
-                        import pdb; pdb.set_trace()
-                        self._TeleBot__exec_task(message_handler['function'], message)
-                        break
-            except BotException as e:
-                logger.debug("BaseBot::_notify_command_handlers -- exception caught")
-                self._handle_exception(e, message)
-    """
-
     def _handle_exception(self, e, message):
         logger.debug("BaseBot::_handle_exception")
         logger.error("Exception %s is not handled: %s" % (type(e), str(e)))
