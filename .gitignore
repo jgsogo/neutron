@@ -39,4 +39,4 @@ local/
 
 # Secret files
 secret.py
-
+file.log

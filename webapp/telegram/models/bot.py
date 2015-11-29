@@ -15,6 +15,9 @@ from .user import User
 class Bot(User):
     token = models.CharField(max_length=128)
     bot_class = models.CharField(max_length=128, default='telegram.utils.BaseBot')
+    allow_anonymous = models.BooleanField(default=True, help_text=_('If True, the user must be registered into '
+                                                                    'your app to interact with the bot'))
+    create_user = models.BooleanField(default=False, help_text=_('If True, this bot can create users in your site'))
 
     def __str__(self):
         return '%s [bot]' % super(Bot, self).__str__()
@@ -39,7 +42,7 @@ class Bot(User):
         if not hasattr(self, '_bot'):
             module_name, class_name = self.bot_class.rsplit(".", 1)
             MyBotClass = getattr(importlib.import_module(module_name), class_name)
-            instance = MyBotClass(self.token)
+            instance = MyBotClass(pk=self.pk, token=self.token)
             setattr(self, '_bot', instance)
         return getattr(self, '_bot')
 
