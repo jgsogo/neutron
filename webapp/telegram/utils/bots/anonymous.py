@@ -13,19 +13,21 @@ logger = logging.getLogger(__name__)
 
 
 class AllowAnonymousMixin(object):
-    commands_excluded = ['start']
+    commands_excluded = []
+
+    def allow_anonymous(self):
+        return self.db_bot.allow_anonymous
 
     def message_handler(self, func=None, *args, **kwargs):
         logger.debug("AllowAnonymousMixin::message_handler")
 
         # Override decorator to check if user is registered
         def allow_anonymous_filter(message):
+            logger.debug("AllowAnonymousMixin::allow_anonymous_filter[allow=%s]" % self.allow_anonymous())
             if not message.content_type == 'text' or extract_command(message.text) not in self.commands_excluded:
-                allow_anonymous = self.db_bot.allow_anonymous  # TODO: It is called each time :/ May use a signal.connect on model modification.
-                logger.debug("AllowAnonymousMixin::allow_anonymous_filter[allow=%s]" % allow_anonymous)
                 user = TelegramUser.objects.filter(id=message.from_user.id).first()
                 kwargs.update({'user': user})
-                if (not user or (user and not user.user)) and not allow_anonymous:
+                if (not user or (user and not user.user)) and not self.allow_anonymous():
                     raise NoUserException('Telegram user %s is not associated with an existing User' % message.from_user.id)
             return func(message) if func else True
 

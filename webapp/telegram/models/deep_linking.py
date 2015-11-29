@@ -13,7 +13,7 @@ TELEGRAM_URL = 'https://telegram.me/%(bot_name)s'
 
 class DeepLinkingManager(models.Manager):
     def valid(self):
-        return self.filter(expires__gt=now(), used__isblank=True)
+        return self.filter(expires__gt=now(), used__isnull=True)
 
     def _get_unique_code(self):
         unique = False
@@ -24,7 +24,7 @@ class DeepLinkingManager(models.Manager):
 
     def create(self, user, bot):
         try:
-            instance = self.get(user=user, bot=bot)
+            instance = self.valid().get(user=user, bot=bot)
         except self.model.DoesNotExist:
             instance = self.model(user=user, bot=bot)
             instance.code = self._get_unique_code()

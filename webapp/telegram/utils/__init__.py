@@ -2,4 +2,6 @@
 # -*- coding: utf-8 -*-
 
 
-from .bots.base import BaseBot
+from .bots import DeepLinkingBot, AllowAnonymousBot
+
+DefaultBot = DeepLinkingBot
