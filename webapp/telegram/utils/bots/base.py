@@ -13,10 +13,12 @@ logger = logging.getLogger(__name__)
 
 class BaseBot(AllowAnonymousMixin, DeepLinkingMixin, TeleBot):
 
-    def __init__(self, pk, token):
-        self.pk = pk
+    def __init__(self, db_bot, token):
+        self.db_bot = db_bot
         super(BaseBot, self).__init__(token=token)
         self.register_messages()
+
+    
 
     def _test_message_handler(self, message_handler, message):
         logger.debug("BaseBot::_test_message_handler")

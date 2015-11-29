@@ -5,16 +5,16 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
-from .user import User
+from .telegram_user import TelegramUser
 from .chat import Chat
 
 class Message(models.Model):
     message_id = models.IntegerField(primary_key=True, help_text=_('Unique message identifier'))
-    from_user = models.ForeignKey(User, blank=True, null=True,
+    from_user = models.ForeignKey(TelegramUser, blank=True, null=True,
                                   help_text=_('Sender, can be empty for messages sent to channels'))
     date = models.IntegerField(help_text=_('Date the message was sent in Unix time'))  # TODO: May convert to datetime
     chat = models.ForeignKey(Chat, help_text=_('Conversation the message belongs to'))
-    forward_from = models.ForeignKey(User, blank=True, null=True,
+    forward_from = models.ForeignKey(TelegramUser, blank=True, null=True,
                                      help_text=_('For forwarded messages, sender of the original message'))
     forward_date = models.IntegerField(blank=True, null=True,
                                        help_text=_('For forwarded messages, '
@@ -34,10 +34,10 @@ class Message(models.Model):
     #caption 	String 	Optional. Caption for the photo or video
     #contact 	Contact 	Optional. Message is a shared contact, information about the contact
     #location 	Location 	Optional. Message is a shared location, information about the location
-    new_chat_participant = models.ForeignKey(User, blank=True, null=True,
+    new_chat_participant = models.ForeignKey(TelegramUser, blank=True, null=True,
                                              help_text=_('A new member was added to the group, information about '
                                                          'them (this member may be bot itself)'))
-    left_chat_participant = models.ForeignKey(User, blank=True, null=True,
+    left_chat_participant = models.ForeignKey(TelegramUser, blank=True, null=True,
                                               help_text=_('A member was removed from the group, information about '
                                                           'them (this member may be bot itself)'))
     new_chat_title = models.CharField(max_length=128, blank=True, null=True,

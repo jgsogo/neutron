@@ -4,7 +4,7 @@
 from django.contrib import admin
 from django import forms
 
-from .models import User, Bot, DeepLinking
+from .models import TelegramUser, Bot, DeepLinking
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -27,6 +27,6 @@ class DeepLinkingAdmin(admin.ModelAdmin):
     list_display = ('user', 'bot', 'used',)
     list_filter = ('expires', 'bot', 'used',)
 
-admin.site.register(User, UserAdmin)
+admin.site.register(TelegramUser, UserAdmin)
 admin.site.register(Bot, BotAdmin)
 admin.site.register(DeepLinking, DeepLinkingAdmin)

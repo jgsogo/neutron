@@ -9,7 +9,7 @@ from django.conf import settings
 
 
 @python_2_unicode_compatible
-class User(models.Model):
+class TelegramUser(models.Model):
     id = models.IntegerField(primary_key=True)
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64, blank=True, null=True)

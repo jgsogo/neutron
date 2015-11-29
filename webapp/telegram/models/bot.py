@@ -8,11 +8,11 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
-from .user import User
+from .telegram_user import TelegramUser
 
 
 @python_2_unicode_compatible
-class Bot(User):
+class Bot(TelegramUser):
     token = models.CharField(max_length=128)
     bot_class = models.CharField(max_length=128, default='telegram.utils.BaseBot')
     allow_anonymous = models.BooleanField(default=True, help_text=_('If True, the user must be registered into '
@@ -46,7 +46,7 @@ class Bot(User):
         if not hasattr(self, '_bot'):
             module_name, class_name = self.bot_class.rsplit(".", 1)
             MyBotClass = getattr(importlib.import_module(module_name), class_name)
-            instance = MyBotClass(pk=self.pk, token=self.token)
+            instance = MyBotClass(db_bot=self, token=self.token)
             setattr(self, '_bot', instance)
         return getattr(self, '_bot')
 

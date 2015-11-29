@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from telegram.models.deep_linking import DeepLinking
-from telegram.models.user import User
+from telegram.models.telegram_user import TelegramUser
 
 import logging
 logger = logging.getLogger(__name__)
@@ -28,7 +28,7 @@ class DeepLinkingMixin(object):
             try:
                 user = DeepLinking.objects.get(code=unique_code)
                 # TODO: Create telegram.user, associate user to chat,...
-                User.objects.get_or_create(id=message.from_user.id, first_name=message.from_user.first_name)
+                TelegramUser.objects.get_or_create(id=message.from_user.id, first_name=message.from_user.first_name)
                 self.reply_to(message, "Hello %s! Nice to see you here" % user)
             except DeepLinking.DoesNotExist:
                 raise DeepLinkingException("Invalid code provided")

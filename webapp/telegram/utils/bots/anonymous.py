@@ -3,7 +3,7 @@
 
 from django.utils.translation import ugettext_lazy as _
 from telebot.util import extract_command
-from telegram.models.user import User
+from telegram.models.telegram_user import TelegramUser
 from telegram.models.bot import Bot
 
 from .exceptions import NoUserException
@@ -21,9 +21,9 @@ class AllowAnonymousMixin(object):
         # Override decorator to check if user is registered
         def allow_anonymous_filter(message):
             if not message.content_type == 'text' or extract_command(message.text) not in self.commands_excluded:
-                allow_anonymous = Bot.objects.get(pk=self.pk).allow_anonymous  # TODO: It is called each time :/ May use a signal.connect on model modification.
+                allow_anonymous = self.db_bot.allow_anonymous  # TODO: It is called each time :/ May use a signal.connect on model modification.
                 logger.debug("AllowAnonymousMixin::allow_anonymous_filter[allow=%s]" % allow_anonymous)
-                user = User.objects.filter(id=message.from_user.id).first()
+                user = TelegramUser.objects.filter(id=message.from_user.id).first()
                 kwargs.update({'user': user})
                 if (not user or (user and not user.user)) and not allow_anonymous:
                     raise NoUserException('Telegram user %s is not associated with an existing User' % message.from_user.id)
