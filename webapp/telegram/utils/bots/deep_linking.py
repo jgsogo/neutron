@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from django.utils.timezone import now
 from telegram.models.deep_linking import DeepLinking
 from telegram.models.telegram_user import TelegramUser
 
@@ -26,10 +27,19 @@ class DeepLinkingMixin(object):
         unique_code = self.extract_unique_code(message.text)
         if unique_code:  # if the '/start' command contains a unique_code
             try:
-                user = DeepLinking.objects.get(code=unique_code)
+                deeplink = DeepLinking.objects.valid().filter(code=unique_code, bot=self.db_bot)
+                deeplink.used = now()
+                deeplink.save()
+                TelegramUser.objects.get_or_create(id=message.from_user.id,
+                                                   user=deeplink.user,
+                                                   defaults={
+                                                        'first_name': message.from_user.first_name,
+                                                        'last_name' : getattr(message.from_user, 'last_name', None),
+                                                        'username': getattr(message.from_user, 'username', None),
+                                                        }
+                                                   )
                 # TODO: Create telegram.user, associate user to chat,...
-                TelegramUser.objects.get_or_create(id=message.from_user.id, first_name=message.from_user.first_name)
-                self.reply_to(message, "Hello %s! Nice to see you here" % user)
+                self.reply_to(message, "Hello %s! Nice to see you here" % deeplink.user)
             except DeepLinking.DoesNotExist:
                 raise DeepLinkingException("Invalid code provided")
         else:

@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from telebot import TeleBot
+from django.db.models.signals import post_save
 
+from telegram.models.bot import Bot
 from .exceptions import BotException
 from .anonymous import AllowAnonymousMixin
 from .deep_linking import DeepLinkingMixin
@@ -13,12 +15,28 @@ logger = logging.getLogger(__name__)
 
 class BaseBot(AllowAnonymousMixin, DeepLinkingMixin, TeleBot):
 
-    def __init__(self, db_bot, token):
-        self.db_bot = db_bot
+    def __init__(self, pk, token):
+        self.db_bot_pk = pk
         super(BaseBot, self).__init__(token=token)
         self.register_messages()
 
-    
+    def set_db_bot(self, db_bot):
+        self.update_db_bot()
+        post_save.connect(self.update_db_bot, sender=Bot)
+
+    def update_db_bot(self):
+        print("*"*20)
+        print(self.db_bot_pk)
+        db_bot = Bot.objects.get(pk=self.db_bot_pk)
+        setattr(self, '_db_bot', db_bot)
+
+    def get_db_bot(self):
+        if not hasattr(self, '_db_bot'):
+            self.update_db_bot()
+        return getattr(self, '_db_bot')
+
+    db_bot = property(get_db_bot, set_db_bot)
+
 
     def _test_message_handler(self, message_handler, message):
         logger.debug("BaseBot::_test_message_handler")

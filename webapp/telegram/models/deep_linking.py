@@ -13,7 +13,7 @@ TELEGRAM_URL = 'https://telegram.me/%(bot_name)s'
 
 class DeepLinkingManager(models.Manager):
     def valid(self):
-        return self.filter(expires__gt=now())
+        return self.filter(expires__gt=now(), used__isblank=True)
 
     def _get_unique_code(self):
         unique = False

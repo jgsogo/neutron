@@ -46,7 +46,7 @@ class Bot(TelegramUser):
         if not hasattr(self, '_bot'):
             module_name, class_name = self.bot_class.rsplit(".", 1)
             MyBotClass = getattr(importlib.import_module(module_name), class_name)
-            instance = MyBotClass(db_bot=self, token=self.token)
+            instance = MyBotClass(pk=self.pk, token=self.token)
             setattr(self, '_bot', instance)
         return getattr(self, '_bot')
 
