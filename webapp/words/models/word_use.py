@@ -24,3 +24,5 @@ class WordUse(WordDatum):
         verbose_name = _('Alternate word')
         verbose_name_plural = _('Alternate words')
 
+    def __str__(self):
+        return '%s [%s]' % (self.informer, self.interface)

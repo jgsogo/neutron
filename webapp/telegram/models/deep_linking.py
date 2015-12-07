@@ -2,10 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import uuid
-from urllib.parse import urlencode
 from django.db import models
 from django.conf import settings
 from django.utils.timezone import now, timedelta
+try:
+    from urllib import urlencode
+except:
+    from urllib.parse import urlencode
 
 from .bot import Bot
 

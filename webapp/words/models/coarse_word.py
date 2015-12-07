@@ -16,3 +16,5 @@ class CoarseWord(WordDatum):
         verbose_name = _('Coarse word')
         verbose_name_plural = _('Coarse words')
 
+    def __str__(self):
+        return '%s [%s]' % (self.informer, self.interface)
