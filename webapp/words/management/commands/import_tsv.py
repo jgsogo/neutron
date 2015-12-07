@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+import re
 import codecs
 import requests
 from django.core.management.base import BaseCommand, CommandError
@@ -36,11 +37,29 @@ class Command(BaseCommand):
     def on_line(self, line):
         chunks = line.split('\t')
         word = chunks[0].strip()
-        definitions = [chunk.strip() for chunk in chunks[1:] if len(chunk.strip())]
+        def on_definition(raw):
+            raw = raw.strip().strip('.')
+            raw = re.sub(r'\s([?.!:,;"](?:\s|$))', r'\1', raw)
+            raw = re.sub(r' +', r' ', raw)
+            if raw[0].isdigit():
+                n, raw = raw.split('.', 1)
+            if ':' in raw:
+                definition, example = raw.split(':', 1)
+                definition = definition.strip().strip('.')
+                example = example.strip().strip('.')
+            else:
+                definition = raw.strip()
+                example = None
+            return definition, example
+        definitions = [on_definition(chunk) for chunk in chunks[1:] if len(chunk.strip())]
 
-        self.stdout.write('<%s>'%word)
-        for it in definitions:
-            self.stdout.write('\t"%s"' % it)
+        self.stdout.write('%s:'%word)
+        for d,ex in definitions:
+            self.stdout.write('\t%s' % d, ending='')
+            if ex:
+                self.stdout.write(': %s.' % ex)
+            else:
+                self.stdout.write('.')
 
     def handle(self, *args, **options):
         url = options['url']
@@ -53,5 +72,5 @@ class Command(BaseCommand):
             file = self.download_file(url)
 
         with codecs.open(file, 'r', 'utf-8') as f:
-            for line in f.readlines()[:4]:
+            for line in f.readlines()[:15]:
                 self.on_line(line)
