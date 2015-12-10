@@ -41,11 +41,15 @@ class WordUseAdmin(admin.ModelAdmin):
         return object.definition.word
 
 
+class ContextAdmin(admin.ModelAdmin):
+    list_display = ('definition', 'word_found')
 
+    def word_found(self, object):
+        return object.word_pos != -1
 
 admin.site.register(Definition, DefinitionAdmin)
 admin.site.register(Dictionary)
-#admin.site.register(Context)
+admin.site.register(Context, ContextAdmin)
 
 admin.site.register(CoarseWord, CoarseWordAdmin)
 admin.site.register(WordUse, WordUseAdmin)

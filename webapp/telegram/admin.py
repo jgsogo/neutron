@@ -26,6 +26,7 @@ class BotAdmin(admin.ModelAdmin):
 class DeepLinkingAdmin(admin.ModelAdmin):
     list_display = ('user', 'bot', 'used',)
     list_filter = ('expires', 'bot', 'used',)
+    readonly_fields = ('code', 'get_url',)
 
 admin.site.register(TelegramUser, UserAdmin)
 admin.site.register(Bot, BotAdmin)

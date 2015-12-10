@@ -71,4 +71,4 @@ class DeepLinkingMixin(AllowAnonymousMixin):
             resp = "There has been an error: %r. Please, try again from the website" % str(e)  # TODO: Rehacer mensaje
             self.reply_to(message, resp)
         else:
-            super(DeepLinking, self)._handle_exception(e)
+            super(DeepLinkingMixin, self)._handle_exception(e, message)
