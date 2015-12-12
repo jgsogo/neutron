@@ -143,6 +143,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
             },
+        'words': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+            },
         }
     }
 

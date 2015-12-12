@@ -55,7 +55,7 @@ class DeepLinkingMixin(AllowAnonymousMixin):
                         # TODO: Associate user to chat,...
                         return True
                     except DeepLinking.DoesNotExist as e:
-                        raise DeepLinkingException("Invalid code provided")
+                        raise DeepLinkingException("Invalid code provided: %s" % str(e))
             return func(message) if func else True
 
         return super(DeepLinkingMixin, self).message_handler(func=deep_linking_filter, *args, **kwargs)
@@ -63,7 +63,7 @@ class DeepLinkingMixin(AllowAnonymousMixin):
     def send_welcome(self, message):
         logger.debug("DeepLinking::send_welcome(message=%s)" % message)
         tuser = TelegramUser.objects.get(id=message.from_user.id)
-        self.reply_to(message, "Hello %s! Nice to see you here" % tuser.user)
+        self.reply_to(message, "Hello %s! Nice to see you here. Type /help to get info" % tuser.user)
 
     def _handle_exception(self, e, message):
         logger.debug("DeepLinking::_handle_exception(e=%s)" % type(e))
