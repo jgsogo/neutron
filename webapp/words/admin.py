@@ -27,6 +27,7 @@ class CoarseWordAdmin(admin.ModelAdmin):
     list_display = ('word', 'informer', 'interface', 'profane',)
     list_filter = ('informer__region', 'interface', 'profane',)
     search_fields = ('definition__word',)
+    readonly_fields = ('definition',)
 
     def word(self, object):
         return object.definition.word
