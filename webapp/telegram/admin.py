@@ -18,6 +18,7 @@ class BotAdminForm(forms.ModelForm):
         self.fields['id'].required = False
         self.fields['first_name'].required = False
 
+
 class BotAdmin(admin.ModelAdmin):
     form = BotAdminForm
     readonly_fields = ('is_bot',)

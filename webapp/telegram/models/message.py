@@ -8,6 +8,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from .telegram_user import TelegramUser
 from .chat import Chat
 
+
 class Message(models.Model):
     message_id = models.IntegerField(primary_key=True, help_text=_('Unique message identifier'))
     from_user = models.ForeignKey(TelegramUser, blank=True, null=True,

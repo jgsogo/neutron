@@ -37,7 +37,7 @@ class BaseBot(TeleBot):
     db_bot = property(get_db_bot, set_db_bot)
 
     def _test_message_handler(self, message_handler, message):
-        logger.debug("\n\nBaseBot::_test_message_handler")
+        logger.debug("\n\nBaseBot::_test_message_handler(message_handler=%s)" % message_handler)
         try:
             return super(BaseBot, self)._test_message_handler(message_handler, message)
         except BotException as e:
@@ -58,4 +58,5 @@ class BaseBot(TeleBot):
         """
 
     def on_help(self, message):
+        logger.debug("BaseBot::on_help")
         self.reply_to(message, 'Help called')

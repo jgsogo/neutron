@@ -46,12 +46,10 @@ class DeepLinkingMixin(AllowAnonymousMixin):
                         deeplink.save()
                         TelegramUser.objects.get_or_create(id=message.from_user.id,
                                                            user=deeplink.user,
-                                                           defaults={
-                                                               'first_name': message.from_user.first_name,
-                                                               'last_name' : getattr(message.from_user, 'last_name', None),
-                                                               'username': getattr(message.from_user, 'username', None),
-                                                           }
-                                                           )
+                                                           defaults={'first_name': message.from_user.first_name,
+                                                                     'last_name': getattr(message.from_user, 'last_name', None),
+                                                                     'username': getattr(message.from_user, 'username', None),
+                                                                    })
                         # TODO: Associate user to chat,...
                         return True
                     except DeepLinking.DoesNotExist as e:

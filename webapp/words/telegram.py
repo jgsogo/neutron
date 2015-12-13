@@ -6,13 +6,20 @@ from telebot import types
 from telebot.util import extract_command
 
 from telegram.utils.bots import DeepLinkingBot
-from words.models import Definition
+from telegram.models.telegram_user import TelegramUser
+from informers.models import Interface, LocalizedInformer
+from words.models import Definition, WordUse
+
+
 
 import logging
 logger = logging.getLogger(__name__)
 
 
 class NeutronBot(DeepLinkingBot):
+    def __init__(self):
+        self.interface = Interface.objects.get_or_create(name=str(self.db_bot.name))
+
     def register_messages(self):
         logger.debug("NeutronBot::register_messages")
         self.message_handler(commands=['help'])(self.on_help)
@@ -20,7 +27,7 @@ class NeutronBot(DeepLinkingBot):
         super(NeutronBot, self).register_messages()
 
     def on_help(self, message):
-        logger.debug("NeutronBot::_handle_exception")
+        logger.debug("NeutronBot::on_help")
         msg = 'Muchas gracias por unirte al proyecto *Neutrón*. A través de la interfaz de Telegram puedes' \
               ' colaborar aportando información, para ello escribe:' \
               ' /word Ayúdanos a identificar qué palabras son comunes en tu región.'
@@ -28,21 +35,30 @@ class NeutronBot(DeepLinkingBot):
         self.send_message(message.chat.id, msg)
 
     def on_word(self, message):
-        logger.debug("NeutronBot::_handle_exception")
+        logger.debug("NeutronBot::on_word")
         count = Definition.objects.count()
         definition = Definition.objects.all()[randint(0,count-1)]
         msg = '*%s*: %s' % (definition.word, definition.definition)
 
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=False)
-        markup.row('ok', 'unknown')
+        alternates = ['ok', 'unknown']
+        markup.row(*alternates)
 
         def wait_reply(answer):
+            logger.debug("NeutronBot::wait_reply")
             if answer.content_type == 'text':
                 command = extract_command(answer.text)
                 if not command:
-                    logger.debug("NeutronBot::wait_reply")
                     logger.debug('Answer for %s: %s' % (definition, answer.text))
-                    #self.send_message(message.chat.id, 'Thanks!')
+                    if answer.text in alternates:
+                        user = TelegramUser.objects.get(id=message.from_user.id).user
+                        LocalizedInformer.objects.get(informer__user=user)
+                        use = WordUse.USES.ok if answer.text == alternates[0] else WordUse.USES.unrecognized
+                        WordUse.objects.create(definition=definition,
+                                               use=use,
+                                               interface=self.interface,
+                                               informer='')
+                    # Ask for another word
                     self.on_word(answer)
 
         #self.send_message(message.chat.id, msg, reply_markup=markup, parse_mode='Markdown')

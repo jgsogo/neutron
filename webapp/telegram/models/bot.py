@@ -15,7 +15,7 @@ from .telegram_user import TelegramUser
 class Bot(TelegramUser):
     token = models.CharField(max_length=128)
     bot_class = models.CharField(max_length=128, default='telegram.utils.DefaultBot')
-    allow_anonymous = models.BooleanField(default=True, help_text=_('If True, the user must be registered into '
+    allow_anonymous = models.BooleanField(default=True, help_text=_('If False, the user must be registered into '
                                                                     'your app to interact with the bot'))
     create_user = models.BooleanField(default=False, help_text=_('If True, this bot can create users in your site'))
 
