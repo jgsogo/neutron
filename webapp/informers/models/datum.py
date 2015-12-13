@@ -5,13 +5,13 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
-from .informer import LocalizedInformer
+from .informer import Informer
 from .interface import Interface
 
 
 @python_2_unicode_compatible
 class Datum(models.Model):
-    informer = models.ForeignKey(LocalizedInformer)
+    informer = models.ForeignKey(Informer)
     interface = models.ForeignKey(Interface)
     timestamp = models.DateTimeField(auto_now=True)
 

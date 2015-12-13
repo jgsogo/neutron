@@ -1,5 +1,5 @@
 
 from .region import Region
-from .informer import Informer, LocalizedInformer
+from .informer import Informer
 from .interface import Interface
 from .datum import Datum

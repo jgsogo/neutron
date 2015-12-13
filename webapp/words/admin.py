@@ -36,6 +36,7 @@ class WordUseAdmin(admin.ModelAdmin):
     list_display = ('word', 'informer', 'interface', 'use',)
     list_filter = ('informer__region', 'interface', 'use',)
     search_fields = ('definition__word',)
+    readonly_fields = ('definition',)
 
     def word(self, object):
         return object.definition.word

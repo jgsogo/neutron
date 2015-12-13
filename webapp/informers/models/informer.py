@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.conf import settings
 
 from .region import Region
 
@@ -12,20 +13,10 @@ from .region import Region
 @python_2_unicode_compatible
 class Informer(models.Model):
     name = models.CharField(max_length=64)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
+                             help_text=_('Some informers may not be users in the webapp'))
 
-    class Meta:
-        verbose_name = _('Informer')
-        verbose_name_plural = _('Informers')
-
-    def __str__(self):
-        return self.name
-
-
-@python_2_unicode_compatible
-class LocalizedInformer(models.Model):
-    # Allow an informer to report data about several regions
-    informer = models.ForeignKey(Informer)
-    region = models.ForeignKey(Region)
+    region = models.ForeignKey(Region, blank=True, null=True)
 
     confidence = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
                                    blank=True,
@@ -35,8 +26,13 @@ class LocalizedInformer(models.Model):
                                   help_text=_("Whether confidence attribute can be automatically reevaluated"))
 
     class Meta:
-        verbose_name = _('Localized informer')
-        verbose_name_plural = _('Localized informers')
+        verbose_name = _('Informer')
+        verbose_name_plural = _('Informers')
+
+    def save(self, *args, **kwargs):
+        if self.user:
+            self.name = str(self.user)
+        super(Informer, self).save(*args, **kwargs)
 
     def __str__(self):
-        return '%s [%s]' % (self.informer, self.region)
+        return '%s [%s]' % (self.name, self.region)

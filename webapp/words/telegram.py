@@ -7,7 +7,7 @@ from telebot.util import extract_command
 
 from telegram.utils.bots import DeepLinkingBot
 from telegram.models.telegram_user import TelegramUser
-from informers.models import Interface, LocalizedInformer
+from informers.models import Interface, Informer
 from words.models import Definition, WordUse
 
 
@@ -17,8 +17,9 @@ logger = logging.getLogger(__name__)
 
 
 class NeutronBot(DeepLinkingBot):
-    def __init__(self):
-        self.interface = Interface.objects.get_or_create(name=str(self.db_bot.name))
+    def __init__(self, *args, **kwargs):
+        super(NeutronBot, self).__init__(*args, **kwargs)
+        self.interface, created = Interface.objects.get_or_create(name=str(self.db_bot))
 
     def register_messages(self):
         logger.debug("NeutronBot::register_messages")
@@ -52,12 +53,12 @@ class NeutronBot(DeepLinkingBot):
                     logger.debug('Answer for %s: %s' % (definition, answer.text))
                     if answer.text in alternates:
                         user = TelegramUser.objects.get(id=message.from_user.id).user
-                        LocalizedInformer.objects.get(informer__user=user)
                         use = WordUse.USES.ok if answer.text == alternates[0] else WordUse.USES.unrecognized
+                        informer, created = Informer.objects.get_or_create(user=user)
                         WordUse.objects.create(definition=definition,
                                                use=use,
                                                interface=self.interface,
-                                               informer='')
+                                               informer=informer)
                     # Ask for another word
                     self.on_word(answer)
 

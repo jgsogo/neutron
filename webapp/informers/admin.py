@@ -1,20 +1,13 @@
+
 from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 
-from .models import Region, Informer, LocalizedInformer, Interface, Datum
-
-class LocalizedInformerAdmin(admin.ModelAdmin):
-    list_display = ('informer', 'region',)
-    list_filter = ('region',)
-
-
-class RegionInline(admin.TabularInline):
-    extra = 0
-    model = LocalizedInformer
+from .models import Region, Informer, Interface, Datum
 
 
 class InformerAdmin(admin.ModelAdmin):
-    inlines = [RegionInline,]
+    list_display = ('__str__', 'region',)
+    list_filter = ('region',)
 
 
 class DatumAdmin(admin.ModelAdmin):
@@ -28,7 +21,6 @@ class DatumAdmin(admin.ModelAdmin):
 
 admin.site.register(Region, MPTTModelAdmin)
 admin.site.register(Informer, InformerAdmin)
-admin.site.register(LocalizedInformer, LocalizedInformerAdmin)
 admin.site.register(Interface)
 
 admin.site.register(Datum, DatumAdmin)
