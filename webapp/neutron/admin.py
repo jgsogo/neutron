@@ -2,7 +2,31 @@ from django.contrib import admin
 from django.forms import TextInput, Textarea
 from django.db import models
 
-from .models import Definition, Dictionary, Context, CoarseWord, WordUse
+from mptt.admin import MPTTModelAdmin
+
+from .models import Informer, Definition, Context, Datum, Region, Interface, CoarseWord, WordUse
+
+
+class InformerAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'region',)
+    list_filter = ('region',)
+
+
+class DatumAdmin(admin.ModelAdmin):
+    list_display = ('informer', 'interface',)
+    list_filter = ('informer__region', 'interface', 'timestamp',)
+    search_fields = ('informer__name',)
+
+    def has_add_permission(self, request):
+        return False
+
+
+admin.site.register(Region, MPTTModelAdmin)
+admin.site.register(Informer, InformerAdmin)
+admin.site.register(Interface)
+
+admin.site.register(Datum, DatumAdmin)
+
 
 
 class ContextInline(admin.TabularInline):
@@ -15,7 +39,7 @@ class ContextInline(admin.TabularInline):
 
 
 class DefinitionAdmin(admin.ModelAdmin):
-    list_display = ('word', 'dictionary',)
+    list_display = ('word', 'informer',)
     inlines = [ContextInline, ]
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
@@ -50,7 +74,6 @@ class ContextAdmin(admin.ModelAdmin):
         return object.word_pos != -1
 
 admin.site.register(Definition, DefinitionAdmin)
-admin.site.register(Dictionary)
 admin.site.register(Context, ContextAdmin)
 
 admin.site.register(CoarseWord, CoarseWordAdmin)

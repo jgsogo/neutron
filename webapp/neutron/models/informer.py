@@ -13,8 +13,10 @@ from .region import Region
 @python_2_unicode_compatible
 class Informer(models.Model):
     name = models.CharField(max_length=64)
+    comment = models.TextField()
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
-                             help_text=_('Some informers may not be users in the webapp'))
+                             help_text=_('Informers may or may not be users in the webapp'))
 
     region = models.ForeignKey(Region, blank=True, null=True)
 

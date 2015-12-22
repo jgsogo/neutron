@@ -5,14 +5,14 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
-from ._word_datum import WordDatum
+from .datum import Datum
 
 
 @python_2_unicode_compatible
-class CoarseWord(WordDatum):
+class CoarseWord(Datum):
     profane = models.BooleanField()
 
-    class Meta(WordDatum.Meta):
+    class Meta:
         verbose_name = _('Coarse word')
         verbose_name_plural = _('Coarse words')
 

@@ -7,25 +7,19 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 from django.conf import settings
 
+from .informer import Informer
+
 MAX_WORD_LENGTH = getattr(settings, 'MAX_WORD_LENGTH', 64)
-
-
-@python_2_unicode_compatible
-class Dictionary(models.Model):
-    name = models.CharField(max_length=128)
-
-    def __str__(self):
-        return self.name
 
 
 @python_2_unicode_compatible
 class Definition(models.Model):
     word = models.CharField(max_length=MAX_WORD_LENGTH, db_index=True)
 
-    dictionary = models.ForeignKey(Dictionary)
+    informer = models.ForeignKey(Informer, help_text=_('Each informer is itself a dictionary'))
 
     order = models.IntegerField(help_text=_('Definition order in the dictionary entry'))
-    definition = models.TextField(help_text=_('Text of the definition itself'))
+    definition = models.TextField(help_text=_('Text of the definition itself'))  # TODO: For alternate definitions, this field has duplicated text ¡¡bytes!!
 
     class Meta:
         verbose_name = _('Definition')

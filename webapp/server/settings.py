@@ -40,8 +40,7 @@ INSTALLED_APPS = (
 
     'mptt',
 
-    'informers',
-    'words',
+    'neutron',
     'telegram',
     #'words.telegram',
 )
