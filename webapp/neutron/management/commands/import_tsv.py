@@ -7,11 +7,11 @@ import codecs
 import requests
 from django.core.management.base import BaseCommand, CommandError
 
-from words.models import Definition, Dictionary, Context
+from neutron.models import Definition, Informer, Context
 
 
 class Command(BaseCommand):
-    help = 'Import dictionary definitions from [tsv] file'
+    help = 'Import informer/dictionary definitions from [tsv] file'
 
     def add_arguments(self, parser):
         # Named (optional) arguments
@@ -19,22 +19,22 @@ class Command(BaseCommand):
             dest='file',
             default=None,
             help='Get the file from disk')
-        parser.add_argument('--dictionary',
-            dest='dictionary',
+        parser.add_argument('--informer',
+            dest='informer',
             default=None,
-            help='Dictionary name (default is filename)')
+            help='Informer name (default is filename)')
         parser.add_argument('--force',
             action='store_true',
             dest='force',
             default=False,
             help='Override already parsed data')
 
-    def get_dictionary(self, options):
-        dict_name = options['dictionary']
+    def get_informer(self, options):
+        dict_name = options['informer']
         if not dict_name:
             dict_name = os.path.basename(options['file']).rsplit('.', 1)[0]
-        dictionary, created = Dictionary.objects.get_or_create(name=dict_name)
-        return dictionary
+        informer, created = Informer.objects.get_or_create(name=dict_name)
+        return informer
 
     def on_line(self, line):
         chunks = line.split('\t')
@@ -64,11 +64,11 @@ class Command(BaseCommand):
                 self.stdout.write('.')
         return word, definitions
 
-    def _save_data(self, dictionary, word, definitions, force=False):
-        if force or not Definition.objects.filter(dictionary=dictionary, word__iexact=word).exists():
+    def _save_data(self, informer, word, definitions, force=False):
+        if force or not Definition.objects.filter(informer=informer, word__iexact=word).exists():
             order = 1
             for d,example in definitions:
-                definition = Definition(word=word, dictionary=dictionary, order=order, definition=d)
+                definition = Definition(word=word, informer=informer, order=order, definition=d)
                 definition.save()
                 if example:
                     c = Context(definition=definition, text=example, word_pos=example.find(word))
@@ -82,11 +82,11 @@ class Command(BaseCommand):
         file = options['file']
         force = options['force']
 
-        dictionary = self.get_dictionary(options)
+        informer = self.get_informer(options)
         i = 0
         with codecs.open(file, 'r', 'utf-8') as f:
             for line in f.readlines():
                 i += 1
                 word, definitions = self.on_line(line)
-                self._save_data(dictionary, word, definitions, force)
+                self._save_data(informer, word, definitions, force)
         self.stdout.write('Done for %d words' % i)
