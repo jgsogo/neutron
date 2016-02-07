@@ -8,6 +8,8 @@ from django.views.generic import ListView, DetailView
 from .models import Bot
 from .views import DeepLinkingRedirect
 
+
+app_name = 'telegram'
 urlpatterns = [
     url(r'^bot/list/$', ListView.as_view(model=Bot), name='bot_list'),
     url(r'^bot/(?P<pk>\d+)/$', DetailView.as_view(model=Bot), name='bot_detail'),

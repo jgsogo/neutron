@@ -39,7 +39,7 @@ class Bot(TelegramUser):
 
     def get_absolute_url(self):
         from django.core.urlresolvers import reverse
-        return reverse('bot_detail', args=[str(self.id)])
+        return reverse('telegram:bot_detail', args=[str(self.id)])
 
     @property
     def bot(self):

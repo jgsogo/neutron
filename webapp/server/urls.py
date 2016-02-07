@@ -32,5 +32,5 @@ urlpatterns = [
     url(r'^register/$', register, name='register'),
 
     url(r'', include('base.urls')),
-    url(r'^telegram/', include('telegram.urls')),
+    url(r'^telegram/', include('telegram.urls', namespace='telegram')),
 ]
