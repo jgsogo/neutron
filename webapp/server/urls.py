@@ -18,7 +18,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from .views import logout, login, register
+from .views import *
 
 admin.site.site_header = 'Neutrón'
 admin.site.index_title = 'Neutrón'
@@ -31,6 +31,10 @@ urlpatterns = [
     url(r'^logout/$', logout, name='logout'),
     url(r'^register/$', register, name='register'),
 
-    url(r'', include('base.urls')),
     url(r'^telegram/', include('telegram.urls', namespace='telegram')),
+
+    url(r'^$', HomeView.as_view()),
+    url(r'^home/$', HomeView.as_view(), name='home'),
+    url(r'^stats/$', StatsHomeView.as_view(), name='stats'),
+
 ]
