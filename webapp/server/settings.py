@@ -42,7 +42,8 @@ INSTALLED_APPS = (
 
     'neutron',
     'telegram',
-    #'words.telegram',
+
+    'base',
 )
 
 MIDDLEWARE_CLASSES = (

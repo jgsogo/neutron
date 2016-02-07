@@ -22,6 +22,7 @@ from django.contrib import admin
 admin.site.site_header = 'Neutrón'
 
 urlpatterns = [
+    url(r'', include('base.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^telegram/', include('telegram.urls')),
 ]
