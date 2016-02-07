@@ -18,11 +18,19 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from .views import logout, login, register
 
 admin.site.site_header = 'Neutrón'
+admin.site.index_title = 'Neutrón'
 
 urlpatterns = [
-    url(r'', include('base.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
+
+    url(r'^login/$', login, name='login'),
+    url(r'^logout/$', logout, name='logout'),
+    url(r'^register/$', register, name='register'),
+
+    url(r'', include('base.urls')),
     url(r'^telegram/', include('telegram.urls')),
 ]
