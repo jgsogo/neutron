@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Coarse Word</h2>
+    {% block coarse_word_content %}
+        <p>Objetivo de la interfaz, cómo usarla,...</p>
+        <p><a href="{% url 'coarse_word_run' %}">Go!</a></p>
+    {% endblock %}
+{% endblock %}

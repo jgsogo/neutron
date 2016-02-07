@@ -37,4 +37,11 @@ urlpatterns = [
     url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^stats/$', StatsHomeView.as_view(), name='stats'),
 
+    # Coarse word
+    url(r'^coarse/$', CoarseWordHome.as_view(), name='coarse_word'),
+    url(r'^coarse/run/$', CoarseWordRun.as_view(), name='coarse_word_run'),
+
+    # Word use
+    url(r'^uses/$', WordUseHome.as_view(), name='word_use'),
+    url(r'^uses/run/$', WordUseRun.as_view(), name='word_use_run'),
 ]

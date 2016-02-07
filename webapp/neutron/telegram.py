@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from random import randint
+
 from telebot import types
 from telebot.util import extract_command
 
@@ -39,8 +39,7 @@ class NeutronBot(DeepLinkingBot):
 
     def on_word(self, message):
         logger.debug("NeutronBot::on_word")
-        count = Definition.objects.count()
-        definition = Definition.objects.all()[randint(0,count-1)]
+        definition = Definition.objects.random()
         msg = '*%s*: %s' % (definition.word, definition.definition)
 
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=False)
@@ -72,8 +71,7 @@ class NeutronBot(DeepLinkingBot):
 
     def on_coarse(self, message):
         logger.debug("NeutronBot::on_coarse")
-        count = Definition.objects.count()
-        definition = Definition.objects.all()[randint(0,count-1)]
+        definition = Definition.objects.random()
         msg = '*%s*: %s' % (definition.word, definition.definition)
 
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=False)

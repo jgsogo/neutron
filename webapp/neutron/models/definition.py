@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from random import randint
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -12,6 +13,15 @@ from .informer import Informer
 MAX_WORD_LENGTH = getattr(settings, 'MAX_WORD_LENGTH', 64)
 
 
+class DefinitionManager(models.Manager):
+    def random(self):
+        count = self.count()
+        try:
+            return self.all()[randint(0,count-1)]
+        except ValueError:
+            raise self.model.DoesNotExist()
+
+
 @python_2_unicode_compatible
 class Definition(models.Model):
     word = models.CharField(max_length=MAX_WORD_LENGTH, db_index=True)
@@ -20,6 +30,8 @@ class Definition(models.Model):
 
     order = models.IntegerField(help_text=_('Definition order in the dictionary entry'))
     definition = models.TextField(help_text=_('Text of the definition itself'))  # TODO: For alternate definitions, this field has duplicated text ¡¡bytes!!
+
+    objects = DefinitionManager()
 
     class Meta:
         verbose_name = _('Definition')

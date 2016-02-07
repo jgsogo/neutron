@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Word Use</h2>
+    {% block word_use_content %}
+        <p>Objetivo de la interfaz, cómo usarla,...</p>
+        <p><a href="{% url 'word_use_run' %}">Go!</a></p>
+    {% endblock %}
+{% endblock %}
