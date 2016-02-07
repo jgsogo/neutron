@@ -2,8 +2,19 @@
 
 {% block content %}
     <h2>Telegram</h2>
-    <p>Telegram es....</p>
 
-    {% block telegram_content %}
-    {% endblock %}
+    {% if user.is_authenticated %}
+        <p>Telegram es....</p>
+
+        {% block telegram_content %}
+        {% endblock %}
+    {% else %}
+        {% url 'register' as register_url %}
+        {% url 'login' as login_url %}
+        <p>Necesitas estar identificado para colaborar (justificar esto), así que
+            por favor, <a href="{{ login_url }}?next={{ request.path }}">entra con tu usuario</a> o <a href="{{ register_url }}">regístrate</a>. ¡Gracias!
+        </p>
+    {% endif %}
+
+    <p>Contar de qué va Telegram y cómo funciona esto.</p>
 {% endblock %}

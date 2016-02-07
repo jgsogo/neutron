@@ -55,7 +55,7 @@
                         <li class="active"><a href="{% url "home" %}">Home</a></li>
                         <li><a href="{% url "stats" %}">Stats</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Interfaces <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Get involved <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header">Web interfaces</li>
                                 <li><a href="#">Interfaz #1</a></li>
@@ -80,17 +80,19 @@
                             <!-- <li><a href="{% url 'logout' %}" class="btn btn-primary">{{user}} ({% trans "logout" %})</a></li> -->
                         </ul>
                     {% else %}
-                        <form class="navbar-form navbar-right" method="post" action="{% url 'login' %}">{% csrf_token %}
-                            <div class="form-group">
-                                <input name="username" type="text" placeholder="Email" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input name="password" type="password" placeholder="Password" class="form-control">
-                            </div>
-                            <input type="hidden" name="next" value="{{ request.path }}">
-                            <button type="submit" class="btn btn-success">Sign in</button>
-                            <a href="{% url 'register' %}" class="btn btn-primary">{% trans "Register" %}</a>
-                        </form>
+                        {% block navbar_login_form %}
+                            <form class="navbar-form navbar-right" method="post" action="{% url 'login' %}">{% csrf_token %}
+                                <div class="form-group">
+                                    <input name="username" type="text" placeholder="Email" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input name="password" type="password" placeholder="Password" class="form-control">
+                                </div>
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <button type="submit" class="btn btn-success">Sign in</button>
+                                <a href="{% url 'register' %}" class="btn btn-primary">{% trans "Register" %}</a>
+                            </form>
+                        {% endblock %}
                     {% endif %}
                 </div><!--/.navbar-collapse -->
             </div>
