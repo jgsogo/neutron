@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 from random import randint
 
 from django.db import models
@@ -28,7 +30,7 @@ class Definition(models.Model):
 
     informer = models.ForeignKey(Informer, help_text=_('Each informer is itself a dictionary'))
 
-    order = models.IntegerField(help_text=_('Definition order in the dictionary entry'))
+    order = models.IntegerField(blank=True, null=True, help_text=_('Definition order in the dictionary entry'))
     definition = models.TextField(help_text=_('Text of the definition itself'))  # TODO: For alternate definitions, this field has duplicated text ¡¡bytes!!
 
     objects = DefinitionManager()

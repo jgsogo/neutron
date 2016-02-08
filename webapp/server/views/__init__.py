@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 from .authentication import login, logout, register
 from .stats import StatsHomeView
 from .coarse_word import CoarseWordHome, CoarseWordRun
-from .word_use import WordUseHome, WordUseRun
+from .word_use import WordUseHome, WordUseRun, WordUseAlternateRun
 
 
 class HomeView(TemplateView):

@@ -5,11 +5,12 @@
     {% if definition %}
         <h3>{{ definition.word }}</h3>
         <p>{{ definition.definition }}</p>
-        <form action="/url/to/submit/" method="post" class="form">
+        <form method="post" class="form">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" name="profane" value="true" class="btn btn-primary">Profane :S</button>
+                <button type="submit" name="profane" value="false" class="btn btn-primary">It's ok</button>
             {% endbuttons %}
         </form>
     {% else %}

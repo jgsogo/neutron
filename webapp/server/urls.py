@@ -20,8 +20,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from .views import *
 
-admin.site.site_header = 'Neutrón'
-admin.site.index_title = 'Neutrón'
+admin.site.site_header = 'Proyecto Neutrón'
+admin.site.index_title = 'Proyecto Neutrón'
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -44,4 +44,5 @@ urlpatterns = [
     # Word use
     url(r'^uses/$', WordUseHome.as_view(), name='word_use'),
     url(r'^uses/run/$', WordUseRun.as_view(), name='word_use_run'),
+    url(r'^uses/(?P<definition>\d+)/alternate/$', WordUseAlternateRun.as_view(), name='word_use_alternate'),
 ]
