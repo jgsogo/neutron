@@ -2,13 +2,18 @@
 {% load bootstrap3 %}
 
 {% block coarse_word_content %}
-    <h3>{{ definition.word }}</h3>
-    <p>{{ definition.definition }}</p>
-    <form action="/url/to/submit/" method="post" class="form">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-            <button type="submit" class="btn btn-primary">Submit</button>
-        {% endbuttons %}
-    </form>
+    {% if definition %}
+        <h3>{{ definition.word }}</h3>
+        <p>{{ definition.definition }}</p>
+        <form action="/url/to/submit/" method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            {% endbuttons %}
+        </form>
+    {% else %}
+        <h3>Error!</h3>
+        <p>There are no definitions in the database.</p>
+    {% endif %}
 {% endblock %}

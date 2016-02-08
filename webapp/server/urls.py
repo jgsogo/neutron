@@ -27,9 +27,9 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
-    url(r'^login/$', login, name='login'),
-    url(r'^logout/$', logout, name='logout'),
-    url(r'^register/$', register, name='register'),
+    url(r'^accounts/login/$', login, name='login'),
+    url(r'^accounts/logout/$', logout, name='logout'),
+    url(r'^accounts/register/$', register, name='register'),
 
     url(r'^telegram/', include('telegram.urls', namespace='telegram')),
 

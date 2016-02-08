@@ -3,7 +3,7 @@
 
 
 from django.views.generic import TemplateView, FormView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from neutron.models import Definition
 from ..forms import WordUseForm
 
@@ -12,7 +12,7 @@ class WordUseHome(TemplateView):
     template_name = 'word_use/home.html'
 
 
-class WordUseRun(FormView):
+class WordUseRun(LoginRequiredMixin, FormView):
     form_class = WordUseForm
     template_name = 'word_use/run.html'
 

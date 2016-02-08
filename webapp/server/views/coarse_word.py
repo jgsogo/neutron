@@ -3,6 +3,7 @@
 
 
 from django.views.generic import TemplateView, FormView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from neutron.models import Definition
 
 from ..forms import CoarseWordForm
@@ -12,7 +13,7 @@ class CoarseWordHome(TemplateView):
     template_name = 'coarse_word/home.html'
 
 
-class CoarseWordRun(FormView):
+class CoarseWordRun(LoginRequiredMixin, FormView):
     form_class = CoarseWordForm
     template_name = 'coarse_word/run.html'
 

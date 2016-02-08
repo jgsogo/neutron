@@ -37,4 +37,4 @@ class Informer(models.Model):
         super(Informer, self).save(*args, **kwargs)
 
     def __str__(self):
-        return '%s [%s]' % (self.name, self.region)
+        return u'%s [%s]' % (self.name, self.region)  # TODO: Aquí no debería haber un "u" de unicode
