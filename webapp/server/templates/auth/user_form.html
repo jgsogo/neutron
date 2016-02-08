@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+        <div class="row">
+            <div class="col-md-2 col-sm-3 sidebar">
+                {% block profile_menu %}
+                    <h2>Profile</h2>
+                    <ul class="nav nav-sidebar">
+                        <li class="active"><a href="{% url 'profile' %}">Personal data</a></li>
+                        <li><a href="{% url 'profile_informer' %}">Informer</a></li>
+                    </ul>
+                {% endblock %}
+            </div>
+            <div class="col-sm-9 col-md-10 main">
+                {% block content_profile %}
+                    <div class="row">
+                        <h3>Personal data</h3>
+                        <form method="post" class="form">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            {% buttons %}
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            {% endbuttons %}
+                        </form>
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+{% endblock %}

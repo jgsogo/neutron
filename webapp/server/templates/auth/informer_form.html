@@ -1,0 +1,16 @@
+{% extends 'auth/user_form.html' %}
+{% load bootstrap3 %}
+
+{% block content_profile %}
+    <div class="row">
+        <h3>Datos de informante</h3>
+        <p>Aquí un mapita para que seleccionara su zona sería algo soberbio.</p>
+        <form method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">Update</button>
+            {% endbuttons %}
+        </form>
+    </div>
+{% endblock %}

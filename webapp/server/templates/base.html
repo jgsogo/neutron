@@ -54,8 +54,9 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="{% url "home" %}">Home</a></li>
                         <li><a href="{% url "stats" %}">Stats</a></li>
+                        {% if request.user.is_informer %}
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Get involved <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contribute <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header">Web interfaces</li>
                                 <li><a href="{% url 'coarse_word' %}">Coarse words</a></li>
@@ -65,13 +66,16 @@
                                 <li><a href="{% url 'telegram:bot_list' %}">Telegram</a></li>
                             </ul>
                         </li>
+                        {% else %}
+                        <li><a href="{% url 'contribute' %}">Contribute</a></li>
+                        {% endif %}
                     </ul>
                     {% if user.is_authenticated %}
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Profile</a></li>
+                                    <li><a href="{% url 'profile' %}">Profile</a></li>
                                     <li><a href="#">My stats</a></li>
                                     {% if user.is_staff %}
                                         <li><a href="{% url 'admin:index' %}">Admin</a></li>

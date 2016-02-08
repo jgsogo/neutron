@@ -7,6 +7,7 @@ from .authentication import login, logout, register
 from .stats import StatsHomeView
 from .coarse_word import CoarseWordHome, CoarseWordRun
 from .word_use import WordUseHome, WordUseRun, WordUseAlternateRun
+from .profile import ProfileView, ProfileInformerView
 
 
 class HomeView(TemplateView):

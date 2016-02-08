@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
@@ -37,4 +39,4 @@ class Informer(models.Model):
         super(Informer, self).save(*args, **kwargs)
 
     def __str__(self):
-        return u'%s [%s]' % (self.name, self.region)  # TODO: Aquí no debería haber un "u" de unicode
+        return '%s [%s]' % (self.name, self.region)

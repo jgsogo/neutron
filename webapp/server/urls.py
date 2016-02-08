@@ -36,6 +36,14 @@ urlpatterns = [
     url(r'^$', HomeView.as_view()),
     url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^stats/$', StatsHomeView.as_view(), name='stats'),
+    url(r'^contribute/$', TemplateView.as_view(template_name='contribute.html'), name='contribute'),
+
+    # Some error views
+    url(r'^accounts/no_informer/$', TemplateView.as_view(template_name='error/no_informer.html'), name='error_no_informer'),
+
+    # Profile
+    url(r'^accounts/profile/$', ProfileView.as_view(), name='profile'),
+    url(r'^accounts/profile/informer/$', ProfileInformerView.as_view(), name='profile_informer'),
 
     # Coarse word
     url(r'^coarse/$', CoarseWordHome.as_view(), name='coarse_word'),

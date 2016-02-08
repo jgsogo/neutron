@@ -3,16 +3,24 @@
 
 
 from django.views.generic import FormView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.core.urlresolvers import reverse
 from neutron.models import Definition, Interface
 
 
-class RandomDefinitionRun(LoginRequiredMixin, FormView):
+class RandomDefinitionRun(UserPassesTestMixin, FormView):
 
     @classmethod
     def as_view(cls, **initkwargs):
         cls.interface, created = Interface.objects.get_or_create(name='Web')
         return super(RandomDefinitionRun, cls).as_view(**initkwargs)
+
+    def test_func(self):
+        u = self.request.user
+        return u.is_authenticated and u.is_informer()
+
+    def get_login_url(self):
+        return reverse('error_no_informer',)
 
     def get_definition(self):
         # assert self.request.method == 'GET', "RandomDefinitionRun::get_definition must be only called in GET"

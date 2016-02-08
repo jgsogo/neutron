@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Stats{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>Participa</h1>
+        <p>Hablar de las diferentes posibilidades de participación, interfaces,...</p>
+        {% if user.is_authenticated %}
+            <p>Dinos de dónde eres y empieza a participar.</p>
+        {% else %}
+            <p><a href="{% url 'register' %}">Regístrate</a> y conviértete en informante.</p>
+        {% endif %}
+    </div>
+{% endblock %}
