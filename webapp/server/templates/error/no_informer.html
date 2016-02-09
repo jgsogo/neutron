@@ -2,5 +2,6 @@
 
 {% block content %}
     <h2>Error: Not an informer!</h2>
-    <p>It seems that you are not registered as an informer.</p>
+    <p>It seems that you are not registered as an informer, please fill the needed data on your profile.</p>
+    <a class="btn btn-success" href="{% url 'profile_informer' %}">Go!</a>
 {% endblock %}

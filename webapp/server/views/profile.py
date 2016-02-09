@@ -8,6 +8,9 @@ from neutron.models import Informer
 class ProfileView(UpdateView):
     fields = ('first_name', 'last_name', 'email',)
 
+    def get_success_url(self):
+        return self.request.path
+
     def get_object(self, queryset=None):
         return self.request.user
 
@@ -17,5 +20,12 @@ class ProfileInformerView(UpdateView):
     fields = ('region',)
     template_name = 'auth/informer_form.html'
 
+    def get_success_url(self):
+        return self.request.path
+
     def get_object(self, queryset=None):
-        return self.request.user.as_informer()
+        if self.request.user.is_informer():
+            return self.request.user.as_informer()
+        else:
+            informer = Informer(user=self.request.user)
+            return informer

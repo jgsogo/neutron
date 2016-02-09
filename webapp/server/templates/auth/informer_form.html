@@ -4,6 +4,9 @@
 {% block content_profile %}
     <div class="row">
         <h3>Datos de informante</h3>
+        {% if not user.is_informer %}
+            <p>You are not an informer yet, please fill the form below.</p>
+        {% endif %}
         <p>Aquí un mapita para que seleccionara su zona sería algo soberbio.</p>
         <form method="post" class="form">
             {% csrf_token %}

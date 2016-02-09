@@ -8,6 +8,7 @@
         <p>Hablar de las diferentes posibilidades de participación, interfaces,...</p>
         {% if user.is_authenticated %}
             <p>Dinos de dónde eres y empieza a participar.</p>
+            <a class="btn btn-success" href="{% url 'profile_informer' %}">Go!</a>
         {% else %}
             <p><a href="{% url 'register' %}">Regístrate</a> y conviértete en informante.</p>
         {% endif %}
