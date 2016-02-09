@@ -35,8 +35,9 @@ urlpatterns = [
 
     url(r'^$', HomeView.as_view()),
     url(r'^home/$', HomeView.as_view(), name='home'),
-    url(r'^stats/$', StatsHomeView.as_view(), name='stats'),
     url(r'^contribute/$', TemplateView.as_view(template_name='contribute.html'), name='contribute'),
+
+    url(r'^stats/', include('neutron.urls', namespace='neutron')),
 
     # Some error views
     url(r'^accounts/no_informer/$', TemplateView.as_view(template_name='error/no_informer.html'), name='error_no_informer'),

@@ -6,7 +6,8 @@ from django.conf.urls import include, url
 from .views import *
 
 
+app_name = 'neutron'
 urlpatterns = [
-    url(r'^word/search/$', SearchDefinition.as_view(), name='word_detail_search'),
-    url(r'^word/(?P<word>\w+)/$', DefinitionDetail.as_view(), name='word_detail'),
+    url(r'^$', SearchDefinition.as_view(), name='word_detail_search'),
+    url(r'^word/(?P<informer_pk>\d+)/(?P<word>\w+)/$', DefinitionDetail.as_view(), name='word_detail'),
     ]
