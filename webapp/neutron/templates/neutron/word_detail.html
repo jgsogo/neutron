@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+        <div class="row">
+            <div class="col-md-2 col-sm-3 sidebar">
+                {% block word_detail_menu %}
+                    <ul class="nav nav-sidebar">
+                        <li><a href="{% url 'word_detail_search' %}">Search</a></li>
+                    </ul>
+                    <h2>Explore</h2>
+                    <ul class="nav nav-sidebar">
+                        <li class="active"><a href="{% url 'profile' %}">Personal data</a></li>
+                        <li><a href="{% url 'profile_informer' %}">Informer</a></li>
+                    </ul>
+                {% endblock %}
+            </div>
+            <div class="col-sm-9 col-md-10 main">
+                {% block word_detail_content %}
+                {% endblock %}
+            </div>
+        </div>
+{% endblock %}
