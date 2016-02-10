@@ -1,33 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'neutron/base.html' %}
 {% load bootstrap3 %}
 
-{% block content %}
-        <div class="row">
-            <div class="col-md-2 col-sm-3 sidebar">
-                {% block word_detail_menu %}
-                    <ul class="nav nav-sidebar">
-                        <li><a href="{% url 'neutron:word_detail_search' %}">Search</a></li>
-                    </ul>
-                    {% if word %}
-                        <h2>Explore</h2>
-                        <ul class="nav nav-sidebar">
-                            <li class="active"><a href="{% url 'profile' %}">Personal data</a></li>
-                            <li><a href="{% url 'profile_informer' %}">Informer</a></li>
-                        </ul>
-                    {% endif %}
-                {% endblock %}
-            </div>
-            <div class="col-sm-9 col-md-10 main">
-                {% block word_detail_content %}
-                    <h2>{{ word }}</h2>
-                    <p><strong>Informante/Diccionario:</strong> {{ informer }}</p>
-                    <h3>Acepciones:</h3>
-                    <ul>
-                        {% for def in definitions %}
-                        <li>{{ def }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endblock %}
-            </div>
-        </div>
+
+{% block neutron_word_link %}
+    <li><a href="{% url 'neutron:word_detail' informer_pk=informer.pk word=word %}">{{ word }}</a></li>
+{% endblock %}
+
+{% block neutron_content %}
+    <h2>{{ word }}</h2>
+    <p><strong>Informante/Diccionario:</strong> {{ informer }}</p>
+    <h3>Acepciones:</h3>
+    <ul>
+        {% for def in definitions %}
+        <li>(<a href="{% url 'neutron:definition_detail' informer_pk=informer.pk word=word pk=def.pk %}">details</a>) {{ def }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'neutron/definition_detail.html' %}
+
+{% block definition_detail_content %}
+    <h3>Coarsity</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Region</th>
+                <th>Not coarse</th>
+                <th>Coarse</th>
+                <th>Total count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for region, counter in data.iteritems %}
+                <tr>
+                    <td>{{ region }}</td>
+                    <td>{% widthratio counter.not_profane counter.all 100 %}%</td>
+                    <td>{% widthratio counter.profane counter.all 100 %}%</td>
+                    <td>{{ counter.all }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

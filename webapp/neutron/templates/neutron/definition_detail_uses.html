@@ -1,0 +1,41 @@
+{% extends 'neutron/definition_detail.html' %}
+{% load neutron_tags %}
+
+{% block definition_detail_content %}
+    <h3>Word uses</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Region</th>
+                <th>Same use</th>
+                <th>Prefer other</th>
+                <th>Unrecognized</th>
+                <th>Total count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for region, counter in data.iteritems %}
+                <tr>
+                    <td>{{ region }}</td>
+                    <td>{% widthratio counter.0 counter.all 100 %}%</td>
+                    <td>
+                        {% widthratio counter.1 counter.all 100 %}% (<a role="button" data-toggle="collapse" href="#collapseAlternatives" aria-expanded="false" aria-controls="collapseExample">show/hide</a>)
+                        <div class="collapse" id="collapseAlternatives">
+                            <ul>
+                                {% with alternatives|get_item:region as alts %}
+                                    {% for word, times in alts.iteritems %}
+                                        {% if word != 'all' %}
+                                            <li>{{ word }} {% widthratio times alts.all 100 %}%</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endwith %}
+                            </ul>
+                        </div>
+                    </td>
+                    <td>{% widthratio counter.2 counter.all 100 %}%</td>
+                    <td>{{ counter.all }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

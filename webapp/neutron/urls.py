@@ -8,6 +8,12 @@ from .views import *
 
 app_name = 'neutron'
 urlpatterns = [
-    url(r'^$', SearchDefinition.as_view(), name='word_detail_search'),
-    url(r'^word/(?P<informer_pk>\d+)/(?P<word>\w+)/$', DefinitionDetail.as_view(), name='word_detail'),
+    # Lemmas
+    url(r'^$', SearchLemma.as_view(), name='word_detail_search'),
+    url(r'^word/(?P<informer_pk>\d+)/(?P<word>\w+)/$', LemmaDetail.as_view(), name='word_detail'),
+
+    # Definitions
+    url(r'^word/(?P<informer_pk>\d+)/(?P<word>\w+)/(?P<pk>\d+)/$', DefinitionDetail.as_view(), name='definition_detail'),
+    url(r'^word/(?P<informer_pk>\d+)/(?P<word>\w+)/(?P<pk>\d+)/coarsity/$', DefinitionCoarsityDetail.as_view(), name='definition_detail_coarsity'),
+    url(r'^word/(?P<informer_pk>\d+)/(?P<word>\w+)/(?P<pk>\d+)/uses/$', DefinitionUsesDetail.as_view(), name='definition_detail_uses'),
     ]

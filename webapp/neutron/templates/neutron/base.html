@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+        <div class="row">
+            <div class="col-md-2 col-sm-3 sidebar">
+                {% block neutron_content_menu %}
+                    <h3>Lemmas</h3>
+                    <ul class="nav nav-sidebar">
+                        <li><a href="{% url 'neutron:word_detail_search' %}">Search</a></li>
+                        {% block neutron_word_link %}
+                        {% endblock %}
+                    </ul>
+                    {% block neutron_content_menu_additional %}
+                    {% endblock %}
+                {% endblock %}
+            </div>
+            <div class="col-sm-9 col-md-10 main">
+                {% block neutron_content %}
+                {% endblock %}
+            </div>
+        </div>
+{% endblock %}
