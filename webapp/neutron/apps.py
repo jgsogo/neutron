@@ -20,7 +20,7 @@ class NeutronConfig(AppConfig):
             if not hasattr(self, '_as_informer'):
                 try:
                     informer = Informer.objects.get(user=self)
-                except Informer.DoesNotExist, Informer.MultipleObjectReturned:
+                except (Informer.DoesNotExist, Informer.MultipleObjectsReturned) as e:
                     informer = None
                 setattr(self, '_as_informer', informer)
             return getattr(self, '_as_informer')

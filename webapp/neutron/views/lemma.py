@@ -24,6 +24,13 @@ class SearchLemma(FormView):
             return HttpResponseRedirect(redirect_to=reverse('neutron:word_detail',
                                         kwargs={'word': word, 'informer_pk': informer.pk}))
 
+    def get_context_data(self, **kwargs):
+        # TODO: This is to delete
+        ctxt = super(SearchLemma, self).get_context_data(**kwargs)
+        ctxt.update({'examples': [Definition.objects.random() for _ in range(3)]})
+        return ctxt
+
+
 class LemmaDetail(TemplateView):
     template_name = 'neutron/word_detail.html'
 

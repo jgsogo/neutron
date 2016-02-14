@@ -70,7 +70,7 @@ class DefinitionUsesDetail(DetailView):
             alternatives[item.informer.region]['all'] += 1
 
         alternatives_data = {}
-        for key,value in dict(alternatives).iteritems():
+        for key,value in dict(alternatives).items():
             alternatives_data[key] = dict(value)
         context.update({'alternatives': alternatives_data})
         return context

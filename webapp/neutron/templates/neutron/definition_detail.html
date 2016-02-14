@@ -2,7 +2,9 @@
 
 
 {% block neutron_word_link %}
-    <li><a href="{% url 'neutron:word_detail' informer_pk=definition.informer.pk word=definition.word %}">{{ definition.word }}</a></li>
+    {% if definition %}
+        <li><a href="{% url 'neutron:word_detail' informer_pk=definition.informer.pk word=definition.word %}">{{ definition.word }}</a></li>
+    {% endif %}
 {% endblock %}
 
 {% block neutron_content_menu_additional %}

@@ -1,0 +1,11 @@
+colorama==0.3.3
+Django==1.9.2
+django-bootstrap3==6.2.2
+django-model-utils==2.3.1
+django-mptt==0.8.0
+py==1.4.31
+pyTelegramBotAPI==1.4.0
+pytest==2.8.3
+requests==2.8.1
+six==1.10.0
+wheel==0.24.0

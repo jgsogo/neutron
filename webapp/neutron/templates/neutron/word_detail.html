@@ -3,7 +3,9 @@
 
 
 {% block neutron_word_link %}
-    <li><a href="{% url 'neutron:word_detail' informer_pk=informer.pk word=word %}">{{ word }}</a></li>
+    {% if informer and word %}
+        <li><a href="{% url 'neutron:word_detail' informer_pk=informer.pk word=word %}">{{ word }}</a></li>
+    {% endif %}
 {% endblock %}
 
 {% block neutron_content %}

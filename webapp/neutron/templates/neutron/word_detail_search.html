@@ -15,4 +15,13 @@
             <button type="submit" class="btn btn-primary">Search</button>
         {% endbuttons %}
     </form>
+    <p>
+        Y como de momento no tenemos muchas palabras aquí metidas, pues pongamos algunos ejemplos
+        para que no haya que buscar:
+        <ul>
+            {% for example in examples %}
+                <li><a href="{% url 'neutron:word_detail' informer_pk=example.informer.pk word=example.word %}">{{ example.word }}</a></li>
+            {% endfor %}
+        </ul>
+    </p>
 {% endblock %}

@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for region, counter in data.iteritems %}
+            {% for region, counter in data.items %}
                 <tr>
                     <td>{{ region }}</td>
                     <td>{% widthratio counter.not_profane counter.all 100 %}%</td>

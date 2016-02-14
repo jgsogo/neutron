@@ -40,3 +40,4 @@ local/
 # Secret files
 secret.py
 file.log
+webapp/static

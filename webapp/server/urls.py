@@ -18,6 +18,9 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
+
 from .views import *
 
 admin.site.site_header = 'Proyecto Neutrón'
@@ -54,4 +57,4 @@ urlpatterns = [
     url(r'^uses/$', WordUseHome.as_view(), name='word_use'),
     url(r'^uses/run/$', WordUseRun.as_view(), name='word_use_run'),
     url(r'^uses/(?P<definition>\d+)/alternate/$', WordUseAlternateRun.as_view(), name='word_use_alternate'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
