@@ -23,7 +23,7 @@
                         <div class="collapse" id="collapseAlternatives">
                             <ul>
                                 {% with alternatives|get_item:region as alts %}
-                                    {% for word, times in alts.iteritems %}
+                                    {% for word, times in alts.items %}
                                         {% if word != 'all' %}
                                             <li>{{ word }} {% widthratio times alts.all 100 %}%</li>
                                         {% endif %}

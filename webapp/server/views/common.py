@@ -12,6 +12,7 @@ class RandomDefinitionRun(UserPassesTestMixin, FormView):
 
     @classmethod
     def as_view(cls, **initkwargs):
+        # TODO: This line cannot be here because it is called also on 'migrate' (database is not created yet)
         cls.interface, created = Interface.objects.get_or_create(name='Web')
         return super(RandomDefinitionRun, cls).as_view(**initkwargs)
 
