@@ -8,7 +8,6 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from .informer import Informer
 from .interface import Interface
-from .definition import Definition
 
 
 @python_2_unicode_compatible
@@ -17,7 +16,6 @@ class Datum(models.Model):
     interface = models.ForeignKey(Interface)
     timestamp = models.DateTimeField(auto_now=True)
 
-    definition = models.ForeignKey(Definition, help_text=_('Word and definition from a given dictionary'))
 
     class Meta:
         verbose_name = _('Datum')

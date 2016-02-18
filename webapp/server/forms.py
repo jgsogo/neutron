@@ -3,7 +3,7 @@
 
 from django import forms
 from neutron.models import Definition, WordUse
-from neutron.models.definition import MAX_WORD_LENGTH
+from neutron.models.word import MAX_WORD_LENGTH
 
 
 class CoarseWordForm(forms.Form):

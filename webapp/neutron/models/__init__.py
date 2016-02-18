@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from .word import Word
 from .informer import Informer
 from .definition import Definition, Context
 

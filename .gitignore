@@ -41,3 +41,6 @@ local/
 secret.py
 file.log
 webapp/static
+*.json
+basico_sm.tsv
+

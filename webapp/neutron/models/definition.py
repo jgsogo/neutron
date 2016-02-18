@@ -8,11 +8,9 @@ from random import randint
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
-from django.conf import settings
 
+from .word import Word
 from .informer import Informer
-
-MAX_WORD_LENGTH = getattr(settings, 'MAX_WORD_LENGTH', 64)
 
 
 class DefinitionManager(models.Manager):
@@ -28,7 +26,7 @@ class DefinitionManager(models.Manager):
 
 @python_2_unicode_compatible
 class Definition(models.Model):
-    word = models.CharField(max_length=MAX_WORD_LENGTH, db_index=True)
+    word = models.ForeignKey(Word)
 
     informer = models.ForeignKey(Informer, help_text=_('Each informer is itself a dictionary'))
 

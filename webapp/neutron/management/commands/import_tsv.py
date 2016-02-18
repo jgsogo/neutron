@@ -7,7 +7,7 @@ import codecs
 import requests
 from django.core.management.base import BaseCommand, CommandError
 
-from neutron.models import Definition, Informer, Context
+from neutron.models import Definition, Informer, Context, Word
 
 
 class Command(BaseCommand):
@@ -65,28 +65,29 @@ class Command(BaseCommand):
         return word, definitions
 
     def _save_data(self, informer, word, definitions, force=False):
-        if force or not Definition.objects.filter(informer=informer, word__iexact=word).exists():
-            order = 1
-            for d,example in definitions:
-                definition = Definition(word=word, informer=informer, order=order, definition=d)
-                definition.save()
-                if example:
-                    c = Context(definition=definition, text=example, word_pos=example.find(word))
-                    c.save()
-                order += 1
-            self.stdout.write('- added')
-        else:
-            self.stdout.write('- skipped')
+        word_instance, created = Word.objects.get_or_create(word=word)
+        order = 1
+        for d, example in definitions:
+            # TODO: Detect duplicate definitions
+            definition = Definition(word=word_instance, informer=informer, order=order, definition=d)
+            definition.save()
+            if example:
+                c = Context(definition=definition, text=example, word_pos=example.find(word))
+                c.save()
+            order += 1
+        self.stdout.write(' - added')
 
     def handle(self, *args, **options):
         file = options['file']
         force = options['force']
-
-        informer = self.get_informer(options)
-        i = 0
-        with codecs.open(file, 'r', 'utf-8') as f:
-            for line in f.readlines():
-                i += 1
-                word, definitions = self.on_line(line)
-                self._save_data(informer, word, definitions, force)
+        try:
+            informer = self.get_informer(options)
+            i = 0
+            with codecs.open(file, 'r', 'utf-8') as f:
+                for line in f.readlines():
+                    i += 1
+                    word, definitions = self.on_line(line)
+                    self._save_data(informer, word, definitions, force)
+        except KeyboardInterrupt:
+            self.stdout.write('... user aborted, exit gracefully.')
         self.stdout.write('Done for %d words' % i)

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.contrib import admin
 from django.forms import TextInput, Textarea
 from django.db import models
@@ -50,11 +53,11 @@ class DefinitionAdmin(admin.ModelAdmin):
 class CoarseWordAdmin(admin.ModelAdmin):
     list_display = ('word', 'informer', 'interface', 'profane',)
     list_filter = ('informer__region', 'interface', 'profane',)
-    search_fields = ('definition__word',)
-    readonly_fields = ('definition',)
+    search_fields = ('word__word',)
+    readonly_fields = ('word',)
 
     def word(self, object):
-        return object.definition.word
+        return object.word.word
 
 
 class WordUseAdmin(admin.ModelAdmin):

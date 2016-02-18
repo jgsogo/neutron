@@ -8,10 +8,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
 from .datum import Datum
+from .word import Word
 
 
 @python_2_unicode_compatible
 class CoarseWord(Datum):
+    word = models.ForeignKey(Word)
     profane = models.BooleanField()
 
     class Meta:

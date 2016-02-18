@@ -10,6 +10,7 @@ from model_utils import Choices
 
 from .datum import Datum
 from .definition import Definition
+from .word import Word
 
 
 @python_2_unicode_compatible
@@ -19,9 +20,10 @@ class WordUse(Datum):
                    (1, 'prefer_other', _('Prefer another word for this definition')),
                    (2, 'unrecognized', _('Do not recognize this meaning for this word')))
 
+    definition = models.ForeignKey(Definition, help_text=_('Word and definition from a given dictionary'))
     use = models.IntegerField(choices=USES)
 
-    alternative = models.ForeignKey(Definition,
+    alternative = models.ForeignKey(Word,
                                     blank=True,
                                     null=True,
                                     help_text=_('Alternate word in the informer\'s dictionary'))
