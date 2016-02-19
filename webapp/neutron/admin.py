@@ -7,7 +7,11 @@ from django.db import models
 
 from mptt.admin import MPTTModelAdmin
 
-from .models import Informer, Definition, Context, Datum, Region, Interface, CoarseWord, WordUse
+from .models import Word, Informer, Definition, Context, Datum, Region, Interface, CoarseWord, WordUse
+
+
+class WordAdmin(admin.ModelAdmin):
+    search_fields = ('word',)
 
 
 class InformerAdmin(admin.ModelAdmin):
@@ -27,7 +31,7 @@ class DatumAdmin(admin.ModelAdmin):
 admin.site.register(Region, MPTTModelAdmin)
 admin.site.register(Informer, InformerAdmin)
 admin.site.register(Interface)
-
+admin.site.register(Word, WordAdmin)
 admin.site.register(Datum, DatumAdmin)
 
 

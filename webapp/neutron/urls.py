@@ -10,7 +10,7 @@ app_name = 'neutron'
 urlpatterns = [
     # Lemmas
     url(r'^$', SearchLemma.as_view(), name='word_detail_search'),
-    url(r'^word/(?P<informer_pk>\d+)/(?P<word>[\w\s\-,]+)/$', LemmaDetail.as_view(), name='word_detail'),
+    url(r'^word/(?P<pk>\d+)/$', LemmaDetail.as_view(), name='word_detail'),
 
     # Definitions
     url(r'^word/(?P<informer_pk>\d+)/(?P<word>[\w\s\-,]+)/(?P<pk>\d+)/$', DefinitionDetail.as_view(), name='definition_detail'),

@@ -19,8 +19,8 @@
         Y como de momento no tenemos muchas palabras aquí metidas, pues pongamos algunos ejemplos
         para que no haya que buscar:
         <ul>
-            {% for example in examples %}
-                <li><a href="{% url 'neutron:word_detail' informer_pk=example.informer.pk word=example.word %}">{{ example.word }}</a></li>
+            {% for word in examples %}
+                <li><a href="{% url 'neutron:word_detail' pk=word.pk %}">{{ word }}</a></li>
             {% endfor %}
         </ul>
     </p>

@@ -9,8 +9,6 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.db.models import Count
 from ..models import Definition, Informer, CoarseWord, WordUse
-from ..forms import SearchDefinitionForm
-
 
 
 class DefinitionDetail(DetailView):
