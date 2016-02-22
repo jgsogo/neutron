@@ -18,13 +18,14 @@ class DefinitionDetail(DetailView):
         context = super(DefinitionDetail, self).get_context_data(**kwargs)
         definition = self.get_object()
         # Data
-        data = definition.datum_set.all()
-        context.update({'data': data,
-                        'coarseword_qs': CoarseWord.objects.filter(definition=definition),
-                        'worduse_qs': WordUse.objects.filter(definition=definition),
+        coarseword_qs = CoarseWord.objects.filter(word=definition.word)
+        worduse_qs = WordUse.objects.filter(definition=definition)
+        context.update({'coarseword_qs': coarseword_qs,
+                        'worduse_qs': worduse_qs,
                         })
         # Informers
-        informers = Informer.objects.filter(pk__in=data.values_list('informer__pk', flat=True))
+        informers_pks = set(list(coarseword_qs.values_list('informer__pk', flat=True)) + list(worduse_qs.values_list('informer__pk', flat=True)))
+        informers = Informer.objects.filter(pk__in=informers_pks)
         context.update({'informers': informers,
                         'regions': informers.values('region__name').annotate(dcount=Count('region__name'))
                         })
@@ -37,7 +38,7 @@ class DefinitionCoarsityDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(DefinitionCoarsityDetail, self).get_context_data(**kwargs)
-        qs = CoarseWord.objects.filter(definition=self.get_object()).order_by('informer__region', 'profane')
+        qs = CoarseWord.objects.filter(word=self.get_object().word).order_by('informer__region', 'profane')
         data = defaultdict(Counter)
         for item in qs:
             data[item.informer.region]['profane' if item.profane else 'not_profane'] += 1

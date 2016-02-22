@@ -14,11 +14,10 @@ MAX_WORD_LENGTH = getattr(settings, 'MAX_WORD_LENGTH', 64)
 
 class WordManager(models.Manager):
     def random(self, queryset=None):
-        count = self.count()
+        qs = queryset or self.all()
+        count = qs.count()
         try:
-            if not queryset:
-                queryset = self.all()
-            return queryset[randint(0,count-1)]
+            return qs[randint(0,count-1)]
         except ValueError:
             raise self.model.DoesNotExist()
 

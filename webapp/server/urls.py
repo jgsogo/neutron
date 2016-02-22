@@ -49,12 +49,9 @@ urlpatterns = [
     url(r'^accounts/profile/$', ProfileView.as_view(), name='profile'),
     url(r'^accounts/profile/informer/$', ProfileInformerView.as_view(), name='profile_informer'),
 
-    # Coarse word
-    url(r'^coarse/$', CoarseWordHome.as_view(), name='coarse_word'),
-    url(r'^coarse/run/$', CoarseWordRun.as_view(), name='coarse_word_run'),
-
     # Word use
     url(r'^uses/$', WordUseHome.as_view(), name='word_use'),
     url(r'^uses/run/$', WordUseRun.as_view(), name='word_use_run'),
     url(r'^uses/(?P<definition>\d+)/alternate/$', WordUseAlternateRun.as_view(), name='word_use_alternate'),
+    url(r'^uses/(?P<definition>\d+)/coarse/$', WordUseCoarseRun.as_view(), name='word_use_coarse'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

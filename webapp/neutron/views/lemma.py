@@ -26,7 +26,8 @@ class SearchLemma(FormView):
     def get_context_data(self, **kwargs):
         # TODO: This is to delete
         ctxt = super(SearchLemma, self).get_context_data(**kwargs)
-        ctxt.update({'examples': [Word.objects.random() for _ in range(3)]})
+        queryset = Word.objects.filter(definition__isnull=False).distinct()
+        ctxt.update({'examples': [Word.objects.random(queryset) for _ in range(3)]})
         return ctxt
 
 

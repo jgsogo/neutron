@@ -1,7 +1,7 @@
-{% extends 'coarse_word/home.html' %}
+{% extends 'word_use/home.html' %}
 {% load bootstrap3 %}
 
-{% block coarse_word_content %}
+{% block word_use_content %}
     {% if definition %}
         <h3>{{ definition.word }}</h3>
         <p>{{ definition.definition }}</p>
@@ -9,8 +9,8 @@
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
-                <button type="submit" name="profane" value="true" class="btn btn-primary">Profane :S</button>
-                <button type="submit" name="profane" value="false" class="btn btn-primary">It's ok</button>
+                <button type="submit" name="alternate" value="True" class="btn btn-primary">Prefer other</button>
+                <button type="submit" name="coarse" value="True" class="btn btn-primary">Coarse!</button>
             {% endbuttons %}
         </form>
     {% else %}

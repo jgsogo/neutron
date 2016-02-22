@@ -3,15 +3,15 @@
 
 {% block neutron_word_link %}
     {% if definition %}
-        <li><a href="{% url 'neutron:word_detail' informer_pk=definition.informer.pk word=definition.word %}">{{ definition.word }}</a></li>
+        <li><a href="{% url 'neutron:word_detail' pk=definition.word.pk %}">{{ definition.word }}</a></li>
     {% endif %}
 {% endblock %}
 
 {% block neutron_content_menu_additional %}
     <h3>Filtros</h3>
     <ul>
-        <li><a href="{% url 'neutron:definition_detail_coarsity' informer_pk=definition.informer.pk word=definition.word pk=definition.pk %}">Coarsity</a></li>
-        <li><a href="{% url 'neutron:definition_detail_uses' informer_pk=definition.informer.pk word=definition.word pk=definition.pk %}">Uses</a></li>
+        <li><a href="{% url 'neutron:definition_detail_coarsity' pk=definition.pk %}">Coarsity</a></li>
+        <li><a href="{% url 'neutron:definition_detail_uses' pk=definition.pk %}">Uses</a></li>
     </ul>
 {% endblock %}
 
@@ -25,8 +25,8 @@
             <li>
                 Datos recolectados: {{ data.count }}
                 <ul>
-                    <li><a href="{% url 'neutron:definition_detail_coarsity' informer_pk=definition.informer.pk word=definition.word pk=definition.pk %}">Coarsity</a>: {{ coarseword_qs.count }}</li>
-                    <li><a href="{% url 'neutron:definition_detail_uses' informer_pk=definition.informer.pk word=definition.word pk=definition.pk %}">Uses</a>: {{ worduse_qs.count }}</li>
+                    <li><a href="{% url 'neutron:definition_detail_coarsity' pk=definition.pk %}">Coarsity</a>: {{ coarseword_qs.count }}</li>
+                    <li><a href="{% url 'neutron:definition_detail_uses' pk=definition.pk %}">Uses</a>: {{ worduse_qs.count }}</li>
                 </ul>
             </li>
             <li>
