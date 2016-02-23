@@ -24,8 +24,8 @@ class DeepLinkingMixin(AllowAnonymousMixin):
         return False  # Using deep linking, users must be always identified
 
     def register_messages(self):
-        self.message_handler(commands=['start'])(self.send_welcome)
         super(DeepLinkingMixin, self).register_messages()
+        self.message_handler(commands=['start'])(self.send_welcome)
 
     def extract_unique_code(self, text):
         # Extracts the unique_code from the sent /start command.
@@ -60,8 +60,11 @@ class DeepLinkingMixin(AllowAnonymousMixin):
 
     def send_welcome(self, message):
         logger.debug("DeepLinking::send_welcome(message=%s)" % message)
-        tuser = TelegramUser.objects.get(id=message.from_user.id)
-        self.reply_to(message, "Hello %s! Nice to see you here. Type /help to get info" % tuser.user)
+        try:
+            tuser = TelegramUser.objects.get(id=message.from_user.id)
+            self.reply_to(message, "Hello %s! Nice to see you here. Type /help to get info" % tuser.user)
+        except TelegramUser.DoesNotExist:
+            self.reply_to(message, "Hello unknown user! Nice to see you here. Type /help to get info")
 
     def _handle_exception(self, e, message):
         logger.debug("DeepLinking::_handle_exception(e=%s)" % type(e))

@@ -7,8 +7,8 @@ from telebot.util import extract_command
 
 from telegram.utils.bots import DeepLinkingBot
 from telegram.models.telegram_user import TelegramUser
-from informers.models import Interface, Informer
-from words.models import Definition, WordUse, CoarseWord
+from .models import Interface, Informer
+from .models import Definition, WordUse, CoarseWord
 
 
 
@@ -72,7 +72,8 @@ class NeutronBot(DeepLinkingBot):
     def on_coarse(self, message):
         logger.debug("NeutronBot::on_coarse")
         definition = Definition.objects.random()
-        msg = '*%s*: %s' % (definition.word, definition.definition)
+        #msg = '*%s*: %s' % (definition.word, definition.definition)
+        msg = '*%s*' % (definition.word)
 
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=False)
         alternates = ['ok', 'coarse!']
@@ -88,7 +89,7 @@ class NeutronBot(DeepLinkingBot):
                         user = TelegramUser.objects.get(id=message.from_user.id).user
                         profane = (answer.text != alternates[0])
                         informer, created = Informer.objects.get_or_create(user=user)
-                        CoarseWord.objects.create(definition=definition,
+                        CoarseWord.objects.create(word=definition.word,
                                                   profane=profane,
                                                   interface=self.interface,
                                                   informer=informer)

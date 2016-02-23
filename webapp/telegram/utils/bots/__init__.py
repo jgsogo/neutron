@@ -10,5 +10,6 @@ from .deep_linking import DeepLinkingMixin
 class DeepLinkingBot(DeepLinkingMixin, BaseBot):
     pass
 
+
 class AllowAnonymousBot(AllowAnonymousMixin, BaseBot):
     pass

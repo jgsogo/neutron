@@ -14,6 +14,6 @@ class Command(BaseCommand):
 
         instance = Bot.objects.all()[0]
         self.stdout.write(instance.get_me().username)
-        instance.bot.polling()
+        instance.bot.polling(none_stop=True)
 
         self.stdout.write('Done!')
