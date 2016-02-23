@@ -20,7 +20,10 @@ class Bot(TelegramUser):
     create_user = models.BooleanField(default=False, help_text=_('If True, this bot can create users in your site'))
 
     def __str__(self):
-        return '%s [bot]' % super(Bot, self).__str__()
+        if self.last_name:
+            return '%s %s [bot]' % (self.first_name, self.last_name)
+        else:
+            return '%s [bot]' % (self.first_name)
 
     def save(self, *args, **kwargs):
         if self.token and not self.id:
