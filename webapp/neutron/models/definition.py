@@ -42,6 +42,9 @@ class Definition(models.Model):
     def __str__(self):
         return u"%s: %s" % (self.word, self.definition)
 
+    def first_context(self):
+        return self.context_set.all().first()
+
 
 @python_2_unicode_compatible
 class Context(models.Model):

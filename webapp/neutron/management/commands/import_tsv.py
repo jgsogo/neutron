@@ -69,9 +69,14 @@ class Command(BaseCommand):
         order = 1
         for d, example in definitions:
             # TODO: Detect duplicate definitions
-            definition = Definition(word=word_instance, informer=informer, order=order, definition=d)
-            definition.save()
+            definition, _ = Definition.objects.get_or_create(word=word_instance,
+                                                          definition=d,
+                                                          defaults={'informer': informer,
+                                                                    'order': order
+                                                                    }
+                                                          )
             if example:
+                Context.objects.filter(definition=definition).delete()
                 c = Context(definition=definition, text=example, word_pos=example.find(word))
                 c.save()
             order += 1

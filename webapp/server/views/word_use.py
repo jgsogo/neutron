@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from neutron.models import Definition, WordUse, CoarseWord, Word
 
 from .common import RandomDefinitionRun
-from ..forms import WordUseForm, WordUseAlternateForm, WordUseCoarseForm
+from ..forms import WordUseForm, WordUseAlternateForm
 
 
 class WordUseHome(TemplateView):
@@ -24,15 +24,14 @@ class WordUseRun(RandomDefinitionRun):
         definition = Definition.objects.get(pk=form.cleaned_data['definition'])
         use = form.cleaned_data['use']
         coarse = form.cleaned_data['coarse']
-        print("*"*20)
-        print(coarse)
+
         if use == WordUse.USES.prefer_other:
             return HttpResponseRedirect(reverse('word_use_alternate', kwargs={'definition': definition.pk}))
-        elif coarse == True:
+        elif coarse is True:
             return HttpResponseRedirect(reverse('word_use_coarse', kwargs={'definition': definition.pk}))
         else:
             word_use = WordUse(definition=definition)
-            word_use.use = form.cleaned_data['use']
+            word_use.use = use
             word_use.informer = self.request.user.as_informer()
             word_use.interface = self.interface
             word_use.save()
@@ -72,13 +71,11 @@ class WordUseAlternateRun(WordUseStepRun):
 
 
 class WordUseCoarseRun(WordUseStepRun):
-    form_class = WordUseCoarseForm
+    form_class = WordUseForm
     template_name = 'word_use/coarse.html'
 
     def form_valid(self, form):
         definition = self.get_definition()
-        alternate = form.cleaned_data['alternate']
-        coarse = form.cleaned_data['coarse']
 
         # Store as coarse
         coarse_word = CoarseWord(word=definition.word)
@@ -87,9 +84,17 @@ class WordUseCoarseRun(WordUseStepRun):
         coarse_word.interface = self.interface
         coarse_word.save()
 
-        if alternate is True:
+        # Handle use
+        use = form.cleaned_data['use']
+        if use == WordUse.USES.prefer_other:
             return HttpResponseRedirect(reverse('word_use_alternate', kwargs={'definition': definition.pk}))
-        elif coarse is True:
-            return super(WordUseCoarseRun, self).form_valid(form)
         else:
-            raise NotImplementedError("Not expected.")
+            word_use = WordUse(definition=definition)
+            word_use.use = use
+            word_use.informer = self.request.user.as_informer()
+            word_use.interface = self.interface
+            word_use.save()
+
+            return super(WordUseCoarseRun, self).form_valid(form=form)
+
+

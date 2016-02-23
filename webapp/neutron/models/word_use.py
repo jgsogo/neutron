@@ -29,8 +29,8 @@ class WordUse(Datum):
                                     help_text=_('Alternate word in the informer\'s dictionary'))
 
     class Meta:
-        verbose_name = _('Alternate word')
-        verbose_name_plural = _('Alternate words')
+        verbose_name = _('Word use')
+        verbose_name_plural = _('Words uses')
 
     def __str__(self):
         return '%s [%s]' % (self.informer, self.interface)

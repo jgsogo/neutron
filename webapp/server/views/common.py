@@ -5,6 +5,7 @@
 from django.views.generic import FormView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.urlresolvers import reverse
+from django.db.utils import OperationalError
 from neutron.models import Definition, Interface
 
 
@@ -12,8 +13,11 @@ class RandomDefinitionRun(UserPassesTestMixin, FormView):
 
     @classmethod
     def as_view(cls, **initkwargs):
-        # TODO: This line cannot be here because it is called also on 'migrate' (database is not created yet)
-        cls.interface, created = Interface.objects.get_or_create(name='Web')
+        try:
+            # TODO: This line cannot be here because it is called also on 'migrate' (database is not created yet)
+            cls.interface, created = Interface.objects.get_or_create(name='Web')
+        except OperationalError as e:
+            pass
         return super(RandomDefinitionRun, cls).as_view(**initkwargs)
 
     def test_func(self):
@@ -27,7 +31,7 @@ class RandomDefinitionRun(UserPassesTestMixin, FormView):
         # assert self.request.method == 'GET', "RandomDefinitionRun::get_definition must be only called in GET"
         if not hasattr(self, '_definition'):
             try:
-                definition = Definition.objects.random()
+                definition = Definition.objects.random()  # TODO: hack queryset depending on user
                 setattr(self, '_definition', definition)
             except Definition.DoesNotExist:
                 # TODO: Redirect to ¿?

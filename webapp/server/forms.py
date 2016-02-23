@@ -15,9 +15,3 @@ class WordUseForm(forms.Form):
 class WordUseAlternateForm(forms.Form):
     definition = forms.IntegerField(widget=forms.HiddenInput())
     alternate = forms.CharField(label='Alternate word', max_length=MAX_WORD_LENGTH)
-
-
-class WordUseCoarseForm(forms.Form):
-    definition = forms.IntegerField(widget=forms.HiddenInput())
-    alternate = forms.NullBooleanField(required=False, widget=forms.HiddenInput())
-    coarse = forms.NullBooleanField(required=False, widget=forms.HiddenInput())

@@ -4,14 +4,22 @@
 {% block word_use_content %}
     {% if definition %}
         <h3>{{ definition.word }}</h3>
-        <p>{{ definition.definition }}</p>
+        <p>
+            {% with definition.first_context as first_context %}
+                {% if first_context %}
+                    {{ definition.definition }}: <em>{{ first_context|capfirst }}.</em>
+                {% else %}
+                    {{ definition.definition }}.
+                {% endif %}
+            {% endwith %}
+        </p>
         <form method="post" class="form">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
                 <button type="submit" name="use" value="0" class="btn btn-primary">Ok</button>
                 <button type="submit" name="use" value="1" class="btn btn-primary">Prefer other</button>
-                <button type="submit" name="use" value="2" class="btn btn-primary">Not recognized</button>
+                <button type="submit" name="use" value="2" class="btn btn-primary">Don't understand</button>
                 <button type="submit" name="coarse" value="True" class="btn btn-primary btn-danger">Coarse!</button>
             {% endbuttons %}
         </form>
