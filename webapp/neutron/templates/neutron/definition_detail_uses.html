@@ -19,8 +19,8 @@
                     <td>{{ region }}</td>
                     <td>{% widthratio counter.0 counter.all 100 %}%</td>
                     <td>
-                        {% widthratio counter.1 counter.all 100 %}% (<a role="button" data-toggle="collapse" href="#collapseAlternatives" aria-expanded="false" aria-controls="collapseExample">show/hide</a>)
-                        <div class="collapse" id="collapseAlternatives">
+                        {% widthratio counter.1 counter.all 100 %}% (<a role="button" data-toggle="collapse" href="#collapseAlternatives{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapseExample">show/hide</a>)
+                        <div class="collapse" id="collapseAlternatives{{ forloop.counter0 }}">
                             <ul>
                                 {% with alternatives|get_item:region as alts %}
                                     {% for word, times in alts.items %}
