@@ -3,13 +3,16 @@
 
 from __future__ import unicode_literals
 
-from random import randint
+from random import randint, Random
+from collections import Counter
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import mark_safe
 from django.core.validators import MaxValueValidator, MinValueValidator, ValidationError
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.urlresolvers import reverse
+
 from neutron.models import Word, Definition, Region as NeutronRegion
 
 
@@ -19,6 +22,7 @@ class Configuration(models.Model):
     seed = models.IntegerField(blank=True)
 
     n_informers = models.IntegerField()
+    generated = models.BooleanField(default=False, help_text=_('Whether the informers have been already generated'))
 
     class Meta:
         verbose_name = _('Configuration')
@@ -40,17 +44,24 @@ class Configuration(models.Model):
         if values != 1.0:
             errors.append('RegionData incomplete: sum of percentages is {}, it must be 100%'.format(values))
 
-        # All word data uses must be valid (alternates must sum 1.0)
+        # All word data uses must be valid (alternates must sum 1.0 if required)
         pending = WordDefinitionData.objects.annotate(ok_unknw=models.F('ok')+models.F('unknown'),
                                                       alternate_sum=models.Sum('alternatedata__percentage'))\
                                             .filter(ok_unknw__lt=1.0, alternate_sum__lt=1.0)
         if len(pending):
             url_name = 'admin:%s_%s_change' % (WordDefinitionData._meta.app_label, WordDefinitionData._meta.model_name)
-            links = ', '.join(['<a href="{}">{}</a>'.format(w.definition.word, reverse(url_name, args=[w.pk])) for w in pending])
+            links = ', '.join(['<a href="{}">{}</a>'.format(reverse(url_name, args=[w.pk]), w.definition.word) for w in pending])
             msg = mark_safe('There are some invalid word configurations: ' + links)
             errors.append(msg)
 
         return errors
+
+    def generate(self, generate_data=True):
+        if len(self.errors()):
+            raise ValueError('Cannot generate an invalid configuration')
+
+        from .generation import InformerGenerated
+        InformerGenerated.objects.generate(configuration=self, generate_data=generate_data)
 
 
 @python_2_unicode_compatible
