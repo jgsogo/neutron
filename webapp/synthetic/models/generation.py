@@ -5,6 +5,9 @@ from random import randint, Random
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MaxValueValidator, MinValueValidator, ValidationError
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
 from neutron.models import Informer as NeutronInformer
 
 from .configuration import Configuration
@@ -51,3 +54,8 @@ class InformerGenerated(models.Model):
             self.seed = randint(1, 10000)
         super(InformerGenerated, self).save(*args, **kwargs)
 
+
+@receiver(post_delete)
+def delete_informer(sender, instance, **kwargs):
+    if sender == InformerGenerated:
+        instance.informer.delete()

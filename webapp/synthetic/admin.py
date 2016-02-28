@@ -40,7 +40,7 @@ class WordDefinitionDataAdmin(admin.ModelAdmin):
 
 class RegionDataInline(admin.TabularInline):
     model = RegionData
-    extra = 1
+    extra = 0
 
 
 class RegionDataReadonlyInline(RegionDataInline):
