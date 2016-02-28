@@ -19,6 +19,7 @@ from neutron.models import Word, Definition, Region as NeutronRegion
 @python_2_unicode_compatible
 class Configuration(models.Model):
     name = models.CharField(max_length=255, help_text=_('Identifier for this synthetic data configuration'))
+    comments = models.TextField(blank=True, null=True)
     seed = models.IntegerField(blank=True)
 
     n_informers = models.IntegerField()
@@ -35,6 +36,10 @@ class Configuration(models.Model):
         if not self.seed:
             self.seed = randint(1, 10000)
         super(Configuration, self).save(*args, **kwargs)
+
+    @property
+    def valid(self):
+        return len(self.errors()) == 0
 
     def errors(self):
         errors = []

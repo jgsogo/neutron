@@ -43,28 +43,60 @@ class RegionDataInline(admin.TabularInline):
     extra = 1
 
 
+class RegionDataReadonlyInline(RegionDataInline):
+    can_delete = False
+    extra = 0
+    editable_fields = []
+
+    def get_readonly_fields(self, request, obj=None):
+        return ('region', 'percentage', 'min_use_data', 'max_use_data', 'min_coarse_data', 'max_coarse_data', 'mean', 'std_dev',)
+
+    def has_add_permission(self, request):
+        return False
+
+
 class ConfigurationAdmin(admin.ModelAdmin):
     list_display = ('name', 'valid', 'generated',)
-    inlines = [RegionDataInline,]
     readonly_fields = ('generated_field',)
     exclude = ('generated',)
     # TODO: Add 'valid' to filters
 
+    def get_inline_instances(self, request, obj=None):
+        inline_instances = []
+        inlines = [RegionDataInline, ] if not obj.generated else [RegionDataReadonlyInline,]
+        for inline_class in inlines:
+            inline = inline_class(self.model, self.admin_site)
+            if request:
+                if not (inline.has_add_permission(request) or
+                        inline.has_change_permission(request, obj) or
+                        inline.has_delete_permission(request, obj)):
+                    continue
+                if not inline.has_add_permission(request):
+                    inline.max_num = 0
+            inline_instances.append(inline)
+
+        return inline_instances
+
     def valid(self, object):
+
         return len(object.errors()) == 0
     valid.boolean = True
 
     def get_readonly_fields(self, request, obj=None):
-        if obj and len(obj.errors()):
-            return self.readonly_fields + ('errors',)
-        return self.readonly_fields
+        fields = self.readonly_fields
+        if obj:
+            if len(obj.errors()):
+                fields += ('errors',)
+            if obj.generated:
+                fields += ('seed', 'n_informers')
+        return fields
 
     def errors(self, obj):
         return mark_safe('\n'.join(obj.errors()))
 
     def generated_field(self, obj):
         if obj.generated:
-            return True
+            return mark_safe('<a href="{url}">Delete data</a>'.format(url=reverse('synthetic:configuration_delete', args=[obj.pk])))
         else:
             return mark_safe('<a href="{url}">Generate data</a>'.format(url=reverse('synthetic:configuration_generate', args=[obj.pk])))
 
