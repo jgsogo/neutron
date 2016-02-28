@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DetailView
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
@@ -57,3 +57,6 @@ class ConfigurationDeleteView(UpdateView):
             return HttpResponseRedirect(redirect_url)
         raise Http404('Ivalid action')
 
+
+class ConfigurationDetailView(DetailView):
+    model = Configuration

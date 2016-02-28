@@ -96,7 +96,9 @@ class ConfigurationAdmin(admin.ModelAdmin):
 
     def generated_field(self, obj):
         if obj.generated:
-            return mark_safe('<a href="{url}">Delete data</a>'.format(url=reverse('synthetic:configuration_delete', args=[obj.pk])))
+            view = mark_safe('<a href="{url}">View details</a>'.format(url=reverse('synthetic:configuration_detail', args=[obj.pk])))
+            delete = mark_safe('<a href="{url}">Delete data</a>'.format(url=reverse('synthetic:configuration_delete', args=[obj.pk])))
+            return mark_safe('{view} {detail}'.format(view=view, detail=delete))
         else:
             return mark_safe('<a href="{url}">Generate data</a>'.format(url=reverse('synthetic:configuration_generate', args=[obj.pk])))
 
