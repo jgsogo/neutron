@@ -54,4 +54,7 @@ urlpatterns = [
     url(r'^uses/run/$', WordUseRun.as_view(), name='word_use_run'),
     url(r'^uses/(?P<definition>\d+)/alternate/$', WordUseAlternateRun.as_view(), name='word_use_alternate'),
     url(r'^uses/(?P<definition>\d+)/coarse/$', WordUseCoarseRun.as_view(), name='word_use_coarse'),
+
+    #Synthetic data
+    url(r'^synthetic/', include('synthetic.urls', namespace='synthetic')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

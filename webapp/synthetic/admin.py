@@ -3,6 +3,8 @@
 
 from django.contrib import admin
 from django.utils.html import mark_safe
+from django.core.urlresolvers import reverse
+from django.contrib.admin.utils import flatten_fieldsets
 
 from .models import Configuration, WordDefinitionData, RegionData, AlternateData, InformerGenerated
 
@@ -53,10 +55,8 @@ class ConfigurationAdmin(admin.ModelAdmin):
     valid.boolean = True
 
     def get_readonly_fields(self, request, obj=None):
-        if obj:
-            errors = obj.errors()
-            if len(errors):
-                return self.readonly_fields + ('errors',)
+        if obj and len(obj.errors()):
+            return self.readonly_fields + ('errors',)
         return self.readonly_fields
 
     def errors(self, obj):
@@ -66,15 +66,37 @@ class ConfigurationAdmin(admin.ModelAdmin):
         if obj.generated:
             return True
         else:
-            return mark_safe('<a href="">Generate data</a>')
-
-    def has_change_permission(self, request, obj=None):
-        if obj is not None and obj.generated:
-            return False
-        return super(ConfigurationAdmin, self).has_change_permission(request, obj=obj)
+            return mark_safe('<a href="{url}">Generate data</a>'.format(url=reverse('synthetic:configuration_generate', args=[obj.pk])))
 
 
 admin.site.register(Configuration, ConfigurationAdmin)
 admin.site.register(WordDefinitionData, WordDefinitionDataAdmin)
 
-admin.site.register(InformerGenerated)
+
+class InformerGeneratedAdmin(admin.ModelAdmin):
+    list_display = ('informer_name', 'configuration', 'informer_region_name', 'generated',)
+    list_filter = ('configuration',)
+    readonly_fields = ('generated_field',)
+    exclude = ('generated',)
+
+    def informer_name(self, obj=None):
+        return obj.informer.name if obj else None
+
+    def informer_region_name(self, obj=None):
+        return obj.informer.region.name if obj else None
+
+    def generated_field(self, obj):
+        if obj.generated:
+            return True
+        else:
+            url = '' # reverse('synthetic:configuration_generate', args=[obj.pk])
+            return mark_safe('<a href="{url}">Generate data</a>'.format(url=url))
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+admin.site.register(InformerGenerated, InformerGeneratedAdmin)
