@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% load i18n l10n admin_urls static %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+&rsaquo; {{ object }}
+</div>
+{% endblock %}
+
+
+{% block content %}
+    <div id="content-main">
+        <ul class="object-tools">
+            <li><a href="{% url 'admin:synthetic_configuration_change' object.pk %}" class="viewsitelink">{% trans "Edit" %}</a></li>
+        </ul>
+
+        <p>Stats about the synthetic data generated.</p>
+
+        <h2>Informers</h2>
+        <p>Aquí quiero mostrar los datos que se han generado y los datos teóricos.</p>
+        {{ informers }}
+
+        <h2>Word use data</h2>
+        <p>Y las estadísticas de palabras sintéticas generadas.</p>
+    </div>
+{% endblock %}
