@@ -20,8 +20,27 @@
         <p>Stats about the synthetic data generated.</p>
 
         <h2>Informers</h2>
-        <p>Aquí quiero mostrar los datos que se han generado y los datos teóricos.</p>
-        {{ informers }}
+        <p>A total of {{ object.n_informers }} informers has been generated, with the following percentages:</p>
+        <table>
+            {% for key,value in informers.items %}
+                {% if forloop.first %}
+                    <thead>
+                        <tr>
+                            <th></th><th>Theoretical</th><th>Generated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                {% endif %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value.0 }}</td>
+                    <td>{{ value.1 }}</td>
+                </tr>
+                {% if forloop.last %}
+                    </tbody>
+                {% endif %}
+            {% endfor %}
+        </table>
 
         <h2>Word use data</h2>
         <p>Y las estadísticas de palabras sintéticas generadas.</p>
