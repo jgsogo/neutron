@@ -8,7 +8,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator, Validat
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
-from neutron.models import Informer as NeutronInformer, CoarseWord, Interface, WordUse
+from neutron.models import Informer as NeutronInformer, CoarseWord, Interface, WordUse, Word
 
 from .configuration import Configuration
 from ..utils import RandomWeighted
@@ -74,7 +74,9 @@ class InformerGenerated(models.Model):
             if random_gen.random() > self.randomness:
                 dato.use = random_gen.choice([WordUse.USES.ok, WordUse.USES.prefer_other, WordUse.USES.unrecognized])
                 if dato.use == WordUse.USES.prefer_other:
-                    dato.alternative = random_gen.choice(w.alternatedata_set.all())
+                    # TODO: Cuando al azar prefiero otra palabra... ¿prefiero otra cualquiera al azar o una del subset?
+                    # dato.alternative = random_gen.choice(list(w.alternatedata_set.all()))
+                    dato.alternative = random_gen.choice(Word.objects.all())
             else:
                 dato.use = random_gen.weighted_choice([(WordUse.USES.ok, w.ok),
                                                        (WordUse.USES.prefer_other, 1-w.ok-w.unknown),
