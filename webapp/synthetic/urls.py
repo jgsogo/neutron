@@ -3,6 +3,7 @@
 
 from django.conf.urls import include, url
 
+from neutron.models.informer import Informer
 from .views import *
 
 urlpatterns = [
@@ -10,5 +11,7 @@ urlpatterns = [
     url(r'^admin/configuration/(?P<pk>\d+)/delete/$', ConfigurationDeleteView.as_view(), name='configuration_delete'),
 
     url(r'^configuration/(?P<pk>\d+)/details/$', ConfigurationDetailView.as_view(), name='configuration_detail'),
+
+    url(r'^informergenerated/(?P<pk>\d+)/details/$', InformerGeneratedDetailView.as_view(), name='informergenerated_detail'),
     ]
 

@@ -1,0 +1,55 @@
+{% extends "admin/base_site.html" %}
+{% load i18n l10n admin_urls static %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+&rsaquo; {{ object }}
+</div>
+{% endblock %}
+
+
+{% block content %}
+    <div id="content-main">
+        <ul class="object-tools">
+            <li><a href="{% url 'admin:synthetic_informergenerated_change' object.pk %}" class="viewsitelink">{% trans "Edit" %}</a></li>
+        </ul>
+
+        <p>Configuration: <a href="{% url 'synthetic:configuration_detail' pk=object.configuration.pk %}">{{ object.configuration }}</a></p>
+        <p>
+            Stats about the synthetic data generated for this informer.
+            <ul>
+                <li>Randomness: {{ object.randomness }}</li>
+                <li>Coarse data: {{ object.n_coarse_data }} in [{{ regiondata.min_coarse_data }}, {{ regiondata.max_coarse_data }}]</li>
+                <li>Use data: {{ object.n_use_data }} in [{{ regiondata.min_use_data }}, {{ regiondata.max_use_data }}]</li>
+            </ul>
+        </p>
+
+        <h2>Coarse data</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Word</th>
+                    <th>Generated</th>
+                    <th>Theorical</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for word,values in coarse.items %}
+                <tr>
+                    <td>{{ word }}</td>
+                    <td>{{ values.0 }}</td>
+                    <td>{{ values.1 }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Word use data</h2>
+        <table>
+
+        </table>
+    </div>
+{% endblock %}

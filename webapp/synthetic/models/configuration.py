@@ -68,6 +68,14 @@ class Configuration(models.Model):
         from .generation import InformerGenerated
         InformerGenerated.objects.generate(configuration=self, generate_data=generate_data)
 
+        self.generated = True
+        self.save()
+
+    def delete_data(self):
+        self.informergenerated_set.all().delete()
+        self.generated = False
+        self.save()
+
 
 @python_2_unicode_compatible
 class RegionData(models.Model):
@@ -108,8 +116,6 @@ class WordDefinitionData(models.Model):
 
     # Data about a word
     definition = models.ForeignKey(Definition)
-    coarse = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
-                               help_text=_('Percentage of people that mark this word as coarse'))
     ok = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
                            help_text=_('Percentage of people that recognize the word with the definition'))
     unknown = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
@@ -119,7 +125,7 @@ class WordDefinitionData(models.Model):
         unique_together = ('configuration', 'region', 'definition')
 
     def clean(self):
-        if self.ok + self.unknown > 1.0:
+        if (self.ok or 0.0) + (self.unknown or 0.0) > 1.0:
             raise ValidationError('Ok + Unknown cannot sum more than 100%')
 
     @property
@@ -149,3 +155,16 @@ class AlternateData(models.Model):
         if self.definition.alternate == 0.0:
             raise ValidationError('Cannot create an alternate for a definition with 0% alternates')
         # TODO: All alternates cannot sum more than 1.0
+
+
+class WordCoarseData(models.Model):
+    configuration = models.ForeignKey(Configuration)
+    region = models.ForeignKey(NeutronRegion)
+
+    # Data about a word
+    word = models.ForeignKey(Word)
+    coarse = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
+                               help_text=_('Percentage of people that mark this word as coarse'))
+    class Meta:
+        unique_together = ('configuration', 'region', 'word')
+

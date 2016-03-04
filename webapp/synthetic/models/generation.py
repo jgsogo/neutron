@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MaxValueValidator, MinValueValidator, ValidationError
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+from django.utils.encoding import python_2_unicode_compatible
 
 from neutron.models import Informer as NeutronInformer, CoarseWord, Interface, WordUse, Word
 
@@ -37,6 +38,7 @@ class InformerGeneratedManager(models.Manager):
                 instance.generate()  # TODO: Meter esto en hilos
 
 
+@python_2_unicode_compatible
 class InformerGenerated(models.Model):
     configuration = models.ForeignKey(Configuration)
     informer = models.ForeignKey(NeutronInformer)
@@ -52,21 +54,23 @@ class InformerGenerated(models.Model):
 
     objects = InformerGeneratedManager()
 
+    def __str__(self):
+        return self.informer.name
+
     def save(self, *args, **kwargs):
         if not self.seed:
             self.seed = randint(1, 10000)
         super(InformerGenerated, self).save(*args, **kwargs)
 
-
     def generate(self):
-        region_data = self.configuration.regiondata_set.filter(region=self.informer.region).get()
-        word_data = self.configuration.worddefinitiondata_set.filter(region=self.informer.region)
-        n_word_data = len(word_data)
         interface, _ = Interface.objects.get_or_create(name='synthetic')
 
         random_gen = RandomWeighted()
         random_gen.seed(self.seed)
 
+        # Data related to word use
+        word_data = self.configuration.worddefinitiondata_set.filter(region=self.informer.region)
+        n_word_data = len(word_data)
         for _ in xrange(self.n_use_data):
             w = word_data[random_gen.randint(0, n_word_data-1)]  # TODO: El extremo derecho está incluído o no?
             dato = WordUse(interface=interface, informer=self.informer)
@@ -85,11 +89,13 @@ class InformerGenerated(models.Model):
                     dato.alternative = random_gen.weighted_choice([(it.word, it.percentage) for it in w.alternatedata_set.all()])
             dato.save()
 
-        # TODO: Para las coarse estoy cogiendo una DEFINICIÓN al azar, pero debería escoger una PALABRA
+        # Data related to coarsity
+        coarse_data = self.configuration.wordcoarsedata_set.filter(region=self.informer.region)
+        n_word_data = len(coarse_data)
         for _ in xrange(self.n_coarse_data):
-            w = word_data[random_gen.randint(0, n_word_data-1)]  # TODO: El extremo derecho está incluído o no?
+            w = coarse_data[random_gen.randint(0, n_word_data-1)]  # TODO: El extremo derecho está incluído o no?
             dato = CoarseWord(interface=interface, informer=self.informer)
-            dato.word = w.definition.word
+            dato.word = w.word
             if random_gen.random() > self.randomness:
                 # At random
                 dato.profane = random_gen.random() > 0.5  # TODO: ¿mayor o mayor-igual?
@@ -97,6 +103,9 @@ class InformerGenerated(models.Model):
                 # Use data
                 dato.profane = random_gen.random() > w.coarse
             dato.save()
+
+        self.generated = True
+        self.save()
 
 
 @receiver(post_delete)

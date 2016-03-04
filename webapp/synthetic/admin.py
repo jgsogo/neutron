@@ -6,7 +6,7 @@ from django.utils.html import mark_safe
 from django.core.urlresolvers import reverse
 from django.contrib.admin.utils import flatten_fieldsets
 
-from .models import Configuration, WordDefinitionData, RegionData, AlternateData, InformerGenerated
+from .models import Configuration, WordDefinitionData, RegionData, AlternateData, InformerGenerated, WordCoarseData
 
 
 class AlternateDataInline(admin.TabularInline):
@@ -38,6 +38,11 @@ class WordDefinitionDataAdmin(admin.ModelAdmin):
         return '\n'.join(obj.errors())
 
 
+class WordCoarseDataAdmin(admin.ModelAdmin):
+    list_display = ('configuration', 'region', 'word')
+    list_filter = ('configuration',)
+
+
 class RegionDataInline(admin.TabularInline):
     model = RegionData
     extra = 0
@@ -63,7 +68,7 @@ class ConfigurationAdmin(admin.ModelAdmin):
 
     def get_inline_instances(self, request, obj=None):
         inline_instances = []
-        inlines = [RegionDataInline, ] if not obj.generated else [RegionDataReadonlyInline,]
+        inlines = [RegionDataInline, ] if obj and not obj.generated else [RegionDataReadonlyInline,]
         for inline_class in inlines:
             inline = inline_class(self.model, self.admin_site)
             if request:
@@ -78,7 +83,6 @@ class ConfigurationAdmin(admin.ModelAdmin):
         return inline_instances
 
     def valid(self, object):
-
         return len(object.errors()) == 0
     valid.boolean = True
 
@@ -95,16 +99,18 @@ class ConfigurationAdmin(admin.ModelAdmin):
         return mark_safe('\n'.join(obj.errors()))
 
     def generated_field(self, obj):
-        if obj.generated:
-            view = mark_safe('<a href="{url}">View details</a>'.format(url=reverse('synthetic:configuration_detail', args=[obj.pk])))
-            delete = mark_safe('<a href="{url}">Delete data</a>'.format(url=reverse('synthetic:configuration_delete', args=[obj.pk])))
-            return mark_safe('{view} {detail}'.format(view=view, detail=delete))
-        else:
-            return mark_safe('<a href="{url}">Generate data</a>'.format(url=reverse('synthetic:configuration_generate', args=[obj.pk])))
+        if obj.pk:
+            if obj.generated:
+                view = mark_safe('<a href="{url}">View details</a>'.format(url=reverse('synthetic:configuration_detail', args=[obj.pk])))
+                delete = mark_safe('<a href="{url}">Delete data</a>'.format(url=reverse('synthetic:configuration_delete', args=[obj.pk])))
+                return mark_safe('{view} {detail}'.format(view=view, detail=delete))
+            else:
+                return mark_safe('<a href="{url}">Generate data</a>'.format(url=reverse('synthetic:configuration_generate', args=[obj.pk])))
 
 
 admin.site.register(Configuration, ConfigurationAdmin)
 admin.site.register(WordDefinitionData, WordDefinitionDataAdmin)
+admin.site.register(WordCoarseData, WordCoarseDataAdmin)
 
 
 class InformerGeneratedAdmin(admin.ModelAdmin):
@@ -121,10 +127,10 @@ class InformerGeneratedAdmin(admin.ModelAdmin):
 
     def generated_field(self, obj):
         if obj.generated:
-            return True
+            return mark_safe('<a href="{url}">View details</a>'.format(url=reverse('synthetic:informergenerated_detail', args=[obj.pk])))
         else:
-            url = '' # reverse('synthetic:configuration_generate', args=[obj.pk])
-            return mark_safe('<a href="{url}">Generate data</a>'.format(url=url))
+            url = reverse('admin:synthetic_configuration_change', args=[obj.pk])
+            return mark_safe('Generation must be invoked from the <a href="{url}">configuration interface</a>)'.format(url=url))
 
     def has_add_permission(self, request, obj=None):
         return False
