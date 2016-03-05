@@ -5,25 +5,28 @@ from collections import Counter, defaultdict
 
 from django.views.generic import UpdateView, DetailView
 from django.utils.translation import ugettext_lazy as _
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.core.urlresolvers import reverse
 from django.db.models import Count
 
 from neutron.models import Informer, CoarseWord, WordUse
 from .models import Configuration, InformerGenerated, RegionData
+from .utils import Histogram, RandomWeighted
 
 
-class ConfigurationGenerateView(UpdateView):
+class SyntheticAdminContextView(object):
+    def get_context_data(self, model=None, **kwargs):
+        context = super(SyntheticAdminContextView, self).get_context_data(**kwargs)
+        context['site_header'] = 'Proyc'  # TODO: Incluir en el contexto los valores por defecto
+        context['title'] = _('Configuration stats details')
+        context['opts'] = self.model._meta if not model else model._meta
+        return context
+
+
+class ConfigurationGenerateView(SyntheticAdminContextView, UpdateView):
     model = Configuration
     template_name = 'admin/configuration_generate.html'
     fields = ()
-
-    def get_context_data(self, **kwargs):
-        context = super(ConfigurationGenerateView, self).get_context_data(**kwargs)
-        context['site_header'] = 'Proyc'  # TODO: Incluir en el contexto los valores por defecto
-        context['title'] = _('Generate configuration data')
-        context['opts'] = Configuration._meta
-        return context
 
     def form_valid(self, form):
         redirect_url = reverse('admin:%s_%s_change' % (Configuration._meta.app_label, Configuration._meta.model_name), args=[self.object.pk])
@@ -35,17 +38,10 @@ class ConfigurationGenerateView(UpdateView):
         raise Http404('Ivalid action')
 
 
-class ConfigurationDeleteView(UpdateView):
+class ConfigurationDeleteView(SyntheticAdminContextView, UpdateView):
     model = Configuration
     template_name = 'admin/configuration_delete.html'
     fields = ()
-
-    def get_context_data(self, **kwargs):
-        context = super(ConfigurationDeleteView, self).get_context_data(**kwargs)
-        context['site_header'] = 'Proyc'  # TODO: Incluir en el contexto los valores por defecto
-        context['title'] = _('Generate configuration data')
-        context['opts'] = Configuration._meta
-        return context
 
     def form_valid(self, form):
         redirect_url = reverse('admin:%s_%s_change' % (Configuration._meta.app_label, Configuration._meta.model_name), args=[self.object.pk])
@@ -57,15 +53,19 @@ class ConfigurationDeleteView(UpdateView):
         raise Http404('Ivalid action')
 
 
-class ConfigurationDetailView(DetailView):
+class ConfigurationDetailView(SyntheticAdminContextView, DetailView):
+    model = Configuration
     template_name = 'admin/configuration_detail.html'
 
     def get_queryset(self):
-        return Configuration.objects.filter(generated=True)
+        return self.model.objects.filter(generated=True)
+
+    def get_configuration(self):
+        return self.object
 
     def get_informers(self):
-        qs = Counter(Informer.objects.filter(informergenerated__configuration = self.object).values_list('region__name', flat=True))
-        ts = RegionData.objects.filter(configuration=self.object).values_list('region__name', 'percentage')
+        qs = Counter(Informer.objects.filter(informergenerated__configuration = self.get_configuration()).values_list('region__name', flat=True))
+        ts = RegionData.objects.filter(configuration=self.get_configuration()).values_list('region__name', 'percentage')
         qtotal = float(sum(qs.values()))
         data = defaultdict(lambda : [0.0, 0.0])
         for (k1,v1),(k2,v2) in zip(qs.most_common(),ts):
@@ -75,16 +75,28 @@ class ConfigurationDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ConfigurationDetailView, self).get_context_data(**kwargs)
-        context['site_header'] = 'Proyc'  # TODO: Incluir en el contexto los valores por defecto
-        context['title'] = _('Configuration stats details')
-        context['opts'] = Configuration._meta
-
         context['informers'] = self.get_informers()
-
         return context
 
 
-class InformerGeneratedDetailView(DetailView):
+class ConfigurationRegionDataDetailView(ConfigurationDetailView):
+    template_name = 'admin/configuration_regiondata_detail.html'
+
+    def get_configuration(self):
+        return Configuration.objects.get(generated=True, pk=self.kwargs['pk_configuration'])
+
+    def get_queryset(self):
+        return RegionData.objects.filter(configuration=self.get_configuration())
+
+    def get_context_data(self, **kwargs):
+        context = super(ConfigurationRegionDataDetailView, self).get_context_data(model=Configuration, **kwargs)
+        context['configuration'] = self.get_configuration()
+        context['regiondata_informers'] = Informer.objects.filter(region=self.object.region, informergenerated__configuration=self.get_configuration())
+        return context
+
+
+class InformerGeneratedDetailView(SyntheticAdminContextView, DetailView):
+    model = InformerGenerated
     template_name = 'admin/informergenerated_detail.html'
 
     def get_queryset(self):
@@ -117,12 +129,23 @@ class InformerGeneratedDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(InformerGeneratedDetailView, self).get_context_data(**kwargs)
-        context['site_header'] = 'Proyc'  # TODO: Incluir en el contexto los valores por defecto
-        context['title'] = _('Informer Generated stats details')
-        context['opts'] = Configuration._meta
-
         context['regiondata'] = self.regiondata
         context['coarse'] = self.get_coarse_data()
         context['worduse'] = self.get_worduse_data()
-
         return context
+
+
+class RegionDataHistogramView(DetailView):
+    model = RegionData
+
+    def get(self, request, *args, **kwargs):
+        object = self.get_object()
+        if object.configuration.generated:
+            qs = InformerGenerated.objects.filter(configuration=object.configuration, informer__region=object.region)
+            data = [it.randomness for it in qs]
+        else:
+            gen = RandomWeighted()
+            data = [gen.beta_ppf(object.beta_a, object.beta_b) for _ in range(10000)]
+        hist = Histogram(data, bins=100)
+        kwargs = {'dpi': 80, 'title': object.region.name + ' - randomness'}
+        return HttpResponse(hist.get_img_buffer(**kwargs).getvalue(), content_type='image/png')

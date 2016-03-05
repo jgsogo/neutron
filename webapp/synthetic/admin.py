@@ -54,7 +54,7 @@ class RegionDataReadonlyInline(RegionDataInline):
     editable_fields = []
 
     def get_readonly_fields(self, request, obj=None):
-        return ('region', 'percentage', 'min_use_data', 'max_use_data', 'min_coarse_data', 'max_coarse_data', 'mean', 'std_dev',)
+        return ('region', 'percentage', 'min_use_data', 'max_use_data', 'min_coarse_data', 'max_coarse_data', 'beta_a', 'beta_b',)
 
     def has_add_permission(self, request):
         return False
@@ -62,7 +62,7 @@ class RegionDataReadonlyInline(RegionDataInline):
 
 class ConfigurationAdmin(admin.ModelAdmin):
     list_display = ('name', 'valid', 'generated',)
-    readonly_fields = ('generated_field',)
+    readonly_fields = ('generated_field', )
     exclude = ('generated',)
     # TODO: Add 'valid' to filters
 
@@ -106,7 +106,6 @@ class ConfigurationAdmin(admin.ModelAdmin):
                 return mark_safe('{view} {detail}'.format(view=view, detail=delete))
             else:
                 return mark_safe('<a href="{url}">Generate data</a>'.format(url=reverse('synthetic:configuration_generate', args=[obj.pk])))
-
 
 admin.site.register(Configuration, ConfigurationAdmin)
 admin.site.register(WordDefinitionData, WordDefinitionDataAdmin)

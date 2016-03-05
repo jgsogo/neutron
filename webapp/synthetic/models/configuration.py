@@ -91,9 +91,15 @@ class RegionData(models.Model):
     min_coarse_data = models.IntegerField(default=0, help_text=_('Minimum amount of data provided by each informer about coarsity'))
     max_coarse_data = models.IntegerField(help_text=_('Maximum amount of data provided by each informer about coarsity'))
 
-    # Data for the log normal distribution to sample informers from
-    mean = models.FloatField(default=0, help_text=_('Mean for lognorm distribuition'))
-    std_dev = models.FloatField(default=0.25, help_text=_('Standard deviation for lognorm distribution'))
+    # Data for the beta distribution to sample informers from. Why?
+    # http://stats.stackexchange.com/questions/47771/what-is-the-intuition-behind-beta-distribution
+    # http://keisan.casio.com/exec/system/1180573226
+    beta_a = models.FloatField(default=2,
+                               validators=[MinValueValidator(0.0),],
+                               help_text=_('Parameter "a" for beta distribuition'))
+    beta_b = models.FloatField(default=100,
+                               validators=[MinValueValidator(0.0),],
+                               help_text=_('Parameter "b" for beta distribution'))
 
     class Meta:
         unique_together = ('configuration', 'region',)

@@ -1,0 +1,11 @@
+{% extends 'admin/configuration_detail.html' %}
+{% load i18n l10n admin_urls static %}
+
+{% block configuration_content %}
+    <h2>{{ regiondata.region.name }} ({{ regiondata_informers.count }} informers)</h2>
+    <div id="content" class="colMS">
+        <div id="content-main">
+            <img src="{% url 'synthetic:regiondata_histogram' pk=regiondata.pk %}"/>
+        </div>
+    </div>
+{% endblock %}
