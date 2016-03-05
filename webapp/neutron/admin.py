@@ -8,10 +8,7 @@ from django.db import models
 from mptt.admin import MPTTModelAdmin
 
 from .models import Word, Informer, Definition, Context, Datum, Region, Interface, CoarseWord, WordUse
-
-
-class WordAdmin(admin.ModelAdmin):
-    search_fields = ('word',)
+from .forms import DefinitionForm, WordUseForm
 
 
 class InformerAdmin(admin.ModelAdmin):
@@ -31,7 +28,6 @@ class DatumAdmin(admin.ModelAdmin):
 admin.site.register(Region, MPTTModelAdmin)
 admin.site.register(Informer, InformerAdmin)
 admin.site.register(Interface)
-admin.site.register(Word, WordAdmin)
 admin.site.register(Datum, DatumAdmin)
 
 
@@ -46,6 +42,7 @@ class ContextInline(admin.TabularInline):
 
 
 class DefinitionAdmin(admin.ModelAdmin):
+    form = DefinitionForm
     list_display = ('word', 'informer',)
     inlines = [ContextInline, ]
     formfield_overrides = {
@@ -63,8 +60,12 @@ class CoarseWordAdmin(admin.ModelAdmin):
     def word(self, object):
         return object.word.word
 
+    def has_add_permission(self, request):
+        return False
+
 
 class WordUseAdmin(admin.ModelAdmin):
+    form = WordUseForm
     list_display = ('word', 'informer', 'interface', 'use',)
     list_filter = ('informer__region', 'interface', 'use',)
     search_fields = ('definition__word',)
@@ -72,6 +73,9 @@ class WordUseAdmin(admin.ModelAdmin):
 
     def word(self, object):
         return object.definition.word
+
+    def has_add_permission(self, request):
+        return False
 
 
 class ContextAdmin(admin.ModelAdmin):

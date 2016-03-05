@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
+from django.core.validators import ValidationError
 
 from model_utils import Choices
 
@@ -34,3 +35,7 @@ class WordUse(Datum):
 
     def __str__(self):
         return '%s [%s]' % (self.informer, self.interface)
+
+    def clean(self):
+        if self.use != WordUse.USES.prefer_other and self.alternative:
+            raise ValidationError('Cannot set an alternative word if prefer-other use is not selected')
