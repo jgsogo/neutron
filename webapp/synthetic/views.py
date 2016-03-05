@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.core.urlresolvers import reverse
 from django.db.models import Count
 
-from neutron.models import Informer, CoarseWord, WordUse
+from neutron.models import Informer, CoarseWord, WordUse, Definition
 from .models import Configuration, InformerGenerated, RegionData
 from .utils import Histogram, RandomWeighted
 
@@ -114,18 +114,42 @@ class InformerGeneratedDetailView(SyntheticAdminContextView, DetailView):
         for (w,profane),n in qs.most_common():
             data_qs[w][0 if profane else 1] = n
 
-        data = defaultdict(lambda : [0.0, 0.0])
+        data = defaultdict(lambda : [0.0, 0.0, 0.0])
         for word,values in data_qs.items():
-            data[word][0] = values[0]/float(sum(values))
-            data[word][1] = ts[word]
+            data[word][0] = sum(values)
+            data[word][1] = values[0]/float(sum(values))
+            data[word][2] = ts[word]
         return dict(data)  # TODO: Put default_factory = None to avoid this copy
 
     def get_worduse_data(self):
-        data = defaultdict(lambda : [0.0, 0.0, list()])
-        for item in WordUse.objects.filter(informer=self.object.informer):
-            if item.use == WordUse.USES.ok:
-                data[item.definition][0] += 1
-        return None
+        # Prepare generated data
+        qs = Counter(WordUse.objects.filter(informer=self.object.informer).values_list('definition', 'use'))
+        data_qs = defaultdict(lambda : [0.0, 0.0, 0.0])
+        for (w, use), n in qs.most_common():
+            data_qs[w][use] = n
+
+        # Prepare teorical data
+        ts = self.object.configuration.worddefinitiondata_set.filter(region=self.object.informer.region).values_list('definition', 'ok', 'unknown')
+        data_ts = defaultdict(lambda : [0.0, 0.0, 0.0])
+        for it in ts:
+            data_ts[it[0]][0] = it[1]             # Ok
+            data_ts[it[0]][1] = round(1 - it[1] - it[2], 1) # prefer_other
+            data_ts[it[0]][2] = it[2]             # unkrecognized
+
+        from pprint import pprint
+        print("*"*20)
+        pprint(data_qs)
+        pprint(data_ts)
+
+        # Output
+        data = defaultdict(lambda : [[], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]])
+        for d, values in data_qs.items():
+            definition = Definition.objects.get(pk=d)
+            data[d][0] = [definition.word, definition.definition]
+            data[d][1] = [values[0]/float(sum(values)), data_ts[d][0]]
+            data[d][2] = [values[1]/float(sum(values)), data_ts[d][1]]
+            data[d][3] = [values[2]/float(sum(values)), data_ts[d][2]]
+        return dict(data)  # TODO: Put default_factory = None to avoid this copy
 
     def get_context_data(self, **kwargs):
         context = super(InformerGeneratedDetailView, self).get_context_data(**kwargs)
