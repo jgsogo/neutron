@@ -7,9 +7,11 @@ from django.core.urlresolvers import reverse
 from django.contrib.admin.utils import flatten_fieldsets
 
 from .models import Configuration, WordDefinitionData, RegionData, AlternateData, InformerGenerated, WordCoarseData
+from .forms import AlternateDataForm
 
 
 class AlternateDataInline(admin.TabularInline):
+    form = AlternateDataForm
     model = AlternateData
     extra = 1
 

@@ -42,8 +42,8 @@
                 <tr>
                     <td>{{ word }}</td>
                     <td>{{ values.0 }}</td>
-                    <td>{{ values.1 }}</td>
-                    <td>{{ values.2 }}</td>
+                    <td>{{ values.1|floatformat:2 }}</td>
+                    <td>{{ values.2|floatformat:2 }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -53,15 +53,17 @@
         <table>
             <thead>
                 <tr>
-                    <th>Word</th>
-                    <th>Definition</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                     <th colspan="2">Ok</th>
                     <th colspan="2">Prefer other</th>
                     <th colspan="2">Unknown</th>
                 </tr>
                 <tr>
-                    <th></th>
-                    <th></th>
+                    <th>Word</th>
+                    <th>Definition</th>
+                    <th>Count</th>
                     <th>Gen</th><th>Theo</th>
                     <th>Gen</th><th>Theo</th>
                     <th>Gen</th><th>Theo</th>
@@ -72,12 +74,13 @@
                 <tr>
                     <td>{{ values.0.0 }}</td>
                     <td>{{ values.0.1 }}</td>
-                    <td>{{ values.1.0 }}</td>
-                    <td>{{ values.1.1 }}</td>
-                    <td>{{ values.2.0 }}</td>
-                    <td>{{ values.2.1 }}</td>
-                    <td>{{ values.3.0 }}</td>
-                    <td>{{ values.3.1 }}</td>
+                    <td>{{ values.1 }}</td>
+                    <td>{{ values.2.0|floatformat:2 }}</td>
+                    <td>{{ values.2.1|floatformat:2 }}</td>
+                    <td>{{ values.3.0|floatformat:2 }}</td>
+                    <td>{{ values.3.1|floatformat:2 }}</td>
+                    <td>{{ values.4.0|floatformat:2 }}</td>
+                    <td>{{ values.4.1|floatformat:2 }}</td>
                 </tr>
             {% endfor %}
             </tbody>

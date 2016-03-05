@@ -142,13 +142,14 @@ class InformerGeneratedDetailView(SyntheticAdminContextView, DetailView):
         pprint(data_ts)
 
         # Output
-        data = defaultdict(lambda : [[], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]])
+        data = defaultdict(lambda : [[], 0.0, [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]])
         for d, values in data_qs.items():
             definition = Definition.objects.get(pk=d)
             data[d][0] = [definition.word, definition.definition]
-            data[d][1] = [values[0]/float(sum(values)), data_ts[d][0]]
-            data[d][2] = [values[1]/float(sum(values)), data_ts[d][1]]
-            data[d][3] = [values[2]/float(sum(values)), data_ts[d][2]]
+            data[d][1] = float(sum(values))
+            data[d][2] = [values[0]/float(sum(values)), data_ts[d][0]]
+            data[d][3] = [values[1]/float(sum(values)), data_ts[d][1]]
+            data[d][4] = [values[2]/float(sum(values)), data_ts[d][2]]
         return dict(data)  # TODO: Put default_factory = None to avoid this copy
 
     def get_context_data(self, **kwargs):
