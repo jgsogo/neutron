@@ -32,7 +32,8 @@ class InformerGeneratedManager(models.Manager):
             # Create auxiliary class
             instance = self.model(configuration=configuration, informer=informer)
             instance.seed = random_gen.randint(1, 10000)
-            instance.randomness = random_gen.beta_ppf(region.beta_a, region.beta_b)
+            if region.random:
+                instance.randomness = random_gen.beta_ppf(region.beta_a, region.beta_b)
             instance.n_use_data = random_gen.randint(region.min_use_data, region.max_use_data)
             instance.n_coarse_data = random_gen.randint(region.min_coarse_data, region.max_coarse_data)
             instance.save()
@@ -53,7 +54,8 @@ class InformerGenerated(models.Model):
 
     # Data to generate
     seed = models.IntegerField(blank=True)
-    randomness = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
+    randomness = models.FloatField(default=0.0,
+                                   validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
                                    help_text=_('How much this informer data is away from gold-standard'))
     n_use_data = models.IntegerField(editable=False, help_text=_('Number of data related to word use'))
     n_coarse_data = models.IntegerField(editable=False, help_text=_('Number of coarse data informed'))
@@ -84,7 +86,7 @@ class InformerGenerated(models.Model):
                 w = word_data[random_gen.randint(0, n_word_data-1)]  # TODO: El extremo derecho está incluído o no?
                 dato = WordUse(interface=interface, informer=self.informer)
                 dato.definition = w.definition
-                if random_gen.random() > self.randomness:
+                if random_gen.random() < self.randomness:
                     dato.use = random_gen.choice([WordUse.USES.ok, WordUse.USES.prefer_other, WordUse.USES.unrecognized])
                     if dato.use == WordUse.USES.prefer_other:
                         # TODO: Cuando al azar prefiero otra palabra... ¿prefiero otra cualquiera al azar o una del subset?
@@ -106,12 +108,12 @@ class InformerGenerated(models.Model):
                 w = coarse_data[random_gen.randint(0, n_word_data-1)]  # TODO: El extremo derecho está incluído o no?
                 dato = CoarseWord(interface=interface, informer=self.informer)
                 dato.word = w.word
-                if random_gen.random() > self.randomness:
+                if random_gen.random() < self.randomness:
                     # At random
-                    dato.profane = random_gen.random() > 0.5  # TODO: ¿mayor o mayor-igual?
+                    dato.profane = random_gen.random() < 0.5  # TODO: ¿mayor o mayor-igual?
                 else:
                     # Use data
-                    dato.profane = random_gen.random() > w.coarse
+                    dato.profane = random_gen.random() < w.coarse
                 dato.save()
 
         self.generated = True

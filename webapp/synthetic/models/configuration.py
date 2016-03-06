@@ -108,6 +108,7 @@ class RegionData(models.Model):
     beta_b = models.FloatField(default=100,
                                validators=[MinValueValidator(0.0),],
                                help_text=_('Parameter "b" for beta distribution'))
+    random = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('configuration', 'region',)

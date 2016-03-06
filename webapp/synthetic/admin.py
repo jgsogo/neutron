@@ -57,7 +57,7 @@ class RegionDataReadonlyInline(RegionDataInline):
     editable_fields = []
 
     def get_readonly_fields(self, request, obj=None):
-        return ('region', 'percentage', 'min_use_data', 'max_use_data', 'min_coarse_data', 'max_coarse_data', 'beta_a', 'beta_b',)
+        return ('region', 'percentage', 'min_use_data', 'max_use_data', 'min_coarse_data', 'max_coarse_data', 'random', 'beta_a', 'beta_b',)
 
     def has_add_permission(self, request):
         return False
