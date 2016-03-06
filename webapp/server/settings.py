@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'neutron',
     'telegram',
     'synthetic',
+    'exporter',
 )
 
 MIDDLEWARE_CLASSES = (

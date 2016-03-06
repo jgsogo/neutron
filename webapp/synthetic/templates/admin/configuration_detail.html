@@ -14,7 +14,7 @@
 {% block content %}
     <p id="content-main">
         <ul class="object-tools">
-            <li><a href="{% url 'admin:synthetic_configuration_change' object.pk %}" class="viewsitelink">{% trans "Edit" %}</a></li>
+            <li><a href="{% url 'admin:synthetic_configuration_change' configuration.pk %}" class="viewsitelink">{% trans "Edit" %}</a></li>
         </ul>
 
         <p>Stats about the synthetic data generated.</p>
