@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.admin.utils import flatten_fieldsets
 
 from .models import Configuration, WordDefinitionData, RegionData, AlternateData, InformerGenerated, WordCoarseData
-from .forms import AlternateDataForm
+from .forms import AlternateDataForm, WordCoarseDataForm
 
 
 class AlternateDataInline(admin.TabularInline):
@@ -41,6 +41,7 @@ class WordDefinitionDataAdmin(admin.ModelAdmin):
 
 
 class WordCoarseDataAdmin(admin.ModelAdmin):
+    form = WordCoarseDataForm
     list_display = ('configuration', 'region', 'word')
     list_filter = ('configuration',)
 

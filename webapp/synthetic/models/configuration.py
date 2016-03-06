@@ -15,6 +15,14 @@ from django.core.urlresolvers import reverse
 
 from neutron.models import Word, Definition, Region as NeutronRegion
 
+try:
+    from math import isclose  # Python 3.5
+except ImportError:
+    def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
+        return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
+
+ABS_TOLERANCE = 1e-06
+
 
 @python_2_unicode_compatible
 class Configuration(models.Model):
@@ -46,7 +54,7 @@ class Configuration(models.Model):
 
         # Region data must sum 1.0
         values = RegionData.objects.filter(configuration=self).aggregate(models.Sum('percentage'))['percentage__sum']
-        if values != 1.0:
+        if not values or not isclose(values, 1.0, abs_tol=ABS_TOLERANCE):
             errors.append('RegionData incomplete: sum of percentages is {}, it must be 100%'.format(values))
 
         # All word data uses must be valid (alternates must sum 1.0 if required)
@@ -137,13 +145,14 @@ class WordDefinitionData(models.Model):
     @property
     def alternate(self):
         if self.pk:
-            return 1- self.ok - self.unknown
+            alt_value = 1- self.ok - self.unknown
+            return 0.0 if isclose(alt_value, 0.0, abs_tol=ABS_TOLERANCE) else alt_value
         else:
             return None
 
     def errors(self):
         errors = []
-        if self.alternate != 0.0:
+        if not isclose(self.alternate, 0.0, abs_tol=ABS_TOLERANCE):
             # Alternate data must sum 1.0
             values = AlternateData.objects.filter(definition=self).aggregate(models.Sum('percentage'))['percentage__sum']
             if values != 1.0:
