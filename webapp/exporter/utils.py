@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 import os
-from neutron.models import Word, Definition, Interface, WordUse, Region, Informer
+from neutron.models import Word, Definition, Interface, WordUse, Region, Informer, Meaning
 
 
 def export(worduse_qs, coarse_qs, path, export_aux=True):
@@ -12,11 +14,11 @@ def export(worduse_qs, coarse_qs, path, export_aux=True):
     # Export data itself
     # - word use
     with open(os.path.join(path, 'data_worduse.tsv'), 'w') as f:
-        f.write('#informer\tinterface\tdefinition\tworduse\tword\n')
+        f.write('#informer\tinterface\tmeaning\tworduse\tword\n')
         for item in worduse_qs:
             f.write(str(item.informer.pk) + '\t' +
                     str(item.interface.pk) + '\t' +
-                    str(item.definition.pk) + '\t' +
+                    str(item.meaning.pk) + '\t' +
                     str(item.use) + '\t' +
                     (str(item.alternative.pk) if item.alternative else '') +
                     '\n')
@@ -39,6 +41,15 @@ def export(worduse_qs, coarse_qs, path, export_aux=True):
                     str(informer.region.pk) +
                     '\n')
 
+    # - meanings -> needed to know which meanings has the same referent word
+    with open(os.path.join(path, 'data_meanings.tsv'), 'w') as f:
+        f.write('#meaning\tword\tdefinition\n')
+        for meaning in Meaning.objects.all():
+            f.write(str(meaning.pk) + '\t' +
+                    str(meaning.word.pk) + '\t' +
+                    str(meaning.definition.pk) +
+                    '\n')
+
     if not export_aux:
         return
 
@@ -51,9 +62,9 @@ def export(worduse_qs, coarse_qs, path, export_aux=True):
 
     # - definition
     with open(os.path.join(path, 'definition.tsv'), 'w') as f:
-        f.write('#definition\tword\tliteral\n')
+        f.write('#definition\tliteral\n')
         for definition in Definition.objects.all():
-            f.write('{}\t{}\t{}\n'.format(definition.pk, definition.word.pk, definition.definition))
+            f.write('{}\t{}\n'.format(definition.pk, definition.definition))
 
     # - interface
     with open(os.path.join(path, 'interface.tsv'), 'w') as f:
