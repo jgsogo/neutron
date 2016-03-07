@@ -3,7 +3,8 @@
 
 from .word import Word
 from .informer import Informer
-from .definition import Definition, Context
+from .definition import Definition
+from .meaning import Meaning, Context
 
 from .region import Region
 from .interface import Interface

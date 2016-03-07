@@ -3,7 +3,7 @@
 
 
 from django import forms
-from .models import Informer, Definition, Word, WordUse
+from .models import Informer, Meaning, Word, WordUse, Definition
 
 
 class SearchWordForm(forms.Form):
@@ -11,11 +11,12 @@ class SearchWordForm(forms.Form):
 
 
 
-class DefinitionForm(forms.ModelForm):
+class MeaningForm(forms.ModelForm):
     word = forms.CharField()
+    definition = forms.CharField()
 
     class Meta:
-        model = Definition
+        model = Meaning
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
@@ -23,11 +24,13 @@ class DefinitionForm(forms.ModelForm):
         initial = kwargs.pop('initial', {})
         if instance:
             initial.update({'word': instance.word.word })
-        super(DefinitionForm, self).__init__(initial=initial, *args, **kwargs)
+            initial.update({'definition': instance.definition.definition })
+        super(MeaningForm, self).__init__(initial=initial, *args, **kwargs)
 
     def clean(self):
         cleaned_data = self.cleaned_data
         cleaned_data['word'], _ = Word.objects.get_or_create(word=cleaned_data['word'])
+        cleaned_data['definition'], _ = Definition.objects.get_or_create(definition=cleaned_data['definition'])
         return cleaned_data
 
 
@@ -42,7 +45,7 @@ class WordUseForm(forms.ModelForm):
         instance = kwargs.get('instance', None)
         initial = kwargs.pop('initial', {})
         if instance and instance.alternative:
-            initial.update({'alternative': instance.alternative.word })
+            initial.update({'alternative': instance.alternative.word.word })
         super(WordUseForm, self).__init__(initial=initial, *args, **kwargs)
 
     def clean(self):

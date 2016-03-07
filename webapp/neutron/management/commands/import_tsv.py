@@ -7,7 +7,7 @@ import codecs
 import requests
 from django.core.management.base import BaseCommand, CommandError
 
-from neutron.models import Definition, Informer, Context, Word
+from neutron.models import Definition, Informer, Context, Word, Meaning
 
 
 class Command(BaseCommand):
@@ -68,16 +68,15 @@ class Command(BaseCommand):
         word_instance, created = Word.objects.get_or_create(word=word)
         order = 1
         for d, example in definitions:
-            # TODO: Detect duplicate definitions
-            definition, _ = Definition.objects.get_or_create(word=word_instance,
-                                                          definition=d,
-                                                          defaults={'informer': informer,
-                                                                    'order': order
-                                                                    }
-                                                          )
+            definition, _ = Definition.objects.get_or_create(definition=d)
+            meaning, _ = Meaning.objects.get_or_create(word=word_instance,
+                                                       definition=definition,
+                                                       informer=informer,
+                                                       source=Meaning.SOURCES.reference
+                                                       )
             if example:
-                Context.objects.filter(definition=definition).delete()
-                c = Context(definition=definition, text=example, word_pos=example.find(word))
+                Context.objects.filter(meaning=meaning).delete()
+                c = Context(meaning=meaning, text=example, word_pos=example.find(word))
                 c.save()
             order += 1
         self.stdout.write(' - added')

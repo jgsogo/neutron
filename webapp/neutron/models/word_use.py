@@ -12,6 +12,7 @@ from model_utils import Choices
 from .datum import Datum
 from .definition import Definition
 from .word import Word
+from .meaning import Meaning
 
 
 @python_2_unicode_compatible
@@ -21,13 +22,13 @@ class WordUse(Datum):
                    (1, 'prefer_other', _('Prefer another word for this definition')),
                    (2, 'unrecognized', _('Do not recognize this meaning for this word')))
 
-    definition = models.ForeignKey(Definition, help_text=_('Word and definition from a given dictionary'))
+    meaning = models.ForeignKey(Meaning, blank=True, null=True, related_name='informeruse_set')
     use = models.IntegerField(choices=USES)
 
-    alternative = models.ForeignKey(Word,
+    alternative = models.ForeignKey(Meaning,
                                     blank=True,
                                     null=True,
-                                    help_text=_('Alternate word in the informer\'s dictionary'))
+                                    help_text=_('Alternate word/definition in the informer\'s dictionary'))
 
     class Meta:
         verbose_name = _('Word use')
