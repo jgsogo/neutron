@@ -7,11 +7,11 @@ from neutron.models.word import MAX_WORD_LENGTH
 
 
 class WordUseForm(forms.Form):
-    definition = forms.IntegerField(widget=forms.HiddenInput())
+    meaning = forms.IntegerField(widget=forms.HiddenInput())
     use = forms.TypedChoiceField(choices=WordUse.USES, coerce=int, required=False, widget=forms.HiddenInput())
     coarse = forms.NullBooleanField(required=False, widget=forms.HiddenInput())
 
 
 class WordUseAlternateForm(forms.Form):
-    definition = forms.IntegerField(widget=forms.HiddenInput())
+    meaning = forms.IntegerField(widget=forms.HiddenInput())
     alternate = forms.CharField(label='Alternate word', max_length=MAX_WORD_LENGTH)

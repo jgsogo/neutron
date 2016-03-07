@@ -2,14 +2,17 @@
 # -*- coding: utf-8 -*-
 
 
+from random import randint, choice
+
 from django.views.generic import FormView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.urlresolvers import reverse
 from django.db.utils import OperationalError
-from neutron.models import Definition, Interface
+
+from neutron.models import Meaning, Interface
 
 
-class RandomDefinitionRun(UserPassesTestMixin, FormView):
+class RandomMeaningRun(UserPassesTestMixin, FormView):
 
     @classmethod
     def as_view(cls, **initkwargs):
@@ -18,7 +21,7 @@ class RandomDefinitionRun(UserPassesTestMixin, FormView):
             cls.interface, created = Interface.objects.get_or_create(name='Web')
         except OperationalError as e:
             pass
-        return super(RandomDefinitionRun, cls).as_view(**initkwargs)
+        return super(RandomMeaningRun, cls).as_view(**initkwargs)
 
     def test_func(self):
         u = self.request.user
@@ -27,24 +30,24 @@ class RandomDefinitionRun(UserPassesTestMixin, FormView):
     def get_login_url(self):
         return reverse('error_no_informer',)
 
-    def get_definition(self):
-        # assert self.request.method == 'GET', "RandomDefinitionRun::get_definition must be only called in GET"
-        if not hasattr(self, '_definition'):
+    def get_meaning(self):
+        # assert self.request.method == 'GET', "RandomMeaningRun::get_meaning must be only called in GET"
+        if not hasattr(self, '_meaning'):
             try:
-                definition = Definition.objects.random()  # TODO: hack queryset depending on user
-                setattr(self, '_definition', definition)
-            except Definition.DoesNotExist:
+                meaning = choice(Meaning.objects.valid())  # TODO: hack queryset depending on user
+                setattr(self, '_meaning', meaning)
+            except Meaning.DoesNotExist:
                 # TODO: Redirect to ¿?
                 pass
-        return getattr(self, '_definition')
+        return getattr(self, '_meaning')
 
     def get_initial(self):
-        data = super(RandomDefinitionRun, self).get_initial()
-        data.update({'definition': self.get_definition().pk})
+        data = super(RandomMeaningRun, self).get_initial()
+        data.update({'meaning': self.get_meaning().pk})
         return data
 
     def get_context_data(self, **kwargs):
-        return super(RandomDefinitionRun, self).get_context_data(definition=self.get_definition(), **kwargs)
+        return super(RandomMeaningRun, self).get_context_data(meaning=self.get_meaning(), **kwargs)
 
     def get_success_url(self):
         return self.request.path

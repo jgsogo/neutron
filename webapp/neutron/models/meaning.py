@@ -36,7 +36,7 @@ class Meaning(models.Model):
 
     source = models.IntegerField(choices=SOURCES)
 
-    objects = MeaningManager
+    objects = MeaningManager()
 
     class Meta:
         verbose_name = _('Meaning')

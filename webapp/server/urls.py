@@ -52,8 +52,8 @@ urlpatterns = [
     # Word use
     url(r'^uses/$', WordUseHome.as_view(), name='word_use'),
     url(r'^uses/run/$', WordUseRun.as_view(), name='word_use_run'),
-    url(r'^uses/(?P<definition>\d+)/alternate/$', WordUseAlternateRun.as_view(), name='word_use_alternate'),
-    url(r'^uses/(?P<definition>\d+)/coarse/$', WordUseCoarseRun.as_view(), name='word_use_coarse'),
+    url(r'^uses/(?P<meaning>\d+)/alternate/$', WordUseAlternateRun.as_view(), name='word_use_alternate'),
+    url(r'^uses/(?P<meaning>\d+)/coarse/$', WordUseCoarseRun.as_view(), name='word_use_coarse'),
 
     #Synthetic data
     url(r'^synthetic/', include('synthetic.urls', namespace='synthetic')),

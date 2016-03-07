@@ -2,14 +2,14 @@
 {% load bootstrap3 %}
 
 {% block word_use_content %}
-    {% if definition %}
-        <h3>{{ definition.word }}</h3>
+    {% if meaning %}
+        <h3>{{ meaning.word }}</h3>
         <p>
-            {% with definition.first_context as first_context %}
+            {% with meaning.first_context as first_context %}
                 {% if first_context %}
-                    {{ definition.definition }}: <em>{{ first_context|capfirst }}.</em>
+                    {{ meaning.definition }}: <em>{{ first_context|capfirst }}.</em>
                 {% else %}
-                    {{ definition.definition }}.
+                    {{ meaning.definition }}.
                 {% endif %}
             {% endwith %}
         </p>
@@ -25,6 +25,6 @@
         </form>
     {% else %}
         <h3>Error!</h3>
-        <p>There are no definitions in the database.</p>
+        <p>There are no meanings in the database.</p>
     {% endif %}
 {% endblock %}

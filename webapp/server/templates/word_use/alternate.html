@@ -2,9 +2,9 @@
 {% load bootstrap3 %}
 
 {% block word_use_content %}
-    {% if definition %}
-        <h3>{{ definition.word }}</h3>
-        <p>{{ definition.definition }}</p>
+    {% if meaning %}
+        <h3>{{ meaning.word }}</h3>
+        <p>{{ meaning.definition }}</p>
         <form method="post" class="form">
             {% csrf_token %}
             {% bootstrap_form form %}
@@ -14,6 +14,6 @@
         </form>
     {% else %}
         <h3>Error!</h3>
-        <p>There are no definitions in the database.</p>
+        <p>There are no meanings in the database.</p>
     {% endif %}
 {% endblock %}
