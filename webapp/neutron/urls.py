@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^word/(?P<pk>\d+)/$', LemmaDetail.as_view(), name='word_detail'),
 
     # Definitions
-    url(r'^word/definition/(?P<pk>\d+)/$', DefinitionDetail.as_view(), name='definition_detail'),
-    url(r'^word/definition/(?P<pk>\d+)/coarsity/$', DefinitionCoarsityDetail.as_view(), name='definition_detail_coarsity'),
-    url(r'^word/definition/(?P<pk>\d+)/uses/$', DefinitionUsesDetail.as_view(), name='definition_detail_uses'),
+    url(r'^word/meaning/(?P<pk>\d+)/$', MeaningDetail.as_view(), name='meaning_detail'),
+    url(r'^word/meaning/(?P<pk>\d+)/coarsity/$', MeaningCoarsityDetail.as_view(), name='meaning_detail_coarsity'),
+    url(r'^word/meaning/(?P<pk>\d+)/uses/$', MeaningUsesDetail.as_view(), name='meaning_detail_uses'),
     ]

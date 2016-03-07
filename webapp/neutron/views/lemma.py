@@ -5,7 +5,8 @@ from django.views.generic import DetailView, FormView, TemplateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from ..models import Definition, Informer, Word
+
+from ..models import Word
 from ..forms import SearchWordForm
 
 
@@ -27,7 +28,7 @@ class SearchLemma(FormView):
     def get_context_data(self, **kwargs):
         # TODO: This is to delete
         ctxt = super(SearchLemma, self).get_context_data(**kwargs)
-        queryset = Word.objects.filter(definition__isnull=False).distinct()
+        queryset = Word.objects.filter(meaning__isnull=False).distinct()
         ctxt.update({'examples': [Word.objects.random(queryset) for _ in range(3)]})
         return ctxt
 

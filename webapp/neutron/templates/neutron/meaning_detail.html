@@ -1,0 +1,42 @@
+{% extends 'neutron/base.html' %}
+
+
+{% block neutron_word_link %}
+    {% if meaning %}
+        <li><a href="{% url 'neutron:word_detail' pk=meaning.word.pk %}">{{ meaning.word }}</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block neutron_content_menu_additional %}
+    <h3>Filtros</h3>
+    <ul>
+        <li><a href="{% url 'neutron:meaning_detail_coarsity' pk=meaning.pk %}">Coarsity</a></li>
+        <li><a href="{% url 'neutron:meaning_detail_uses' pk=meaning.pk %}">Uses</a></li>
+    </ul>
+{% endblock %}
+
+{% block neutron_content %}
+    <h2>{{ meaning }}</h2>
+    <p><strong>Informante/Diccionario:</strong> {{ meaning.informer }}</p>
+
+    {% block meaning_detail_content %}
+        <h3>Some numbers</h3>
+        <ul>
+            <li>
+                Datos recolectados: {{ data.count }}
+                <ul>
+                    <li><a href="{% url 'neutron:meaning_detail_coarsity' pk=meaning.pk %}">Coarsity</a>: {{ coarseword_qs.count }}</li>
+                    <li><a href="{% url 'neutron:meaning_detail_uses' pk=meaning.pk %}">Uses</a>: {{ worduse_qs.count }}</li>
+                </ul>
+            </li>
+            <li>
+                Informantes: {{ informers.count }}
+                <ul>
+                    {% for item in regions %}
+                        <li>{{ item.region__name }}: {{ item.dcount }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    {% endblock %}
+{% endblock %}

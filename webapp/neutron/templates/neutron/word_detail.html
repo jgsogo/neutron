@@ -10,13 +10,13 @@
 
 {% block neutron_content %}
     <h2>{{ word }}</h2>
-    {% regroup word.definition_set.all by informer as definition_list %}
+    {% regroup word.meaning_set.all by informer as meaning_list %}
     <ul>
-        {% for defs in definition_list %}
+        {% for defs in meaning_list %}
             <li><strong>Informante/Diccionario:</strong> {{ defs.grouper }}
                 <ul>
                     {% for item in defs.list %}
-                        <li>(<a href="{% url 'neutron:definition_detail' pk=item.pk %}">details</a>) {{ item.definition }}</li>
+                        <li>(<a href="{% url 'neutron:meaning_detail' pk=item.pk %}">details</a>) {{ item.definition }}</li>
                     {% endfor %}
                 </ul>
             </li>

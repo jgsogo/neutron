@@ -8,18 +8,18 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.db.models import Count
-from ..models import Definition, Informer, CoarseWord, WordUse
+from ..models import Meaning, Informer, CoarseWord, WordUse
 
 
-class DefinitionDetail(DetailView):
-    model = Definition
+class MeaningDetail(DetailView):
+    model = Meaning
 
     def get_context_data(self, **kwargs):
-        context = super(DefinitionDetail, self).get_context_data(**kwargs)
-        definition = self.get_object()
+        context = super(MeaningDetail, self).get_context_data(**kwargs)
+        meaning = self.get_object()
         # Data
-        coarseword_qs = CoarseWord.objects.filter(word=definition.word)
-        worduse_qs = WordUse.objects.filter(definition=definition)
+        coarseword_qs = CoarseWord.objects.filter(word=meaning.word)
+        worduse_qs = WordUse.objects.filter(meaning=meaning)
         context.update({'coarseword_qs': coarseword_qs,
                         'worduse_qs': worduse_qs,
                         })
@@ -32,12 +32,12 @@ class DefinitionDetail(DetailView):
         return context
 
 
-class DefinitionCoarsityDetail(DetailView):
-    model = Definition
-    template_name = 'neutron/definition_detail_coarsity.html'
+class MeaningCoarsityDetail(DetailView):
+    model = Meaning
+    template_name = 'neutron/meaning_detail_coarsity.html'
 
     def get_context_data(self, **kwargs):
-        context = super(DefinitionCoarsityDetail, self).get_context_data(**kwargs)
+        context = super(MeaningCoarsityDetail, self).get_context_data(**kwargs)
         qs = CoarseWord.objects.filter(word=self.get_object().word).order_by('informer__region', 'profane')
         data = defaultdict(Counter)
         for item in qs:
@@ -47,14 +47,14 @@ class DefinitionCoarsityDetail(DetailView):
         return context
 
 
-class DefinitionUsesDetail(DetailView):
-    model = Definition
-    template_name = 'neutron/definition_detail_uses.html'
+class MeaningUsesDetail(DetailView):
+    model = Meaning
+    template_name = 'neutron/meaning_detail_uses.html'
 
     def get_context_data(self, **kwargs):
-        context = super(DefinitionUsesDetail, self).get_context_data(**kwargs)
+        context = super(MeaningUsesDetail, self).get_context_data(**kwargs)
         # Data about use
-        qs = WordUse.objects.filter(definition=self.get_object()).order_by('informer__region', 'use')
+        qs = WordUse.objects.filter(meaning=self.get_object()).order_by('informer__region', 'use')
         data = defaultdict(Counter)
         for item in qs:
             data[item.informer.region][str(item.use)] += 1
@@ -62,7 +62,7 @@ class DefinitionUsesDetail(DetailView):
         context.update({'data': dict(data)})
 
         # Data about alternates
-        qs = WordUse.objects.filter(definition=self.get_object(), alternative__isnull=False).order_by('informer__region', 'use')
+        qs = WordUse.objects.filter(meaning=self.get_object(), alternative__isnull=False).order_by('informer__region', 'use')
         alternatives = defaultdict(Counter)
         for item in qs:
             alternatives[item.informer.region][item.alternative.word] += 1
