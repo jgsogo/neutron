@@ -6,7 +6,7 @@ from django.utils.html import mark_safe
 from django.core.urlresolvers import reverse
 from django.contrib.admin.utils import flatten_fieldsets
 
-from .models import Configuration, WordDefinitionData, RegionData, AlternateData, InformerGenerated, WordCoarseData
+from .models import Configuration, WordMeaningData, RegionData, AlternateData, InformerGenerated, WordCoarseData
 from .forms import AlternateDataForm, WordCoarseDataForm
 
 
@@ -111,7 +111,7 @@ class ConfigurationAdmin(admin.ModelAdmin):
                 return mark_safe('<a href="{url}">Generate data</a>'.format(url=reverse('synthetic:configuration_generate', args=[obj.pk])))
 
 admin.site.register(Configuration, ConfigurationAdmin)
-admin.site.register(WordDefinitionData, WordDefinitionDataAdmin)
+admin.site.register(WordMeaningData, WordDefinitionDataAdmin)
 admin.site.register(WordCoarseData, WordCoarseDataAdmin)
 
 

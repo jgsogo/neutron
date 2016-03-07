@@ -13,7 +13,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator, Validat
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.urlresolvers import reverse
 
-from neutron.models import Word, Definition, Region as NeutronRegion
+from neutron.models import Word, Meaning, Region as NeutronRegion
 
 try:
     from math import isclose  # Python 3.5
@@ -58,12 +58,12 @@ class Configuration(models.Model):
             errors.append('RegionData incomplete: sum of percentages is {}, it must be 100%'.format(values))
 
         # All word data uses must be valid (alternates must sum 1.0 if required)
-        pending = WordDefinitionData.objects.annotate(ok_unknw=models.F('ok')+models.F('unknown'),
-                                                      alternate_sum=models.Sum('alternatedata__percentage'))\
+        pending = WordMeaningData.objects.annotate(ok_unknw=models.F('ok') + models.F('unknown'),
+                                                   alternate_sum=models.Sum('alternatedata__percentage'))\
                                             .filter(ok_unknw__lt=1.0, alternate_sum__lt=1.0)
         if len(pending):
-            url_name = 'admin:%s_%s_change' % (WordDefinitionData._meta.app_label, WordDefinitionData._meta.model_name)
-            links = ', '.join(['<a href="{}">{}</a>'.format(reverse(url_name, args=[w.pk]), w.definition.word) for w in pending])
+            url_name = 'admin:%s_%s_change' % (WordMeaningData._meta.app_label, WordMeaningData._meta.model_name)
+            links = ', '.join(['<a href="{}">{}</a>'.format(reverse(url_name, args=[w.pk]), w.meaning.word) for w in pending])
             msg = mark_safe('There are some invalid word configurations: ' + links)
             errors.append(msg)
 
@@ -125,19 +125,19 @@ class RegionData(models.Model):
         super(RegionData, self).save(*args, **kwargs)
 
 
-class WordDefinitionData(models.Model):
+class WordMeaningData(models.Model):
     configuration = models.ForeignKey(Configuration)
     region = models.ForeignKey(NeutronRegion)
 
     # Data about a word
-    definition = models.ForeignKey(Definition)
+    meaning = models.ForeignKey(Meaning)
     ok = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
-                           help_text=_('Percentage of people that recognize the word with the definition'))
+                           help_text=_('Percentage of people that recognize the word with the meaning'))
     unknown = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
-                                help_text=_('Percentage of people that do not recognize the word with the definition'))
+                                help_text=_('Percentage of people that do not recognize the word with the meaning'))
 
     class Meta:
-        unique_together = ('configuration', 'region', 'definition')
+        unique_together = ('configuration', 'region', 'meaning')
 
     def clean(self):
         if (self.ok or 0.0) + (self.unknown or 0.0) > 1.0:
@@ -155,21 +155,21 @@ class WordDefinitionData(models.Model):
         errors = []
         if not isclose(self.alternate, 0.0, abs_tol=ABS_TOLERANCE):
             # Alternate data must sum 1.0
-            values = AlternateData.objects.filter(definition=self).aggregate(models.Sum('percentage'))['percentage__sum']
+            values = AlternateData.objects.filter(wordmeaningdata=self).aggregate(models.Sum('percentage'))['percentage__sum']
             if values != 1.0:
                 errors.append('Alternate data incomplete: sum of percentages is {}, it must be 100%'.format(values))
         return errors
 
 
 class AlternateData(models.Model):
-    definition = models.ForeignKey(WordDefinitionData)
+    wordmeaningdata = models.ForeignKey(WordMeaningData)
     word = models.ForeignKey(Word)
     percentage = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
                                    help_text=_('Percentage of use of this word as the alternate for the given one'))
 
     def clean(self):
-        if self.definition.alternate == 0.0:
-            raise ValidationError('Cannot create an alternate for a definition with 0% alternates')
+        if isclose(self.wordmeaningdata.alternate, 0.0, abs_tol=ABS_TOLERANCE):
+            raise ValidationError('Cannot create an alternate for a WordMeaningData with 0% alternates')
         # TODO: All alternates cannot sum more than 1.0
 
 

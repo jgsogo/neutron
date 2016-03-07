@@ -10,7 +10,7 @@ from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils.encoding import python_2_unicode_compatible
 
-from neutron.models import Informer as NeutronInformer, CoarseWord, Interface, WordUse, Word
+from neutron.models import Informer as NeutronInformer, CoarseWord, Interface, WordUse, Word, Meaning
 
 from .configuration import Configuration
 from ..utils import RandomWeighted, Histogram
@@ -79,25 +79,31 @@ class InformerGenerated(models.Model):
         random_gen.seed(self.seed)
 
         # Data related to word use
-        word_data = self.configuration.worddefinitiondata_set.filter(region=self.informer.region)
+        word_data = self.configuration.wordmeaningdata_set.filter(region=self.informer.region)
         n_word_data = len(word_data)
         if n_word_data:
             for _ in range(self.n_use_data):
                 w = word_data[random_gen.randint(0, n_word_data-1)]  # TODO: El extremo derecho está incluído o no?
                 dato = WordUse(interface=interface, informer=self.informer)
-                dato.definition = w.definition
+                dato.meaning = w.meaning
                 if random_gen.random() < self.randomness:
                     dato.use = random_gen.choice([WordUse.USES.ok, WordUse.USES.prefer_other, WordUse.USES.unrecognized])
                     if dato.use == WordUse.USES.prefer_other:
                         # TODO: Cuando al azar prefiero otra palabra... ¿prefiero otra cualquiera al azar o una del subset?
                         # dato.alternative = random_gen.choice(list(w.alternatedata_set.all()))
-                        dato.alternative = random_gen.choice(Word.objects.all())
+                        word = random_gen.choice(Word.objects.all())
+                        alternative_meaning = Meaning(word=word, definition=dato.meaning.definition, informer=self.informer, source=Meaning.SOURCES.informer)
+                        alternative_meaning.save()
+                        dato.alternative = alternative_meaning
                 else:
                     dato.use = random_gen.weighted_choice([(WordUse.USES.ok, w.ok),
                                                            (WordUse.USES.prefer_other, 1-w.ok-w.unknown),
                                                            (WordUse.USES.unrecognized, w.unknown)])
                     if dato.use == WordUse.USES.prefer_other:
-                        dato.alternative = random_gen.weighted_choice([(it.word, it.percentage) for it in w.alternatedata_set.all()])
+                        word = random_gen.weighted_choice([(it.word, it.percentage) for it in w.alternatedata_set.all()])
+                        alternative_meaning = Meaning(word=word, definition=dato.meaning.definition, informer=self.informer, source=Meaning.SOURCES.informer)
+                        alternative_meaning.save()
+                        dato.alternative = alternative_meaning
                 dato.save()
 
         # Data related to coarsity
