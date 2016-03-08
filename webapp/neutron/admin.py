@@ -43,7 +43,7 @@ class ContextInline(admin.TabularInline):
 
 class MeaningAdmin(admin.ModelAdmin):
     form = MeaningForm
-    list_display = ('word', 'informer', 'source',)
+    list_display = ('word', 'informer',)
     inlines = [ContextInline, ]
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '20'})},

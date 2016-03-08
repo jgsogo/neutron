@@ -15,26 +15,15 @@ from .informer import Informer
 
 
 class MeaningManager(models.Manager):
-    def reference(self):
-        return self.filter(source=self.model.SOURCES.reference)
-
     def valid(self):
-        return self.exclude(source=self.model.SOURCES.trap)
-
-    def invalid(self):
-        return self.filter(source=self.model.SOURCES.trap)
+        return self.all()
 
 
 @python_2_unicode_compatible
 class Meaning(models.Model):
-    SOURCES = Choices((0, 'reference', _('Initial data from dictionaries')),
-                      (1, 'informer', _('Data provided from actual informers')),
-                      (2, 'trap', _('Invalid meanings just to catch cheaters')))
     word = models.ForeignKey(Word)
     definition = models.ForeignKey(Definition)
     informer = models.ForeignKey(Informer)
-
-    source = models.IntegerField(choices=SOURCES)
 
     objects = MeaningManager()
 

@@ -72,7 +72,6 @@ class Command(BaseCommand):
             meaning, _ = Meaning.objects.get_or_create(word=word_instance,
                                                        definition=definition,
                                                        informer=informer,
-                                                       source=Meaning.SOURCES.reference
                                                        )
             if example:
                 Context.objects.filter(meaning=meaning).delete()

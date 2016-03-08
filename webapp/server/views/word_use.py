@@ -67,8 +67,7 @@ class WordUseAlternateRun(WordUseStepRun):
         alternate_word, _ = Word.objects.get_or_create(word=form.cleaned_data['alternate'])
         alternate_meaning = Meaning.objects.create(word=alternate_word,
                                                    definition=self.get_meaning().definition,
-                                                   informer=word_use.informer,
-                                                   source=Meaning.SOURCES.informer)
+                                                   informer=word_use.informer)
         word_use.alternative = alternate_meaning
         word_use.save()
         return super(WordUseAlternateRun, self).form_valid(form)

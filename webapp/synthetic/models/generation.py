@@ -92,7 +92,7 @@ class InformerGenerated(models.Model):
                         # TODO: Cuando al azar prefiero otra palabra... ¿prefiero otra cualquiera al azar o una del subset?
                         # dato.alternative = random_gen.choice(list(w.alternatedata_set.all()))
                         word = random_gen.choice(Word.objects.all())
-                        alternative_meaning = Meaning(word=word, definition=dato.meaning.definition, informer=self.informer, source=Meaning.SOURCES.informer)
+                        alternative_meaning = Meaning(word=word, definition=dato.meaning.definition, informer=self.informer)
                         alternative_meaning.save()
                         dato.alternative = alternative_meaning
                 else:
@@ -101,7 +101,7 @@ class InformerGenerated(models.Model):
                                                            (WordUse.USES.unrecognized, w.unknown)])
                     if dato.use == WordUse.USES.prefer_other:
                         word = random_gen.weighted_choice([(it.word, it.percentage) for it in w.alternatedata_set.all()])
-                        alternative_meaning = Meaning(word=word, definition=dato.meaning.definition, informer=self.informer, source=Meaning.SOURCES.informer)
+                        alternative_meaning = Meaning(word=word, definition=dato.meaning.definition, informer=self.informer)
                         alternative_meaning.save()
                         dato.alternative = alternative_meaning
                 dato.save()
