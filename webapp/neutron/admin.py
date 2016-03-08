@@ -70,6 +70,7 @@ class WordUseAdmin(admin.ModelAdmin):
     list_filter = ('informer__region', 'interface', 'use',)
     search_fields = ('meaning__word',)
     readonly_fields = ('word', 'definition',)
+    exclude = ('meaning',)
 
     def word(self, object):
         return object.meaning.word
