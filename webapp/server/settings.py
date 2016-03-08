@@ -37,12 +37,14 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'bootstrap3', # https://github.com/dyve/django-bootstrap3
     'mptt',
+    'telegrambot',
+    'rest_framework',
 
     'neutron',
-    'telegram',
     'synthetic',
     'exporter',
 )
@@ -104,6 +106,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+SITE_ID = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
@@ -119,6 +122,8 @@ from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
+
+TELEGRAM_BOT_HANDLERS_CONF = "neutron.telegram.handlers"
 
 
 LOGGING = {

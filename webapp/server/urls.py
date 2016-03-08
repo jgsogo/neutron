@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^accounts/logout/$', logout, name='logout'),
     url(r'^accounts/register/$', register, name='register'),
 
-    url(r'^telegram/', include('telegram.urls', namespace='telegram')),
+    url(r'^telegrambot/', include('telegrambot.urls', namespace="telegrambot")),
 
     url(r'^$', HomeView.as_view()),
     url(r'^home/$', HomeView.as_view(), name='home'),
