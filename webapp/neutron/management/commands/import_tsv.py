@@ -7,7 +7,7 @@ import codecs
 import requests
 from django.core.management.base import BaseCommand, CommandError
 
-from neutron.models import Definition, Informer, Context, Word, Meaning
+from neutron.models import Definition, Informer, Context, Word, Meaning, WordUse, Interface
 
 
 class Command(BaseCommand):
@@ -28,6 +28,10 @@ class Command(BaseCommand):
             dest='force',
             default=False,
             help='Override already parsed data')
+        parser.add_argument('--filter',
+            dest='filter',
+            default='.*',
+            help='Regex expression to filter words')
 
     def get_informer(self, options):
         dict_name = options['informer']
@@ -35,6 +39,10 @@ class Command(BaseCommand):
             dict_name = os.path.basename(options['file']).rsplit('.', 1)[0]
         informer, created = Informer.objects.get_or_create(name=dict_name)
         return informer
+
+    def get_interface(self, options):
+        interface, _ = Interface.objects.get_or_create(name='import_tsv')
+        return interface
 
     def on_line(self, line):
         chunks = line.split('\t')
@@ -64,33 +72,44 @@ class Command(BaseCommand):
                 self.stdout.write('.')
         return word, definitions
 
-    def _save_data(self, informer, word, definitions, force=False):
+    def _save_data(self, informer, interface, word, definitions, force=False):
         word_instance, created = Word.objects.get_or_create(word=word)
-        order = 1
         for d, example in definitions:
+            # The data itself
             definition, _ = Definition.objects.get_or_create(definition=d)
-            meaning, _ = Meaning.objects.get_or_create(word=word_instance,
-                                                       definition=definition,
-                                                       informer=informer,
-                                                       )
+            meaning, created = Meaning.objects.get_or_create(word=word_instance,
+                                                             definition=definition,
+                                                             informer=informer,)
+
+            # Examples
             if example:
                 Context.objects.filter(meaning=meaning).delete()
                 c = Context(meaning=meaning, text=example, word_pos=example.find(word))
                 c.save()
-            order += 1
+
+            # WordUse
+            WordUse.objects.create(meaning=meaning,
+                                   use=WordUse.USES.ok,
+                                   interface=interface,
+                                   informer=informer)
         self.stdout.write(' - added')
 
     def handle(self, *args, **options):
         file = options['file']
         force = options['force']
+        filter = re.compile(options['filter'], re.IGNORECASE)
         try:
             informer = self.get_informer(options)
+            interface = self.get_interface(options)
             i = 0
             with codecs.open(file, 'r', 'utf-8') as f:
                 for line in f.readlines():
                     i += 1
                     word, definitions = self.on_line(line)
-                    self._save_data(informer, word, definitions, force)
+                    if filter.match(word):
+                        self._save_data(informer, interface, word, definitions, force)
+                    else:
+                        self.stdout.write(' - skipped')
         except KeyboardInterrupt:
             self.stdout.write('... user aborted, exit gracefully.')
         self.stdout.write('Done for %d words' % i)
