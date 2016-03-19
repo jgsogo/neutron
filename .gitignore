@@ -45,3 +45,7 @@ webapp/static
 basico_sm.tsv
 logs
 
+# Cpp stuff
+processing/*/build
+conanbuildinfo.cmake
+conaninfo.txt
