@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+import boto3
+
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime
 from exporter.models import ExportIndex
+from exporter.utils.download import download
 
 
 class Command(BaseCommand):
@@ -31,10 +35,32 @@ class Command(BaseCommand):
             default=None,
             help='End date (use format "%Y-%m-%d-%H-%M-%D")')
 
-    def handle(self, *args, **options):
-        name = options['name']
-        index = ExportIndex.objects.get(name=name)
-        files = index.get_data(version=options['version'], from_date=options['from_date'], to_date=options['to_date'])
+        parser.add_argument('--outpath',
+            dest='outpath',
+            default=None,
+            help='Destination path (will download files)')
 
-        from pprint import pformat
-        self.stdout.write(pformat(files))
+    def handle(self, *args, **options):
+        # Handle arguments
+        name = options['name']
+        from_date = parse_datetime(options['from_date']) if options['from_date'] else None
+        to_date = parse_datetime(options['to_date']) if options['to_date'] else None
+        outpath = options['outpath']
+        if not outpath:
+            raise CommandError("Provide an output path")
+
+        outpath = os.path.normpath(outpath)
+        dirname = os.path.dirname(outpath)
+        if not os.path.exists(dirname):
+            raise CommandError("Base directory '{}' must exists.".format(dirname))
+        if not os.path.exists(outpath):
+            os.makedirs(outpath)
+
+        # Get required data
+        index = ExportIndex.objects.get(name=name)
+        files = index.get_data(version=options['version'], from_date=from_date, to_date=to_date)
+
+        # Download from S3
+        download(files, outpath)
+
+        self.stdout.write("Done!")

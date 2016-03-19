@@ -105,7 +105,7 @@ class ExportIndex(AWSObject):
         time_now = now()
 
         if self.last_date and self.last_date + ExportIndex.MINIMUM_PERIOD > time_now:
-            log.warn("Abort incremental dump. Cannot perform another one until {}".format(self.last_date + ExportIndex.MINIMUM_PERIOD))
+            log.warn("Abort incremental dump. Cannot perform another one for '{}' until {} (now is {})".format(self.name, self.last_date + ExportIndex.MINIMUM_PERIOD, time_now))
             return False
 
         # Gather data
@@ -166,10 +166,10 @@ class ExportIndex(AWSObject):
             worduse = worduse.filter(start__gte=from_date)
             coarse = coarse.filter(start__gte=from_date)
 
-        return {'worduse': [(it.bucket, it.key) for it in worduse],
-                'coarse': [(it.bucket, it.key) for it in coarse],
-                'informer': [(it.bucket, it.key) for it in informer],
-                'meaning': [(it.bucket, it.key) for it in meaning],
+        return {'worduse_qs': worduse,
+                'coarse_qs': coarse,
+                'informer': informer.last(),
+                'meaning': meaning.last(),
                 }
 
 

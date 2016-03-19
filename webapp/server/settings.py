@@ -155,7 +155,12 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
             },
-        'words': {
+        'neutron': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+            },
+        'exporter': {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': True,
