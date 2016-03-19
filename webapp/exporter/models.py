@@ -105,7 +105,8 @@ class ExportIndex(AWSObject):
         time_now = now()
 
         if self.last_date and self.last_date + ExportIndex.MINIMUM_PERIOD > time_now:
-            log.warn("Abort incremental dump. Cannot perform another one for '{}' until {} (now is {})".format(self.name, self.last_date + ExportIndex.MINIMUM_PERIOD, time_now))
+            log.warn("Not enough time since last incremental dump for '{}'".format(self.name))
+            log.debug(" - wait until {} (now is {})".format(self.last_date + ExportIndex.MINIMUM_PERIOD, time_now))
             return False
 
         # Gather data
@@ -139,11 +140,13 @@ class ExportIndex(AWSObject):
                 wordcoarse.save(file=os.path.join(dirpath, filenames['wordcoarse_data']))
 
                 log.debug(" - save informer_data")
-                informers = OverrideFile(index=self, name='informer', version=version, end=time_now)
+                informers, _ = OverrideFile.objects.get_or_create(index=self, name='informer', version=version)
+                informers.end=time_now
                 informers.save(file=os.path.join(dirpath, filenames['informers_data']))
 
                 log.debug(" - save meaning_data")
-                meanings = OverrideFile(index=self, name='meaning', version=version, end=time_now)
+                meanings, _ = OverrideFile.objects.get_or_create(index=self, name='meaning', version=version)
+                meanings.end=time_now
                 meanings.save(file=os.path.join(dirpath, filenames['meanings_data']))
 
                 log.debug(" - update export_index")
@@ -156,20 +159,16 @@ class ExportIndex(AWSObject):
         filters = {}
         if to_date:
             filters.update({'end__lte': to_date})
+        if from_date:
+            filters.update({'start__gte': from_date})
 
         worduse = IncrementalFile.objects.filter(index=self, version=version, name='worduse').filter(**filters)
         coarse = IncrementalFile.objects.filter(index=self, version=version, name='coarse').filter(**filters)
-        informer = OverrideFile.objects.filter(index=self, version=version, name='informer').filter(**filters)
-        meaning = OverrideFile.objects.filter(index=self, version=version, name='meaning').filter(**filters)
-
-        if from_date:
-            worduse = worduse.filter(start__gte=from_date)
-            coarse = coarse.filter(start__gte=from_date)
 
         return {'worduse_qs': worduse,
                 'coarse_qs': coarse,
-                'informer': informer.last(),
-                'meaning': meaning.last(),
+                'informer': OverrideFile.objects.get(index=self, version=version, name='informer'),
+                'meaning': OverrideFile.objects.filter(index=self, version=version, name='meaning'),
                 }
 
 
@@ -206,7 +205,7 @@ class IncrementalFile(StoredFile):
     start = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        unique_together = ('version', 'name', 'start', 'end',)
+        unique_together = ('version', 'name', 'index', 'start', 'end',)
 
     def get_full_name(self):
         end = self.end.strftime('%Y-%m-%d-%H-%M-%S')
@@ -216,4 +215,5 @@ class IncrementalFile(StoredFile):
 
 @python_2_unicode_compatible
 class OverrideFile(StoredFile):
-    pass
+    class Meta:
+        unique_together = ('version', 'name', 'index',)
