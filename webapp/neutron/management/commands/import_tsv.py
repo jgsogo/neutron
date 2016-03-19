@@ -47,6 +47,7 @@ class Command(BaseCommand):
     def on_line(self, line):
         chunks = line.split('\t')
         word = chunks[0].strip()
+
         def on_definition(raw):
             raw = raw.strip().strip('.')
             raw = re.sub(r'\s([?.!:,;"](?:\s|$))', r'\1', raw)
@@ -63,13 +64,16 @@ class Command(BaseCommand):
             return definition, example
         definitions = [on_definition(chunk) for chunk in chunks[1:] if len(chunk.strip())]
 
-        self.stdout.write('%s:'%word)
-        for d,ex in definitions:
-            self.stdout.write('\t%s' % d, ending='')
-            if ex:
-                self.stdout.write(': %s.' % ex)
-            else:
-                self.stdout.write('.')
+        try:
+            self.stdout.write('%s:'%word)
+            for d,ex in definitions:
+                self.stdout.write('\t%s' % d, ending='')
+                if ex:
+                    self.stdout.write(': %s.' % ex)
+                else:
+                    self.stdout.write('.')
+        except (UnicodeEncodeError, UnicodeDecodeError) as e:
+            pass
         return word, definitions
 
     def _save_data(self, informer, interface, word, definitions, force=False):
