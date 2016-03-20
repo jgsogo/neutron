@@ -54,6 +54,10 @@ int main(int argc, char** argv){
         neutron::WordUseManager word_uses(word_use_file.string());
 
         // == Play a little bit with the data
+        auto spaniards = informers.get_by_region(neutron::region_id(1));
+        auto word_use_data_all = word_uses.all();
+
+        /*auto spaniards_data = */word_uses.filter(spaniards);
 
     }
     catch(std::exception& e) {

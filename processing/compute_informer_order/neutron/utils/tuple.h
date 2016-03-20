@@ -8,8 +8,11 @@ namespace utils {
     namespace tuple {
         
         // References: 
+        //  - a hpp with some interesting functionality: https://github.com/meox/omega.hpp
         //  - tail/head: http://stackoverflow.com/questions/10626856/how-to-split-a-tuple
         //  - project: http://stackoverflow.com/questions/23612648/creating-a-c-stdtuple-projection-function
+        //  - index of type: http://stackoverflow.com/questions/18063451/get-index-of-a-tuple-elements-type
+        //  - remove ith type of tuple: http://stackoverflow.com/questions/14852593/removing-the-first-type-of-a-stdtuple
         
         // Projection
         namespace {
@@ -40,6 +43,48 @@ namespace utils {
             return typename Projection<T, indexes...>::Tuple(std::get<indexes>(t)...);
         }
 
+        // Index of a given type
+        namespace {
+            template <class T, class Tuple>
+            struct Index;
+
+            template <class T, class... Types>
+            struct Index<T, std::tuple<T, Types...>> {
+                static const std::size_t value = 0;
+            };
+
+            template <class T, class U, class... Types>
+            struct Index<T, std::tuple<U, Types...>> {
+                static const std::size_t value = 1 + Index<T, std::tuple<Types...>>::value;
+            };
+        }
+        template <typename T, typename... Ts>
+        constexpr std::size_t index() {
+            return Index<T, std::tuple<Ts...>>::value;
+        }
+
+        // Remove ith type of a tuple
+        template<size_t I, typename T>
+        struct remove_ith_type;
+
+        template<typename T, typename... Ts>
+        struct remove_ith_type<0, std::tuple<T, Ts...>> {
+            typedef std::tuple<Ts...> type;
+            auto indexes() {
+                std::make_index_sequence<sizeof...(Ts)>();
+            }
+        };
+
+        template<size_t I, typename T, typename... Ts>
+        struct remove_ith_type<I, std::tuple<T, Ts...>> {
+            typedef decltype(
+                std::tuple_cat(
+                    declval<std::tuple<T>>(),
+                    declval<typename remove_ith_type<I - 1, std::tuple<Ts...>>::type>()
+                )
+                ) type;
+        };
+
         // Comparaison
         struct NoCompareType {};
         namespace {
@@ -61,7 +106,6 @@ namespace utils {
             };
                         
         }
-        
         
         template <typename T, typename... Args>
         bool pair_compare(const std::tuple<T, Args...>& lhs, const std::tuple<T, Args...>& rhs) {
