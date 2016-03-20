@@ -54,10 +54,24 @@ int main(int argc, char** argv){
         neutron::WordUseManager word_uses(word_use_file.string());
 
         // == Play a little bit with the data
+        std::cout << "Get all spaniards (region_id = 1)" << std::endl;
         auto spaniards = informers.get_by_region(neutron::region_id(1));
+        for (auto& item : spaniards) {
+            std::cout << item << std::endl;
+        }
+        std::cout << "Get all spaniards (region_id = 1) -- version 2" << std::endl;
+        auto spaniards2 = ::utils::list(informers.filter(neutron::region_id(1)));
+        for (auto& item : spaniards2) {
+            std::cout << item << std::endl;
+        }
+        /*
         auto word_use_data_all = word_uses.all();
 
-        /*auto spaniards_data = */word_uses.filter(spaniards);
+        auto spaniards_data = word_uses.filter(spaniards);
+        for (auto& item : spaniards_data) {
+            std::cout << item << std::endl;
+        }
+        */
 
     }
     catch(std::exception& e) {

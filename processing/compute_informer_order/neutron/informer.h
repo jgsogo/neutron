@@ -5,7 +5,7 @@
 #include "types.h"
 
 namespace neutron {
-    class InformerManager : public utils::BaseManager<informer_id, region_id> {
+    class InformerManager : public ::utils::BaseManager<informer_id, region_id> {
         public:
             typedef std::map<informer_id, region_id> informer_container_type;
             typedef std::map<region_id, std::vector<informer_id>> informer_by_region_type;
@@ -25,7 +25,7 @@ namespace neutron {
                 if (it != _all_by_region.end()) {
                     return it->second;
                 }
-                throw utils::NotFoundException("Region not found");
+                throw ::utils::NotFoundException("Region not found");
             }
             
         protected:

@@ -5,11 +5,11 @@
 #include "types.h"
 
 namespace neutron {
-    class WordUseManager : public utils::BaseManager<informer_id,
-                                                     interface_id,
-                                                     meaning_id,
-                                                     word_use_id,
-                                                     word_id> {
+    class WordUseManager : public ::utils::BaseManager<informer_id,
+                                                       interface_id,
+                                                       meaning_id,
+                                                       word_use_id,
+                                                       word_id> {
     public:
         typedef std::map<interface_id, std::vector<std::tuple<informer_id, meaning_id, word_use_id, word_id>>> worduse_by_interface_type;
 

@@ -13,6 +13,7 @@ namespace utils {
         //  - project: http://stackoverflow.com/questions/23612648/creating-a-c-stdtuple-projection-function
         //  - index of type: http://stackoverflow.com/questions/18063451/get-index-of-a-tuple-elements-type
         //  - remove ith type of tuple: http://stackoverflow.com/questions/14852593/removing-the-first-type-of-a-stdtuple
+        //  - integer sequence with one out: http://stackoverflow.com/questions/27124920/compile-time-generate-integer-sequence-with-one-left-out
         
         // Projection
         namespace {
@@ -38,9 +39,14 @@ namespace utils {
            return  tail_impl( std::make_index_sequence<sizeof...(Ts) - 1u>() , t );
         }
 
-        template<size_t... indexes, typename T>
+        template<std::size_t... indexes, typename T>
         auto project(const T &t) -> typename Projection<T, indexes...>::Tuple {
             return typename Projection<T, indexes...>::Tuple(std::get<indexes>(t)...);
+        }
+
+        template<std::size_t... indexes, typename T>
+        auto project(const T &t, std::index_sequence<indexes...>) {
+            return std::make_tuple(std::get<indexes>(t)...);
         }
 
         // Index of a given type
@@ -70,20 +76,32 @@ namespace utils {
         template<typename T, typename... Ts>
         struct remove_ith_type<0, std::tuple<T, Ts...>> {
             typedef std::tuple<Ts...> type;
-            auto indexes() {
-                std::make_index_sequence<sizeof...(Ts)>();
-            }
         };
 
         template<size_t I, typename T, typename... Ts>
         struct remove_ith_type<I, std::tuple<T, Ts...>> {
             typedef decltype(
                 std::tuple_cat(
-                    declval<std::tuple<T>>(),
-                    declval<typename remove_ith_type<I - 1, std::tuple<Ts...>>::type>()
+                    std::declval<std::tuple<T>>(),
+                    std::declval<typename remove_ith_type<I - 1, std::tuple<Ts...>>::type>()
                 )
                 ) type;
         };
+
+        // Generate integer sequence with one out:
+        namespace {
+            template <typename Seq1, std::size_t Offset, typename Seq2> struct concat_seq;
+
+            template <std::size_t ... Is1, std::size_t Offset, std::size_t ... Is2>
+            struct concat_seq<std::index_sequence<Is1...>, Offset, std::index_sequence<Is2...>>
+            {
+                using type = std::index_sequence<Is1..., (Offset + Is2)...>;
+            };
+        }
+
+        template <std::size_t N, std::size_t E>
+        using gen_seq = typename concat_seq<typename std::make_index_sequence<E>::type, E + 1, typename std::make_index_sequence<(N > E) ? (N - E - 1) : 0>::type>::type;
+
 
         // Comparaison
         struct NoCompareType {};
@@ -118,6 +136,28 @@ namespace utils {
             return atomic_compare<T>::pair_compare(head(lhs), head(rhs));
         }
         
+
+        // Print
+        // pretty-print a tuple (from http://stackoverflow.com/a/6245777/273767)
+        template<class Ch, class Tr, class Tuple, std::size_t... Is>
+        void print_tuple_impl(std::basic_ostream<Ch, Tr>& os,
+                              const Tuple & t,
+                              std::index_sequence<Is...>) {
+            using swallow = int[]; // guaranties left to right order
+            (void)swallow {
+                0, (void(os << (Is == 0 ? "" : ", ") << std::get<Is>(t)), 0)...
+            };
+        }
+
+        
     }
 }
 
+template<class Ch, class Tr, class... Args>
+decltype(auto) operator<<(std::basic_ostream<Ch, Tr>& os,
+    const std::tuple<Args...>& t)
+{
+    os << "(";
+    ::utils::tuple::print_tuple_impl(os, t, std::index_sequence_for<Args...>{});
+    return os << ")";
+}
