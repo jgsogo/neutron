@@ -7,6 +7,13 @@
 
 
 int main(int argc, char** argv){
+    typedef std::size_t tipo1;
+    typedef std::size_t tipo2;
+
+    tipo1 t1 = 1;
+    tipo2 t2 = 2;
+    t1 = t2;
+
     std::cout << "== Compute informer order ==\n";
     try {
         // Define and parse the program options
@@ -40,9 +47,7 @@ int main(int argc, char** argv){
         // Parse informers
         fs::path informers_file = path / "data_informers.tsv";
         neutron::InformerManager informers(informers_file.string());
-        
-        auto esp = informers.filter(std::tuple<std::size_t, std::size_t>(1, 2));
-        
+                
     }
     catch(std::exception& e) {
         std::cerr << "Unhandled Exception reached the top of main: " 

@@ -30,6 +30,7 @@ namespace neutron {
                     parse(filename, _raw_data);
                 }
                 
+                /* TODO: Investigar cómo implementar filtros
                 data_vector_type filter(const std::tuple<Args...>& filters) {
                     data_vector_type result;
                     for (auto& item: _raw_data) {
@@ -39,6 +40,7 @@ namespace neutron {
                     }
                     return result;
                 }
+                */
                 
             protected:
                 data_vector_type _raw_data;
