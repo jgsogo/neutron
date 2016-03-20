@@ -38,13 +38,11 @@ int main(int argc, char** argv){
         std::cout << " - path to files: '" << path << "'\n";
         
         // Parse informers
-        neutron::Informer::informer_vector_type informers;
         fs::path informers_file = path / "data_informers.tsv";
-        neutron::Informer::parse(informers_file.string(), informers);
+        neutron::InformerManager informers(informers_file.string());
         
-        for (auto& informer : informers) {
-            std::cout << std::get<0>(informer) << " - " << std::get<1>(informer) << "\n";
-        }
+        auto esp = informers.filter(std::tuple<std::size_t, std::size_t>(1, 2));
+        
     }
     catch(std::exception& e) {
         std::cerr << "Unhandled Exception reached the top of main: " 

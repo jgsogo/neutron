@@ -1,18 +1,33 @@
 
 #pragma once
 
-#include "utils/read_file.h"
+#include "utils/base_manager.h"
 
 namespace neutron {
-    class Informer {
+    class InformerManager : public utils::BaseManager<std::size_t, std::size_t> {
         public:
-            typedef std::vector<std::tuple<std::size_t, std::size_t>> informer_vector_type;
+            typedef std::map<std::size_t, std::size_t> informer_container_type;
+            typedef std::map<std::size_t, std::vector<std::size_t>> informer_by_region_type;
+            
+        public:
+            InformerManager(const std::string& filename) : BaseManager(filename) {
+                for(auto& item: _raw_data) {
+                    const std::size_t& first = std::get<0>(item);
+                    const std::size_t& second = std::get<1>(item);
+                    _all.insert(std::make_pair(first, second));
+                    _all_by_region[first].push_back(second);
+                }
+            }
         
-            static std::size_t parse(const std::string& filename, informer_vector_type& informers) {
-                std::size_t old_length = informers.size();
-                utils::read_file<std::size_t, std::size_t>(filename, informers);
-                return informers.size() - old_length;
+            const std::vector<std::size_t>& get_by_region(const std::size_t& region) {
+                informer_by_region_type::const_iterator it = _all_by_region.find(region);
+                if (it != _all_by_region.end()) {
+                    return it->second;
+                }
+                throw utils::NotFoundException("Region not found");
             }
         protected:
+            informer_container_type _all;
+            informer_by_region_type _all_by_region;
     };
 }
