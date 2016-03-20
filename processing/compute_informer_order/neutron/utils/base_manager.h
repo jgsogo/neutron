@@ -42,6 +42,9 @@ namespace neutron {
                 }
                 */
                 
+                const data_vector_type& all() const {
+                    return _raw_data;
+                }
             protected:
                 data_vector_type _raw_data;
         };     

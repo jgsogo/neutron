@@ -4,6 +4,7 @@
 #include <boost/filesystem.hpp>
 
 #include "neutron/informer.h"
+#include "neutron/word_use.h"
 
 
 int main(int argc, char** argv){
@@ -47,7 +48,13 @@ int main(int argc, char** argv){
         // Parse informers
         fs::path informers_file = path / "data_informers.tsv";
         neutron::InformerManager informers(informers_file.string());
-                
+
+        // Parse worduse
+        fs::path word_use_file = path / "data_worduse.tsv";
+        neutron::WordUseManager word_uses(word_use_file.string());
+
+        // == Play a little bit with the data
+
     }
     catch(std::exception& e) {
         std::cerr << "Unhandled Exception reached the top of main: " 

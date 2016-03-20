@@ -7,20 +7,19 @@
 namespace neutron {
     namespace utils {
         
-        // Credit: http://stackoverflow.com/questions/14033828/translating-a-stdtuple-into-a-template-parameter-pack
+        // Reference: http://stackoverflow.com/questions/14033828/translating-a-stdtuple-into-a-template-parameter-pack
         //  - [BUG]: Initializator list order: http://stackoverflow.com/questions/14060264/order-of-evaluation-of-elements-in-list-initialization
+        //  - Maybe improve with: http://stackoverflow.com/questions/10014713/build-tuple-using-variadic-templates
         namespace {
             template <typename T>
-            struct _helper_caster {
-                _helper_caster(std::istream& ss) { ss >> _dato;};
-                operator T() {return std::move(_dato);}
-                T _dato;
-            };            
+            T read(std::istream& is) {
+                T t; is >> t; return t;
+            }
         }
         
         template<typename... Args>
         std::tuple<Args...> parse(std::stringstream& stream) {            
-            return std::tuple<Args...> { _helper_caster<Args>(stream)... };
+            return std::tuple<Args...> { read<Args>(stream)... };
         }
         
         template<typename... Args>

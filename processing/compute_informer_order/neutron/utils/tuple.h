@@ -7,26 +7,39 @@
 namespace utils {
     namespace tuple {
         
-        // Credit: http://stackoverflow.com/questions/10626856/how-to-split-a-tuple
+        // References: 
+        //  - tail/head: http://stackoverflow.com/questions/10626856/how-to-split-a-tuple
+        //  - project: http://stackoverflow.com/questions/23612648/creating-a-c-stdtuple-projection-function
         
+        // Projection
+        namespace {
+            template<typename T, size_t... indexes>
+            class Projection {
+                public:
+                    using Tuple = std::tuple<typename std::tuple_element<indexes, T>::type...>;
+            };
+
+            template < std::size_t... Ns, typename... Ts >
+            auto tail_impl(std::index_sequence<Ns...>, std::tuple<Ts...> t) {
+                return std::make_tuple(std::get<Ns + 1u>(t)...);
+            }
+        }
+
         template < typename T , typename... Ts >
-        auto head( std::tuple<T,Ts...> t )
-        {
+        auto head( std::tuple<T,Ts...> t ) {
            return  std::get<0>(t);
         }
 
-        template < std::size_t... Ns , typename... Ts >
-        auto tail_impl( std::index_sequence<Ns...> , std::tuple<Ts...> t )
-        {
-           return  std::make_tuple( std::get<Ns+1u>(t)... );
-        }
-
         template < typename... Ts >
-        auto tail( std::tuple<Ts...> t )
-        {
+        auto tail( std::tuple<Ts...> t ) {
            return  tail_impl( std::make_index_sequence<sizeof...(Ts) - 1u>() , t );
         }
-        
+
+        template<size_t... indexes, typename T>
+        auto project(const T &t) -> typename Projection<T, indexes...>::Tuple {
+            return typename Projection<T, indexes...>::Tuple(std::get<indexes>(t)...);
+        }
+
         // Comparaison
         struct NoCompareType {};
         namespace {

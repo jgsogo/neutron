@@ -11,5 +11,6 @@ namespace neutron {
     typedef ::utils::strong_typedef<std::size_t, 3> word_use_id;
     typedef ::utils::strong_typedef<std::size_t, 4> region_id;
     typedef ::utils::strong_typedef<std::size_t, 5> interface_id;
+    typedef ::utils::strong_typedef<std::size_t, 5> word_id;
     
 }
