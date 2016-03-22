@@ -70,18 +70,19 @@ class Command(BaseCommand):
         lema = None
         data = [] # [(lema, numero, is_def, definicion, ejemplo), ...]
 
-        # TODO: Parsear locuciones también
-
         numera = 1
         item = None
+        is_locution = False
         for child in node:
             if child.tag in ['lema', 'variante', 'locucion']:
                 if child.tag in ['lema', 'variante']:
+                    is_locution = False
                     if child.find('lema_cursiva') is None:
                         lema = child.text.strip()
                     else:
                         lema = child.find('lema_cursiva').text.strip()
                 elif child.tag == 'locucion':
+                    is_locution = True
                     numera = 1
                     lema = ''.join([child.text] + [c.tail for c in child] + [child.tail]).strip()
             elif child.tag == 'numera':
@@ -90,9 +91,10 @@ class Command(BaseCommand):
                 if item:
                     data.append(item)
                 definition = ''.join([child.text] + [c.text + c.tail for c in child])
-                item = [lema, numera, child.tag == 'definicion', definition.strip(), None]
+                type = Meaning.TYPE.definition if child.tag == 'definicion' else Meaning.TYPE.reference
+                item = [lema, is_locution, numera, type, definition.strip().strip('.:'), None]
             elif child.tag == 'ejemplo':
-                item[4] = child.text.strip()
+                item[5] = child.text.strip().strip('.')
         data.append(item)
 
         return data

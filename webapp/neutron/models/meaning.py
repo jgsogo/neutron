@@ -21,9 +21,15 @@ class MeaningManager(models.Manager):
 
 @python_2_unicode_compatible
 class Meaning(models.Model):
+    TYPE = Choices((0, 'definition', _('Definition')),
+                   (1, 'reference', _('Reference (remisión)')),
+                   )
     word = models.ForeignKey(Word)
     definition = models.ForeignKey(Definition)
     informer = models.ForeignKey(Informer)
+    
+    type = models.IntegerField(choices=TYPE, default=TYPE.definition)
+    is_locution = models.BooleanField(default=False)
 
     objects = MeaningManager()
 

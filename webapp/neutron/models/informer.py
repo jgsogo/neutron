@@ -9,19 +9,25 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
 
+from model_utils import Choices
 from .region import Region
 
 
 @python_2_unicode_compatible
 class Informer(models.Model):
+    PRIVACY = Choices((0, 'public', _('Public')),
+                      (1, 'friends', _('Friends')),
+                      (2, 'private', _('Private')),
+                     )
+
     name = models.CharField(max_length=64)
     comment = models.TextField()
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
                              help_text=_('Informers may or may not be users in the webapp'))
-
     region = models.ForeignKey(Region, blank=True, null=True)
 
+    privacy = models.IntegerField(choices=PRIVACY, default=PRIVACY.public, help_text=_("Define who can see this information: public (everyone), friends (only users registered), private (nobody, just in database dumps)."))
     confidence = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
                                    blank=True,
                                    null=True,
