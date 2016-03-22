@@ -45,7 +45,7 @@ class Meaning(models.Model):
 @python_2_unicode_compatible
 class Context(models.Model):
     meaning = models.ForeignKey(Meaning, blank=True, null=True)
-    word_pos = models.IntegerField()
+    word_pos = models.IntegerField(default=-1)
     text = models.TextField()
 
     class Meta:

@@ -13,6 +13,11 @@ from django.core.management.base import BaseCommand, CommandError
 from neutron.models import Definition, Informer, Context, Word, Meaning, WordUse, Interface
 
 
+def all_text(node):
+    txt = ''.join([node.text] + [c.text + c.tail for c in node] + [node.tail])
+    return txt.strip()
+    
+
 class Command(BaseCommand):
     help = 'Import file from SM'
 
@@ -23,11 +28,11 @@ class Command(BaseCommand):
             dest='informer',
             default=None,
             help='Informer name (default is filename) to assign this data to')
-        parser.add_argument('--force',
+        parser.add_argument('--test',
             action='store_true',
-            dest='force',
+            dest='test',
             default=False,
-            help='Override already parsed data')
+            help='Test command (do not touch database)')
         parser.add_argument('--filter',
             dest='filter',
             default='.*',
@@ -62,13 +67,13 @@ class Command(BaseCommand):
                 elif child.tag == 'locucion':
                     is_locution = True
                     numera = 1
-                    lema = ''.join([child.text] + [c.tail for c in child] + [child.tail]).strip()
+                    lema = all_text(child)
             elif child.tag == 'numera':
                 numera = child.text.strip()
             elif child.tag in ['definicion', 'remision']:
                 if item:
                     data.append(item)
-                definition = ''.join([child.text] + [c.text + c.tail for c in child])
+                definition = all_text(child)
                 type = Meaning.TYPE.definition if child.tag == 'definicion' else Meaning.TYPE.reference
                 item = [lema, is_locution, numera, type, definition.strip().strip('.:'), None]
             elif child.tag == 'ejemplo':
@@ -78,46 +83,71 @@ class Command(BaseCommand):
         return data
 
     def handle(self, *args, **options):
+        self.stdout.write("== Import file from disk (using format from SM) ==")
+        
+        verbosity = int(options['verbosity'])
         file = options['file']
-        force = options['force']
+        test = options['test']
         filter = re.compile(options['filter'], re.IGNORECASE)
+        
+        self.stdout.write(" - file: %s" % file)
+        self.stdout.write(" - filter: %s" % options['filter'])
+        
         try:
             informer = self.get_informer(options)
             interface = self.get_interface(options)
 
+            self.stdout.write(" - informer: %s" % informer)
+            self.stdout.write(" - interface: %s" % interface)
+
             tree = ET.parse(file)
             root = tree.getroot()
 
-            i = 0
-            for ficha in root.findall('./ficha'):
+            fichas = root.findall('./ficha')
+            n_fichas = len(fichas)
+            ficha_format = "[%%0%dd/%%d]" % len(str(n_fichas))
+            i = i_skipped = i_meanings = 0            
+            for ficha in fichas:
                 i += 1
-                lema = ficha.find('lema').text.strip()
+                lema = all_text(ficha.find('lema'))
+                if verbosity > 1:
+                    self.stdout.write(('\n' if verbosity > 2 else '') + ficha_format % (i, n_fichas), ending='')
                 if filter.match(lema):
                     data = self.work_on_ficha(ficha)
+                    if verbosity > 1:
+                        self.stdout.write(' + add:  %s' % repr(lema))
                     for it in data:
-                        # The data itself
-                        word_instance, _ = Word.objects.get_or_create(word=it[0]) # TODO: Cache this
-                        definition, _ = Definition.objects.get_or_create(definition=it[4])                        
-                        meaning, _ = Meaning.objects.get_or_create(word=word_instance,
-                                                                   definition=definition,
-                                                                   informer=informer,
-                                                                   type=it[3],
-                                                                   is_locution=it[1],
-                                                                   order=it[2],)
-                        # Examples
-                        if example:
-                            Context.objects.filter(meaning=meaning).delete()
-                            c = Context(meaning=meaning, text=it[5])
-                            c.save()
+                        i_meanings += 1
+                        
+                        if verbosity > 2:
+                            self.stdout.write('\t' + repr(it))
+                        
+                        if not test:
+                            # The data itself
+                            word_instance, _ = Word.objects.get_or_create(word=it[0]) # TODO: Cache this
+                            definition, _ = Definition.objects.get_or_create(definition=it[4])                        
+                            meaning, _ = Meaning.objects.get_or_create(word=word_instance,
+                                                                       definition=definition,
+                                                                       informer=informer,
+                                                                       type=it[3],
+                                                                       is_locution=it[1],
+                                                                       order=it[2],)
+                            # Examples
+                            if it[5]:
+                                Context.objects.filter(meaning=meaning).delete()
+                                c = Context(meaning=meaning, text=it[5])
+                                c.save()
 
-                        # WordUse
-                        WordUse.objects.create(meaning=meaning,
-                                               use=WordUse.USES.ok,
-                                               interface=interface,
-                                               informer=informer)
-                    self.stdout.write(' - added')
+                            # WordUse
+                            WordUse.objects.create(meaning=meaning,
+                                                   use=WordUse.USES.ok,
+                                                   interface=interface,
+                                                   informer=informer)
+
                 else:
-                    self.stdout.write(' - skipped')
+                    i_skipped += 1
+                    if verbosity > 1:
+                        self.stdout.write(' - skip: %s' % repr(lema))
         except KeyboardInterrupt:
             self.stdout.write('... user aborted, exit gracefully.')
-        self.stdout.write('Done for %d words' % i)
+        self.stdout.write('Done for %d words (%d skipped). %d meanings processed.' % (i, i_skipped, i_meanings))
