@@ -44,28 +44,6 @@ class Command(BaseCommand):
         interface, _ = Interface.objects.get_or_create(name='import_sm')
         return interface
 
-    def _save_data(self, informer, interface, word, definitions, force=False):
-        word_instance, created = Word.objects.get_or_create(word=word)
-        for d, example in definitions:
-            # The data itself
-            definition, _ = Definition.objects.get_or_create(definition=d)
-            meaning, created = Meaning.objects.get_or_create(word=word_instance,
-                                                             definition=definition,
-                                                             informer=informer,)
-
-            # Examples
-            if example:
-                Context.objects.filter(meaning=meaning).delete()
-                c = Context(meaning=meaning, text=example, word_pos=example.find(word))
-                c.save()
-
-            # WordUse
-            WordUse.objects.create(meaning=meaning,
-                                   use=WordUse.USES.ok,
-                                   interface=interface,
-                                   informer=informer)
-        self.stdout.write(' - added')
-
     def work_on_ficha(self, node):
         lema = None
         data = [] # [(lema, numero, is_def, definicion, ejemplo), ...]
@@ -116,25 +94,30 @@ class Command(BaseCommand):
                 lema = ficha.find('lema').text.strip()
                 if filter.match(lema):
                     data = self.work_on_ficha(ficha)
-
                     for it in data:
-                        try:
-                            self.stdout.write(repr(it))
-                        except:
-                            self.stderr.write('error: ' + str(it))
-                            pass
+                        # The data itself
+                        word_instance, _ = Word.objects.get_or_create(word=it[0]) # TODO: Cache this
+                        definition, _ = Definition.objects.get_or_create(definition=it[4])                        
+                        meaning, _ = Meaning.objects.get_or_create(word=word_instance,
+                                                                   definition=definition,
+                                                                   informer=informer,
+                                                                   type=it[3],
+                                                                   is_locution=it[1],
+                                                                   order=it[2],)
+                        # Examples
+                        if example:
+                            Context.objects.filter(meaning=meaning).delete()
+                            c = Context(meaning=meaning, text=it[5])
+                            c.save()
 
-            return
-
-            i = 0
-            with codecs.open(file, 'r', 'utf-8') as f:
-                for line in f.readlines():
-                    i += 1
-                    word, definitions = self.on_line(line)
-                    if filter.match(word):
-                        self._save_data(informer, interface, word, definitions, force)
-                    else:
-                        self.stdout.write(' - skipped')
+                        # WordUse
+                        WordUse.objects.create(meaning=meaning,
+                                               use=WordUse.USES.ok,
+                                               interface=interface,
+                                               informer=informer)
+                    self.stdout.write(' - added')
+                else:
+                    self.stdout.write(' - skipped')
         except KeyboardInterrupt:
             self.stdout.write('... user aborted, exit gracefully.')
         self.stdout.write('Done for %d words' % i)
