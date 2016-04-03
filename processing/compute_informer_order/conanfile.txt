@@ -5,5 +5,5 @@ Boost/1.60.0@lasote/stable
 cmake
 
 [imports]
-bin, *.dll -> ./bin # Copies all dll files from the package "bin" folder to my project "bin" folder
-lib, *.dylib* -> ./bin # Copies all dylib files from the package "lib" folder to my project "bin" folder
+bin, *.dll -> ./build/bin
+lib, *.dylib* -> ./build/bin

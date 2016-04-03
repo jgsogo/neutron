@@ -3,6 +3,9 @@
 
 #include <fstream>
 #include <tuple>
+#include <vector>
+#include <string>
+#include <sstream>
 
 namespace utils {
         

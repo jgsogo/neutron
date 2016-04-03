@@ -60,7 +60,7 @@ int main(int argc, char** argv){
             std::cout << item << std::endl;
         }
         std::cout << "Get all spaniards (region_id = 1) -- version 2" << std::endl;
-        auto spaniards2 = ::utils::list(informers.filter(neutron::region_id(1)));
+        auto spaniards2 = ::utils::list<neutron::informer_id>(informers.filter(neutron::region_id(1)));
         for (auto& item : spaniards2) {
             std::cout << item << std::endl;
         }
@@ -73,6 +73,9 @@ int main(int argc, char** argv){
         }
         */
 
+        // == Play with querysets
+        utils::QuerySet<neutron::informer_id, neutron::region_id> qs(informers.all());
+        //qs.filter(neutron::region_id(1));
     }
     catch(std::exception& e) {
         std::cerr << "Unhandled Exception reached the top of main: " 
