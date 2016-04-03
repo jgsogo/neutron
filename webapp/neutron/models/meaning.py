@@ -21,9 +21,16 @@ class MeaningManager(models.Manager):
 
 @python_2_unicode_compatible
 class Meaning(models.Model):
+    TYPE = Choices((0, 'definition', _('Definition')),
+                   (1, 'reference', _('Reference (remisión)')),
+                   )
     word = models.ForeignKey(Word)
     definition = models.ForeignKey(Definition)
     informer = models.ForeignKey(Informer)
+    order = models.IntegerField(blank=True, null=True)
+    
+    type = models.IntegerField(choices=TYPE, default=TYPE.definition)
+    is_locution = models.BooleanField(default=False)
 
     objects = MeaningManager()
 
@@ -38,7 +45,7 @@ class Meaning(models.Model):
 @python_2_unicode_compatible
 class Context(models.Model):
     meaning = models.ForeignKey(Meaning, blank=True, null=True)
-    word_pos = models.IntegerField()
+    word_pos = models.IntegerField(default=-1)
     text = models.TextField()
 
     class Meta:

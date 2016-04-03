@@ -200,7 +200,6 @@ class StoredFile(AWSObject):
         return self.name
 
 
-@python_2_unicode_compatible
 class IncrementalFile(StoredFile):
     start = models.DateTimeField(blank=True, null=True)
 
@@ -213,7 +212,6 @@ class IncrementalFile(StoredFile):
         return '{v}-{name}-to({end})-from({start})'.format(v=self.version, name=self.name, start=start, end=end)
 
 
-@python_2_unicode_compatible
 class OverrideFile(StoredFile):
     class Meta:
         unique_together = ('version', 'name', 'index',)
