@@ -5,23 +5,41 @@ language: cpp
 
 matrix:
   include:
-    - os: linux
-      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5
+    - compiler: gcc
       addons:
         apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+      env: COMPILER=g++-4.9
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
           packages:
             - g++-5
-          sources: &sources
-            - llvm-toolchain-precise
-            - ubuntu-toolchain-r-test
-    - os: linux
-      env: COMPILER_NAME=clang CXX=clang++-3.8 CC=clang-3.8
+      env: COMPILER=g++-5
+    - compiler: clang
       addons:
         apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.7
+          packages:
+            - clang-3.7
+      env: COMPILER=clang++-3.7
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.8
           packages:
             - clang-3.8
-          sources: *sources
-
+      env: COMPILER=clang++-3.8
+      
 install:
   # install cmake 2.8.12 manually, see
   #     * https://github.com/travis-ci-tester/travis-test-cmake
@@ -48,5 +66,5 @@ install:
 script:
   - mkdir processing/compute_informer_order/build
   - cd processing/compute_informer_order/build
-  - cmake .. && cmake --build .
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && cmake --build .
 
