@@ -19,4 +19,7 @@ matrix:
             - clang-3.8
           sources: *sources
 script:
-    make processing/compute_informer_order
+  - mkdir processing/compute_informer_order/build
+  - cd processing/compute_informer_order/build
+  - cmake .. && make
+
