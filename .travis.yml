@@ -63,6 +63,8 @@ install:
 
   # Automatic detection of your arch, compiler, etc
   - cd processing/compute_informer_order
+  - echo $COMPILER_NAME
+  - echo $COMPILER_VERSION
   - conan install -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION
   - cd ..
   - cd ..
