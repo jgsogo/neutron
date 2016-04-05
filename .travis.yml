@@ -12,7 +12,10 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.9
-      env: COMPILER=g++-4.9
+      env: 
+        - COMPILER=g++-4.9
+        - COMPILER_NAME=g++
+        - COMPILER_VERSION=4.9
     - compiler: gcc
       addons:
         apt:
@@ -20,7 +23,10 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env: COMPILER=g++-5
+      env:
+        - COMPILER=g++-5
+        - COMPILER_NAME=g++
+        - COMPILER_VERSION=5
     - compiler: clang
       addons:
         apt:
@@ -29,7 +35,10 @@ matrix:
             - llvm-toolchain-precise-3.7
           packages:
             - clang-3.7
-      env: COMPILER=clang++-3.7
+      env: 
+        - COMPILER=clang++-3.7
+        - COMPILER_NAME=clang
+        - COMPILER_VERSION=3.7
     - compiler: clang
       addons:
         apt:
@@ -38,7 +47,10 @@ matrix:
             - llvm-toolchain-precise-3.8
           packages:
             - clang-3.8
-      env: COMPILER=clang++-3.8
+      env: 
+        - COMPILER=clang++-3.8
+        - COMPILER_NAME=clang
+        - COMPILER_VERSION=3.8
       
 install:
   # install cmake 2.8.12 manually, see
@@ -59,7 +71,7 @@ install:
 
   # Automatic detection of your arch, compiler, etc
   - cd processing/compute_informer_order
-  - conan install
+  - conan install -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION
   - cd ..
   - cd ..
   
