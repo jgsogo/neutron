@@ -33,8 +33,19 @@ install:
   - cd ..
   # -- end
   
+  # Download conan
+  - wget http://downloads.conan.io/latest_debian -O conan.deb
+  - sudo dpkg -i conan.deb
+  - rm conan.deb
+
+  # Automatic detection of your arch, compiler, etc
+  - cd processing/compute_informer_order
+  - conan install
+  - cd ..
+  - cd ..
+  
 script:
   - mkdir processing/compute_informer_order/build
   - cd processing/compute_informer_order/build
-  - cmake .. && make
+  - cmake .. && cmake --build .
 
