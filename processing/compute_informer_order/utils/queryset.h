@@ -26,8 +26,8 @@ namespace utils {
     template <typename... Args, typename T>
     auto filter(const queryset<Args...>& qs, const T& filter_value) {
         constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
-        typedef ::utils::tuple::remove_ith_type<index, std::tuple<Args...>>::type result_tuple;
-        typedef ::utils::tuple::gen_seq<sizeof...(Args), index>::type result_tuple_indexes;
+        typedef typename ::utils::tuple::remove_ith_type<index, std::tuple<Args...>>::type result_tuple;
+        typedef typename ::utils::tuple::gen_seq<sizeof...(Args), index>::type result_tuple_indexes;
 
         std::vector<result_tuple> result;
         // There is no 'std::copy_if_and_transform' algorithm
@@ -43,8 +43,8 @@ namespace utils {
     template <typename... Args, typename T>
     auto filter(const queryset<Args...>& qs, const std::vector<T>& filter_values) {
         constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
-        typedef ::utils::tuple::remove_ith_type<index, std::tuple<Args...>>::type result_tuple;
-        typedef ::utils::tuple::gen_seq<sizeof...(Args), index>::type result_tuple_indexes;
+        typedef typename ::utils::tuple::remove_ith_type<index, std::tuple<Args...>>::type result_tuple;
+        typedef typename ::utils::tuple::gen_seq<sizeof...(Args), index>::type result_tuple_indexes;
 
         std::vector<result_tuple> result;
         // There is no 'std::copy_if_and_transform' algorithm
@@ -60,8 +60,8 @@ namespace utils {
     template <typename T, typename... Args>
     auto project(const queryset<Args...>& qs) {
         constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
-        typedef ::utils::tuple::remove_ith_type<index, std::tuple<Args...>>::type result_tuple;
-        typedef ::utils::tuple::gen_seq<sizeof...(Args), index>::type result_tuple_indexes;
+        typedef typename ::utils::tuple::remove_ith_type<index, std::tuple<Args...>>::type result_tuple;
+        typedef typename ::utils::tuple::gen_seq<sizeof...(Args), index>::type result_tuple_indexes;
 
         std::vector<result_tuple> result;
         for (auto& item : qs) {
