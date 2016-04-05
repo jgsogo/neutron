@@ -1,12 +1,22 @@
-addons:
-    apt:
-        sources:
+language: generic
+os: osx
+matrix:
+  include:
+    - os: linux
+      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5
+      addons:
+        apt:
+          packages:
+            - g++-5
+          sources: &sources
             - llvm-toolchain-precise
             - ubuntu-toolchain-r-test
-        packages:
-            - clang-3.7
-            - g++-5
-            - gcc-5
-install:
-    - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
-    - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.7" CC="clang-3.7"; fi
+    - os: linux
+      env: COMPILER_NAME=clang CXX=clang++-3.8 CC=clang-3.8
+      addons:
+        apt:
+          packages:
+            - clang-3.8
+          sources: *sources
+script:
+    make processing/compute_informer_order
