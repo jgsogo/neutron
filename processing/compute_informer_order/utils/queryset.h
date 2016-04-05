@@ -2,6 +2,7 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
 #include "tuple.h"
 
 namespace utils {
@@ -73,7 +74,7 @@ namespace utils {
     template <typename... Args>
     class QuerySet {
         public:
-            QuerySet(const queryset<Args...>& qs) : _qs(qs) {};  // TODO: Move input qs to QuerySet ¿?
+            QuerySet(const queryset<Args...>& qs) : _qs(qs) {};  // TODO: Move input qs to QuerySet Â¿?
             /*
             template <typename T>
             auto filter(const T& filter_value) {
