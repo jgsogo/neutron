@@ -40,11 +40,11 @@ namespace utils {
                 return ::utils::filter(_raw_data, filter_values);
             }
 
-            const queryset& all() const {
+            const _t_queryset& all() const {
                 return _raw_data;
             }
         protected:
-            queryset _raw_data;
+            _t_queryset _raw_data;
     };     
 }
 
