@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "utils/base_manager.h"
+#include "../utils/base_manager.h"
 #include "types.h"
 
 namespace neutron {
