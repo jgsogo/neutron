@@ -32,7 +32,7 @@ namespace utils {
         while (std::getline(infile, line)) {
             if (line.compare(0, 1, "#") != 0) {
                 std::istringstream iss(line);
-                data.push_back(parse<Args...>(line));
+                data.push_back(parse<Args...>(iss));
             }
         }
     }
