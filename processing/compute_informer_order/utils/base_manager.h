@@ -7,7 +7,7 @@
 
 namespace utils {
         
-    typedef std::exception Exception;
+    typedef std::runtime_error Exception;
         
     class NotFoundException : public Exception {
         public:
