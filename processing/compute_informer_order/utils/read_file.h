@@ -14,13 +14,13 @@ namespace utils {
     //  - Maybe improve with: http://stackoverflow.com/questions/10014713/build-tuple-using-variadic-templates
     namespace {
         template <typename T>
-        T read(const std::istringstream& is) {
+        T read(std::istringstream& is) {
             T t; is >> t; return t;
         }
     }
         
     template<typename... Args>
-    std::tuple<Args...> parse(const std::istringstream& stream) {            
+    std::tuple<Args...> parse(std::istringstream& stream) {            
         return std::tuple<Args...> { read<Args>(stream)... };
     }
         
@@ -31,7 +31,8 @@ namespace utils {
         std::string line;
         while (std::getline(infile, line)) {
             if (line.compare(0, 1, "#") != 0) {
-                data.push_back(parse<Args...>(std::istringstream(line)));
+                std::istringstream iss(line);
+                data.push_back(parse<Args...>(line));
             }
         }
     }
