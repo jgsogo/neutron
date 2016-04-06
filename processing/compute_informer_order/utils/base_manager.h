@@ -17,9 +17,9 @@ namespace utils {
     template <typename... Args>
     class BaseManager {
         public:
-            typedef queryset<Args...> queryset;
+            typedef queryset<Args...> _t_queryset;
                 
-            static std::size_t parse(const std::string& filename, queryset& data) {
+            static std::size_t parse(const std::string& filename, _t_queryset& data) {
                 std::size_t old_length = data.size();
                 read_file<Args...>(filename, data);
                 return data.size() - old_length;
