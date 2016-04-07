@@ -100,7 +100,7 @@ namespace utils {
         }
 
         template <std::size_t N, std::size_t E>
-        using gen_seq = typename concat_seq<typename std::make_index_sequence<E>::type, E + 1, typename std::make_index_sequence<(N > E) ? (N - E - 1) : 0>::type>::type;
+        using gen_seq = typename concat_seq<typename std::make_index_sequence<E>, E + 1, typename std::make_index_sequence<(N > E) ? (N - E - 1) : 0>>::type;
 
 
         // Comparaison
