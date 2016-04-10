@@ -20,9 +20,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-5
+            - g++-5.1
       env:
-        - COMPILER=g++-5 COMPILER_NAME=gcc COMPILER_VERSION=5
+        - COMPILER=g++-5.1 COMPILER_NAME=gcc COMPILER_VERSION=5
     - compiler: clang
       addons:
         apt:
@@ -65,7 +65,7 @@ install:
   - cd processing/compute_informer_order
   - echo $COMPILER_NAME
   - echo $COMPILER_VERSION
-  - conan install -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION
+  - conan install -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION -s compiler.libcxx=libstdc++11
   - cd ..
   - cd ..
   
