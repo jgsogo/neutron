@@ -10,7 +10,10 @@ namespace boost {
             {
                 void operator()(std::ostream& os, const std::tuple<Args...>& pr)
                 {
-                    os << pr;
+                    // TODO: Why just `os << pr` or `::operator<<(os, pr)` does not work?
+                    os << "(";
+                    ::utils::tuple::print_tuple_impl(os, t, std::index_sequence_for<Args...>{});
+                    return os << ")";
                 }
             };
 
