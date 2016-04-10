@@ -73,4 +73,5 @@ script:
   - mkdir processing/compute_informer_order/build
   - cd processing/compute_informer_order/build
   - cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && cmake --build .
+  - test_utils
 
