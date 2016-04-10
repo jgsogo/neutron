@@ -12,7 +12,7 @@ namespace boost {
                 {
                     // TODO: Why just `os << pr` or `::operator<<(os, pr)` does not work?
                     os << "(";
-                    ::utils::tuple::print_tuple_impl(os, t, std::index_sequence_for<Args...>{});
+                    ::utils::tuple::print_tuple_impl(os, pr, std::index_sequence_for<Args...>{});
                     os << ")";
                 }
             };
