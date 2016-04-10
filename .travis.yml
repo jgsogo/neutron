@@ -23,24 +23,6 @@ matrix:
             - g++-5.1
       env:
         - COMPILER=g++-5.1 COMPILER_NAME=gcc COMPILER_VERSION=5.1
-    - compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5.2
-      env:
-        - COMPILER=g++-5.2 COMPILER_NAME=gcc COMPILER_VERSION=5.2
-    - compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5.3
-      env:
-        - COMPILER=g++-5.3 COMPILER_NAME=gcc COMPILER_VERSION=5.3
     - compiler: clang
       addons:
         apt:
