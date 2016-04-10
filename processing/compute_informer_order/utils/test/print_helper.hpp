@@ -9,7 +9,7 @@ namespace boost {
             {
                 void operator()(std::ostream& os, const typename std::tuple<Args...>& pr)
                 {
-                    ::operator<<(os, pr);
+                    os << pr;
                 }
             };
 
