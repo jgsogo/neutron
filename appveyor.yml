@@ -11,6 +11,7 @@ install:
   - cmd: conan --version
 
 build_script:
+  - cmd: cd processing/compute_informer_order
   - cmd: mkdir build
   - cmd: conan install
   - cmd: cd build
