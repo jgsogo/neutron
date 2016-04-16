@@ -17,34 +17,34 @@ namespace utils {
         
         // Projection
         namespace {
-            template<typename T, size_t... indexes>
+            template <typename T, size_t... indexes>
             class Projection {
                 public:
                     using Tuple = std::tuple<typename std::tuple_element<indexes, T>::type...>;
             };
 
-            template < std::size_t... Ns, typename... Ts >
+            template <std::size_t... Ns, typename... Ts >
             auto tail_impl(std::index_sequence<Ns...>, std::tuple<Ts...> t) {
                 return std::make_tuple(std::get<Ns + 1u>(t)...);
             }
         }
 
-        template < typename T , typename... Ts >
-        auto head( std::tuple<T,Ts...> t ) {
-           return  std::get<0>(t);
+        template <typename T , typename... Ts>
+        auto head(std::tuple<T,Ts...> t ) {
+           return std::get<0>(t);
         }
 
-        template < typename... Ts >
-        auto tail( std::tuple<Ts...> t ) {
-           return  tail_impl( std::make_index_sequence<sizeof...(Ts) - 1u>() , t );
+        template <typename... Ts>
+        auto tail(std::tuple<Ts...> t ) {
+           return tail_impl(std::make_index_sequence<sizeof...(Ts) - 1u>() , t );
         }
 
-        template<std::size_t... indexes, typename T>
+        template <std::size_t... indexes, typename T>
         auto project(const T &t) -> typename Projection<T, indexes...>::Tuple {
             return typename Projection<T, indexes...>::Tuple(std::get<indexes>(t)...);
         }
 
-        template<std::size_t... indexes, typename T>
+        template <std::size_t... indexes, typename T>
         auto project(const T &t, std::index_sequence<indexes...>) {
             return std::make_tuple(std::get<indexes>(t)...);
         }
