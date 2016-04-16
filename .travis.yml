@@ -14,35 +14,6 @@ matrix:
             - g++-4.9
       env: 
         - COMPILER=g++-4.9 COMPILER_NAME=gcc COMPILER_VERSION=4.9
-    - compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5.1
-      env:
-        - COMPILER=g++-5.1 COMPILER_NAME=gcc COMPILER_VERSION=5.1
-    - compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
-          packages:
-            - clang-3.7
-      env: 
-        - COMPILER=clang++-3.7 COMPILER_NAME=clang COMPILER_VERSION=3.7 CONAN_EXTRA="-s compiler.libcxx=libstdc++11"
-    - compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.8
-          packages:
-            - clang-3.8
-      env: 
-        - COMPILER=clang++-3.8 COMPILER_NAME=clang COMPILER_VERSION=3.8 CONAN_EXTRA="-s compiler.libcxx=libstdc++11"
       
 install:
   # install cmake 2.8.12 manually, see
