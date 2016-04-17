@@ -6,6 +6,7 @@
 #include "neutron/informer.h"
 #include "neutron/word_use.h"
 
+#include "models/queryset.h"
 
 int main(int argc, char** argv){
     typedef std::size_t tipo1;
@@ -14,6 +15,23 @@ int main(int argc, char** argv){
     tipo1 t1 = 1;
     tipo2 t2 = 2;
     t1 = t2;
+
+    typedef std::tuple<int, std::string, float> mytuple;
+    ::utils::queryset<int, std::string, float> initial_qs;
+    initial_qs.push_back(mytuple{ 0, "hola", 0.f });
+    initial_qs.push_back(mytuple{ 0, "bye", 0.1f });
+    initial_qs.push_back(mytuple{ 0, "ciao", 0.2f });
+
+    initial_qs.push_back(mytuple{ 1, "hola", 1.f });
+    initial_qs.push_back(mytuple{ 1, "bye", 1.1f });
+    initial_qs.push_back(mytuple{ 1, "ciao", 1.2f });
+
+    initial_qs.push_back(mytuple{ 2, "hola", 2.f });
+    initial_qs.push_back(mytuple{ 2, "bye", 2.1f });
+    initial_qs.push_back(mytuple{ 2, "ciao", 2.2f });
+    QuerySet<int, std::string, float> qs(initial_qs);
+    auto f1 = qs.filter(0).filter<std::string>("hola").get();//.filter("hola");
+
 
     std::cout << "== Compute informer order ==\n";
     try {
