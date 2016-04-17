@@ -43,7 +43,7 @@ namespace utils {
             std::back_inserter(result),
             [&filter_values](const std::tuple<Args...>& item) {
             constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
-            return std::find(filter_values.begin(), filter_values.end(), std::get<index>(item)) != filter_values.end()
+            return std::find(filter_values.begin(), filter_values.end(), std::get<index>(item)) != filter_values.end();
         });
         return result;
     }
