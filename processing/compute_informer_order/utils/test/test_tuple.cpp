@@ -1,12 +1,15 @@
-#define BOOST_TEST_MODULE utils_tests
+
 #include <boost/test/unit_test.hpp>
 
 #include "print_helper.hpp"
 #include "../tuple.h"
 
+BOOST_AUTO_TEST_SUITE(tuple)
+
+typedef std::tuple<int, std::string, float> mytuple;
+
 BOOST_AUTO_TEST_CASE(tuple_index)
 {
-    typedef std::tuple<int, std::string, float> mytuple;
     BOOST_CHECK_EQUAL((::utils::tuple::index<int, int, std::string, float>()), 0);
     BOOST_CHECK_EQUAL((::utils::tuple::index<std::string, int, std::string, float>()), 1);
     BOOST_CHECK_EQUAL((::utils::tuple::index<float, int, std::string, float>()), 2);
@@ -14,7 +17,6 @@ BOOST_AUTO_TEST_CASE(tuple_index)
 
 BOOST_AUTO_TEST_CASE(tuple_projection)
 {
-    typedef std::tuple<int, std::string, float> mytuple;
     mytuple a{2, "hola", 0.f};
 
     // Indexes for each element
@@ -46,7 +48,6 @@ BOOST_AUTO_TEST_CASE(tuple_projection)
 
 BOOST_AUTO_TEST_CASE(tuple_remove_ith_type)
 {
-    typedef std::tuple<int, std::string, float> mytuple;
     typedef ::utils::tuple::remove_ith_type<0, mytuple>::type mytuple_12;
     typedef ::utils::tuple::remove_ith_type<1, mytuple>::type mytuple_02;
     typedef ::utils::tuple::remove_ith_type<2, mytuple>::type mytuple_01;
@@ -58,7 +59,6 @@ BOOST_AUTO_TEST_CASE(tuple_remove_ith_type)
 
 BOOST_AUTO_TEST_CASE(tuple_gen_seq)
 {
-    typedef std::tuple<int, std::string, float> mytuple;
     mytuple a{ 2, "hola", 0.f };
 
     typedef ::utils::tuple::gen_seq<3, 0> seq1;
@@ -77,7 +77,6 @@ BOOST_AUTO_TEST_CASE(tuple_gen_seq)
 
 BOOST_AUTO_TEST_CASE(tuple_comparaison)
 {
-    typedef std::tuple<int, std::string, float> mytuple;
     mytuple a{ 2, "hola", 0.f };
 
     BOOST_CHECK_GT(a, (mytuple{ 1, "z", 23.f }));
@@ -85,3 +84,4 @@ BOOST_AUTO_TEST_CASE(tuple_comparaison)
     BOOST_CHECK_GT(a, (mytuple{ 2, "hola", -1.f }));
 }
 
+BOOST_AUTO_TEST_SUITE_END()

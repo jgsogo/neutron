@@ -24,35 +24,27 @@ namespace utils {
 
     // Filter a queryset by one value in a column
     template <typename... Args, typename T>
-    auto filter(const queryset<Args...>& qs, const T& filter_value) {
-        constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
-        typedef typename ::utils::tuple::remove_ith_type<index, std::tuple<Args...>>::type result_tuple;
-        typedef typename ::utils::tuple::gen_seq<sizeof...(Args), index> result_tuple_indexes;
-
-        std::vector<result_tuple> result;
-        // There is no 'std::copy_if_and_transform' algorithm
-        for (auto& item : qs) {
-            if (std::get<index>(item) == filter_value) {
-                result.push_back(::utils::tuple::project(item, result_tuple_indexes()));
-            }
-        }
+    queryset<Args...> filter(const queryset<Args...>& qs, const T& filter_value) {
+        queryset<Args...> result;
+        std::copy_if(qs.begin(), qs.end(), 
+                     std::back_inserter(result),
+                     [&filter_value] (const std::tuple<Args...>& item) {
+                        constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
+                        return std::get<index>(item) == filter_value;
+                     });
         return result;
     }
 
     // Filter a queryset by several values in a given column
     template <typename... Args, typename T>
     auto filter(const queryset<Args...>& qs, const std::vector<T>& filter_values) {
-        constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
-        typedef typename ::utils::tuple::remove_ith_type<index, std::tuple<Args...>>::type result_tuple;
-        typedef typename ::utils::tuple::gen_seq<sizeof...(Args), index> result_tuple_indexes;
-
-        std::vector<result_tuple> result;
-        // There is no 'std::copy_if_and_transform' algorithm
-        for (auto& item : qs) {
-            if (std::find(filter_values.begin(), filter_values.end(), std::get<index>(item)) != filter_values.end()) {
-                result.push_back(::utils::tuple::project(item, result_tuple_indexes()));
-            }
-        }
+        queryset<Args...> result;
+        std::copy_if(qs.begin(), qs.end(),
+            std::back_inserter(result),
+            [&filter_values](const std::tuple<Args...>& item) {
+            constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
+            return std::find(filter_values.begin(), filter_values.end(), std::get<index>(item)) != filter_values.end()
+        });
         return result;
     }
 

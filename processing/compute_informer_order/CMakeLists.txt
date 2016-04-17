@@ -13,7 +13,11 @@ conan_basic_setup()
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Testing
-enable_testing()
+# enable_testing()
+add_custom_target(RUN_TESTS ${CMAKE_COMMAND} -E env CTEST_OUTPUT_ON_FAILURE=1
+                  ${CMAKE_CTEST_COMMAND} -C $<CONFIG> --verbose
+                  WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+
 
 add_subdirectory(utils)
 add_subdirectory(neutron)
