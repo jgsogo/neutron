@@ -2,8 +2,8 @@
 #pragma once
 
 #include "read_file.h"
-#include "tuple.h"
-#include "queryset.h"
+#include "utils/tuple.h"
+#include "utils/queryset.h"
 
 namespace utils {
         

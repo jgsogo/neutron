@@ -2,7 +2,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include "print_helper.hpp"
-#include "../tuple.h"
+#include "../../utils/tuple.h"
 
 BOOST_AUTO_TEST_SUITE(tuple)
 
@@ -75,10 +75,52 @@ BOOST_AUTO_TEST_CASE(tuple_gen_seq)
     BOOST_CHECK_EQUAL(::utils::tuple::project(a, seq4()), a);
 }
 
-BOOST_AUTO_TEST_CASE(tuple_comparaison)
+BOOST_AUTO_TEST_CASE(tuple_comparaison_same_size)
+{
+    mytuple a{ 2, "hola", 0.f };
+    mytuple b1{ 3, "hola", 0.f };
+    mytuple b2{ 2, "bye", 0.f };
+    mytuple b3{ 2, "hola", 1.f };
+
+    BOOST_CHECK(utils::tuple::pair_compare(a, a));
+    BOOST_CHECK(!utils::tuple::pair_compare(a, b1));
+    BOOST_CHECK(!utils::tuple::pair_compare(a, b2));
+    BOOST_CHECK(!utils::tuple::pair_compare(a, b3));
+    BOOST_CHECK(!utils::tuple::pair_compare(b1, a));
+    BOOST_CHECK(!utils::tuple::pair_compare(b2, a));
+    BOOST_CHECK(!utils::tuple::pair_compare(b3, a));
+}
+
+BOOST_AUTO_TEST_CASE(tuple_comparaison_different_size)
 {
     mytuple a{ 2, "hola", 0.f };
 
+    // Size == 1
+    auto b1 = std::make_tuple<int>(2);
+    auto b2 = std::make_tuple<std::string>("hola");
+    auto b3 = std::make_tuple<float>(0.f);
+
+    BOOST_CHECK(utils::tuple::pair_compare(a, b1));
+    BOOST_CHECK(utils::tuple::pair_compare(a, b2));
+    BOOST_CHECK(utils::tuple::pair_compare(a, b3));
+
+    BOOST_CHECK(utils::tuple::pair_compare(b1, a));
+    BOOST_CHECK(utils::tuple::pair_compare(b2, a));
+    BOOST_CHECK(utils::tuple::pair_compare(b3, a));
+
+    // Size == 2
+    auto c1 = std::make_tuple<int, float>(2, 0.f);
+    BOOST_CHECK(utils::tuple::pair_compare(a, c1));
+    BOOST_CHECK(utils::tuple::pair_compare(c1, a));
+
+    auto d1 = std::make_tuple<float, int>(0.f, 2);
+    BOOST_CHECK(utils::tuple::pair_compare(a, d1));
+    BOOST_CHECK(utils::tuple::pair_compare(d1, a));
+}
+
+BOOST_AUTO_TEST_CASE(tuple_gt)
+{
+    mytuple a{ 2, "hola", 0.f };
     BOOST_CHECK_GT(a, (mytuple{ 1, "z", 23.f }));
     BOOST_CHECK_GT(a, (mytuple{ 2, "a", 23.f }));
     BOOST_CHECK_GT(a, (mytuple{ 2, "hola", -1.f }));

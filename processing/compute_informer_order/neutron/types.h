@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "../utils/strong_typedef.h"
+#include "../models/strong_typedef.h"
 
 namespace neutron {
     

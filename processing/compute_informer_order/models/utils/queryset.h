@@ -31,7 +31,8 @@ namespace utils {
                      [&filter_value] (const std::tuple<Args...>& item) {
                         constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
                         return std::get<index>(item) == filter_value;
-                     });
+                     }
+        );
         return result;
     }
 
@@ -40,13 +41,29 @@ namespace utils {
     auto filter(const queryset<Args...>& qs, const std::vector<T>& filter_values) {
         queryset<Args...> result;
         std::copy_if(qs.begin(), qs.end(),
-            std::back_inserter(result),
-            [&filter_values](const std::tuple<Args...>& item) {
-            constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
-            return std::find(filter_values.begin(), filter_values.end(), std::get<index>(item)) != filter_values.end();
-        });
+                     std::back_inserter(result),
+                     [&filter_values](const std::tuple<Args...>& item) {
+                        constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
+                        return std::find(filter_values.begin(), filter_values.end(), std::get<index>(item)) != filter_values.end();
+                     }
+        );
         return result;
     }
+
+    // Filter queryset by different type values
+    template <typename... Args, typename... T>
+    auto filter(const queryset<Args...>& qs, const std::tuple<T...>& filter_values) {
+        queryset<Args...> result;
+        std::copy_if(qs.begin(), qs.end(),
+                     std::back_inserter(result),
+                     [&filter_values](const std::tuple<Args...>& item) {
+                        return tuple::pair_compare(filter_values, item);
+                     }
+        );
+        return result;
+    }
+
+
 
     // Project a queryset over a set of column (delete the rest of columns)
     template <typename T, typename... Args>
@@ -61,20 +78,4 @@ namespace utils {
         }
         return result;
     }
-
-
-    template <typename... Args>
-    class QuerySet {
-        public:
-            QuerySet(const queryset<Args...>& qs) : _qs(qs) {};  // TODO: Move input qs to QuerySet ¿?
-            /*
-            template <typename T>
-            auto filter(const T& filter_value) {
-                return QuerySet<Args...>(::utils::filter(_qs, filter_value));
-            };
-            */
-        protected:
-            queryset<Args...> _qs;
-    };
-
 }

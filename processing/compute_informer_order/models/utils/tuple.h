@@ -112,17 +112,23 @@ namespace utils {
                     return (lhs == rhs);
                 }
             };
-            
+            /*
             template <typename T>
             struct atomic_compare<T, NoCompareType> {
-                static bool pair_compare(const T& lhs, const NoCompareType& rhs) {return true;}
+                static bool pair_compare(const T& lhs, const NoCompareType& rhs) {
+                    std::cout << "pair_compare(lhs, NoCompareType)" << std::endl;
+                    return true;
+                }
             };
             
             template <typename T>
             struct atomic_compare<NoCompareType, T> {
-                static bool pair_compare(const NoCompareType& lhs, const T& rhs) {return true;}
+                static bool pair_compare(const NoCompareType& lhs, const T& rhs) {
+                    std::cout << "pair_compare(NoCompareType, rhs)" << std::endl;
+                    return true;
+                }
             };
-                        
+            */
         }
         
         template <typename T, typename... Args>
@@ -136,6 +142,30 @@ namespace utils {
             return atomic_compare<T>::pair_compare(head(lhs), head(rhs));
         }
         
+        // Compare tuples of different size.
+        template <typename... Ts, typename... Us>
+        auto pair_compare(const std::tuple<Ts...>& lhs, const std::tuple<Us...>& rhs)
+            -> typename std::enable_if<(sizeof...(Ts) > sizeof...(Us)), bool>::type
+        {
+            return pair_compare(rhs, lhs);
+        }
+
+        template <typename... Ts, typename... Us>
+        auto pair_compare(const std::tuple<Ts...>& lhs, const std::tuple<Us...>& rhs)
+            -> typename std::enable_if<(sizeof...(Ts) <= sizeof...(Us)), bool>::type
+        {
+            typedef typename std::tuple_element<0, std::tuple<Ts...> >::type lhs_head_type;
+            constexpr std::size_t index = ::utils::tuple::index<lhs_head_type, Us...>();
+            return atomic_compare<lhs_head_type>::pair_compare(head(lhs), std::get<index>(rhs)) &&
+                   pair_compare(tail(lhs), rhs);
+        }
+
+        template <typename T, typename... Us>
+        auto pair_compare(const std::tuple<T>& lhs, const std::tuple<Us...>& rhs) {
+            constexpr std::size_t index = ::utils::tuple::index<T, Us...>();
+            return atomic_compare<T>::pair_compare(head(lhs), std::get<index>(rhs));
+        }
+
 
         // Print
         // pretty-print a tuple (from http://stackoverflow.com/a/6245777/273767)

@@ -74,7 +74,7 @@ int main(int argc, char** argv){
         */
 
         // == Play with querysets
-        utils::QuerySet<neutron::informer_id, neutron::region_id> qs(informers.all());
+        //QuerySet<neutron::informer_id, neutron::region_id> qs(informers.all());
         //qs.filter(neutron::region_id(1));
     }
     catch(std::exception& e) {
