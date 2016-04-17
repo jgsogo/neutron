@@ -14,9 +14,15 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Testing
 # enable_testing()
-add_custom_target(RUN_TESTS ${CMAKE_COMMAND} -E env CTEST_OUTPUT_ON_FAILURE=1
-                  ${CMAKE_CTEST_COMMAND} -C $<CONFIG> --verbose
-                  WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+if (UNIX)
+    add_custom_target(RUN_TESTS ${CMAKE_COMMAND} -E env CTEST_OUTPUT_ON_FAILURE=1
+                      ${CMAKE_CTEST_COMMAND} --verbose
+                      WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+else()
+    add_custom_target(RUN_TESTS ${CMAKE_COMMAND} -E env CTEST_OUTPUT_ON_FAILURE=1
+                      ${CMAKE_CTEST_COMMAND} -C $<CONFIG> --verbose
+                      WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+endif()
 
 
 add_subdirectory(utils)
