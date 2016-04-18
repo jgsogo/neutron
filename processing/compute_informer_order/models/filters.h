@@ -125,7 +125,7 @@ namespace utils {
                         delete new_filter;
                     }
                 }
-                catch (BaseFilter::Empty& e) {
+                catch (Empty& e) {
                     _is_empty = true;
                 }
             };
