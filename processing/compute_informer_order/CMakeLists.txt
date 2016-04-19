@@ -15,6 +15,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Testing
 enable_testing()
 if (UNIX)
+    add_definitions(-Wfatal-errors)
     add_custom_target(check ${CMAKE_COMMAND} -E env CTEST_OUTPUT_ON_FAILURE=1
                       ${CMAKE_CTEST_COMMAND} --verbose
                       WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
