@@ -35,7 +35,9 @@ namespace utils {
                 }
                 // Actual filtering
                 queryset<Args...> result;
-                std::copy_if(qs.begin(), qs.end(), std::back_inserter(result), pass);
+                std::copy_if(qs.begin(), qs.end(), std::back_inserter(result), [=](const auto& item){
+                    return this->pass(item);
+                });
                 return result;
             }
 

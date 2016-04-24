@@ -34,6 +34,9 @@ BOOST_FIXTURE_TEST_SUITE(queryset_class, Fixture)
         QuerySet<int, std::string, float> qs(initial_qs);
         auto f4 = qs.groupBy<int>();
         BOOST_CHECK_EQUAL(f4.size(), 3);
+
+        const ::utils::queryset<int, std::string, float>& f4_int0 = f4.find(0)->second;
+        BOOST_CHECK_EQUAL(f4_int0.size(), 3);
     }
 
     /*
