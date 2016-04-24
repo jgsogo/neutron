@@ -104,7 +104,7 @@ namespace utils {
 
 
         // Comparaison
-        struct NoCompareType {};
+        //struct NoCompareType {};
         namespace {
             template <typename T, typename U = T>
             struct atomic_compare {
@@ -143,11 +143,10 @@ namespace utils {
         }
         
         // Compare tuples of different size.
-        template <typename... Ts, typename... Us>
-        auto pair_compare(const std::tuple<Ts...>& lhs, const std::tuple<Us...>& rhs)
-            -> typename std::enable_if<(sizeof...(Ts) > sizeof...(Us)), bool>::type
-        {
-            return pair_compare(rhs, lhs);
+        template <typename T, typename... Us>
+        auto pair_compare(const std::tuple<T>& lhs, const std::tuple<Us...>& rhs) {
+            constexpr std::size_t index = ::utils::tuple::index<T, Us...>();
+            return atomic_compare<T>::pair_compare(head(lhs), std::get<index>(rhs));
         }
 
         template <typename... Ts, typename... Us>
@@ -157,15 +156,15 @@ namespace utils {
             typedef typename std::tuple_element<0, std::tuple<Ts...> >::type lhs_head_type;
             constexpr std::size_t index = ::utils::tuple::index<lhs_head_type, Us...>();
             return atomic_compare<lhs_head_type>::pair_compare(head(lhs), std::get<index>(rhs)) &&
-                   pair_compare(tail(lhs), rhs);
+                pair_compare(tail(lhs), rhs);
         }
 
-        template <typename T, typename... Us>
-        auto pair_compare(const std::tuple<T>& lhs, const std::tuple<Us...>& rhs) {
-            constexpr std::size_t index = ::utils::tuple::index<T, Us...>();
-            return atomic_compare<T>::pair_compare(head(lhs), std::get<index>(rhs));
+        template <typename... Ts, typename... Us>
+        auto pair_compare(const std::tuple<Ts...>& lhs, const std::tuple<Us...>& rhs)
+            -> typename std::enable_if<(sizeof...(Ts) > sizeof...(Us)), bool>::type
+        {
+            return pair_compare(rhs, lhs);
         }
-
 
         // Print
         // pretty-print a tuple (from http://stackoverflow.com/a/6245777/273767)
