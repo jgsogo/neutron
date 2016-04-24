@@ -7,10 +7,6 @@
 
 namespace utils {
 
-    namespace {
-
-    }
-
     class GroupBy {
         public:
             template <typename T, typename... Args>

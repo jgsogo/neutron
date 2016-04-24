@@ -9,7 +9,7 @@
 template <typename... Args>
 class QuerySet {
     public:
-        QuerySet(const utils::queryset<Args...>& qs) : _qs(qs) {};  // TODO: Move input qs to QuerySet �?
+        QuerySet(const utils::queryset<Args...>& qs) : _qs(qs) {};  // TODO: Move input qs to QuerySet?
 
         bool empty() const {
             return _filters.empty();
@@ -58,5 +58,4 @@ class QuerySet {
     protected:
         utils::queryset<Args...> _qs;
         utils::FilterContainer<Args...> _filters;
-        //utils::GroupBy<Args...> _groups;
 };
