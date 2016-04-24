@@ -65,7 +65,7 @@ namespace utils {
 
 
 
-    // Project a queryset over a set of column (delete the rest of columns)
+    // Project a queryset over a set of column (the same as marginalization)
     template <typename T, typename... Args>
     auto project(const queryset<Args...>& qs) {
         constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
