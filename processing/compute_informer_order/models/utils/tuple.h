@@ -131,15 +131,15 @@ namespace utils {
             */
         }
         
+        template <typename T>
+        bool pair_compare(const std::tuple<T>& lhs, const std::tuple<T>& rhs) {
+            return atomic_compare<T>::pair_compare(head(lhs), head(rhs));
+        }
+
         template <typename T, typename... Args>
         bool pair_compare(const std::tuple<T, Args...>& lhs, const std::tuple<T, Args...>& rhs) {
             return atomic_compare<T>::pair_compare(head(lhs), head(rhs)) && 
                    pair_compare<Args...>(tail(lhs), tail(rhs));
-        }
-        
-        template <typename T>
-        bool pair_compare(const std::tuple<T>& lhs, const std::tuple<T>& rhs) {
-            return atomic_compare<T>::pair_compare(head(lhs), head(rhs));
         }
         
         // Compare tuples of different size.
