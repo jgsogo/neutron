@@ -3,6 +3,7 @@
 
 #include "utils/queryset.h"
 #include "filters.h"
+#include "group_by.h"
 
 
 template <typename... Args>
@@ -14,6 +15,11 @@ class QuerySet {
             return _filters.empty();
         }
 
+        utils::queryset<Args...> get() const {
+            return _filters.apply(_qs);
+        }
+
+        // Filtering functions
         template <typename T>
         QuerySet<Args...>& filter(const T& filter_value) {
             _filters.add_filter(filter_value);
@@ -32,8 +38,17 @@ class QuerySet {
             return *this;
         }
 
-        utils::queryset<Args...> get() const {
-            return _filters.apply(_qs);
+        // Grouping by field types
+        template <typename T>
+        std::map<T, utils::queryset<Args...>> groupBy() {
+            // Put all with the same value of T into a group
+            return utils::GroupBy::apply<T>(_qs, _filters);
+        }
+
+        template <typename... T, typename = typename std::enable_if<(sizeof...(T) > 1), bool>::type>
+        std::map<std::tuple<T...>, utils::queryset<Args...>> groupBy() {
+            // Put all with the same values of T... into a group
+            return utils::GroupBy::apply<T...>(_qs, _filters);
         }
 
     protected:

@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 2.8.12)
 
 add_executable (test_models print_helper.hpp 
                             main.cpp
-                            test_class_queryset.cpp
-                            )
+                            test_class_queryset_filter.cpp
+                            test_class_queryset_groupby.cpp)
 target_link_libraries (test_models
                        #utils
                        ${Boost_FILESYSTEM_LIBRARY}
