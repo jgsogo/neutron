@@ -63,8 +63,8 @@ namespace utils {
                 std::sort(t.begin(), t.end());
                 if (_value_filters_apply[index]) {
                     std::set<T>& t_filters = std::get<index>(_value_filters);
-                    std::set<T> v;
-                    std::set<T>::iterator it;
+                    typename std::set<T> v;
+                    typename std::set<T>::iterator it;
                     it = std::set_difference(t.begin(), t.end(), t_filters.begin(), t_filters.end(), v.begin());
                     v.resize(it - v.begin());
 
