@@ -14,7 +14,17 @@ matrix:
             - g++-4.9
       env: 
         - COMPILER=g++-4.9 COMPILER_NAME=gcc COMPILER_VERSION=4.9
-      
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.6
+          packages:
+            - clang-3.6
+      env: 
+        - COMPILER=clang++-3.6 COMPILER_NAME=clang COMPILER_VERSION=3.6 CONAN_EXTRA="-s compiler.libcxx=libstdc++11"
+        
 install:
   # install cmake 2.8.12 manually, see
   #     * https://github.com/travis-ci-tester/travis-test-cmake

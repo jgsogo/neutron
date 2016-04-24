@@ -30,7 +30,7 @@ namespace utils {
                 for (auto& item : qs) {                    
                     bool append = true;
                     ::utils::tuple::for_each(_value_filters, [this, &item, &result, &append](const auto& values){
-                        append &= filter_pass(values, _value_filters_apply, item);
+                        append &= FilterContainer::filter_pass(values, _value_filters_apply, item);
                     });
                     if (append) {
                         result.push_back(item);
