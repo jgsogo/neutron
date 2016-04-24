@@ -29,7 +29,7 @@ struct Fixture {
 
 BOOST_FIXTURE_TEST_SUITE(queryset_class, Fixture)
 
-    BOOST_AUTO_TEST_CASE(group_by_int)
+    BOOST_AUTO_TEST_CASE(group_by_single)
     {
         QuerySet<int, std::string, float> qs(initial_qs);
         auto f4 = qs.groupBy<int>();
@@ -39,14 +39,16 @@ BOOST_FIXTURE_TEST_SUITE(queryset_class, Fixture)
         BOOST_CHECK_EQUAL(f4_int0.size(), 3);
     }
 
-    /*
-    BOOST_AUTO_TEST_CASE(group_by_int_stdstring)
+    BOOST_AUTO_TEST_CASE(group_by_compound)
     {
         QuerySet<int, std::string, float> qs(initial_qs);
         auto f4 = qs.groupBy<int, std::string>();
-        BOOST_CHECK_EQUAL(f4.size(), 3);
+        BOOST_CHECK_EQUAL(f4.size(), 9);
+
+        const std::tuple<int, std::string>& f4_key = f4.find(std::tuple<int, std::string>{0, "hola"})->first;
+        const ::utils::queryset<int, std::string, float>& f4_value = f4.find(std::tuple<int, std::string>{0, "hola"})->second;
+        BOOST_CHECK_EQUAL(f4_value.size(), 1);
     }
-    */
 
 BOOST_AUTO_TEST_SUITE_END()
 

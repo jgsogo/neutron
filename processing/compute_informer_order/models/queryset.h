@@ -45,15 +45,11 @@ class QuerySet {
             return utils::GroupBy::apply<T>(_qs, _filters);
         }
 
-        /* TODO: Work in progress.
-         * Para implementar este tipo de 'group_by' podría considerar implementar utils::typle::project<T...>
-         * y ya lo tendría hecho.
         template <typename... T, typename = typename std::enable_if<(sizeof...(T) > 1), bool>::type>
         std::map<std::tuple<T...>, utils::queryset<Args...>> groupBy() {
             // Put all with the same values of T... into a group
-            return utils::GroupBy::apply<T...>(_qs);
+            return utils::GroupBy::apply<T...>(_qs, _filters);
         }
-        */
 
     protected:
         utils::queryset<Args...> _qs;
