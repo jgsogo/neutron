@@ -17,6 +17,14 @@ namespace utils {
                 return _is_empty;
             }
 
+            bool pass(const std::tuple<Args...>& t) const {
+                bool pass = true;
+                ::utils::tuple::for_each(_value_filters, [this, &t, &pass](const auto& values){
+                    pass &= FilterContainer::filter_pass(values, _value_filters_apply, t);
+                });
+                return pass;
+            }
+
             queryset<Args...> apply(const queryset<Args...>& qs) const {
                 // Corner cases
                 if (_is_empty) {
@@ -27,15 +35,7 @@ namespace utils {
                 }
                 // Actual filtering
                 queryset<Args...> result;
-                for (auto& item : qs) {                    
-                    bool append = true;
-                    ::utils::tuple::for_each(_value_filters, [this, &item, &result, &append](const auto& values){
-                        append &= FilterContainer::filter_pass(values, _value_filters_apply, item);
-                    });
-                    if (append) {
-                        result.push_back(item);
-                    }
-                }
+                std::copy_if(qs.begin(), qs.end(), std::back_inserter(result), pass);
                 return result;
             }
 
