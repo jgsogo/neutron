@@ -62,7 +62,7 @@ namespace utils {
                     virtual bool add_filter(const BaseFilter* p) {
                         const FilterVector<T>* ptype = dynamic_cast<const FilterVector<T>*>(p);
                         if (ptype) {
-                            _value.insert(ptype->_value)
+                            _value.insert(ptype->_value);
                         }
                         return false;
                     };
@@ -125,7 +125,7 @@ namespace utils {
                         delete new_filter;
                     }
                 }
-                catch (BaseFilter::Empty& e) {
+                catch (Empty& e) {
                     _is_empty = true;
                 }
             };

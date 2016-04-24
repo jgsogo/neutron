@@ -45,5 +45,6 @@ script:
   - cd processing/compute_informer_order/build
   - cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && cmake --build .
   - ls -la bin/
-  - ./bin/test_utils
+  - ./bin/test_models_utils
+  - ./bin/test_models
 
