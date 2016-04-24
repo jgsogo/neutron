@@ -8,6 +8,7 @@
 
 #include "models/queryset.h"
 
+
 int main(int argc, char** argv){
     typedef std::size_t tipo1;
     typedef std::size_t tipo2;

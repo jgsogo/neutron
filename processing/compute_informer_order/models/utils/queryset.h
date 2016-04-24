@@ -13,12 +13,22 @@ namespace utils {
 
     // We can list a queryset for one of its values (it is like projecting and then flattening to a vector)
     template <typename T, typename... Args>
-    typename std::vector<T> list(const queryset<Args...>& qs) {
+    std::vector<T> list(const queryset<Args...>& qs) {
         std::vector<T> result;
         std::transform(qs.begin(), qs.end(), std::back_inserter(result), [](auto& item) { 
             constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
             return std::get<index>(item);
             });
+        return result;
+    }
+
+    template <typename... T, typename... Args, typename = typename std::enable_if<(sizeof...(T) > 1), bool>::type>
+    queryset<T...> project(const queryset<Args...>& qs) {
+        queryset<T...> result;
+        for (auto& item : qs) {
+            typename std::tuple<T...> tup = std::make_tuple(std::get<::utils::tuple::index<T, Args...>()>(item)...);
+            result.push_back(tup);
+        }
         return result;
     }
 
@@ -65,9 +75,9 @@ namespace utils {
 
 
 
-    // Project a queryset over a set of column (delete the rest of columns)
+    // Marginalize a queryset over a set of column
     template <typename T, typename... Args>
-    auto project(const queryset<Args...>& qs) {
+    auto marginalize(const queryset<Args...>& qs) {
         constexpr std::size_t index = ::utils::tuple::index<T, Args...>();
         typedef typename ::utils::tuple::remove_ith_type<index, std::tuple<Args...>>::type result_tuple;
         typedef typename ::utils::tuple::gen_seq<sizeof...(Args), index> result_tuple_indexes;

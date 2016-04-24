@@ -30,17 +30,17 @@ BOOST_AUTO_TEST_CASE(basic_tests)
     BOOST_CHECK_EQUAL(*qs.rbegin(), (mytuple{ 2, "ciao", 1.f }));
 }
 
-BOOST_AUTO_TEST_CASE(projection)
+BOOST_AUTO_TEST_CASE(marginalization)
 {
-    auto projected_int = ::utils::project<int>(qs);
-    auto projected_str = ::utils::project<std::string>(qs);
-    auto projected_float = ::utils::project<float>(qs);
+    auto marginalized_int = ::utils::marginalize<int>(qs);
+    auto marginalized_str = ::utils::marginalize<std::string>(qs);
+    auto marginalized_float = ::utils::marginalize<float>(qs);
 
     std::size_t i = 0;
     for (myqueryset::const_iterator it = qs.begin(); it != qs.end(); ++it, ++i) {
-        BOOST_CHECK_EQUAL(projected_int.at(i), (::utils::tuple::project<1, 2>(*it)));
-        BOOST_CHECK_EQUAL(projected_str.at(i), (::utils::tuple::project<0, 2>(*it)));
-        BOOST_CHECK_EQUAL(projected_float.at(i), (::utils::tuple::project<0, 1>(*it)));
+        BOOST_CHECK_EQUAL(marginalized_int.at(i), (::utils::tuple::project<1, 2>(*it)));
+        BOOST_CHECK_EQUAL(marginalized_str.at(i), (::utils::tuple::project<0, 2>(*it)));
+        BOOST_CHECK_EQUAL(marginalized_float.at(i), (::utils::tuple::project<0, 1>(*it)));
     }
 }
 

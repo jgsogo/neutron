@@ -65,6 +65,7 @@ namespace utils {
                 static const std::size_t value = 1 + Index<T, std::tuple<Types...>>::value;
             };
         }
+        
         template <typename T, typename... Ts>
         constexpr std::size_t index() {
             return Index<T, std::tuple<Ts...>>::value;

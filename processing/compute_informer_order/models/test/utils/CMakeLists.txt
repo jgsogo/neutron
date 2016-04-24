@@ -8,6 +8,7 @@ add_executable (test_models_utils print_helper.hpp
                                   test_queryset_list.cpp
                                   test_queryset_filter.cpp
                                   test_queryset_project.cpp
+                                  test_queryset_marginalize.cpp
                                   )
 target_link_libraries (test_models_utils
                        #utils
