@@ -14,6 +14,7 @@ namespace utils {
         //  - index of type: http://stackoverflow.com/questions/18063451/get-index-of-a-tuple-elements-type
         //  - remove ith type of tuple: http://stackoverflow.com/questions/14852593/removing-the-first-type-of-a-stdtuple
         //  - integer sequence with one out: http://stackoverflow.com/questions/27124920/compile-time-generate-integer-sequence-with-one-left-out
+        //  - iterate a tuple: http://stackoverflow.com/questions/1198260/iterate-over-tuple
         
         // Projection
         namespace {
@@ -178,6 +179,17 @@ namespace utils {
             };
         }
 
+        // Iterate over a tuple
+        template<std::size_t I = 0, typename FuncT, typename... Tp>
+        inline typename std::enable_if<I == sizeof...(Tp), void>::type
+        for_each(const std::tuple<Tp...> &, FuncT) { }
+
+        template<std::size_t I = 0, typename FuncT, typename... Tp>
+        inline typename std::enable_if<I < sizeof...(Tp), void>::type
+        for_each(const std::tuple<Tp...>& t, FuncT f) {
+            f(std::get<I>(t));
+            for_each<I + 1, FuncT, Tp...>(t, f);
+        }
         
     }
 }

@@ -2,148 +2,109 @@
 #pragma once
 
 #include <set>
+#include <bitset>
 #include "queryset.h"
 
 namespace utils {
 
     template <typename... Args>
     class FilterContainer {
-        protected:
-            class Empty : public std::runtime_error {
-                public:
-                    Empty() : std::runtime_error("Empty queryset") {};
-            };
-
-            class BaseFilter {
-                public:
-                    BaseFilter() {};
-                    virtual ~BaseFilter() {};
-                    virtual bool add_filter(const BaseFilter* p) = 0;
-                    virtual queryset<Args...> apply(const queryset<Args...>& qs) const = 0;
-            };
-
-            template <typename T>
-            class Filter : public BaseFilter {
-                public:
-                    Filter(const T& t) : _value(t) {};
-                    ~Filter() {};
-
-                    virtual queryset<Args...> apply(const queryset<Args...>& qs) const {
-                        return filter(qs, _value);
-                    };
-
-                    virtual bool add_filter(const BaseFilter* p) {
-                        const Filter<T>* ptype = dynamic_cast<const Filter<T>*>(p);
-                        if (ptype) {
-                            if (ptype->_value == _value) {
-                                return true;
-                            }
-                            else {
-                                throw Empty();
-                            }
-                        }
-                        return false;
-                    };
-
-                protected:
-                    T _value;
-                };
-
-            template <typename T>
-            class FilterVector : public BaseFilter {
-                public:
-                    FilterVector(const std::vector<T>& t) : _value(t) {};
-                    ~FilterVector() {};
-
-                    virtual queryset<Args...> apply(const queryset<Args...>& qs) const {
-                        return filter(qs, _value);
-                    };
-
-                    virtual bool add_filter(const BaseFilter* p) {
-                        const FilterVector<T>* ptype = dynamic_cast<const FilterVector<T>*>(p);
-                        if (ptype) {
-                            _value.insert(ptype->_value);
-                        }
-                        return false;
-                    };
-                protected:
-                    std::set<T> _value;
-            };
-
         public:
-            FilterContainer() : _is_empty(false) {};
-            ~FilterContainer() {
-                for (auto& filter : _filters) {
-                    delete filter;
-                }
-                _filters.clear();
-            };
+            FilterContainer() : _is_empty(false) {}
+            ~FilterContainer() {}
+
+            bool empty() const {
+                return _is_empty;
+            }
 
             queryset<Args...> apply(const queryset<Args...>& qs) const {
+                // Corner cases
                 if (_is_empty) {
                     return queryset<Args...>();
                 }
-                queryset<Args...> result(qs);
-                for (auto& filter : _filters) {
-                    result = filter->apply(result);
+                if (_value_filters_apply.none()) {
+                    return qs;
+                }
+                // Actual filtering
+                queryset<Args...> result;
+                for (auto& item : qs) {                    
+                    bool append = true;
+                    ::utils::tuple::for_each(_value_filters, [this, &item, &result, &append](const auto& values){
+                        append &= filter_pass(values, _value_filters_apply, item);
+                    });
+                    if (append) {
+                        result.push_back(item);
+                    }
                 }
                 return result;
-            };
+            }
 
             template <typename T>
             void add_filter(const T& t) {
-                Filter<T>* new_filter = new Filter<T>(t);
-                bool considered = false;
-                try {
-                    for (auto& filter : _filters) {
-                        considered |= filter->add_filter(new_filter);
-                    }
-                    if (!considered) {
-                        _filters.push_back(new_filter);
-                    }
-                    else {
-                        delete new_filter;
+                constexpr std::size_t index = tuple::index<T, Args...>();
+                std::set<T>& t_filters = std::get<index>(_value_filters);
+                if (_value_filters_apply[index]) {
+                    _is_empty = std::find(t_filters.begin(), t_filters.end(), t) == t_filters.end();
+                    if (!_is_empty) {
+                        t_filters.clear();
+                        t_filters.insert(t);
                     }
                 }
-                catch (Empty&) {
-                    _is_empty = true;
+                else {
+                    _value_filters_apply[index] = true;
+                    t_filters.insert(t);
                 }
-            };
+            }
 
             template <typename T>
-            void add_filter(const std::vector<T>& t) {
-                FilterVector<T>* new_filter = new FilterVector<T>(t);
-                bool considered = false;
-                try {
-                    for (auto& filter : _filters) {
-                        considered |= filter->add_filter(new_filter);
-                    }
-                    if (!considered) {
-                        _filters.push_back(new_filter);
-                    }
-                    else {
-                        delete new_filter;
-                    }
+            void add_filter(const std::set<T>& t) {
+                // Check if there is a single filter for this type
+                constexpr std::size_t index = tuple::index<T, Args...>();
+                std::sort(t.begin(), t.end());
+                if (_value_filters_apply[index]) {
+                    std::set<T>& t_filters = std::get<index>(_value_filters);
+                    std::set<T> v;
+                    std::set<T>::iterator it;
+                    it = std::set_difference(t.begin(), t.end(), t_filters.begin(), t_filters.end(), v.begin());
+                    v.resize(it - v.begin());
+
+                    _is_empty = v.empty();
+                    _value_filters[index] = v;
                 }
-                catch (Empty& e) {
-                    _is_empty = true;
+                else {
+                    _value_filters[index] = v;
                 }
-            };
+            }
 
             template <typename... T>
             void add_filter(const std::tuple<T...>& t) {
                 this->add_filter(std::get<0>(t));
                 this->add_filter(::utils::tuple::tail(t));
-            };
+            }
 
             template <typename T>
             void add_filter(const std::tuple<T>& t) {
                 this->add_filter(std::get<0>(t));
-            };
+            }
+
+        protected:
+            template <class T>
+            static bool filter_pass(const std::set<T>& values, const std::bitset<sizeof...(Args)>& values_apply, const std::tuple<Args...>& t) {
+                constexpr std::size_t index = tuple::index<T, Args...>();
+                if (values_apply[index]) {
+                    return std::find(values.begin(), values.end(), std::get<index>(t)) != values.end();
+                }
+                return true;
+            }
 
         protected:
             bool _is_empty;
-            std::vector<BaseFilter*> _filters;
+            /*
+            std::tuple<Args...> _single_value_filters;
+            std::bitset<sizeof...(Args)> _single_value_filters_apply;
+            */
+            std::tuple<std::set<Args>...> _value_filters;
+            std::bitset<sizeof...(Args)> _value_filters_apply;
     };
     
 }
