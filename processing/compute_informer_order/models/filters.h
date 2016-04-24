@@ -72,7 +72,7 @@ namespace utils {
                     _value_filters[index] = v;
                 }
                 else {
-                    _value_filters[index] = v;
+                    _value_filters[index] = t;
                 }
             }
 
