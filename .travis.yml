@@ -23,7 +23,7 @@ matrix:
           packages:
             - clang-3.6
       env: 
-        - CC=clang CXX=clang COMPILER=clang++-3.6 COMPILER_NAME=clang COMPILER_VERSION=3.6 CONAN_EXTRA="-s compiler.libcxx=libstdc++11 --build bzip2"
+        - COMPILER=clang++-3.6 COMPILER_NAME=clang COMPILER_VERSION=3.6 CONAN_EXTRA="-s compiler.libcxx=libstdc++11 --build bzip2"
         
 install:
   # install cmake 2.8.12 manually, see
@@ -46,6 +46,8 @@ install:
   - cd processing/compute_informer_order
   - echo $COMPILER_NAME
   - echo $COMPILER_VERSION
+  - export CC=clang
+  - export CXX=clang 
   - conan install -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION $CONAN_EXTRA
   - cd ..
   - cd ..
