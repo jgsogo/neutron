@@ -138,7 +138,7 @@ namespace utils {
             return atomic_compare<T>::pair_compare(head(lhs), head(rhs));
         }
 
-        template <typename T, typename... Args>
+        template <typename T, typename... Args, typename = typename std::enable_if<(sizeof...(Args) > 0), bool>::type>
         bool pair_compare(const std::tuple<T, Args...>& lhs, const std::tuple<T, Args...>& rhs) {
             return atomic_compare<T>::pair_compare(head(lhs), head(rhs)) && 
                    pair_compare<Args...>(tail(lhs), tail(rhs));
