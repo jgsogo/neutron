@@ -1,16 +1,42 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Stats{% endblock %}
+{% block title %}{% trans "Participa" %}{% endblock %}
 
 {% block content %}
-    <div class="jumbotron">
-        <h1>Participa</h1>
-        <p>Hablar de las diferentes posibilidades de participación, interfaces,...</p>
-        {% if user.is_authenticated %}
-            <p>Dinos de dónde eres y empieza a participar.</p>
-            <a class="btn btn-success" href="{% url 'profile_informer' %}">Go!</a>
-        {% else %}
-            <p><a href="{% url 'register' %}">Regístrate</a> y conviértete en informante.</p>
-        {% endif %}
-    </div>
+    <h2>Participa en el proyecto</h2>
+    <h3 class="cabecera-caja-fondo-gris-01 margin-top-tres">Llamada a la acción</h3>
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <h4>Únete a nosotros y cuéntanos cómo es tu español</h4>
+            <p>Buscamos hablantes de español con ilusión por reivindicar las peculiaridades de su habla y participar en un proyecto pionero.</p>
+            <p>Si cumples estos requisitos, te queremos a bordo:</p>
+            <ul>
+                <li>Eres hablante nativo.</li>
+                <li>Has nacido y crecido en el mismo país (distinto de España) en el que resides.</li>
+                <li>En los últimos dos años no has pasado más de seis meses en otro país hispanohablante.</li>
+            </ul>
+            <h4>¿Qué tendrías que hacer?</h4>
+            <p>Necesitamos que recorras un glosario de palabras definidas de forma sencilla e ilustradas con ejemplos y que, para cada una de ellas, respondas a dos preguntas:</p>
+            <ul>
+                <li>¿Te resulta malsonante esta palabra?</li>
+                <li>Para este mismo significado, ¿preferirías utilizar otra?</li>
+                <li>Para ponértelo fácil, hemos preparado una interfaz ágil e intuitiva, <span class="color-orange">¿quieres verla?</span></li>
+            </ul>
+            <h4>¿Qué puedes obtener a cambio?</h4>
+            <p>Nuestros informantes reciben el <span class="color-orange">certificado Neutrón</span>, que expresa formalmente su participación en un proyecto de investigación lingüística patrocinado por prestigiosas entidades públicas y del sector privado.</p>
+        </div><!-- caja-fondo-gris -->
+    </div><!-- content -->
+
+    <h3 class="cabecera-caja-fondo-gris-02">Formulario</h3>
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <input type="text" placeholder="Nombre*">
+            <input type="text" placeholder="Correo electrónico*">
+            <input type="text" placeholder="Nacionalidad*">
+            <input type="text" placeholder="¿Cómo nos has conocido?* (Cálamo&Cran, Fundéu, universidad, otros)">
+            <input type="text" placeholder="Nivel de estudios* (ed. básica, ed. secundaria, ed. universitaria)">
+            <button class="b-yellow">participar</button>
+        </div><!-- caja-fondo-gris -->
+    </div><!-- content -->
 {% endblock %}

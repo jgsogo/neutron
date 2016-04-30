@@ -28,7 +28,7 @@ admin.site.index_title = 'Proyecto Neutrón'
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),  # TODO: la interfaz no permite acceder aquí
 
     url(r'^accounts/login/$', login, name='login'),
     url(r'^accounts/logout/$', logout, name='logout'),
@@ -39,6 +39,7 @@ urlpatterns = [
     url(r'^$', HomeView.as_view()),
     url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^contribute/$', TemplateView.as_view(template_name='contribute.html'), name='contribute'),
+    url(r'^faq/$', TemplateView.as_view(template_name='faq.html'), name='faq'),
 
     url(r'^stats/', include('neutron.urls', namespace='neutron')),
 

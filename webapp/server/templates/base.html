@@ -35,11 +35,11 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<img class="logo" src="{% static 'img/neutron_logo_600x143.png' %}" alt="logo neutron">
+					<a href="{% url "home" %}"><img class="logo" src="{% static 'img/neutron_logo_600x143.png' %}" alt="logo neutron"></a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">{% trans "Consulta" %}</a></li>
+						<li><a href="{% url 'neutron:word_detail_search' %}">{% trans "Consulta" %}</a></li>
 						{% comment "Al usuario que es informante se le muestran las interfaces, al resto un botón para apuntarse" %}
 						    >>> TODO: if request.user.is_informer
 						    <li class="dropdown">
@@ -54,8 +54,8 @@
                             </li>
                             >>> TODO: else (el link de "participa")
                         {% endcomment %}
-                        <li><a href="#">{% trans "Participa" %}</a></li>
-						<li><a href="#">FAQ's</a></li>
+                        <li><a href="{% url 'contribute' %}">{% trans "Participa" %}</a></li>
+						<li><a href="{% url 'faq' %}">FAQ's</a></li>
 						<li class="equipo"><a href="#">{% trans "equipo y patrocinadores" %}</a></li>
                         {% comment "Register/login y profile/logout" %}
                             >>> TODO: if user.is_authenticated

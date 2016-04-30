@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "FAQ's" %}{% endblock %}
+
+{% block content %}
+    <h2>Preguntas frecuentes</h2>
+    <h3 class="cabecera-caja-fondo-gris-01 margin-top-tres">No estoy seguro de si la palabra es o no malsonante. ¿Pulso el botón rojo o el verde?</h3>
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <p>Cuando dudes, hazte esta pregunta: ¿usarías la palabra propuesta delante de un niño de seis años? Si la respuesta es afirmativa, pulsa el botón verde. Si pronunciar esta palabra delante de un niño te resulta claramente inapropiado, pulsa el botón rojo.</p>
+        </div><!-- caja-fondo-gris -->
+    </div><!-- content -->
+    <h3 class="cabecera-caja-fondo-gris-01">Para esta definición, además de la palabra propuesta, uso otras, ¿selecciono <span class="color-orange">¡Ok!</span> o <span class="color-orange">Prefiero usar otra</span>?</h3>
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <p>Si utilizas la palabra propuesta, aunque sea con una frecuencia baja, debes seleccionar <span class="color-orange">¡Ok!</span>  Si no utilizas la palabra propuesta, aunque la entiendas y seas consciente de haberla oído en alguna ocasión, debes seleccionar <span class="color-orange">Prefiero usar otra</span>.</p>
+        </div><!-- caja-fondo-gris -->
+    </div><!-- content -->
+    <h3 class="cabecera-caja-fondo-gris-01">Sé que, para este significado, utilizo una palabra distinta a la propuesta, pero no consigo recordarla ahora.</h3>
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <p>Te animamos muchísimo a darle una vuelta más antes de rendirte, ¿seguro que no puedes recordarla? Si te sientes realmente atascado, selecciona <span class="color-orange">Prefiero usar otra</span> e introduce el comodín “blank” en el campo de texto.</p>
+        </div><!-- caja-fondo-gris -->
+    </div><!-- content -->
+    <h3 class="cabecera-caja-fondo-gris-02">¿Tienes otra duda? ¡Escríbenos!</h3>
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <textarea name="duda" id="duda" cols="30" rows="10"placeholder="¿Cómo podemos ayudarte?"></textarea>
+            <button class="b-yellow">enviar</button>
+        </div><!-- caja-fondo-gris -->
+    </div><!-- content -->
+{% endblock %}

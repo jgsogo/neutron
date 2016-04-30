@@ -1,27 +1,15 @@
-{% extends 'neutron/word_detail.html' %}
+{% extends 'base.html' %}
 {% load bootstrap3 %}
 
-{% block neutron_content %}
-    <h2>Search a word</h2>
-    <p>
-        En el futuro el diccionario no se podrá elegir, habrá uno que será la referencia (Básico SM);
-        pero la organización de la base de datos nos permite utilizar como referencia cualquiera de
-        los informantes.
-    </p>
-    <form method="post" class="form">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-            <button type="submit" class="btn btn-primary">Search</button>
-        {% endbuttons %}
-    </form>
-    <p>
-        Y como de momento no tenemos muchas palabras aquí metidas, pues pongamos algunos ejemplos
-        para que no haya que buscar:
-        <ul>
-            {% for word in examples %}
-                <li><a href="{% url 'neutron:word_detail' pk=word.pk %}">{{ word }}</a></li>
-            {% endfor %}
-        </ul>
-    </p>
+{% block content %}
+    <h2>Consultar palabra</h2>
+    <div class="content">
+        <div class="buscador-palabra">
+            <form method="post" class="form">
+                {% csrf_token %}
+                <input id="id_word" name="word" required="required" type="text" placeholder="Escribir palabra...">
+                <button>buscar</button>
+            </form>
+        </div><!-- buscador-palabra -->
+    </div>
 {% endblock %}
