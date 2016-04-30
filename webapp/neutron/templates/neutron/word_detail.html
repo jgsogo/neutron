@@ -1,26 +1,58 @@
-{% extends 'neutron/base.html' %}
-{% load bootstrap3 %}
+{% extends 'base.html' %}
+{% load i18n %}
 
 
-{% block neutron_word_link %}
-    {% if word %}
-        <li><a href="{% url 'neutron:word_detail' pk=word.pk %}">{{ word }}</a></li>
-    {% endif %}
-{% endblock %}
-
-{% block neutron_content %}
+{% block content %}
     <h2>{{ word }}</h2>
-    {% regroup word.meaning_set.all by informer as meaning_list %}
-    <ul>
+    {% regroup meanings.all by informer as meaning_list %}
+    <div class="resultado-busqueda">
         {% for defs in meaning_list %}
-            <li><strong>Informante/Diccionario:</strong> {{ defs.grouper }}
-                <ul>
-                    {% for item in defs.list %}
-                        <li>(<a href="{% url 'neutron:meaning_detail' pk=item.pk %}">details</a>) {{ item.definition }}</li>
-                    {% endfor %}
-                </ul>
-            </li>
+            <h3 class="cabecera-caja-fondo-gris-01 margin-top-tres">{{ defs.grouper.region }} - {{ defs.grouper.name }}</h3>
+            <div class="content">
+                {% for item in defs.list %}
+                    <div class="definicion-grupo">
+                        <div class="definicion collapsed" data-toggle="collapse" href="#palabra-{{item.pk}}" aria-expanded="false">
+                            <p>{{ item.definition }}</p><span class="masMenos"></span>
+                        </div><!-- definicion -->
+                        <div id="palabra-{{item.pk}}" class="informacion collapse" aria-expanded="false">
+                            {% if item.informeruse_set.count %}
+                                <p class="cabecera-seccion">{% trans "Word uses" %}: <span>{{ item.informeruse_set.count }}</span></p>
+                                <div class="caja-linea-gris">
+                                    <div class="table-responsive">
+                                        <table class="table tabla-02">
+                                            <thead>
+                                                <tr>
+                                                    <th>{% trans "Region" %}</th>
+                                                    <th>{% trans "Same use" %}</th>
+                                                    <th>{% trans "Prefer other" %}</th>
+                                                    <th>{% trans "Unrecognized" %}</th>
+                                                    <th>{% trans "Total count" %}</th>
+											    </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% regroup item.informeruse_set.all by informer.region as uses_list %}
+                                                {% for region in uses_list %}
+                                                    {% worduse_stats region.list as stats %}
+                                                    <tr>
+                                                        <td>{{ region.grouper }}</td>
+                                                        <td>{{ stats.ok|floatformat:0 }}%</td>
+                                                        <td>{{ stats.prefer_other|floatformat:0 }}%</td>
+                                                        <td>{{ stats.unrecognized|floatformat:0 }}%</td>
+                                                        <td>{{ stats.count }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <p><a href="{% url 'neutron:meaning_detail' pk=item.pk %}">More details...</a></p>
+                            {% else %}
+                                <p>:( {% trans "There is no data for this meaning" %}.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         {% endfor %}
-    </ul>
-
+    </div>
 {% endblock %}

@@ -22,6 +22,7 @@ class Informer(models.Model):
 
     name = models.CharField(max_length=64)
     comment = models.TextField()
+    searchable = models.BooleanField(default=False, help_text=_('Whether the words related to this informer are included in the search-form.'))
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
                              help_text=_('Informers may or may not be users in the webapp'))

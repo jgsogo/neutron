@@ -6,9 +6,11 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 
-from ..models import Word
+from ..models import Meaning, Word, WordUse
 from ..forms import SearchWordForm
 
+import logging
+log = logging.getLogger(__name__)
 
 class SearchLemma(FormView):
     form_class = SearchWordForm
@@ -18,21 +20,25 @@ class SearchLemma(FormView):
         word_str = form.cleaned_data['word']
         try:
             word = Word.objects.get(word=word_str)
-            return HttpResponseRedirect(redirect_to=reverse('neutron:word_detail',
-                                        kwargs={'pk': word.pk}))
+            if Meaning.objects.filter(word__word=word_str, informer__searchable=True).exists():
+                return HttpResponseRedirect(redirect_to=reverse('neutron:word_detail',
+                                            kwargs={'pk': word.pk}))
+            else:
+                # TODO: Are there users with special privileges to access non-searchable informers?
+                raise Word.DoesNotExist()
         except Word.DoesNotExist:
-            # TODO: Si la palabra no existe => error en el formulario.
-            messages.add_message(self.request, messages.ERROR, "Word '%s' cannot be found in the dictionary" % word_str)
+            messages.add_message(self.request, messages.ERROR, "Word '%s' cannot be found in the applications" % word_str)
             return self.form_invalid(form)
-
-    def get_context_data(self, **kwargs):
-        # TODO: This is to delete
-        ctxt = super(SearchLemma, self).get_context_data(**kwargs)
-        queryset = Word.objects.filter(meaning__isnull=False).distinct()
-        ctxt.update({'examples': [Word.objects.random(queryset) for _ in range(3)]})
-        return ctxt
 
 
 class LemmaDetail(DetailView):
     model = Word
     template_name = 'neutron/word_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(LemmaDetail, self).get_context_data(**kwargs)
+        meanings = Meaning.objects.filter(word=self.get_object(), informer__searchable=True)
+        log.debug(meanings[0].worduse_set.all())
+        log.debug(WordUse.objects.filter(meaning=meanings[0]))
+        context.update({'meanings': meanings})
+        return context
