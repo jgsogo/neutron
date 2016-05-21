@@ -39,26 +39,18 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'neutron:word_detail_search' %}">{% trans "Consulta" %}</a></li>
-						{% comment "Al usuario que es informante se le muestran las interfaces, al resto un botón para apuntarse" %}
-						    >>> TODO: if request.user.is_informer
-						    <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contribute <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-header">Web interfaces</li>
-                                    <li><a href="{% url 'word_use' %}">Word uses</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li class="dropdown-header">Other interfaces</li>
-                                    <li><a href="{% url 'telegram:bot_list' %}">Telegram</a></li>
-                                </ul>
-                            </li>
-                            >>> TODO: else (el link de "participa")
-                        {% endcomment %}
-                        <li><a href="{% url 'contribute' %}">{% trans "Participa" %}</a></li>
-						<li><a href="{% url 'faq' %}">FAQ's</a></li>
-						<li class="equipo"><a href="#">{% trans "equipo y patrocinadores" %}</a></li>
-                        {% comment "Register/login y profile/logout" %}
-                            >>> TODO: if user.is_authenticated
+
+                        {% if not user.is_authenticated %}
+                            <li><a href="{% url 'contribute' %}">{% trans "Únete" %}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'word_use' %}">{% trans "Participa" %}</a></li>
+    						<li><a href="{% url 'faq' %}">FAQ's</a></li>
+                        {% endif %}
+
+                        <li><a href="{% url 'neutron:word_detail_search' %}">{% trans "Consulta" %}</a></li>
+                        <li class="equipo"><a href="{% url 'about' %}">{% trans "equipo y patrocinadores" %}</a></li>
+
+                        {% if user.is_authenticated %}
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
@@ -73,22 +65,21 @@
                                     </ul>
                                 </li>
                             </ul>
-                            >>> TODO: else
-                                {% block navbar_login_form %}
-                                    <form class="navbar-form navbar-right" method="post" action="{% url 'login' %}">{% csrf_token %}
-                                        <div class="form-group">
-                                            <input name="username" type="text" placeholder="Email" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <input name="password" type="password" placeholder="Password" class="form-control">
-                                        </div>
-                                        <input type="hidden" name="next" value="{{ request.path }}">
-                                        <button type="submit" class="btn btn-success">Sign in</button>
-                                        <a href="{% url 'register' %}" class="btn btn-primary">{% trans "Register" %}</a>
-                                    </form>
-                                {% endblock %}
-                            >>> TODO: endif
-                        {% endcomment %}
+                        {% else %}
+                            {% block navbar_login_form %}
+                                <form class="navbar-form navbar-right" method="post" action="{% url 'login' %}">{% csrf_token %}
+                                    <div class="form-group">
+                                        <input name="username" type="text" placeholder="Email" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="password" type="password" placeholder="Password" class="form-control">
+                                    </div>
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <button type="submit" class="btn btn-success">Sign in</button>
+                                    <a href="{% url 'register' %}" class="btn btn-primary">{% trans "Register" %}</a>
+                                </form>
+                            {% endblock %}
+                        {% endif %}
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>

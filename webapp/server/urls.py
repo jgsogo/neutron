@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^contribute/$', TemplateView.as_view(template_name='contribute.html'), name='contribute'),
     url(r'^faq/$', TemplateView.as_view(template_name='faq.html'), name='faq'),
+    url(r'^about/$', TemplateView.as_view(template_name='about.html'), name='about'),
 
     url(r'^stats/', include('neutron.urls', namespace='neutron')),
 
