@@ -12,9 +12,26 @@ from .forms import MeaningForm, WordUseForm
 
 
 class InformerAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'region',)
-    list_filter = ('region',)
+    list_display = ('__str__', 'region', 'searchable', 'mutable', 'privacy', )
+    list_filter = ('region', 'searchable', 'mutable', 'privacy',)
+    #fields = ('nationality', 'known_us', 'education',)
 
+    def get_fields(self, request, obj=None):
+        fields = super(InformerAdmin, self).get_fields(request, obj)
+        def move_to_front(item):
+            if fields[0] == item:
+                return
+            try:
+                fields.remove(item)
+            except ValueError:
+                pass
+            fields.insert(0, item)
+
+        move_to_front('education')
+        move_to_front('known_us')
+        move_to_front('nationality')
+
+        return fields
 
 class DatumAdmin(admin.ModelAdmin):
     list_display = ('informer', 'interface',)

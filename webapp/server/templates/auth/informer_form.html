@@ -1,24 +1,24 @@
 {% extends 'auth/user_form.html' %}
 {% load bootstrap3 %}
+{% load i18n %}
 
 {% block content_profile %}
-    <div class="row">
-        <h3>Datos de informante</h3>
-        {% if not user.is_informer %}
-            <p>You are not an informer yet, please fill the form below.</p>
-        {% endif %}
-        <p>Aquí un mapita para que seleccionara su zona sería algo soberbio.</p>
-        <form method="post" class="form">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-primary">Update</button>
-            {% endbuttons %}
-        </form>
-        <p class="well">
-            Hay que pensar muy bien qué datos puede editar el usuario y cuáles no, y cuáles son las
-        consecuencias de andar tocándolos. Si un usuario cambia de zona, ¿qué pasa con toda la
-        información que ya ha proporcionado?
-        </p>
+    <h3 class="cabecera-caja-fondo-gris-02">{% trans "Datos de informante" %}</h3>
+    {% if not user.is_informer %}
+        <p>You are not an informer yet, please fill the form below.</p>
+    {% endif %}
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <form method="post" class="form">{% csrf_token %}
+                {{ form.nationality.errors }}{{ form.nationality.label_tag }}{{ form.nationality }}
+                {{ form.education.errors }}{{ form.education.label_tag }}{{ form.education }}
+                <button type="submit" class="b-yellow">{% trans "Update" %}</button>
+            </form>
+            <p class="well">
+                Hay que pensar muy bien qué datos puede editar el usuario y cuáles no, y cuáles son las
+                consecuencias de andar tocándolos. Si un usuario cambia de zona, ¿qué pasa con toda la
+                información que ya ha proporcionado?
+            </p>
+        </div>
     </div>
 {% endblock %}

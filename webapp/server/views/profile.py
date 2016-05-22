@@ -17,7 +17,7 @@ class ProfileView(UpdateView):
 
 class ProfileInformerView(UpdateView):
     model = Informer
-    fields = ('region',)
+    fields = ('nationality', 'education',)
     template_name = 'auth/informer_form.html'
 
     def get_success_url(self):
