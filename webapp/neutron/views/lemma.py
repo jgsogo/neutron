@@ -27,7 +27,7 @@ class SearchLemma(FormView):
                 # TODO: Are there users with special privileges to access non-searchable informers?
                 raise Word.DoesNotExist()
         except Word.DoesNotExist:
-            messages.add_message(self.request, messages.ERROR, "Word '%s' cannot be found in the applications" % word_str)
+            messages.add_message(self.request, messages.ERROR, "Word '{}' cannot be found in the application".format(word_str))
             return self.form_invalid(form)
 
 

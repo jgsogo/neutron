@@ -15,6 +15,11 @@ from .word import Word
 from .meaning import Meaning
 
 
+class WordUseManager(models.Manager):
+    def valid(self):
+        return self.filter(informer__region__isnull=False)
+
+
 @python_2_unicode_compatible
 class WordUse(Datum):
     # Perception of the word use
@@ -29,6 +34,8 @@ class WordUse(Datum):
                                     blank=True,
                                     null=True,
                                     help_text=_('Alternate word/definition in the informer\'s dictionary'))
+
+    objects = WordUseManager()
 
     class Meta:
         verbose_name = _('Word use')

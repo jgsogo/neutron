@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
-{% load bootstrap3 %}
+{% load i18n %}
 
 {% block content %}
-    <h2>Consultar palabra</h2>
+    <h2>{% trans "Consultar palabra" %}</h2>
     <div class="content">
         <div class="buscador-palabra">
             <form method="post" class="form">
                 {% csrf_token %}
-                <input id="id_word" name="word" required="required" type="text" placeholder="Escribir palabra...">
-                <button>buscar</button>
+                <input id="id_word" name="word" required="required" type="text" placeholder="{% trans "Escribir palabra" %}...">
+                <button>{% trans "bucar" %}</button>
             </form>
         </div><!-- buscador-palabra -->
     </div>

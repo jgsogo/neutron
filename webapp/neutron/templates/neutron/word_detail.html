@@ -16,7 +16,7 @@
                         </div><!-- definicion -->
                         <div id="palabra-{{item.pk}}" class="informacion collapse" aria-expanded="false">
                             {% if item.informeruse_set.count %}
-                                <p class="cabecera-seccion">{% trans "Word uses" %}: <span>{{ item.informeruse_set.count }}</span></p>
+                                <p class="cabecera-seccion">{% trans "Word uses" %}: <span>{{ item.informeruse_set.valid.count }}</span></p>
                                 <div class="caja-linea-gris">
                                     <div class="table-responsive">
                                         <table class="table tabla-02">
@@ -30,7 +30,7 @@
 											    </tr>
                                             </thead>
                                             <tbody>
-                                                {% regroup item.informeruse_set.all by informer.region as uses_list %}
+                                                {% regroup item.informeruse_set.valid.all by informer.region as uses_list %}
                                                 {% for region in uses_list %}
                                                     {% worduse_stats region.list as stats %}
                                                     <tr>
