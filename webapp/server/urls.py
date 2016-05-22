@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^faq/delete$', question_delete, name='faq_delete'),
     url(r'^about/$', TemplateView.as_view(template_name='about.html'), name='about'),
 
-    url(r'^stats/', include('neutron.urls', namespace='neutron')),
+    url(r'^neutron/', include('neutron.urls', namespace='neutron')),
 
     # Some error views
     url(r'^accounts/no_informer/$', TemplateView.as_view(template_name='error/no_informer.html'), name='error_no_informer'),
@@ -52,6 +52,7 @@ urlpatterns = [
     # Profile
     url(r'^accounts/profile/$', ProfileView.as_view(), name='profile'),
     url(r'^accounts/profile/informer/$', ProfileInformerView.as_view(), name='profile_informer'),
+    url(r'^accounts/profile/stats/$', TemplateView.as_view(template_name='profile/stats.html'), name='profile_stats'),
 
     # Word use
     url(r'^uses/$', WordUseHome.as_view(), name='word_use'),
