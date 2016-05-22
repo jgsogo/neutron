@@ -49,3 +49,5 @@ logs
 processing/*/build
 conanbuildinfo.cmake
 conaninfo.txt
+build_*/
+tmp/
