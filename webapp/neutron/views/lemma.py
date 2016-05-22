@@ -6,8 +6,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 
-from ..models import Meaning, Word, WordUse
-from ..forms import SearchWordForm
+from neutron.models import Meaning, Word, WordUse
+from neutron.forms import SearchWordForm
 
 import logging
 log = logging.getLogger(__name__)

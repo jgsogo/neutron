@@ -15,3 +15,12 @@ class WordUseForm(forms.Form):
 class WordUseAlternateForm(forms.Form):
     meaning = forms.IntegerField(widget=forms.HiddenInput())
     alternate = forms.CharField(label='Alternate word', max_length=MAX_WORD_LENGTH)
+
+
+class JoinForm(forms.Form):
+    name = forms.CharField(max_length=64)
+    surname = forms.CharField(max_length=128)
+    email = forms.EmailField()
+    nacionality = forms.CharField(max_length=128)
+    kwnow_us = forms.TextInput()
+    education = forms.CharField(max_length=128)

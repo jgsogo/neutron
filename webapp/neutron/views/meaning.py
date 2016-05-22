@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.db.models import Count
-from ..models import Meaning, Informer, CoarseWord, WordUse
+from neutron.models import Meaning, Informer, CoarseWord, WordUse
 
 
 class MeaningDetail(DetailView):

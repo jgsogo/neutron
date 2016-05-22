@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from neutron.models import Meaning, WordUse, CoarseWord, Word
 
 from .common import RandomMeaningRun
-from ..forms import WordUseForm, WordUseAlternateForm
+from server.forms import WordUseForm, WordUseAlternateForm
 
 
 class WordUseHome(TemplateView):
