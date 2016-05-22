@@ -23,11 +23,46 @@
             <p>Te animamos muchísimo a darle una vuelta más antes de rendirte, ¿seguro que no puedes recordarla? Si te sientes realmente atascado, selecciona <span class="color-orange">Prefiero usar otra</span> e introduce el comodín “blank” en el campo de texto.</p>
         </div><!-- caja-fondo-gris -->
     </div><!-- content -->
+
+    {% for question in question_list %}
+        <h3 class="cabecera-caja-fondo-gris-01">{{ question.question }}</h3>
+        <div class="content">
+            <div class="caja-fondo-gris">
+                <p>{{ question.answer }}</p>
+            </div><!-- caja-fondo-gris -->
+        </div><!-- content -->
+    {% endfor %}
+
+    {% if pending_questions %}
+    <hr/>
+    <h2>{% trans "Your pending questions" %}</h2>
+    {% for question in pending_questions %}
+        <h3 class="cabecera-caja-fondo-gris-01{% if forloop.first %} margin-top-tres{% endif %}">
+            {% blocktrans with timestamp=question.timestamp %}On {{ timestamp }} you asked:{% endblocktrans %}
+        </h3>
+        <div class="content">
+            <div class="caja-fondo-gris">
+                <p>{{ question.user_input }}</p>
+                <p>
+                    <form method="post" action="{% url 'faq_delete' %}">{% csrf_token %}
+                        <input id="faq_id" name="faq_id" value="{{ question.id }}" hidden="hidden"/>
+                        <button class="b-yellow">{% trans "Delete" %}</button>
+                    </form>
+                </p>
+            </div><!-- caja-fondo-gris -->
+        </div><!-- content -->
+    {% endfor %}
+    {% endif %}
+
+
     <h3 class="cabecera-caja-fondo-gris-02">¿Tienes otra duda? ¡Escríbenos!</h3>
     <div class="content">
         <div class="caja-fondo-gris">
-            <textarea name="duda" id="duda" cols="30" rows="10"placeholder="¿Cómo podemos ayudarte?"></textarea>
-            <button class="b-yellow">enviar</button>
+            <form method="post" action="{% url 'faq_ask' %}">{% csrf_token %}
+                <textarea id="id_user_input" name="user_input" cols="30" rows="10" placeholder="{% trans "¿Cómo podemos ayudarte?" %}"></textarea>
+                <button class="b-yellow">{% trans "Enviar" %}</button>
+            </form>
         </div><!-- caja-fondo-gris -->
     </div><!-- content -->
+
 {% endblock %}

@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'bootstrap3', # https://github.com/dyve/django-bootstrap3
     'mptt',
 
+    'server',
     'neutron',
     'telegram',
     'synthetic',

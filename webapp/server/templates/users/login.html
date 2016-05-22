@@ -53,9 +53,9 @@
         {% endbuttons %}
 
         <ol style="visibility:hidden;"></ol>
-        {% url 'register' as register_url %}
+        {% url 'join' as register_url %}
         <p>
-            {% blocktrans %}If you don't have an account, please <a href="{{ register_url }}">register</a>{% endblocktrans %}.
+            {% blocktrans %}If you don't have an account, please <a href="{{ register_url }}">join</a> first{% endblocktrans %}.
         </p>
     </form>
 

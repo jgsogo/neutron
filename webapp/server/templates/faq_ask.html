@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Make a new question" %}{% endblock %}
+
+{% block content %}
+    <h3 class="cabecera-caja-fondo-gris-02">{% trans "Tell us your doubts" %}</h3>
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <form method="post" action="">{% csrf_token %}
+                <textarea id="id_user_input" name="user_input" cols="30" rows="10" placeholder="{% trans "¿Cómo podemos ayudarte?" %}"></textarea>
+                <button class="b-yellow">enviar</button>
+            </form>
+        </div><!-- caja-fondo-gris -->
+    </div><!-- content -->
+{% endblock %}

@@ -28,15 +28,18 @@
         </div><!-- caja-fondo-gris -->
     </div><!-- content -->
 
-    <h3 class="cabecera-caja-fondo-gris-02">Formulario</h3>
+    <h3 class="cabecera-caja-fondo-gris-02">{% trans "Formulario" %}</h3>
     <div class="content">
         <div class="caja-fondo-gris">
-            <input type="text" placeholder="Nombre*">
-            <input type="text" placeholder="Correo electrónico*">
-            <input type="text" placeholder="Nacionalidad*">
-            <input type="text" placeholder="¿Cómo nos has conocido?* (Cálamo&Cran, Fundéu, universidad, otros)">
-            <input type="text" placeholder="Nivel de estudios* (ed. básica, ed. secundaria, ed. universitaria)">
-            <button class="b-yellow">participar</button>
+            <form method="post" action="{% url 'join' %}">{% csrf_token %}
+                <input type="text" placeholder="{% trans "Nombre" %}*">
+                <input type="text" placeholder="{% trans "Apellidos" %}*">
+                <input type="text" placeholder="{% trans "Correo electronico" %}*">
+                <input type="text" placeholder="{% trans "Nacionalidad" %}*">
+                <input type="text" placeholder="{% trans "¿Cómo nos has conocido?* (Cálamo&Cran, Fundéu, universidad, otros)" %}">
+                <input type="text" placeholder="{% trans "Nivel de estudios* (ed. básica, ed. secundaria, ed. universitaria)" %}">
+                <button class="b-yellow">{% trans "Participar" %}</button>
+            </form>
         </div><!-- caja-fondo-gris -->
     </div><!-- content -->
 {% endblock %}

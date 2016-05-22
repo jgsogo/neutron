@@ -32,14 +32,15 @@ urlpatterns = [
 
     url(r'^accounts/login/$', login, name='login'),
     url(r'^accounts/logout/$', logout, name='logout'),
-    url(r'^accounts/register/$', register, name='register'),
 
     url(r'^telegram/', include('telegram.urls', namespace='telegram')),
 
     url(r'^$', HomeView.as_view()),
     url(r'^home/$', HomeView.as_view(), name='home'),
-    url(r'^contribute/$', TemplateView.as_view(template_name='contribute.html'), name='contribute'),
-    url(r'^faq/$', TemplateView.as_view(template_name='faq.html'), name='faq'),
+    url(r'^join/$', TemplateView.as_view(template_name='join.html'), name='join'),
+    url(r'^faq/$', QuestionList.as_view(template_name='faq.html'), name='faq'),
+    url(r'^faq/ask$', QuestionMake.as_view(template_name='faq_ask.html'), name='faq_ask'),
+    url(r'^faq/delete$', question_delete, name='faq_delete'),
     url(r'^about/$', TemplateView.as_view(template_name='about.html'), name='about'),
 
     url(r'^stats/', include('neutron.urls', namespace='neutron')),
