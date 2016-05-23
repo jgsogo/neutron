@@ -38,7 +38,5 @@ class LemmaDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(LemmaDetail, self).get_context_data(**kwargs)
         meanings = Meaning.objects.filter(word=self.get_object(), informer__searchable=True)
-        log.debug(meanings[0].worduse_set.all())
-        log.debug(WordUse.objects.filter(meaning=meanings[0]))
         context.update({'meanings': meanings})
         return context

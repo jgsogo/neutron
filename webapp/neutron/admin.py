@@ -14,7 +14,6 @@ from .forms import MeaningForm, WordUseForm
 class InformerAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'region', 'searchable', 'mutable', 'privacy', )
     list_filter = ('region', 'searchable', 'mutable', 'privacy',)
-    #fields = ('nationality', 'known_us', 'education',)
 
     def get_fields(self, request, obj=None):
         fields = super(InformerAdmin, self).get_fields(request, obj)
@@ -29,7 +28,7 @@ class InformerAdmin(admin.ModelAdmin):
 
         move_to_front('education')
         move_to_front('known_us')
-        move_to_front('nationality')
+        move_to_front('region')
 
         return fields
 

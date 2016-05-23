@@ -14,7 +14,7 @@ from neutron.models import Definition, Informer, Context, Word, Meaning, WordUse
 
 
 def all_text(node):
-    txt = ''.join([node.text] + [c.text + c.tail for c in node] + [node.tail])
+    txt = ''.join([node.text or ''] + [c.text or '' + c.tail or '' for c in node] + [node.tail or ''])
     return txt.strip()
     
 
