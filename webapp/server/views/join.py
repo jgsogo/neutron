@@ -9,14 +9,16 @@ from django.utils.text import slugify
 from django.contrib.auth import login as auth_login, authenticate
 
 from server.forms import JoinForm, JoinRegisterForm
-from neutron.models import Informer
+from neutron.models import Informer, Region
 
 
 class JoinView(FormView):
     form_class = JoinForm
 
     def form_valid(self, form):
-        self.request.session['join_data'] = form.cleaned_data
+        data = form.cleaned_data
+        data.update({'region': form.cleaned_data['region'].pk})
+        self.request.session['join_data'] = data
         return HttpResponseRedirect(reverse('register'))
 
 
@@ -41,7 +43,6 @@ class JoinRegister(FormView):
         # Grab data from previous step to create the informer
         join_data = self.request.session.get('join_data', None)
         if join_data:
-            print("*"*100)
             # Extra data for user
             new_user.first_name = join_data['name']
             new_user.last_name = join_data['surname']
@@ -51,7 +52,7 @@ class JoinRegister(FormView):
             # Create informer data
             informer = Informer(user=new_user)
             informer.name = join_data['name']
-            informer.nationality = join_data['nationality']
+            informer.region = Region.objects.get(pk=join_data['region'])
             informer.known_us = join_data['known_us']
             informer.education = join_data['education']
             informer.save()

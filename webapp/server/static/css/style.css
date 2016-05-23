@@ -208,6 +208,13 @@ input {
   margin-bottom: 1em;
 }
 
+select {
+  width: 100%;
+  border: #ececec;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
 input[type="checkbox"] {
   width: 30px;
   border: #ececec;

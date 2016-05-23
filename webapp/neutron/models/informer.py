@@ -21,7 +21,6 @@ class Informer(models.Model):
                      )
 
     # Input data by the user himself
-    nationality = models.CharField(max_length=128, blank=True, null=True, help_text=_("Nacionality set by the user"))
     known_us = models.CharField(max_length=512, blank=True, null=True, help_text=_("How did he know about us"))
     education = models.CharField(max_length=128, blank=True, null=True, help_text=_("Educational level"))
 
@@ -51,8 +50,6 @@ class Informer(models.Model):
     def save(self, *args, **kwargs):
         if self.user and len(self.name.strip()) == 0:
             self.name = str(self.user)
-        if not self.region:
-            self.region = Region.objects.search(self.nationality)
         super(Informer, self).save(*args, **kwargs)
 
     def __str__(self):

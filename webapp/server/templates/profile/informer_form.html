@@ -10,7 +10,7 @@
     <div class="content">
         <div class="caja-fondo-gris">
             <form method="post" class="form">{% csrf_token %}
-                {{ form.nationality.errors }}{{ form.nationality.label_tag }}{{ form.nationality }}
+                {{ form.region.errors }}{{ form.region.label_tag }}{{ form.region }}
                 {{ form.education.errors }}{{ form.education.label_tag }}{{ form.education }}
                 <button type="submit" class="b-yellow">{% trans "Update" %}</button>
             </form>

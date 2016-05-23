@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
 
-from neutron.models import Definition, WordUse
+from neutron.models import Definition, WordUse, Region
 from neutron.models.word import MAX_WORD_LENGTH
 
 
@@ -26,7 +26,7 @@ class JoinForm(forms.Form):
     name = forms.CharField(max_length=64)
     surname = forms.CharField(max_length=128)
     email = forms.EmailField()
-    nationality = forms.CharField(max_length=128)
+    region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label="(Select your nationality)")
     known_us = forms.CharField(max_length=512)
     education = forms.CharField(max_length=128)
 
@@ -37,7 +37,6 @@ class JoinForm(forms.Form):
         self.fields['name'].widget.attrs.update({'placeholder': _("Nombre*"),})
         self.fields['surname'].widget.attrs.update({'placeholder': _("Apellidos*"),})
         self.fields['email'].widget.attrs.update({'placeholder': _("Correo electrónico*"),})
-        self.fields['nationality'].widget.attrs.update({'placeholder': _("Nacionalidad*"),})
         self.fields['known_us'].widget.attrs.update({'placeholder': _("¿Cómo nos has conocido?* (Cálamo&Cran, Fundéu, universidad, otros)"),})
         self.fields['education'].widget.attrs.update({'placeholder': _("Nivel de estudios* (ed. básica, ed. secundaria, ed. universitaria)"),})
 
