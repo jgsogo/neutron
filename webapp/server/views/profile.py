@@ -7,6 +7,7 @@ from neutron.models import Informer
 
 class ProfileView(UpdateView):
     fields = ('first_name', 'last_name', 'email',)
+    template_name = 'profile/user_form.html'
 
     def get_success_url(self):
         return self.request.path

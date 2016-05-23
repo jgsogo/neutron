@@ -15,7 +15,7 @@ def compute_information(value):
     return -value*math.log(value, 2)
 
 
-def compute_entropy(queryset, informers=None):
+def compute_entropy(queryset):
     """  Compute entropy of a meaning for each available region.
          Entropy is computed as H(S) = - sum(p(x_i)·log_2 p(x_i))
 
@@ -25,11 +25,10 @@ def compute_entropy(queryset, informers=None):
             2. alternative_meaning
             3. informer
     """
-    assert informers is None or isinstance(informers, list), "Informers parameter must be a list or None"
 
     # For each region, get probability options (according to alternatives)
     aux_probs = defaultdict(lambda: defaultdict(int))
-    for item in itertools.ifilter(lambda it: informers is None or it[3] in informers, queryset):
+    for item in queryset:
         use = item[1]
         if use == 1:
             use = "1-{}".format(item[2])
@@ -77,7 +76,7 @@ if __name__ == '__main__':
 
         # Generate random data for queryset
         qs = []
-        for _ in xrange(random.randint(10, 100)):
+        for _ in range(random.randint(10, 100)):
             if len(alts):
                 use = random.choice(['ok', 'unk', 1])
                 alt = random.choice(alts)

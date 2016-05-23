@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from django.db.utils import OperationalError
 
 from neutron.models import Meaning, Interface
+from neutron.utils.meaning_list import get_next_meaning_for_informer
 
 
 class RandomMeaningRun(UserPassesTestMixin, FormView):
@@ -34,7 +35,8 @@ class RandomMeaningRun(UserPassesTestMixin, FormView):
         # assert self.request.method == 'GET', "RandomMeaningRun::get_meaning must be only called in GET"
         if not hasattr(self, '_meaning'):
             try:
-                meaning = choice(Meaning.objects.valid())  # TODO: hack queryset depending on user
+                meaning_pk = get_next_meaning_for_informer(self.request.user.as_informer())
+                meaning = Meaning.objects.get(pk=meaning_pk)
                 setattr(self, '_meaning', meaning)
             except Meaning.DoesNotExist:
                 # TODO: Redirect to ¿?
