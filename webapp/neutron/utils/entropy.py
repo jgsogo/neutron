@@ -25,11 +25,11 @@ def compute_entropy(queryset, informers=None):
             2. alternative_meaning
             3. informer
     """
-    assert not informers or isinstance(informers, list), "Informers parameter must be a list or None"
+    assert informers is None or isinstance(informers, list), "Informers parameter must be a list or None"
 
     # For each region, get probability options (according to alternatives)
     aux_probs = defaultdict(lambda: defaultdict(int))
-    for item in itertools.ifilter(lambda it: not informers or it[3] in informers, queryset):
+    for item in itertools.ifilter(lambda it: informers is None or it[3] in informers, queryset):
         use = item[1]
         if use == 1:
             use = "1-{}".format(item[2])
@@ -87,7 +87,7 @@ if __name__ == '__main__':
             qs.append([ random.choice(countries), use, alt, random.randint(0, 10)])
 
         # Compute entropy
-        h = compute_entropy(qs, [0, 1])
+        h = compute_entropy(qs)
 
         # Group by region
         for key, value in h.items():
