@@ -86,6 +86,7 @@ class NeutronBot(DeepLinkingBot):
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=False)
         alternates = ['ok', 'coarse!']
         markup.row(*alternates)
+        markup.row('/help')
 
         def wait_reply(answer):
             logger.debug("NeutronBot::wait_reply_for_coarse")
