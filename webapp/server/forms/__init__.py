@@ -33,7 +33,7 @@ class JoinForm(forms.Form):
     declaration = forms.BooleanField()
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(JoinForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'placeholder': _("Nombre*"),})
         self.fields['surname'].widget.attrs.update({'placeholder': _("Apellidos*"),})
         self.fields['email'].widget.attrs.update({'placeholder': _("Correo electrónico*"),})
