@@ -121,6 +121,8 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
 
+NEUTRON_BOT_USERNAME = 'neutron_test_bot'
+
 
 LOGGING = {
     'version': 1,

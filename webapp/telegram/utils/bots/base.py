@@ -42,6 +42,7 @@ class BaseBot(TeleBot):
             return super(BaseBot, self)._test_message_handler(message_handler, message)
         except BotException as e:
             self._handle_exception(e, message)
+        print("*"*100)
 
     def _handle_exception(self, e, message):
         logger.debug("BaseBot::_handle_exception")

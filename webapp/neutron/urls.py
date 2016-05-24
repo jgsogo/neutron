@@ -3,6 +3,7 @@
 
 
 from django.conf.urls import include, url
+
 from .views import *
 
 
@@ -16,4 +17,7 @@ urlpatterns = [
     url(r'^word/meaning/(?P<pk>\d+)/$', MeaningDetail.as_view(), name='meaning_detail'),
     url(r'^word/meaning/(?P<pk>\d+)/coarsity/$', MeaningCoarsityDetail.as_view(), name='meaning_detail_coarsity'),
     url(r'^word/meaning/(?P<pk>\d+)/uses/$', MeaningUsesDetail.as_view(), name='meaning_detail_uses'),
+
+    # Telegram bot
+    url(r'^bot/link/$', NutronBotLink.as_view(), name='bot_link'),
     ]

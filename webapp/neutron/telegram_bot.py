@@ -9,7 +9,8 @@ from telebot.util import extract_command
 from telegram.utils.bots import DeepLinkingBot
 from telegram.models.telegram_user import TelegramUser
 from .models import Interface, Informer
-from .models import Definition, WordUse, CoarseWord
+from .models import Definition, WordUse, CoarseWord, Meaning
+from neutron.utils.meaning_list import get_next_meaning_for_informer
 
 
 
@@ -35,46 +36,52 @@ class NeutronBot(DeepLinkingBot):
               ' colaborar aportando información, puedes hacerlo de dos formas:' \
               ' \n /word Ayúdanos a identificar qué palabras son comunes en tu región.' \
               ' \n /coarse Dinos qué términos son malsonantes.'
-        #self.send_message(message.chat.id, msg, parse_mode='Markdown')
-        self.send_message(message.chat.id, msg)
+        self.send_message(message.chat.id, msg, parse_mode='Markdown')
+        #self.send_message(message.chat.id, msg)
 
     def on_word(self, message):
         logger.debug("NeutronBot::on_word")
-        definition = Definition.objects.random()
-        msg = '*%s*: %s' % (definition.word, definition.definition)
+        user = TelegramUser.objects.get(id=message.from_user.id).user
+        informer, created = Informer.objects.get_or_create(user=user)
+        meaning_pk = get_next_meaning_for_informer(informer)
+        meaning = Meaning.objects.get(pk=meaning_pk)
+
+        msg = '*%s*: %s' % (meaning.word, meaning.definition)
 
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=False)
-        alternates = ['ok', 'unknown']
-        markup.row(*alternates)
+        markup.row('ok', 'unknown')
+        markup.row('/help')
 
         def wait_reply(answer):
             logger.debug("NeutronBot::wait_reply_for_word")
             if answer.content_type == 'text':
                 command = extract_command(answer.text)
                 if not command:
-                    logger.debug('Answer for %s: %s' % (definition, answer.text))
-                    if answer.text in alternates:
-                        user = TelegramUser.objects.get(id=message.from_user.id).user
-                        use = WordUse.USES.ok if answer.text == alternates[0] else WordUse.USES.unrecognized
-                        informer, created = Informer.objects.get_or_create(user=user)
-                        WordUse.objects.create(definition=definition,
+                    logger.debug('Answer for %s: %s' % (meaning.word, answer.text))
+                    if answer.text in ['ok', 'unknown']:
+                        use = WordUse.USES.ok if answer.text == 'ok' else WordUse.USES.unrecognized
+                        WordUse.objects.create(meaning=meaning,
                                                use=use,
                                                interface=self.interface,
                                                informer=informer)
-                    # Ask for another word
+                        # Ask for another word
                     self.on_word(answer)
 
-        #self.send_message(message.chat.id, msg, reply_markup=markup, parse_mode='Markdown')
-        self.send_message(message.chat.id, msg, reply_markup=markup)
+        self.send_message(message.chat.id, msg, reply_markup=markup, parse_mode='Markdown')
+        #self.send_message(message.chat.id, msg, reply_markup=markup)
 
         self.pre_message_subscribers_next_step[message.chat.id] = []
         self.register_next_step_handler(message, wait_reply)
 
     def on_coarse(self, message):
         logger.debug("NeutronBot::on_coarse")
-        definition = Definition.objects.random()
+        user = TelegramUser.objects.get(id=message.from_user.id).user
+        informer, created = Informer.objects.get_or_create(user=user)
+        meaning_pk = get_next_meaning_for_informer(informer)
+        meaning = Meaning.objects.get(pk=meaning_pk)
+
         #msg = '*%s*: %s' % (definition.word, definition.definition)
-        msg = '*%s*' % (definition.word)
+        msg = '*%s*' % (meaning.word)
 
         markup = types.ReplyKeyboardMarkup(one_time_keyboard=False)
         alternates = ['ok', 'coarse!']
@@ -85,20 +92,18 @@ class NeutronBot(DeepLinkingBot):
             if answer.content_type == 'text':
                 command = extract_command(answer.text)
                 if not command:
-                    logger.debug('Answer for %s: %s' % (definition, answer.text))
+                    logger.debug('Answer for %s: %s' % (meaning.word, answer.text))
                     if answer.text in alternates:
-                        user = TelegramUser.objects.get(id=message.from_user.id).user
                         profane = (answer.text != alternates[0])
-                        informer, created = Informer.objects.get_or_create(user=user)
-                        CoarseWord.objects.create(word=definition.word,
+                        CoarseWord.objects.create(word=meaning.word,
                                                   profane=profane,
                                                   interface=self.interface,
                                                   informer=informer)
                     # Ask for another word
                     self.on_coarse(answer)
 
-        #self.send_message(message.chat.id, msg, reply_markup=markup, parse_mode='Markdown')
-        self.send_message(message.chat.id, msg, reply_markup=markup)
+        self.send_message(message.chat.id, msg, reply_markup=markup, parse_mode='Markdown')
+        #self.send_message(message.chat.id, msg, reply_markup=markup)
 
         self.pre_message_subscribers_next_step[message.chat.id] = []
         self.register_next_step_handler(message, wait_reply)
