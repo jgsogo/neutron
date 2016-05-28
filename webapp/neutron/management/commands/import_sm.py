@@ -5,24 +5,25 @@ from __future__ import unicode_literals
 
 import os
 import re
-import codecs
-import requests
-from xml.etree import ElementTree as ET
+import lxml.etree as ET
+import fnmatch
 from django.core.management.base import BaseCommand, CommandError
 
 from neutron.models import Definition, Informer, Context, Word, Meaning, WordUse, Interface
 
 
-def all_text(node):
-    txt = ''.join([node.text or ''] + [c.text or '' + c.tail or '' for c in node] + [node.tail or ''])
-    return txt.strip()
-    
+def to_console(item):
+    try:
+        return str(item.encode('ascii', errors='replace'))
+    except:
+        return str(item)
+
 
 class Command(BaseCommand):
     help = 'Import file from SM'
 
     def add_arguments(self, parser):
-        parser.add_argument('file', help='File from disk')
+        parser.add_argument('file', help='File (or directory) from disk')
         # Named (optional) arguments
         parser.add_argument('--informer',
             dest='informer',
@@ -37,11 +38,16 @@ class Command(BaseCommand):
             dest='filter',
             default='.*',
             help='Regex expression to filter words')
+        parser.add_argument('--pattern',
+            dest='pattern',
+            default='*.xml',
+            help='Pattern to match files in directory (only if input is dir)')
 
     def get_informer(self, options):
         dict_name = options['informer']
         if not dict_name:
-            dict_name = os.path.basename(options['file']).rsplit('.', 1)[0]
+            workon = options['file']
+            dict_name = os.path.splitext(workon)[0] if os.path.isfile(workon) else os.path.basename(workon)
         informer, created = Informer.objects.get_or_create(name=dict_name)
         return informer
 
@@ -51,7 +57,7 @@ class Command(BaseCommand):
 
     def work_on_ficha(self, node):
         lema = None
-        data = [] # [(lema, numero, is_def, definicion, ejemplo), ...]
+        data = []  # [(lema, numero, is_def, definicion, ejemplo), ...]
 
         numera = 1
         item = None
@@ -67,13 +73,13 @@ class Command(BaseCommand):
                 elif child.tag == 'locucion':
                     is_locution = True
                     numera = 1
-                    lema = all_text(child)
+                    lema = ''.join(child.itertext()).strip().strip('|').strip()
             elif child.tag == 'numera':
                 numera = child.text.strip()
             elif child.tag in ['definicion', 'remision']:
                 if item:
                     data.append(item)
-                definition = all_text(child)
+                definition = ''.join(child.itertext()).strip()
                 type = Meaning.TYPE.definition if child.tag == 'definicion' else Meaning.TYPE.reference
                 item = [lema, is_locution, numera, type, definition.strip().strip('.:'), None]
             elif child.tag == 'ejemplo':
@@ -86,13 +92,24 @@ class Command(BaseCommand):
         self.stdout.write("== Import file from disk (using format from SM) ==")
         
         verbosity = int(options['verbosity'])
-        file = options['file']
+        workon = options['file']
         test = options['test']
         filter = re.compile(options['filter'], re.IGNORECASE)
-        
-        self.stdout.write(" - file: %s" % file)
+
+        filenames = []
+        if os.path.isdir(workon):
+            pattern = options['pattern']
+            for root, dirs, files in os.walk(workon):
+                for file in files:
+                    if fnmatch.fnmatch(file, pattern):
+                        filenames.append(os.path.join(root, file))
+        else:
+            filenames = [workon]
+
+        self.stdout.write(" - files: \n\t{}".format('\n\t'.join(filenames)))
         self.stdout.write(" - filter: %s" % options['filter'])
         
+        i = i_skipped = i_meanings = 0
         try:
             informer = self.get_informer(options)
             interface = self.get_interface(options)
@@ -100,54 +117,64 @@ class Command(BaseCommand):
             self.stdout.write(" - informer: %s" % informer)
             self.stdout.write(" - interface: %s" % interface)
 
-            tree = ET.parse(file)
-            root = tree.getroot()
+            for filename in filenames:
+                i2, i_skipped2, i_meanings2 = self.handle_single(filename, informer, interface, filter, verbosity=verbosity, test=test)
+                i += i2; i_skipped += i_skipped2; i_meanings += i_meanings2
 
-            fichas = root.findall('./ficha')
-            n_fichas = len(fichas)
-            ficha_format = "[%%0%dd/%%d]" % len(str(n_fichas))
-            i = i_skipped = i_meanings = 0            
-            for ficha in fichas:
-                i += 1
-                lema = all_text(ficha.find('lema'))
-                if verbosity > 1:
-                    self.stdout.write(('\n' if verbosity > 2 else '') + ficha_format % (i, n_fichas), ending='')
-                if filter.match(lema):
-                    data = self.work_on_ficha(ficha)
-                    if verbosity > 1:
-                        self.stdout.write(' + add:  %s' % repr(lema))
-                    for it in data:
-                        i_meanings += 1
-                        
-                        if verbosity > 2:
-                            self.stdout.write('\t' + repr(it))
-                        
-                        if not test:
-                            # The data itself
-                            word_instance, _ = Word.objects.get_or_create(word=it[0]) # TODO: Cache this
-                            definition, _ = Definition.objects.get_or_create(definition=it[4])                        
-                            meaning, _ = Meaning.objects.get_or_create(word=word_instance,
-                                                                       definition=definition,
-                                                                       informer=informer,
-                                                                       type=it[3],
-                                                                       is_locution=it[1],
-                                                                       order=it[2],)
-                            # Examples
-                            if it[5]:
-                                Context.objects.filter(meaning=meaning).delete()
-                                c = Context(meaning=meaning, text=it[5])
-                                c.save()
-
-                            # WordUse
-                            WordUse.objects.create(meaning=meaning,
-                                                   use=WordUse.USES.ok,
-                                                   interface=interface,
-                                                   informer=informer)
-
-                else:
-                    i_skipped += 1
-                    if verbosity > 1:
-                        self.stdout.write(' - skip: %s' % repr(lema))
         except KeyboardInterrupt:
             self.stdout.write('... user aborted, exit gracefully.')
         self.stdout.write('Done for %d words (%d skipped). %d meanings processed.' % (i, i_skipped, i_meanings))
+
+
+    def handle_single(self, filename, informer, interface, filter, verbosity, test):
+        basename = os.path.splitext(os.path.basename(filename))[0]
+        tree = ET.parse(filename)
+        root = tree.getroot()
+
+        fichas = root.findall('./ficha')
+        n_fichas = len(fichas)
+        ficha_format = "%s [%%0%dd/%%d]" % (basename, len(str(n_fichas)))
+        i = i_skipped = i_meanings = 0
+        for ficha in fichas:
+            i += 1
+            lema = ''.join(ficha.find('./lema').itertext()).strip()
+            pass_filter = filter.match(lema)
+            if verbosity > 1:
+                self.stdout.write(('\n' if verbosity > 2 and pass_filter else '') + ficha_format % (i, n_fichas), ending='')
+            if pass_filter:
+                data = self.work_on_ficha(ficha)
+                if verbosity > 1:
+                    self.stdout.write(' + %s' % to_console(lema))
+                for it in data:
+                    i_meanings += 1
+
+                    if verbosity > 2:
+                        self.stdout.write('\t{}'.format(', '.join(map(to_console, it))))
+
+                    if not test:
+                        # The data itself
+                        word_instance, _ = Word.objects.get_or_create(word=it[0]) # TODO: Cache this
+                        definition, _ = Definition.objects.get_or_create(definition=it[4])
+                        meaning, _ = Meaning.objects.get_or_create(word=word_instance,
+                                                                   definition=definition,
+                                                                   informer=informer,
+                                                                   type=it[3],
+                                                                   is_locution=it[1],
+                                                                   order=it[2],)
+                        # Examples
+                        if it[5]:
+                            Context.objects.filter(meaning=meaning).delete()
+                            c = Context(meaning=meaning, text=it[5])
+                            c.save()
+
+                        # WordUse
+                        WordUse.objects.create(meaning=meaning,
+                                               use=WordUse.USES.ok,
+                                               interface=interface,
+                                               informer=informer)
+
+            else:
+                i_skipped += 1
+                if verbosity > 1:
+                    self.stdout.write(' = %s' % to_console(lema))
+        return i, i_skipped, i_meanings
