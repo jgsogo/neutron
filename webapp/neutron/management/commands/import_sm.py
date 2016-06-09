@@ -83,7 +83,7 @@ class Command(BaseCommand):
                 type = Meaning.TYPE.definition if child.tag == 'definicion' else Meaning.TYPE.reference
                 item = [lema, is_locution, numera, type, definition.strip().strip('.:'), None]
             elif child.tag == 'ejemplo':
-                item[5] = child.text.strip().strip('.')
+                item[5] = child.text.strip().strip('.') if child.text else ''
         data.append(item)
 
         return data
