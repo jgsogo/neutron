@@ -137,14 +137,14 @@ class Command(BaseCommand):
         i = i_skipped = i_meanings = 0
         for ficha in fichas:
             i += 1
-            lema = ''.join(ficha.find('./lema').itertext()).strip()
-            pass_filter = filter.match(lema)
+            lemma = ''.join(ficha.find('./lema').itertext()).strip()
+            pass_filter = filter.match(lemma)
             if verbosity > 1:
                 self.stdout.write(('\n' if verbosity > 2 and pass_filter else '') + ficha_format % (i, n_fichas), ending='')
             if pass_filter:
                 data = self.work_on_ficha(ficha)
                 if verbosity > 1:
-                    self.stdout.write(' + %s' % to_console(lema))
+                    self.stdout.write(' + %s' % to_console(lemma))
                 for it in data:
                     i_meanings += 1
 
@@ -153,7 +153,7 @@ class Command(BaseCommand):
 
                     if not test:
                         # The data itself
-                        word_instance, _ = Word.objects.get_or_create(word=it[0]) # TODO: Cache this
+                        word_instance, _ = Word.objects.get_or_create(word=it[0])  # TODO: Cache this
                         definition, _ = Definition.objects.get_or_create(definition=it[4])
                         meaning, _ = Meaning.objects.get_or_create(word=word_instance,
                                                                    definition=definition,
@@ -176,5 +176,5 @@ class Command(BaseCommand):
             else:
                 i_skipped += 1
                 if verbosity > 1:
-                    self.stdout.write(' = %s' % to_console(lema))
+                    self.stdout.write(' = %s' % to_console(lemma))
         return i, i_skipped, i_meanings

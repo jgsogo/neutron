@@ -3,7 +3,7 @@
 
 import math
 import itertools
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 import logging
 log = logging.getLogger(__name__)
@@ -15,38 +15,42 @@ def compute_information(value):
     return -value*math.log(value, 2)
 
 
-def compute_entropy(queryset):
-    """  Compute entropy of a meaning for each available region.
-         Entropy is computed as H(S) = - sum(p(x_i)·log_2 p(x_i))
+def _compute_entropy(data, value_list=None, default_times=None):
+    """ Compute entropy for given input data (all corresponding to the same variable).
+        Entropy is computed as H(S) = - sum(p(x_i)·log_2 p(x_i))
 
-         Input data for WordUse is given as a list of tuples with the following elements:
-            0. informer_region
-            1. use: (0)ok, (1)prefer_other, (2)unrecognized
-            2. alternative_meaning
-            3. informer
+    :param data: vector of tuples with the following info: (value, group)
+    :param value_list: list of possible values of field 'value' in data
+    :param min_times: minimum number of times for each value if value_list given.
+    :param grouped: whether entropy must be calculated considering groups or not
+    :return:
     """
 
-    # For each region, get probability options (according to alternatives)
+    # Count each value for each group
     aux_probs = defaultdict(lambda: defaultdict(int))
-    for item in queryset:
-        use = item[1]
-        if use == 1:
-            use = "1-{}".format(item[2])
-            aux_probs[item[0]][use] += 1
-        aux_probs[item[0]][use] += 1
+    for value, group in data:
+        aux_probs[group][value] += 1
+        aux_probs['all'][value] += 1
+
+    # Assign default times for missing values
+    if value_list:
+        default_times = default_times or [10]*len(value_list)
+        for group, values in aux_probs.items():
+            for v, default in zip(value_list, default_times):
+                values[v] = values.setdefault(v, default)
 
     if log.getEffectiveLevel() == logging.DEBUG:
         log.debug("Counting probabilities for each region:")
-        for region, values in aux_probs.items():
-            log.debug(" - {} => {}".format(region, values.items()))
+        for group,values in aux_probs.items():
+            log.debug(" - {} => {}".format(group, values.items()))
 
     # Normalize probabilities
     probs = {}
     n_data = {}
-    for region, values in aux_probs.items():
+    for group, values in aux_probs.items():
         count = float(sum(values.values()))
-        probs[region] = [(key, value/count) for key, value in values.items()]
-        n_data[region] = count
+        probs[group] = [(key, value/count) for key, value in values.items()]
+        n_data[group] = count
 
     # Compute entropy
     entropy = {}
@@ -68,25 +72,21 @@ if __name__ == '__main__':
     # Generate synthetic data
     import random
     countries = ["España", "México", "Argentina",]
-    meanings = {'meaning1': ["m1-alt1", "m2-alt2"], 'meaning2': [], 'meaning3': ['m3-alt1']}
+    meanings = ['meaning1', 'meaning2', 'meaning3',]
+    uses = ['ok', 'not_me', 'unknown', 'unrecognized']
+    default_times = [1, 1, 1, 1]
 
     result = defaultdict(dict)
-    for meaning, alts in meanings.items():
+    for meaning in meanings:
         log.info("Meaning '{}'".format(meaning))
 
-        # Generate random data for queryset
-        qs = []
+        # Generate random data
+        data = []  # (value, country)
         for _ in range(random.randint(10, 100)):
-            if len(alts):
-                use = random.choice(['ok', 'unk', 1])
-                alt = random.choice(alts)
-            else:
-                use = random.choice(['ok', 'unk'])
-                alt = None
-            qs.append([ random.choice(countries), use, alt, random.randint(0, 10)])
+            data.append((random.choice(uses), random.choice(countries)))
 
         # Compute entropy
-        h = compute_entropy(qs)
+        h = _compute_entropy(data, value_list=uses + ['extra'], default_times=default_times + [1])
 
         # Group by region
         for key, value in h.items():
