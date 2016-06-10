@@ -30,14 +30,14 @@ class WordUseRun(RandomMeaningRun):
         elif coarse is True:
             # Store as coarse
             coarse_word = CoarseWord(word=meaning.word)
-            coarse_word.profane = True
+            coarse_word.value = True
             coarse_word.informer = self.request.user.as_informer()
             coarse_word.interface = self.interface
             coarse_word.save()
             return HttpResponseRedirect(reverse('word_use_coarse', kwargs={'meaning': meaning.pk}))
         else:
             word_use = WordUse(meaning=meaning)
-            word_use.use = use
+            word_use.value = use
             word_use.informer = self.request.user.as_informer()
             word_use.interface = self.interface
             word_use.save()
@@ -66,7 +66,7 @@ class WordUseAlternateRun(WordUseStepRun):
 
     def form_valid(self, form):
         word_use = WordUse(meaning=self.get_meaning())
-        word_use.use = WordUse.USES.prefer_other
+        word_use.value = WordUse.USES.prefer_other
         word_use.informer = self.request.user.as_informer()
         word_use.interface = self.interface
         word_use.meaning = self.get_meaning()
@@ -92,7 +92,7 @@ class WordUseCoarseRun(WordUseStepRun):
             return HttpResponseRedirect(reverse('word_use_alternate', kwargs={'meaning': meaning.pk}))
         else:
             word_use = WordUse(meaning=meaning)
-            word_use.use = use
+            word_use.value = use
             word_use.informer = self.request.user.as_informer()
             word_use.interface = self.interface
             word_use.save()

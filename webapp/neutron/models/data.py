@@ -38,7 +38,7 @@ class Datum(models.Model):
 @python_2_unicode_compatible
 class CoarseWord(Datum):
     word = models.ForeignKey(Word)
-    profane = models.BooleanField()
+    value = models.BooleanField()
 
     class Meta:
         verbose_name = _('Coarse word')
@@ -60,7 +60,7 @@ class WordUse(Datum):
                    (2, 'unrecognized', _('Do not recognize this meaning for this word')))
 
     meaning = models.ForeignKey(Meaning, blank=True, null=True)
-    use = models.IntegerField(choices=USES)
+    value = models.IntegerField(choices=USES)
 
     class Meta:
         verbose_name = _('Word use')
@@ -73,11 +73,11 @@ class WordUse(Datum):
 @python_2_unicode_compatible
 class WordAlternate(Datum):
     meaning = models.ForeignKey(Meaning, blank=True, null=True)
-    alternative = models.ForeignKey(Meaning,
-                                    blank=True,
-                                    null=True,
-                                    help_text=_('Alternate word/definition in the informer\'s dictionary'),
-                                    related_name='alternate_set')
+    value = models.ForeignKey(Meaning,
+                              blank=True,
+                              null=True,
+                              help_text=_('Alternate word/definition in the informer\'s dictionary'),
+                              related_name='alternate_set')
 
     class Meta:
         verbose_name = _('Word alternate')

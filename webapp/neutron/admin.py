@@ -82,8 +82,8 @@ class MeaningAdmin(admin.ModelAdmin):
 
 
 class CoarseWordAdmin(admin.ModelAdmin):
-    list_display = ('word', 'informer', 'interface', 'profane',)
-    list_filter = ('informer__region', 'interface', 'profane',)
+    list_display = ('word', 'informer', 'interface', 'value',)
+    list_filter = ('informer__region', 'interface', 'value',)
     search_fields = ('word__word',)
     readonly_fields = ('word',)
 
@@ -95,8 +95,8 @@ class CoarseWordAdmin(admin.ModelAdmin):
 
 
 class WordUseAdmin(admin.ModelAdmin):
-    list_display = ('word', 'informer', 'interface', 'use',)
-    list_filter = ('informer__region', 'interface', 'use',)
+    list_display = ('word', 'informer', 'interface', 'value',)
+    list_filter = ('informer__region', 'interface', 'value',)
     search_fields = ('meaning__word',)
     readonly_fields = ('word', 'definition',)
     exclude = ('meaning',)
@@ -114,13 +114,13 @@ class WordUseAdmin(admin.ModelAdmin):
 class WordAlternateAdmin(admin.ModelAdmin):
     form = WordAlternateForm
     list_display = ('word', 'informer', 'interface', 'has_alternative', )
-    list_filter = ('informer__region', 'interface', null_filter('alternative'), )
+    list_filter = ('informer__region', 'interface', null_filter('value'), )
     search_fields = ('meaning__word',)
     readonly_fields = ('word', 'definition',)
     exclude = ('meaning',)
 
     def has_alternative(self, object):
-        return object.alternative is not None
+        return object.value is not None
 
     def word(self, object):
         return object.meaning.word

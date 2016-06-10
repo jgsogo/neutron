@@ -87,8 +87,8 @@ class InformerGenerated(models.Model):
                 dato = WordUse(interface=interface, informer=self.informer)
                 dato.meaning = w.meaning
                 if random_gen.random() < self.randomness:
-                    dato.use = random_gen.choice([WordUse.USES.ok, WordUse.USES.prefer_other, WordUse.USES.unrecognized])
-                    if dato.use == WordUse.USES.prefer_other:
+                    dato.value = random_gen.choice([WordUse.USES.ok, WordUse.USES.prefer_other, WordUse.USES.unrecognized])
+                    if dato.value == WordUse.USES.prefer_other:
                         # TODO: Cuando al azar prefiero otra palabra... ¿prefiero otra cualquiera al azar o una del subset?
                         # dato.alternative = random_gen.choice(list(w.alternatedata_set.all()))
                         word = random_gen.choice(Word.objects.all())
@@ -96,10 +96,10 @@ class InformerGenerated(models.Model):
                         alternative_meaning.save()
                         dato.alternative = alternative_meaning
                 else:
-                    dato.use = random_gen.weighted_choice([(WordUse.USES.ok, w.ok),
-                                                           (WordUse.USES.prefer_other, 1-w.ok-w.unknown),
-                                                           (WordUse.USES.unrecognized, w.unknown)])
-                    if dato.use == WordUse.USES.prefer_other:
+                    dato.value = random_gen.weighted_choice([(WordUse.USES.ok, w.ok),
+                                                             (WordUse.USES.prefer_other, 1-w.ok-w.unknown),
+                                                             (WordUse.USES.unrecognized, w.unknown)])
+                    if dato.value == WordUse.USES.prefer_other:
                         word = random_gen.weighted_choice([(it.word, it.percentage) for it in w.alternatedata_set.all()])
                         alternative_meaning = Meaning(word=word, definition=dato.meaning.definition, informer=self.informer)
                         alternative_meaning.save()
@@ -116,10 +116,10 @@ class InformerGenerated(models.Model):
                 dato.word = w.word
                 if random_gen.random() < self.randomness:
                     # At random
-                    dato.profane = random_gen.random() < 0.5  # TODO: ¿mayor o mayor-igual?
+                    dato.value = random_gen.random() < 0.5  # TODO: ¿mayor o mayor-igual?
                 else:
                     # Use data
-                    dato.profane = random_gen.random() < w.coarse
+                    dato.value = random_gen.random() < w.coarse
                 dato.save()
 
         self.generated = True

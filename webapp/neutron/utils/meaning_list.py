@@ -6,20 +6,22 @@ from random import shuffle
 
 from django.core.cache import cache
 
-from neutron.models import WordUse, Meaning
+from neutron.models import WordUse, Meaning, WordAlternate, CoarseWord
 from .entropy import compute_entropy
 
 import logging
 log = logging.getLogger(__name__)
 
 
-def get_meaning_list(region):
-    cache_key = 'meaning-list-region-{}'.format(region.name)
+def get_meaning_list(region, model_class):
+    assert model_class in [WordUse, WordAlternate, CoarseWord, ], "'get_next_meaning_for_informer' unexpected model_class '{}'".format(model_class)
+
+    cache_key = 'meaning-list-region-{}-game-{}'.format(region.name, model_class.__name__.lower())
     data = cache.get(cache_key)
     if data:
         return data
 
-    log.info("Compute meaning_list for region='{}'".format(region.name))
+    log.info("Compute meaning_list for region='{}' for game='{}'".format(region.name, model_class.__name__.lower()))
 
     result = []
     for meaning in Meaning.objects.valid():
@@ -38,18 +40,19 @@ def get_meaning_list(region):
     return ordered_meanings
 
 
-def get_next_meaning_for_informer(informer):
+def get_next_meaning_for_informer(informer, model_class):
+    assert model_class in [WordUse, WordAlternate, CoarseWord, ], "'get_next_meaning_for_informer' unexpected model_class '{}'".format(model_class)
     # TODO: ¿Qué pasa con la caché cuando hay varios hilos (pensar que esto lo ejecuto en servidor)?
-    cache_key = 'meaning-list-informer-{}'.format(informer.pk)
+    cache_key = 'meaning-list-informer-{}-game-{}'.format(informer.pk, model_class.__name__.lower())
     data = cache.get(cache_key)
     if data and len(data):
         item = data.pop()
         cache.set(cache_key, data)  # TODO: ¡Actualizo la caché cada vez! Esto no me gusta
         return item
 
-    log.info("Compute meaning_list for informer='{}'".format(informer.name))
+    log.info("Compute meaning_list for informer='{}' for game='{}'".format(informer.name, model_class.__name__.lower()))
     # Get meanings not informed by the user
-    informed_meanings = WordUse.objects.filter(informer=informer).values('meaning_id')
+    informed_meanings = model_class.objects.filter(informer=informer).values('meaning_id')
     next_meanings = list(Meaning.objects.exclude(pk__in=informed_meanings).values_list('pk', flat=True))
     if len(next_meanings):
         log.info("Use meanings not yet informed (informer='{}')".format(informer.name))
@@ -57,7 +60,7 @@ def get_next_meaning_for_informer(informer):
     else:
         # Get meanings ordered by entropy for informer region
         log.info("Use meanings ordered by entropy")
-        next_meanings = get_meaning_list(informer.region)
+        next_meanings = get_meaning_list(informer.region, model_class)
 
     item = next_meanings.pop()
     cache.set(cache_key, next_meanings)

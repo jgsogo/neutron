@@ -93,7 +93,7 @@ class Command(BaseCommand):
 
             # WordUse
             WordUse.objects.create(meaning=meaning,
-                                   use=WordUse.USES.ok,
+                                   value=WordUse.USES.ok,
                                    interface=interface,
                                    informer=informer)
         self.stdout.write(' - added')

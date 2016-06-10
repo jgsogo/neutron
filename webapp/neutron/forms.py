@@ -34,7 +34,7 @@ class MeaningForm(forms.ModelForm):
 
 
 class WordAlternateForm(forms.ModelForm):
-    alternative = forms.CharField()
+    value = forms.CharField()
 
     class Meta:
         model = WordUse
@@ -43,11 +43,11 @@ class WordAlternateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance', None)
         initial = kwargs.pop('initial', {})
-        if instance and instance.alternative:
-            initial.update({'alternative': instance.alternative.word.word, })
+        if instance and instance.value:
+            initial.update({'value': instance.value.word.word, })
         super(WordAlternateForm, self).__init__(initial=initial, *args, **kwargs)
 
     def clean(self):
         cleaned_data = self.cleaned_data
-        cleaned_data['alternative'], _ = Word.objects.get_or_create(word=cleaned_data['alternative'])
+        cleaned_data['value'], _ = Word.objects.get_or_create(word=cleaned_data['value'])
         return cleaned_data
