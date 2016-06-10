@@ -3,14 +3,19 @@
 
 
 from random import Random
-from scipy.stats import beta
 import io
-import PIL
 
-# Import matplotlib, not to render windows: http://stackoverflow.com/questions/27147300/how-to-clean-images-in-python-django
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+import logging
+log = logging.getLogger(__name__)
+
+try:
+    from scipy.stats import beta
+    # Import matplotlib, not to render windows: http://stackoverflow.com/questions/27147300/how-to-clean-images-in-python-django
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+except ImportError as e:
+    log.error("Error importing neutron::synthetic app: {}".format(str(e)))
 
 
 class RandomWeighted(Random):

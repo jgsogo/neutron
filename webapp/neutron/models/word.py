@@ -13,11 +13,14 @@ MAX_WORD_LENGTH = getattr(settings, 'MAX_WORD_LENGTH', 64)
 
 
 class WordManager(models.Manager):
+    def valid(self):
+        return self.filter(excluded=False)
+
     def random(self, queryset=None):
-        qs = queryset or self.all()
+        qs = queryset or self.valid()
         count = qs.count()
         try:
-            return qs[randint(0,count-1)]
+            return qs[randint(0, count-1)]
         except ValueError:
             raise self.model.DoesNotExist()
 
@@ -25,6 +28,8 @@ class WordManager(models.Manager):
 @python_2_unicode_compatible
 class Word(models.Model):
     word = models.CharField(max_length=MAX_WORD_LENGTH, db_index=True)
+
+    excluded = models.BooleanField(default=False, help_text=_("If set, this word won't be shown to informers in WordCoarse interface"))
 
     objects = WordManager()
 

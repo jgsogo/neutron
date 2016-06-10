@@ -10,7 +10,6 @@ class SearchWordForm(forms.Form):
     word = forms.CharField()
 
 
-
 class MeaningForm(forms.ModelForm):
     word = forms.CharField()
     definition = forms.CharField()
@@ -34,7 +33,7 @@ class MeaningForm(forms.ModelForm):
         return cleaned_data
 
 
-class WordUseForm(forms.ModelForm):
+class WordAlternateForm(forms.ModelForm):
     alternative = forms.CharField()
 
     class Meta:
@@ -45,8 +44,8 @@ class WordUseForm(forms.ModelForm):
         instance = kwargs.get('instance', None)
         initial = kwargs.pop('initial', {})
         if instance and instance.alternative:
-            initial.update({'alternative': instance.alternative.word.word })
-        super(WordUseForm, self).__init__(initial=initial, *args, **kwargs)
+            initial.update({'alternative': instance.alternative.word.word, })
+        super(WordAlternateForm, self).__init__(initial=initial, *args, **kwargs)
 
     def clean(self):
         cleaned_data = self.cleaned_data

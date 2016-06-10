@@ -15,7 +15,7 @@ def compute_information(value):
     return -value*math.log(value, 2)
 
 
-def _compute_entropy(data, value_list=None, default_times=None):
+def compute_entropy(data, value_list=None, default_times=None):
     """ Compute entropy for given input data (all corresponding to the same variable).
         Entropy is computed as H(S) = - sum(p(x_i)·log_2 p(x_i))
 
@@ -86,7 +86,7 @@ if __name__ == '__main__':
             data.append((random.choice(uses), random.choice(countries)))
 
         # Compute entropy
-        h = _compute_entropy(data, value_list=uses + ['extra'], default_times=default_times + [1])
+        h = compute_entropy(data, value_list=uses + ['extra'], default_times=default_times + [1])
 
         # Group by region
         for key, value in h.items():

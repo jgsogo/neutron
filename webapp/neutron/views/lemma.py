@@ -12,6 +12,7 @@ from neutron.forms import SearchWordForm
 import logging
 log = logging.getLogger(__name__)
 
+
 class SearchLemma(FormView):
     form_class = SearchWordForm
     template_name = 'neutron/word_detail_search.html'

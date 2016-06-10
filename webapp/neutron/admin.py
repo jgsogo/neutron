@@ -7,8 +7,9 @@ from django.db import models
 
 from mptt.admin import MPTTModelAdmin
 
-from .models import Word, Informer, Definition, Context, Datum, Region, Interface, CoarseWord, WordUse, Meaning
-from .forms import MeaningForm, WordUseForm
+from .models import Word, Informer, Context, Datum, Region, Interface, CoarseWord, WordUse, Meaning, WordAlternate
+from .forms import MeaningForm, WordAlternateForm
+from .utils import null_filter
 
 
 class InformerAdmin(admin.ModelAdmin):
@@ -17,6 +18,7 @@ class InformerAdmin(admin.ModelAdmin):
 
     def get_fields(self, request, obj=None):
         fields = super(InformerAdmin, self).get_fields(request, obj)
+
         def move_to_front(item):
             if fields[0] == item:
                 return
@@ -32,6 +34,7 @@ class InformerAdmin(admin.ModelAdmin):
 
         return fields
 
+
 class DatumAdmin(admin.ModelAdmin):
     list_display = ('informer', 'interface',)
     list_filter = ('informer__region', 'interface', 'timestamp',)
@@ -41,25 +44,36 @@ class DatumAdmin(admin.ModelAdmin):
         return False
 
 
+class WordAdmin(admin.ModelAdmin):
+    list_display = ('word', 'excluded', )
+    list_filter = ('excluded', )
+    search_fields = ('word', )
+    readonly_fields = ('word',)
+
+    def has_add_permission(self, request):
+        return False
+
+
 admin.site.register(Region, MPTTModelAdmin)
 admin.site.register(Informer, InformerAdmin)
 admin.site.register(Interface)
 admin.site.register(Datum, DatumAdmin)
-
+admin.site.register(Word, WordAdmin)
 
 
 class ContextInline(admin.TabularInline):
     extra = 0
     model = Context
     formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size':'20'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':40})},
+        models.CharField: {'widget': TextInput(attrs={'size': '20'})},
+        models.TextField: {'widget': Textarea(attrs={'rows': 4, 'cols': 40})},
     }
 
 
 class MeaningAdmin(admin.ModelAdmin):
     form = MeaningForm
-    list_display = ('word', 'informer',)
+    list_display = ('word', 'informer', 'excluded',)
+    list_filter = ('excluded', )
     inlines = [ContextInline, ]
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '20'})},
@@ -81,12 +95,32 @@ class CoarseWordAdmin(admin.ModelAdmin):
 
 
 class WordUseAdmin(admin.ModelAdmin):
-    form = WordUseForm
     list_display = ('word', 'informer', 'interface', 'use',)
     list_filter = ('informer__region', 'interface', 'use',)
     search_fields = ('meaning__word',)
     readonly_fields = ('word', 'definition',)
     exclude = ('meaning',)
+
+    def word(self, object):
+        return object.meaning.word
+
+    def definition(self, object):
+        return object.meaning.definition
+
+    def has_add_permission(self, request):
+        return False
+
+
+class WordAlternateAdmin(admin.ModelAdmin):
+    form = WordAlternateForm
+    list_display = ('word', 'informer', 'interface', 'has_alternative', )
+    list_filter = ('informer__region', 'interface', null_filter('alternative'), )
+    search_fields = ('meaning__word',)
+    readonly_fields = ('word', 'definition',)
+    exclude = ('meaning',)
+
+    def has_alternative(self, object):
+        return object.alternative is not None
 
     def word(self, object):
         return object.meaning.word
@@ -109,3 +143,4 @@ admin.site.register(Context, ContextAdmin)
 
 admin.site.register(CoarseWord, CoarseWordAdmin)
 admin.site.register(WordUse, WordUseAdmin)
+admin.site.register(WordAlternate, WordAlternateAdmin)
