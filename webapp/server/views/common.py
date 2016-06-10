@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.urlresolvers import reverse
 from django.db.utils import OperationalError
 
-from neutron.models import Meaning, Interface
+from neutron.models import Meaning, Interface, WordUse
 from neutron.utils.meaning_list import get_next_meaning_for_informer
 
 
@@ -35,7 +35,7 @@ class RandomMeaningRun(UserPassesTestMixin, FormView):
         # assert self.request.method == 'GET', "RandomMeaningRun::get_meaning must be only called in GET"
         if not hasattr(self, '_meaning'):
             try:
-                meaning_pk = get_next_meaning_for_informer(self.request.user.as_informer())
+                meaning_pk = get_next_meaning_for_informer(self.request.user.as_informer(), WordUse)
                 meaning = Meaning.objects.get(pk=meaning_pk)
                 setattr(self, '_meaning', meaning)
             except Meaning.DoesNotExist:

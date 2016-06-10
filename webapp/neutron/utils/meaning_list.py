@@ -16,22 +16,22 @@ log = logging.getLogger(__name__)
 def get_meaning_list(region, model_class):
     assert model_class in [WordUse, WordAlternate, CoarseWord, ], "'get_next_meaning_for_informer' unexpected model_class '{}'".format(model_class)
 
-    cache_key = 'meaning-list-region-{}-game-{}'.format(region.name, model_class.__name__.lower())
+    cache_key = 'meaning-list-region-{}-game-{}'.format(region.pk, model_class.__name__.lower())
     data = cache.get(cache_key)
     if data:
         return data
 
-    log.info("Compute meaning_list for region='{}' for game='{}'".format(region.name, model_class.__name__.lower()))
+    log.info("Compute meaning_list for region='{}' for game='{}'".format(region.name.encode('utf8', 'replace'), model_class.__name__.lower()))
 
     result = []
     for meaning in Meaning.objects.valid():
-        qs = WordUse.objects.valid().\
+        qs = model_class.objects.all().\
             filter(meaning=meaning, informer__region=region).\
-            value_list('informer__region', 'use', 'alternative_id', 'informer_id')
+            values_list('value', 'informer__region')
         h = compute_entropy(qs)
 
         # Get data for the region
-        result.append([meaning.pk] + h[region])
+        result.append([meaning.pk] + list(h[region.pk]))
 
     ordered_meanings = sorted(result, key=lambda x: x[1], reverse=True)
     ordered_meanings = map(lambda item: item[0], ordered_meanings)
@@ -40,7 +40,7 @@ def get_meaning_list(region, model_class):
     return ordered_meanings
 
 
-def get_next_meaning_for_informer(informer, model_class):
+def get_next_meaning_for_informer(informer, model_class, full_round_first=False):
     assert model_class in [WordUse, WordAlternate, CoarseWord, ], "'get_next_meaning_for_informer' unexpected model_class '{}'".format(model_class)
     # TODO: ¿Qué pasa con la caché cuando hay varios hilos (pensar que esto lo ejecuto en servidor)?
     cache_key = 'meaning-list-informer-{}-game-{}'.format(informer.pk, model_class.__name__.lower())
@@ -51,13 +51,15 @@ def get_next_meaning_for_informer(informer, model_class):
         return item
 
     log.info("Compute meaning_list for informer='{}' for game='{}'".format(informer.name, model_class.__name__.lower()))
-    # Get meanings not informed by the user
-    informed_meanings = model_class.objects.filter(informer=informer).values('meaning_id')
-    next_meanings = list(Meaning.objects.exclude(pk__in=informed_meanings).values_list('pk', flat=True))
-    if len(next_meanings):
-        log.info("Use meanings not yet informed (informer='{}')".format(informer.name))
+    next_meanings = []
+    if full_round_first:
+        log.info("Try to use meanings not yet informed (informer='{}')".format(informer.name))
+        # Get meanings not informed by the user
+        informed_meanings = model_class.objects.filter(informer=informer).values('meaning_id')
+        next_meanings = list(Meaning.objects.exclude(pk__in=informed_meanings).values_list('pk', flat=True))
         shuffle(next_meanings)
-    else:
+
+    if not len(next_meanings):
         # Get meanings ordered by entropy for informer region
         log.info("Use meanings ordered by entropy")
         next_meanings = get_meaning_list(informer.region, model_class)
