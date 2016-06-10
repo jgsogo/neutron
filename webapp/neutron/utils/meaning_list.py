@@ -13,7 +13,7 @@ import logging
 log = logging.getLogger(__name__)
 
 
-def get_meaning_list(region, model_class):
+def get_meaning_list(region, model_class, limit=10, **kwargs):
     assert model_class in [WordUse, WordAlternate, CoarseWord, ], "'get_next_meaning_for_informer' unexpected model_class '{}'".format(model_class)
 
     cache_key = 'meaning-list-region-{}-game-{}'.format(region.pk, model_class.__name__.lower())
@@ -24,14 +24,16 @@ def get_meaning_list(region, model_class):
     log.info("Compute meaning_list for region='{}' for game='{}'".format(region.name.encode('utf8', 'replace'), model_class.__name__.lower()))
 
     result = []
-    for meaning in Meaning.objects.valid():
+    for i, meaning in enumerate(Meaning.objects.valid()):
         qs = model_class.objects.all().\
             filter(meaning=meaning, informer__region=region).\
             values_list('value', 'informer__region')
-        h = compute_entropy(qs)
+        h = compute_entropy(qs, **kwargs)
 
         # Get data for the region
         result.append([meaning.pk] + list(h[region.pk]))
+        if limit and i >= limit:
+            break
 
     ordered_meanings = sorted(result, key=lambda x: x[1], reverse=True)
     ordered_meanings = map(lambda item: item[0], ordered_meanings)
@@ -40,7 +42,7 @@ def get_meaning_list(region, model_class):
     return ordered_meanings
 
 
-def get_next_meaning_for_informer(informer, model_class, full_round_first=False):
+def get_next_meaning_for_informer(informer, model_class, full_round_first=False, **kwargs):
     assert model_class in [WordUse, WordAlternate, CoarseWord, ], "'get_next_meaning_for_informer' unexpected model_class '{}'".format(model_class)
     # TODO: ¿Qué pasa con la caché cuando hay varios hilos (pensar que esto lo ejecuto en servidor)?
     cache_key = 'meaning-list-informer-{}-game-{}'.format(informer.pk, model_class.__name__.lower())
