@@ -2,7 +2,7 @@
 #pragma once
 
 #include <map>
-#include "../models/base_manager.h"
+#include "queryset/base_manager.h"
 #include "types.h"
 
 namespace neutron {

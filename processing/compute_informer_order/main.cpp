@@ -6,7 +6,7 @@
 #include "neutron/informer.h"
 #include "neutron/word_use.h"
 
-#include "models/queryset.h"
+#include "queryset/queryset.h"
 
 
 int main(int argc, char** argv){

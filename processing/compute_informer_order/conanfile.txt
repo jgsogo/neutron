@@ -1,9 +1,9 @@
 [requires]
-Boost/1.60.0@lasote/stable
+queryset-cpp/0.1@jgsogo/testing
 
 [generators]
 cmake
 
 [imports]
-bin, *.dll -> ./build/bin
-lib, *.dylib* -> ./build/bin
+bin, *.dll -> ./bin
+lib, *.dylib* -> ./bin

@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED on)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")  # Needed for Travis CI
 add_compile_options(-std=c++14) # CMake 2.8.12 or newer
 
-include(conanbuildinfo.cmake)
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
 # Files in subdirectories
@@ -26,9 +26,9 @@ else()
 endif()
 
 
-add_subdirectory(models)
 add_subdirectory(neutron)
 
 
 add_executable(compute_informer_order main.cpp)
+target_include_directories(compute_informer_order PUBLIC ${CONAN_INCLUDE_DIRS_QUERYSET-CPP})
 target_link_libraries(compute_informer_order ${CONAN_LIBS} neutron)
