@@ -47,7 +47,7 @@ urlpatterns = [
     url(r'^neutron/', include('neutron.urls', namespace='neutron')),
 
     # Word use
-    url(r'^worduse/', include('worduse.urls', namespace='worduse')),
+    url(r'^worduse/', include('question.worduse.urls', namespace='worduse')),
 
     #url(r'^uses/run/$', WordUseRun.as_view(), name='word_use_run'),
     #url(r'^uses/(?P<meaning>\d+)/alternate/$', WordUseAlternateRun.as_view(), name='word_use_alternate'),

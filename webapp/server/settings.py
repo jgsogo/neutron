@@ -43,7 +43,7 @@ INSTALLED_APPS = (
 
     'server',
     'neutron',
-    'worduse',  # Game WordUse
+    'question.worduse',  # Game WordUse
     'telegram',
     'synthetic',
     'exporter',

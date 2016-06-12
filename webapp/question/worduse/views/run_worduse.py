@@ -10,7 +10,7 @@ from neutron.models import Meaning, WordUse, CoarseWord, Word
 
 from neutron.views.run_random_meaning import WordUseRandomMeaningRun
 from server.forms import WordUseAlternateForm
-from worduse.forms import WordUseForm
+from ..forms import WordUseForm
 
 
 class WordUseHome(TemplateView):
