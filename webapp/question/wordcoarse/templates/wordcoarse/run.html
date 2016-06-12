@@ -2,8 +2,8 @@
 {% load bootstrap3 %}
 
 {% block wordcoarse_content %}
-    {% if word %}
-        <h3>{{ word }}</h3>
+    {% if item %}
+        <h3>{{ item }}</h3>
         <form method="post" class="form">
             {% csrf_token %}
             {% bootstrap_form form %}

@@ -5,7 +5,7 @@
 from django.views.generic import TemplateView
 
 from neutron.models import Meaning, WordUse, Word
-from neutron.views.run_random_meaning import WordUseRandomMeaningRun
+from neutron.views import WordUseRandomMeaningRun
 
 from ..forms import WordUseForm
 
@@ -18,12 +18,13 @@ class WordUseRun(WordUseRandomMeaningRun):
     form_class = WordUseForm
     template_name = 'word_use/run.html'
 
-    def form_valid(self, form):
-        meaning = Meaning.objects.get(pk=form.cleaned_data['meaning'])
+    def form_valid(self, form, time_elapsed=None):
+        meaning = Meaning.objects.get(pk=form.cleaned_data['item'])
         word_use = WordUse(meaning=meaning)
         word_use.value = form.cleaned_data['use']
         word_use.informer = self.request.user.as_informer()
         word_use.interface = self.interface
+        word_use.elapsed_time = time_elapsed
         word_use.save()
         return super(WordUseRun, self).form_valid(form=form)
 

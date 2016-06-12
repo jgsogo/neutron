@@ -62,6 +62,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+
 ROOT_URLCONF = 'server.urls'
 
 TEMPLATES = [

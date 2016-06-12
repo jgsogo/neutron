@@ -6,7 +6,7 @@ from django import forms
 
 
 class WordAlternateForm(forms.Form):
-    meaning = forms.IntegerField(widget=forms.HiddenInput())
+    item = forms.IntegerField(widget=forms.HiddenInput())
     value = forms.CharField(required=False)
 
     button = forms.IntegerField(widget=forms.HiddenInput())

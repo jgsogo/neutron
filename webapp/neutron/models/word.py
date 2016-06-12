@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from random import randint
 
 from django.db import models
 from django.conf import settings
@@ -16,13 +15,9 @@ class WordManager(models.Manager):
     def valid(self):
         return self.filter(excluded=False)
 
-    def random(self, queryset=None):
-        qs = queryset or self.valid()
-        count = qs.count()
-        try:
-            return qs[randint(0, count-1)]
-        except ValueError:
-            raise self.model.DoesNotExist()
+    def get_next_for_informer(self, *args, **kwargs):
+        from ..utils.word_list import get_next_word_for_informer
+        return get_next_word_for_informer(*args, **kwargs)
 
 
 @python_2_unicode_compatible

@@ -51,3 +51,4 @@ class WordAlternateForm(forms.ModelForm):
         cleaned_data = self.cleaned_data
         cleaned_data['value'], _ = Word.objects.get_or_create(word=cleaned_data['value'])
         return cleaned_data
+

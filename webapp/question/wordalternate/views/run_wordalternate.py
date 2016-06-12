@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 from django.utils.translation import ugettext_lazy as _
 
 from neutron.models import Meaning, WordAlternate, Word
-from neutron.views.run_random_meaning import WordAlternateRandomMeaningRun
+from neutron.views import WordAlternateRandomMeaningRun
 
 from ..forms import WordAlternateForm
 
@@ -19,8 +19,8 @@ class WordAlternateRun(WordAlternateRandomMeaningRun):
     form_class = WordAlternateForm
     template_name = 'wordalternate/run.html'
 
-    def form_valid(self, form):
-        meaning = Meaning.objects.get(pk=form.cleaned_data['meaning'])
+    def form_valid(self, form, time_elapsed=None):
+        meaning = Meaning.objects.get(pk=form.cleaned_data['item'])
         button = form.cleaned_data['button']
         word_alternate = WordAlternate(meaning=meaning)
         if button == 0:
@@ -32,6 +32,7 @@ class WordAlternateRun(WordAlternateRandomMeaningRun):
             word_alternate.value = alternate_meaning
         word_alternate.informer = self.request.user.as_informer()
         word_alternate.interface = self.interface
+        word_alternate.elapsed_time = time_elapsed
         word_alternate.save()
         return super(WordAlternateRun, self).form_valid(form=form)
 

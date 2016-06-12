@@ -5,5 +5,5 @@ from django import forms
 
 
 class WordCoarseForm(forms.Form):
-    word = forms.IntegerField(widget=forms.HiddenInput())
-    profane = forms.BooleanField(widget=forms.HiddenInput())
+    item = forms.IntegerField(widget=forms.HiddenInput())
+    profane = forms.IntegerField(widget=forms.HiddenInput())

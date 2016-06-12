@@ -2,14 +2,14 @@
 {% load bootstrap3 %}
 
 {% block wordalternate_content %}
-    {% if meaning %}
-        <h3>{{ meaning.word }}</h3>
+    {% if item %}
+        <h3>{{ item.word }}</h3>
         <p>
-            {% with meaning.first_context as first_context %}
+            {% with item.first_context as first_context %}
                 {% if first_context %}
-                    {{ meaning.definition }}: <em>{{ first_context|capfirst }}.</em>
+                    {{ item.definition }}: <em>{{ first_context|capfirst }}.</em>
                 {% else %}
-                    {{ meaning.definition }}.
+                    {{ item.definition }}.
                 {% endif %}
             {% endwith %}
         </p>
