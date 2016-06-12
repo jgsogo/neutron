@@ -31,13 +31,12 @@ def get_meaning_list(region, model_class, limit=10, **kwargs):
         h = compute_entropy(qs, **kwargs)
 
         # Get data for the region
-        result.append([meaning.pk] + list(h[region.pk]))
+        result.append([meaning.pk,] + list(h[region.pk]))
         if limit and i >= limit:
             break
 
     ordered_meanings = sorted(result, key=lambda x: x[1], reverse=True)
-    ordered_meanings = map(lambda item: item[0], ordered_meanings)
-
+    ordered_meanings = list(map(lambda item: item[0], ordered_meanings))
     cache.set(cache_key, ordered_meanings, timeout=6*60*60)  # Cache for six hours
     return ordered_meanings
 
@@ -64,7 +63,7 @@ def get_next_meaning_for_informer(informer, model_class, full_round_first=False,
     if not len(next_meanings):
         # Get meanings ordered by entropy for informer region
         log.info("Use meanings ordered by entropy")
-        next_meanings = get_meaning_list(informer.region, model_class)
+        next_meanings = get_meaning_list(informer.region, model_class, **kwargs)
 
     item = next_meanings.pop()
     cache.set(cache_key, next_meanings)

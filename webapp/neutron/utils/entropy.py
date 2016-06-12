@@ -15,16 +15,17 @@ def compute_information(value):
     return -value*math.log(value, 2)
 
 
-def compute_entropy(data, value_list=None, default_times=None):
+def compute_entropy(data, extra_values=None):
     """ Compute entropy for given input data (all corresponding to the same variable).
         Entropy is computed as H(S) = - sum(p(x_i)·log_2 p(x_i))
 
     :param data: vector of tuples with the following info: (value, group)
-    :param value_list: list of possible values of field 'value' in data
-    :param min_times: minimum number of times for each value if value_list given.
-    :param grouped: whether entropy must be calculated considering groups or not
+    :param extra_values: list of pairs with possible values of field 'value' in data and number of times
     :return:
     """
+    if len(data) == 0:
+        log.warn("Compute entropy called with an empty data vector, nothing to do.")
+        return {}
 
     # Count each value for each group
     aux_probs = defaultdict(lambda: defaultdict(int))
@@ -33,15 +34,14 @@ def compute_entropy(data, value_list=None, default_times=None):
         aux_probs['all'][value] += 1
 
     # Assign default times for missing values
-    if value_list:
-        default_times = default_times or [10]*len(value_list)
+    if extra_values:
         for group, values in aux_probs.items():
-            for v, default in zip(value_list, default_times):
-                values[v] = values.setdefault(v, default)
+            for v in extra_values:
+                values[v[0]] = values.setdefault(v[0], v[1])
 
     if log.getEffectiveLevel() == logging.DEBUG:
         log.debug("Counting probabilities for each region:")
-        for group,values in aux_probs.items():
+        for group, values in aux_probs.items():
             log.debug(" - {} => {}".format(group, values.items()))
 
     # Normalize probabilities
@@ -86,7 +86,9 @@ if __name__ == '__main__':
             data.append((random.choice(uses), random.choice(countries)))
 
         # Compute entropy
-        h = compute_entropy(data, value_list=uses + ['extra'], default_times=default_times + [1])
+        extra_values = [(v, n) for v, n in zip(uses, default_times)]
+        extra_values.append(('extra', 1))
+        h = compute_entropy(data, extra_values)
 
         # Group by region
         for key, value in h.items():
