@@ -24,7 +24,8 @@ class WordManager(models.Manager):
 class Word(models.Model):
     word = models.CharField(max_length=MAX_WORD_LENGTH, db_index=True)
 
-    excluded = models.BooleanField(default=False, help_text=_("If set, this word won't be shown to informers in WordCoarse interface"))
+    excluded = models.BooleanField(default=False,
+                                   help_text=_("If set, this word won't be shown to informers in WordCoarse interface"))
 
     objects = WordManager()
 

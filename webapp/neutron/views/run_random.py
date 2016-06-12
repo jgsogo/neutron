@@ -7,6 +7,7 @@ from django.views.generic import FormView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.urlresolvers import reverse
 from django.db.utils import OperationalError
+from django.conf import settings
 
 from neutron.models import Meaning, Interface, WordUse, WordAlternate, Word, CoarseWord
 
@@ -35,7 +36,11 @@ class RandomItemRun(UserPassesTestMixin, FormView):
         return u.is_authenticated() and u.is_informer()
 
     def get_login_url(self):
-        return reverse('neutron:error_no_informer',)
+        u = self.request.user
+        if not u.is_authenticated():
+            return settings.LOGIN_URL
+        elif not u.is_informer():
+            return reverse('neutron:error_no_informer',)
 
     def get_item(self):
         # assert self.request.method == 'GET', "RandomMeaningRun::get_meaning must be only called in GET"
@@ -49,6 +54,9 @@ class RandomItemRun(UserPassesTestMixin, FormView):
                 setattr(self, '_item', meaning)
             except self.model_item_class.DoesNotExist:
                 # TODO: Redirect to ¿?
+                pass
+            except IndexError:
+                # TODO: There are no meanings for this informer
                 pass
         return getattr(self, '_item')
 
@@ -72,14 +80,14 @@ class RandomItemRun(UserPassesTestMixin, FormView):
         form = self.get_form()
         if form.is_valid():
             time_elapsed = None
-            init_time = self.request.session.get(int(form.cleaned_data['item']), None)
+            init_time = self.request.session.pop(int(form.cleaned_data['item']), None)
             if init_time:
                 time_elapsed = timer() - init_time
             return self.form_valid(form, time_elapsed)
         else:
-            # TODO: Jump to another item or keep trying on this? Log to error and jump!
-            log.error("Form ")
-            return self.form_invalid(form)
+            # Jump to another item but keep track of error
+            log.error("RandomItemRun form error (user: {}, item: {}): {}".format(self.request.user, form.cleaned_data['item'], form.errors))
+            return super(RandomItemRun, self).form_valid(form=None)
 
 
 class WordUseRandomMeaningRun(RandomItemRun):

@@ -10,6 +10,9 @@ from neutron.views import WordAlternateRandomMeaningRun
 
 from ..forms import WordAlternateForm
 
+import logging
+log = logging.getLogger(__name__)
+
 
 class WordAlternateHome(TemplateView):
     template_name = 'wordalternate/home.html'
@@ -24,7 +27,13 @@ class WordAlternateRun(WordAlternateRandomMeaningRun):
         button = form.cleaned_data['button']
         word_alternate = WordAlternate(meaning=meaning)
         if button == 0:
-            alternate, _ = Word.objects.get_or_create(word=form.cleaned_data['value'])
+            value = form.cleaned_data['value']
+            if not value:
+                # Jump to another item but keep track of error
+                log.error("WordAlternateRun form error, user '{}' left value field empty.".format(self.request.user))
+                return super(WordAlternateRun, self).form_valid(form=None)
+
+            alternate, _ = Word.objects.get_or_create(word=value)
             alternate_meaning = Meaning(word=alternate, definition=meaning.definition)
             alternate_meaning.informer = self.request.user.as_informer()
             alternate_meaning.excluded = True  # TODO: May I accept directly new words?
@@ -34,7 +43,7 @@ class WordAlternateRun(WordAlternateRandomMeaningRun):
         word_alternate.interface = self.interface
         word_alternate.elapsed_time = time_elapsed
         word_alternate.save()
-        return super(WordAlternateRun, self).form_valid(form=form)
+        return super(WordAlternateRun, self).form_valid(form=None)
 
     def get_context_data(self, **kwargs):
         context = super(WordAlternateRun, self).get_context_data(**kwargs)

@@ -24,7 +24,7 @@ def get_meaning_list(region, model_class, limit=10, **kwargs):
 
     result = []
     random_binary_entropy = 2*compute_information(0.5)  # Entropy for random binary variable
-    for i, meaning in enumerate(Meaning.objects.valid()):
+    for i, meaning in enumerate(Meaning.objects.exclude(informer__region=region)):
         qs = model_class.objects.all().\
             filter(meaning=meaning, informer__region=region).\
             values_list('value', 'informer__region')

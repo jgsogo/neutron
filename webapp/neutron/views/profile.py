@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from django.views.generic import UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from neutron.models import Informer
 
 
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin, UpdateView):
     fields = ('first_name', 'last_name', 'email',)
     template_name = 'profile/user_form.html'
 
@@ -16,7 +18,7 @@ class ProfileView(UpdateView):
         return self.request.user
 
 
-class ProfileInformerView(UpdateView):
+class ProfileInformerView(LoginRequiredMixin, UpdateView):
     model = Informer
     fields = ('region', 'education',)
     template_name = 'profile/informer_form.html'

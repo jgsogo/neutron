@@ -27,7 +27,7 @@ class WordCoarseRun(WordCoarseRandomWordRun):
         word_coarse.interface = self.interface
         word_coarse.elapsed_time = time_elapsed
         word_coarse.save()
-        return super(WordCoarseRun, self).form_valid(form=form)
+        return super(WordCoarseRun, self).form_valid(form=None)
 
     def get_context_data(self, **kwargs):
         context = super(WordCoarseRun, self).get_context_data(**kwargs)

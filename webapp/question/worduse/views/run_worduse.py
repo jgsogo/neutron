@@ -26,7 +26,7 @@ class WordUseRun(WordUseRandomMeaningRun):
         word_use.interface = self.interface
         word_use.elapsed_time = time_elapsed
         word_use.save()
-        return super(WordUseRun, self).form_valid(form=form)
+        return super(WordUseRun, self).form_valid(form=None)
 
     def get_context_data(self, **kwargs):
         context = super(WordUseRun, self).get_context_data(**kwargs)
