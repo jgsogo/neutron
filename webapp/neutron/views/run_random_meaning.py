@@ -69,4 +69,4 @@ class WordAlternateRandomMeaningRun(RandomMeaningRun):
     model_class = WordAlternate
 
     def get_extra_values(self):
-        raise NotImplementedError("'WordAlternateRandomMeaningRun::get_extra_values' not implemented")
+        return []

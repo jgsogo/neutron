@@ -4,6 +4,7 @@
 from django.contrib import admin
 from django.forms import TextInput, Textarea
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 from mptt.admin import MPTTModelAdmin
 
@@ -114,13 +115,14 @@ class WordUseAdmin(admin.ModelAdmin):
 class WordAlternateAdmin(admin.ModelAdmin):
     form = WordAlternateForm
     list_display = ('word', 'informer', 'interface', 'has_alternative', )
-    list_filter = ('informer__region', 'interface', null_filter('value'), )
+    list_filter = ('informer__region', 'interface', null_filter('value', _('has alternative'), {'0': _('Yes'), '1': _('No')}), )
     search_fields = ('meaning__word__word',)
     readonly_fields = ('word', 'definition',)
     exclude = ('meaning',)
 
     def has_alternative(self, object):
         return object.value is not None
+    has_alternative.boolean = True
 
     def word(self, object):
         return object.meaning.word

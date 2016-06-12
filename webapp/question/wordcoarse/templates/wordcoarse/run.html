@@ -1,0 +1,20 @@
+{% extends 'wordcoarse/home.html' %}
+{% load bootstrap3 %}
+
+{% block wordcoarse_content %}
+    {% if word %}
+        <h3>{{ word }}</h3>
+        <form method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                {% for button in button_items %}
+                    <button type="submit" name="profane" value="{{ button.0 }}" class="btn btn-primary">{{ button.1 }}</button>
+                {% endfor %}
+            {% endbuttons %}
+        </form>
+    {% else %}
+        <h3>Error!</h3>
+        <p>There are no words in the database.</p>
+    {% endif %}
+{% endblock %}
