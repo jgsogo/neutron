@@ -1,5 +1,5 @@
 [requires]
-queryset-cpp/0.1@jgsogo/testing
+queryset-cpp/0.1@jgsogo/dev
 
 [generators]
 cmake
