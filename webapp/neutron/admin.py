@@ -97,7 +97,7 @@ class CoarseWordAdmin(admin.ModelAdmin):
 class WordUseAdmin(admin.ModelAdmin):
     list_display = ('word', 'informer', 'interface', 'value',)
     list_filter = ('informer__region', 'interface', 'value',)
-    search_fields = ('meaning__word',)
+    search_fields = ('meaning__word__word',)
     readonly_fields = ('word', 'definition',)
     exclude = ('meaning',)
 
@@ -115,7 +115,7 @@ class WordAlternateAdmin(admin.ModelAdmin):
     form = WordAlternateForm
     list_display = ('word', 'informer', 'interface', 'has_alternative', )
     list_filter = ('informer__region', 'interface', null_filter('value'), )
-    search_fields = ('meaning__word',)
+    search_fields = ('meaning__word__word',)
     readonly_fields = ('word', 'definition',)
     exclude = ('meaning',)
 

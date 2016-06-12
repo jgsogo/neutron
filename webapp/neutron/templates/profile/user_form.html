@@ -6,8 +6,8 @@
             <div class="col-md-2 col-sm-3 sidebar">
                 {% block profile_menu %}
                     <h2>Profile</h2>
-                    <p><a href="{% url 'profile' %}">Personal</a></p>
-                    <p><a href="{% url 'profile_informer' %}">Location</a></p>
+                    <p><a href="{% url 'neutron:profile' %}">Personal</a></p>
+                    <p><a href="{% url 'neutron:profile_informer' %}">Location</a></p>
                 {% endblock %}
             </div>
             <div class="col-sm-9 col-md-10 main">

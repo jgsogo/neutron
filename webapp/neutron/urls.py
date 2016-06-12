@@ -3,6 +3,7 @@
 
 
 from django.conf.urls import include, url
+from django.views.generic import TemplateView
 
 from .views import *
 
@@ -17,6 +18,14 @@ urlpatterns = [
     url(r'^word/meaning/(?P<pk>\d+)/$', MeaningDetail.as_view(), name='meaning_detail'),
     url(r'^word/meaning/(?P<pk>\d+)/coarsity/$', MeaningCoarsityDetail.as_view(), name='meaning_detail_coarsity'),
     url(r'^word/meaning/(?P<pk>\d+)/uses/$', MeaningUsesDetail.as_view(), name='meaning_detail_uses'),
+
+    # Some error views
+    url(r'^accounts/no_informer/$', TemplateView.as_view(template_name='error/no_informer.html'), name='error_no_informer'),
+
+    # Profile
+    url(r'^accounts/profile/$', ProfileView.as_view(), name='profile'),
+    url(r'^accounts/profile/informer/$', ProfileInformerView.as_view(), name='profile_informer'),
+    url(r'^accounts/profile/stats/$', TemplateView.as_view(template_name='profile/stats.html'), name='profile_stats'),
 
     # Telegram bot
     url(r'^bot/link/$', NutronBotLink.as_view(), name='bot_link'),

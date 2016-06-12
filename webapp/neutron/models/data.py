@@ -56,8 +56,8 @@ class WordUse(Datum):
     # Perception of the word use
     USES = Choices((0, 'ok', _('Ok')),
                    (1, 'not_me', _('I don\'t use it, but I have heard it')),
-                   (1, 'unknown', _('Neither use it, nor heard it before')),
-                   (2, 'unrecognized', _('Do not recognize this meaning for this word')))
+                   (2, 'unknown', _('Neither use it, nor heard it before')),
+                   (3, 'unrecognized', _('Do not recognize this meaning for this word')))
 
     meaning = models.ForeignKey(Meaning, blank=True, null=True)
     value = models.IntegerField(choices=USES)

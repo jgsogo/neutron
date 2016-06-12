@@ -8,44 +8,36 @@ from django.http import HttpResponseRedirect
 
 from neutron.models import Meaning, WordUse, CoarseWord, Word
 
-from .common import RandomMeaningRun
-from server.forms import WordUseForm, WordUseAlternateForm
+from neutron.views.run_random_meaning import WordUseRandomMeaningRun
+from server.forms import WordUseAlternateForm
+from worduse.forms import WordUseForm
 
 
 class WordUseHome(TemplateView):
     template_name = 'word_use/home.html'
 
 
-class WordUseRun(RandomMeaningRun):
+class WordUseRun(WordUseRandomMeaningRun):
     form_class = WordUseForm
     template_name = 'word_use/run.html'
 
     def form_valid(self, form):
         meaning = Meaning.objects.get(pk=form.cleaned_data['meaning'])
         use = form.cleaned_data['use']
-        coarse = form.cleaned_data['coarse']
+        word_use = WordUse(meaning=meaning)
+        word_use.value = form.cleaned_data['use']
+        word_use.informer = self.request.user.as_informer()
+        word_use.interface = self.interface
+        word_use.save()
+        return super(WordUseRun, self).form_valid(form=form)
 
-        if use == WordUse.USES.prefer_other:
-            return HttpResponseRedirect(reverse('word_use_alternate', kwargs={'meaning': meaning.pk}))
-        elif coarse is True:
-            # Store as coarse
-            coarse_word = CoarseWord(word=meaning.word)
-            coarse_word.value = True
-            coarse_word.informer = self.request.user.as_informer()
-            coarse_word.interface = self.interface
-            coarse_word.save()
-            return HttpResponseRedirect(reverse('word_use_coarse', kwargs={'meaning': meaning.pk}))
-        else:
-            word_use = WordUse(meaning=meaning)
-            word_use.value = use
-            word_use.informer = self.request.user.as_informer()
-            word_use.interface = self.interface
-            word_use.save()
-
-            return super(WordUseRun, self).form_valid(form=form)
+    def get_context_data(self, **kwargs):
+        context = super(WordUseRun, self).get_context_data(**kwargs)
+        context.update({'button_items': [(i, WordUse.USES[i]) for i, _ in enumerate(WordUse.USES)]})
+        return context
 
 
-class WordUseStepRun(RandomMeaningRun):
+class WordUseStepRun(WordUseRandomMeaningRun):
     def get_meaning(self):
         if not hasattr(self, '_meaning'):
             try:

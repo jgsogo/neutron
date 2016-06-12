@@ -46,19 +46,12 @@ urlpatterns = [
 
     url(r'^neutron/', include('neutron.urls', namespace='neutron')),
 
-    # Some error views
-    url(r'^accounts/no_informer/$', TemplateView.as_view(template_name='error/no_informer.html'), name='error_no_informer'),
-
-    # Profile
-    url(r'^accounts/profile/$', ProfileView.as_view(), name='profile'),
-    url(r'^accounts/profile/informer/$', ProfileInformerView.as_view(), name='profile_informer'),
-    url(r'^accounts/profile/stats/$', TemplateView.as_view(template_name='profile/stats.html'), name='profile_stats'),
-
     # Word use
-    # url(r'^uses/$', WordUseHome.as_view(), name='word_use'),
-    url(r'^uses/run/$', WordUseRun.as_view(), name='word_use_run'),
-    url(r'^uses/(?P<meaning>\d+)/alternate/$', WordUseAlternateRun.as_view(), name='word_use_alternate'),
-    url(r'^uses/(?P<meaning>\d+)/coarse/$', WordUseCoarseRun.as_view(), name='word_use_coarse'),
+    url(r'^worduse/', include('worduse.urls', namespace='worduse')),
+
+    #url(r'^uses/run/$', WordUseRun.as_view(), name='word_use_run'),
+    #url(r'^uses/(?P<meaning>\d+)/alternate/$', WordUseAlternateRun.as_view(), name='word_use_alternate'),
+    #url(r'^uses/(?P<meaning>\d+)/coarse/$', WordUseCoarseRun.as_view(), name='word_use_coarse'),
 
     #Synthetic data
     url(r'^synthetic/', include('synthetic.urls', namespace='synthetic')),

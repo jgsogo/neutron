@@ -6,15 +6,8 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
 
-from neutron.models import Definition, WordUse, Region
+from neutron.models import Region
 from neutron.models.word import MAX_WORD_LENGTH
-
-
-
-class WordUseForm(forms.Form):
-    meaning = forms.IntegerField(widget=forms.HiddenInput())
-    use = forms.TypedChoiceField(choices=WordUse.USES, coerce=int, required=False, widget=forms.HiddenInput())
-    coarse = forms.NullBooleanField(required=False, widget=forms.HiddenInput())
 
 
 class WordUseAlternateForm(forms.Form):
