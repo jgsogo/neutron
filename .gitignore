@@ -51,3 +51,4 @@ conanbuildinfo.cmake
 conaninfo.txt
 build_*/
 tmp/
+0_*.bat
