@@ -58,19 +58,22 @@ class RandomItemRun(UserPassesTestMixin, FormView):
             except IndexError:
                 # TODO: There are no meanings for this informer
                 pass
-        return getattr(self, '_item')
+        return getattr(self, '_item', None)
 
     def get_extra_values(self):
         return self.extra_values
 
     def get_initial(self):
         data = super(RandomItemRun, self).get_initial()
-        data.update({'item': self.get_item().pk})
+        item = self.get_item()
+        if item:
+            data.update({'item': self.get_item().pk})
         return data
 
     def get_context_data(self, **kwargs):
         item = self.get_item()
-        self.request.session[item.pk] = timer()
+        if item:
+            self.request.session[item.pk] = timer()
         return super(RandomItemRun, self).get_context_data(item=item, **kwargs)
 
     def get_success_url(self):
