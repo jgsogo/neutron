@@ -2,12 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+from builtins import str
 
 import os
+import codecs
 from neutron.models import Word, Definition, Interface, WordUse, Region, Informer, Meaning
 
 
 FILENAMES = {'worduse_data': 'data_worduse.tsv',
+             'wordalternate_data': 'data_wordalternate.tsv',
              'wordcoarse_data': 'data_wordcoarse.tsv',
              'informers_data': 'data_informers.tsv',
              'meanings_data': 'data_meanings.tsv',
@@ -20,81 +23,85 @@ FILENAMES = {'worduse_data': 'data_worduse.tsv',
              }
 
 
-def export(worduse_qs, coarse_qs, path, export_aux=True, filenames=FILENAMES):
+def line(h, *args):
+    h.write('\t'.join(map(str, args)) + "\n")
+
+
+def export(worduse_qs, wordalternate_qs, coarse_qs, path, do_export_aux=True, filenames=FILENAMES):
     if not os.path.isdir(path):
         raise ValueError("path '{}' must be an existing directory".format(path))
 
-    # Export data itself
-    # - word use
-    with open(os.path.join(path, filenames['worduse_data']), 'w') as f:
-        f.write('#informer\tinterface\tmeaning\tworduse\tword\n')
-        for item in worduse_qs:
-            f.write(str(item.informer.pk) + '\t' +
-                    str(item.interface.pk) + '\t' +
-                    str(item.meaning.pk) + '\t' +
-                    str(item.use) + '\t' +
-                    (str(item.alternative.pk) if item.alternative else '') +
-                    '\n')
-
-    # - word coarse
-    with open(os.path.join(path, filenames['wordcoarse_data']), 'w') as f:
-        f.write('#informer\tinterface\tword\tcoarse\n')
-        for item in coarse_qs:
-            f.write(str(item.informer.pk) + '\t' +
-                    str(item.interface.pk) + '\t' +
-                    str(item.word.pk) + '\t' +
-                    ('1' if item.profane else '0') +
-                    '\n')
-
+    # Export data about informers and meanings
     # - informers by region
-    with open(os.path.join(path, filenames['informers_data']), 'w') as f:
-        f.write('#informer\tregion\n')
+    with codecs.open(os.path.join(path, filenames['informers_data']), 'w', 'utf-8') as f:
+        line(f, '#informer', "region", "confidence")
         for informer in Informer.objects.all():
-            f.write(str(informer.pk) + '\t' +
-                    str(informer.region.pk) +
-                    '\n')
+            line(f, informer.pk, informer.region.pk, informer.confidence or -1)
 
     # - meanings -> needed to know which meanings has the same referent word
-    with open(os.path.join(path, filenames['meanings_data']), 'w') as f:
-        f.write('#meaning\tword\tdefinition\n')
+    with codecs.open(os.path.join(path, filenames['meanings_data']), 'w', 'utf-8') as f:
+        line(f, "#meaning", "word", "definition", "informer")
         for meaning in Meaning.objects.all():
-            f.write(str(meaning.pk) + '\t' +
-                    str(meaning.word.pk) + '\t' +
-                    str(meaning.definition.pk) +
-                    '\n')
+            line(f, meaning.pk, meaning.word_id, meaning.definition_id, meaning.informer_id)
 
-    if not export_aux:
-        return filenames
+    # Data gathered
+    # - word use
+    with codecs.open(os.path.join(path, filenames['worduse_data']), 'w', 'utf-8') as f:
+        line(f, "#informer", "interface", "timestamp", "elapsed_time", "meaning", "use")
+        for item in worduse_qs:
+            line(f, item.informer_id, item.interface_id, item.timestamp, item.elapsed_time,
+                 item.meaning_id, item.value)
 
+    # - word alternates
+    with codecs.open(os.path.join(path, filenames['wordalternate_data']), 'w', 'utf-8') as f:
+        line(f, "#informer", "interface", "timestamp", "elapsed_time", "meaning", "alternate")
+        for item in wordalternate_qs:
+            line(f, item.informer_id, item.interface_id, item.timestamp, item.elapsed_time,
+                 item.meaning_id, item.value_id or "")
+
+    # - word coarse
+    with codecs.open(os.path.join(path, filenames['wordcoarse_data']), 'w', 'utf-8') as f:
+        line(f, "#informer", "interface", "timestamp", "elapsed_time", "meaning", "profane")
+        for item in coarse_qs:
+            line(f, item.informer_id, item.interface_id, item.timestamp, item.elapsed_time,
+                 item.word_id, item.value)
+
+    if do_export_aux:
+        export_aux(path, filenames)
+
+    return filenames
+
+
+def export_aux(path, filenames=None):
     # We are asked to print all the literal for each key
     # - words
-    with open(os.path.join(path, filenames['word']), 'w') as f:
-        f.write('#word\tliteral\n')
+    with codecs.open(os.path.join(path, filenames['word']), 'w', 'utf-8') as f:
+        line(f, "#word", 'literal')
         for word in Word.objects.all():
-            f.write('{}\t{}\n'.format(word.pk, word.word))
+            line(f, word.pk, word.word)
 
     # - definition
-    with open(os.path.join(path, filenames['definition']), 'w') as f:
-        f.write('#definition\tliteral\n')
+    with codecs.open(os.path.join(path, filenames['definition']), 'w', 'utf-8') as f:
+        line(f, "#definition", "literal")
         for definition in Definition.objects.all():
-            f.write('{}\t{}\n'.format(definition.pk, definition.definition))
+            line(f, definition.pk, definition.definition)
 
     # - interface
-    with open(os.path.join(path, filenames['interface']), 'w') as f:
-        f.write('#interface\tliteral\n')
+    with codecs.open(os.path.join(path, filenames['interface']), 'w', 'utf-8') as f:
+        line(f, "#interface", "literal")
         for interface in Interface.objects.all():
-            f.write('{}\t{}\n'.format(interface.pk, interface.name))
+            line(f, interface.pk, interface.name)
 
     # - worduse
-    with open(os.path.join(path, filenames['worduse']), 'w') as f:
-        f.write('#worduse\tliteral\n')
+    with codecs.open(os.path.join(path, filenames['worduse']), 'w', 'utf-8') as f:
+        line(f, "#worduse", "literal")
         for use in WordUse.USES:
-            f.write('{}\t{}\n'.format(use[0], use[1]))
+            line(f, use[0], use[1])
 
     # - region
-    with open(os.path.join(path, filenames['region']), 'w') as f:
-        f.write('#region\tparent\tliteral\n')
+    with codecs.open(os.path.join(path, filenames['region']), 'w', 'utf-8') as f:
+        line(f, "#region", "parent", "literal")
         for region in Region.objects.all():
-            f.write('{}\t{}\t{}\n'.format(region.pk, region.parent.pk if region.parent else '', region.name))
+            line(f, region.pk, region.parent.pk if region.parent else "", region.name)
 
     return filenames

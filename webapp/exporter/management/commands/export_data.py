@@ -7,7 +7,7 @@ import codecs
 import requests
 from django.core.management.base import BaseCommand, CommandError
 
-from neutron.models import WordUse, CoarseWord
+from neutron.models import WordUse, CoarseWord, WordAlternate
 from exporter.utils import export
 
 
@@ -35,8 +35,9 @@ class Command(BaseCommand):
 
         # Gather data
         worduse_data = WordUse.objects.all()
+        wordalternate_qs = WordAlternate.objects.all()
         coarse_data = CoarseWord.objects.all()
 
-        export(worduse_data, coarse_data, outpath)
+        export(worduse_data, wordalternate_qs, coarse_data, outpath, do_export_aux=True)
 
         self.stdout.write('Done!')
