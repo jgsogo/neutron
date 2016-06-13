@@ -33,7 +33,7 @@ class QuestionMake(LoginRequiredMixin, CreateView):
         obj.user = self.request.user
         obj.save()
         # TODO: Send a mail (or enqueu it), or make a daemon run over all unresolved questions
-        messages.add_message(self.request, messages.SUCCESS, "Thanks for your question! We will answer you soon using your mail {}".format(self.request.user.email))
+        messages.add_message(self.request, messages.SUCCESS, _("Thanks for your question! We will answer you soon using your mail {}").format(self.request.user.email))
         return HttpResponseRedirect(reverse('faq'))
 
 
@@ -43,7 +43,7 @@ def question_delete(request):
         try:
             q = Question.objects.pending(user=request.user).get(id=request.POST['faq_id'])
             q.delete()
-            messages.add_message(request, messages.SUCCESS, "Question has been deleted.")
+            messages.add_message(request, messages.SUCCESS, _("Question has been deleted."))
         except Question.DoesNotExist:
-            messages.add_message(request, messages.ERROR, "You cannot delete that question.")
+            messages.add_message(request, messages.ERROR, _("You cannot delete that question."))
     return HttpResponseRedirect(reverse('faq'))
