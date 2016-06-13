@@ -51,10 +51,6 @@ urlpatterns = [
     url(r'^wordcoarse/', include('question.wordcoarse.urls', namespace='wordcoarse')),
     url(r'^wordalternate/', include('question.wordalternate.urls', namespace='wordalternate')),
 
-    #url(r'^uses/run/$', WordUseRun.as_view(), name='word_use_run'),
-    #url(r'^uses/(?P<meaning>\d+)/alternate/$', WordUseAlternateRun.as_view(), name='word_use_alternate'),
-    #url(r'^uses/(?P<meaning>\d+)/coarse/$', WordUseCoarseRun.as_view(), name='word_use_coarse'),
-
     #Synthetic data
     url(r'^synthetic/', include('synthetic.urls', namespace='synthetic')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

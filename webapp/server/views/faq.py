@@ -8,11 +8,12 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from server.models import Question
 
 
-class QuestionList(ListView):
+class QuestionList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Question.objects.answered().filter(models.Q(public=True) | models.Q(user=self.request.user))
@@ -23,7 +24,7 @@ class QuestionList(ListView):
         return context
 
 
-class QuestionMake(CreateView):
+class QuestionMake(LoginRequiredMixin, CreateView):
     fields = ('user_input',)
     model = Question
 

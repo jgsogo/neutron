@@ -54,7 +54,10 @@
     						<li><a href="{% url 'faq' %}">FAQ's</a></li>
                         {% endif %}
 
-                        <li><a href="{% url 'neutron:word_detail_search' %}">{% trans "Consulta" %}</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'neutron:word_detail_search' %}">{% trans "Consulta" %}</a></li>
+                        {% endif %}
+
                         <li class="equipo"><a href="{% url 'about' %}">{% trans "equipo y patrocinadores" %}</a></li>
 
                         {% if user.is_authenticated %}

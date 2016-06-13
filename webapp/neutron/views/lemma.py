@@ -5,6 +5,7 @@ from django.views.generic import DetailView, FormView, TemplateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from neutron.models import Meaning, Word, WordUse
 from neutron.forms import SearchWordForm
@@ -13,7 +14,7 @@ import logging
 log = logging.getLogger(__name__)
 
 
-class SearchLemma(FormView):
+class SearchLemma(LoginRequiredMixin, FormView):
     form_class = SearchWordForm
     template_name = 'neutron/word_detail_search.html'
 
@@ -32,7 +33,7 @@ class SearchLemma(FormView):
             return self.form_invalid(form)
 
 
-class LemmaDetail(DetailView):
+class LemmaDetail(LoginRequiredMixin, DetailView):
     model = Word
     template_name = 'neutron/word_detail.html'
 

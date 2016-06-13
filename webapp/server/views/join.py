@@ -4,7 +4,6 @@
 from django.views.generic import FormView
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth.forms import UserCreationForm
 from django.utils.text import slugify
 from django.contrib.auth import login as auth_login, authenticate
 

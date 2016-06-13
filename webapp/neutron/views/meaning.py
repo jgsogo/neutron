@@ -8,10 +8,12 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.db.models import Count
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from neutron.models import Meaning, Informer, CoarseWord, WordUse
 
 
-class MeaningDetail(DetailView):
+class MeaningDetail(LoginRequiredMixin, DetailView):
     model = Meaning
 
     def get_context_data(self, **kwargs):
@@ -32,7 +34,7 @@ class MeaningDetail(DetailView):
         return context
 
 
-class MeaningCoarsityDetail(DetailView):
+class MeaningCoarsityDetail(LoginRequiredMixin, DetailView):
     model = Meaning
     template_name = 'neutron/meaning_detail_coarsity.html'
 
@@ -47,7 +49,7 @@ class MeaningCoarsityDetail(DetailView):
         return context
 
 
-class MeaningUsesDetail(DetailView):
+class MeaningUsesDetail(LoginRequiredMixin, DetailView):
     model = Meaning
     template_name = 'neutron/meaning_detail_uses.html'
 
