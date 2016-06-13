@@ -48,6 +48,5 @@ script:
   - $CONAN_ENV conan install .. --build=missing -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION $CONAN_EXTRA
   - cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && cmake --build .
   - ls -la bin/
-  - ./bin/test_models_utils
-  - ./bin/test_models
+  - ./bin/test_neutron_basic
 

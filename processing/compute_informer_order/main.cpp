@@ -39,7 +39,7 @@ int main(int argc, char** argv){
         namespace fs = boost::filesystem;
         fs::path path = vm["path"].as<std::string>();
         std::cout << " - path to files: '" << path << "'\n";
-        
+        /*
         // Parse informers
         fs::path informers_file = path / "data_informers.tsv";
         neutron::InformerManager informers(informers_file.string());
@@ -59,6 +59,7 @@ int main(int argc, char** argv){
         for (auto& item : spaniards2) {
             std::cout << item << std::endl;
         }
+        */
         /*
         auto word_use_data_all = word_uses.all();
 

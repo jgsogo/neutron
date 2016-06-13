@@ -20,5 +20,4 @@ build_script:
 
 test_script:
   - cmd: cd bin
-  - cmd: test_models_utils.exe
-  - cmd: test_models.exe
+  - cmd: test_neutron_basic.exe

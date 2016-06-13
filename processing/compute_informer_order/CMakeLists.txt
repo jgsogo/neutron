@@ -27,6 +27,7 @@ endif()
 
 
 add_subdirectory(neutron)
+add_subdirectory(tests)
 
 
 add_executable(compute_informer_order main.cpp)

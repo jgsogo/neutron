@@ -1,5 +1,6 @@
 [requires]
 queryset-cpp/0.1@jgsogo/dev
+Boost/1.60.0@lasote/stable
 
 [generators]
 cmake

@@ -8,10 +8,10 @@ namespace neutron {
     class WordUseManager : public ::utils::BaseManager<informer_id,
                                                        interface_id,
                                                        meaning_id,
-                                                       word_use_id,
+                                                       int,
                                                        word_id> {
     public:
-        typedef std::map<interface_id, std::vector<std::tuple<informer_id, meaning_id, word_use_id, word_id>>> worduse_by_interface_type;
+        typedef std::map<interface_id, std::vector<std::tuple<informer_id, meaning_id, int, word_id>>> worduse_by_interface_type;
 
     public:
         WordUseManager(const std::string& filename) : BaseManager(filename) {
