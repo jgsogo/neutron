@@ -3,13 +3,32 @@
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
 
+#include "easylogging++.h"
+INITIALIZE_EASYLOGGINGPP
+
 #include "neutron/informer.h"
+#include "neutron/region.h"
 #include "neutron/word_use.h"
 
 #include "queryset/queryset.h"
 
 
 int main(int argc, char** argv){
+    LOG(DEBUG) << "Easylogging is working!";
+    {
+        namespace fs = boost::filesystem;
+        fs::path full_path = fs::path("C:/Users/xe53859/src/neutron/processing/compute_informer_order/build/debug/bin/test_data") / fs::path("region.tsv");
+
+        std::cout << "Create regions manager" << std::endl;
+        std::cout << " - filename: " << full_path.string() << std::endl;
+        auto& region_manager = neutron::Region::objects(full_path.string());
+        std::cout << " - read success!" << std::endl;
+        for (auto& item: region_manager.all().get()) {
+            std::cout << "    + " << item << std::endl;
+        }
+        std::cout << "< done !" << std::endl;
+    }
+
     std::cout << "== Compute informer order ==\n";
     try {
         // Define and parse the program options

@@ -5,6 +5,7 @@
 #include "types.h"
 
 namespace neutron {
+    /*
     class WordUseManager : public ::utils::BaseManager<informer_id,
                                                        interface_id,
                                                        meaning_id,
@@ -25,4 +26,5 @@ namespace neutron {
     protected:
         worduse_by_interface_type _all_by_interface;
     };
+    */
 }
