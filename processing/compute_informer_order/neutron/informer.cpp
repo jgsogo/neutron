@@ -2,13 +2,12 @@
 #include "informer.h"
 
 namespace neutron {
-    /*
-    InformerManager::InformerManager(const std::string& filename) : BaseManager(filename) {
+    Informer::Informer() {
     }
-            
-    int InformerManager::get_by_region(const region_id& region) {
-        //return _raw_data.filter<region_id>(region);
-        return 2;
+
+    Informer::Informer(const std::tuple<informer_id, region_id, float>& data) {
+        _id = std::get<0>(data);
+        _region = std::get<1>(data);
+        _confidence = std::get<2>(data);
     }
-    */
 }

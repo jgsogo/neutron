@@ -13,8 +13,10 @@ BOOST_AUTO_TEST_CASE(read)
     namespace fs = boost::filesystem;
     fs::path full_path = test_data_dir / fs::path("data_informers.tsv");
 
-    //neutron::InformerManager informers(full_path.string());
-    //auto spaniards = informers.get_by_region(neutron::region_id)
+    auto& informers = neutron::Informer::objects(full_path.string());
+    informers.all().count();
+
+    //BOOST_CHECK_EQUAL(informers.all().count(), 2);
 
 }
 
