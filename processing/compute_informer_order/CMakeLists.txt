@@ -12,6 +12,11 @@ conan_basic_setup()
 # Files in subdirectories
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+OPTION(SPDLOG_DEBUG_ON "Enable debug logging" OFF) # Disabled by default
+IF(SPDLOG_DEBUG_ON)
+    ADD_DEFINITIONS(-DSPDLOG_DEBUG_ON)
+ENDIF(SPDLOG_DEBUG_ON)
+
 # Testing
 enable_testing()
 if (UNIX)

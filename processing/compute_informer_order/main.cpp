@@ -3,8 +3,7 @@
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
 
-#include "easylogging++.h"
-INITIALIZE_EASYLOGGINGPP
+#include "spdlog/spdlog.h"
 
 #include "neutron/informer.h"
 #include "neutron/region.h"
@@ -14,7 +13,13 @@ INITIALIZE_EASYLOGGINGPP
 
 
 int main(int argc, char** argv){
-    LOG(DEBUG) << "Easylogging is working!";
+    #ifdef SPDLOG_DEBUG_ON
+    spdlog::stdout_logger_mt("qs")->set_level(spdlog::level::debug);
+    #endif
+
+    auto console = spdlog::stdout_logger_mt("neutron");
+    console->set_level(spdlog::level::debug);
+
     {
         namespace fs = boost::filesystem;
         fs::path full_path = fs::path("C:/Users/xe53859/src/neutron/processing/compute_informer_order/build/debug/bin/test_data") / fs::path("region.tsv");
