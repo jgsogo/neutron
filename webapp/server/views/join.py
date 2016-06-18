@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 from django.views.generic import FormView
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
