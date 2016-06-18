@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
 
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import ValidationError
+from django.utils.encoding import python_2_unicode_compatible
 
 
 class QuestionManager(models.Manager):
@@ -16,6 +18,7 @@ class QuestionManager(models.Manager):
         return self.filter(answer__isnull=True, user=user)
 
 
+@python_2_unicode_compatible
 class Question(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, help_text=_("User who asked the question"))
     timestamp = models.DateTimeField(auto_now=True)
