@@ -54,7 +54,10 @@ int main(int argc, char** argv){
         ConfigStore::get().parse_file(settings.string());
 
         auto informers = Informer::objects().all();
-
+        auto by_region = informers.groupBy<region_id>().get();
+        for (auto& region : by_region) {
+            auto local_informers = region.second.value_list<informer_id>();
+        }
 
         /*
         // Parse informers
