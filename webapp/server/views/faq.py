@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.translation import ugettext_lazy as _
 
 from server.models import Question
 
