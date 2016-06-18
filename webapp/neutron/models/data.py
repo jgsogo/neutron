@@ -38,7 +38,7 @@ class Datum(models.Model):
 @python_2_unicode_compatible
 class CoarseWord(Datum):
     word = models.ForeignKey(Word)
-    value = models.BooleanField()
+    value = models.BooleanField(help_text=_("Checked if the word has been marked as coarse."))
 
     class Meta:
         verbose_name = _('Coarse word')
