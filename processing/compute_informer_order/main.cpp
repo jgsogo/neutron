@@ -18,28 +18,8 @@ int main(int argc, char** argv){
     #ifdef SPDLOG_DEBUG_ON
     spdlog::stdout_logger_mt("qs")->set_level(spdlog::level::debug);
     #endif
-
     auto console = spdlog::stdout_logger_mt("neutron");
     console->set_level(spdlog::level::debug);
-
-    std::string settings = "config.json";
-    console->info("Configure Neutron: '{}'", settings);
-    ConfigStore::get().parse_data(settings);
-    /*
-    {
-        namespace fs = boost::filesystem;
-        fs::path full_path = fs::path("C:/Users/xe53859/src/neutron/processing/compute_informer_order/build/debug/bin/test_data") / fs::path("region.tsv");
-
-        std::cout << "Create regions manager" << std::endl;
-        std::cout << " - filename: " << full_path.string() << std::endl;
-        auto& region_manager = neutron::Region::objects(full_path.string());
-        std::cout << " - read success!" << std::endl;
-        for (auto& item: region_manager.all().get()) {
-            std::cout << "    + " << item << std::endl;
-        }
-        std::cout << "< done !" << std::endl;
-    }
-    */
 
     std::cout << "== Compute informer order ==\n";
     try {
@@ -48,7 +28,7 @@ int main(int argc, char** argv){
         po::options_description desc("Options");
         desc.add_options() 
           ("help", "Print help messages") 
-          ("path", po::value<std::string>()->required(), "path to files");
+          ("settings", po::value<std::string>()->required(), "path to settings file");
  
         po::variables_map vm;
         try {
@@ -68,8 +48,14 @@ int main(int argc, char** argv){
         }
         
         namespace fs = boost::filesystem;
-        fs::path path = vm["path"].as<std::string>();
-        std::cout << " - path to files: '" << path << "'\n";
+        fs::path settings = vm["settings"].as<std::string>();
+        std::cout << " - path to settings: '" << settings << "'\n";
+        console->info("Configure Neutron: '{}'", settings);
+        ConfigStore::get().parse_file(settings.string());
+
+        auto informers = Informer::objects().all();
+
+
         /*
         // Parse informers
         fs::path informers_file = path / "data_informers.tsv";

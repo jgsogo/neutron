@@ -8,7 +8,8 @@ namespace neutron {
     namespace {
         std::string regions_path() {
             namespace fs = boost::filesystem;
-            fs::path full_path = ConfigStore::get().get_value_as<std::string>("db_path") / fs::path("regions.tsv");
+            auto regions_filename = ConfigStore::get().get_value_as<std::string>("files/regions");
+            fs::path full_path = ConfigStore::get().get_value_as<std::string>("db_path") / fs::path(regions_filename);
             return full_path.string();
         }
     }
