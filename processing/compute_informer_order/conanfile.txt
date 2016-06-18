@@ -1,7 +1,8 @@
 [requires]
-queryset-cpp/0.1@jgsogo/dev
+queryset-cpp/0.2@jgsogo/dev
 Boost/1.60.0@lasote/stable
 spdlog/0.1@memsharded/testing
+RapidJSON/1.0.2@SamuelMarks/stable
 
 [generators]
 cmake

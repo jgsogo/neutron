@@ -14,8 +14,8 @@ include_directories (${TEST_SOURCE_DIR}/src
 SET(TEST_DATA_PATH ${CMAKE_BINARY_DIR}/bin/test_data)
 file(MAKE_DIRECTORY ${TEST_DATA_PATH})
 configure_file(config_tests.h.cmake ${CMAKE_CURRENT_LIST_DIR}/config_tests.h)
-file(COPY data/data_informers.tsv DESTINATION ${TEST_DATA_PATH})
-file(COPY data/region.tsv DESTINATION ${TEST_DATA_PATH})
+file(COPY data/informers.tsv DESTINATION ${TEST_DATA_PATH})
+file(COPY data/regions.tsv DESTINATION ${TEST_DATA_PATH})
 
 # Add subdirectories with tests
 add_subdirectory(basic)

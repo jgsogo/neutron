@@ -5,12 +5,14 @@
 
 #include "spdlog/spdlog.h"
 
+#include "neutron/config_store.h"
 #include "neutron/informer.h"
 #include "neutron/region.h"
 #include "neutron/word_use.h"
 
 #include "queryset/queryset.h"
 
+using namespace neutron;
 
 int main(int argc, char** argv){
     #ifdef SPDLOG_DEBUG_ON
@@ -20,6 +22,10 @@ int main(int argc, char** argv){
     auto console = spdlog::stdout_logger_mt("neutron");
     console->set_level(spdlog::level::debug);
 
+    std::string settings = "config.json";
+    console->info("Configure Neutron: '{}'", settings);
+    ConfigStore::get().parse_data(settings);
+    /*
     {
         namespace fs = boost::filesystem;
         fs::path full_path = fs::path("C:/Users/xe53859/src/neutron/processing/compute_informer_order/build/debug/bin/test_data") / fs::path("region.tsv");
@@ -33,6 +39,7 @@ int main(int argc, char** argv){
         }
         std::cout << "< done !" << std::endl;
     }
+    */
 
     std::cout << "== Compute informer order ==\n";
     try {

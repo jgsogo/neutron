@@ -1,13 +1,24 @@
 
+#include <boost/filesystem.hpp>
+
 #include "informer.h"
+#include "config_store.h"
 
 namespace neutron {
-    Informer::Informer() {
+
+    namespace {
+        std::string informers_path() {
+            namespace fs = boost::filesystem;
+            fs::path full_path = ConfigStore::get().get_value_as<std::string>("db_path") / fs::path("informers.tsv");
+            return full_path.string();
+        }
     }
 
-    Informer::Informer(const std::tuple<informer_id, region_id, float>& data) {
-        _id = std::get<0>(data);
-        _region = std::get<1>(data);
-        _confidence = std::get<2>(data);
+    InformerManager::InformerManager() : BaseManager<informer_id, region_id, float>(informers_path()) {
+    }
+
+    Informer::Informer() {
+    }
+    Informer::Informer(const std::tuple<informer_id, region_id, float>& data) : Informer::BaseModel(data) {
     }
 }

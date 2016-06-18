@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "queryset/base_manager.h"
 #include "types.h"
 
 namespace neutron {

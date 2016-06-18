@@ -1,33 +1,23 @@
 
+#include <boost/filesystem.hpp>
 #include "region.h"
+#include "config_store.h"
 
 namespace neutron {
-    /*
-    class RegionManager::Impl {
-        public:
-            Impl(const std::string& filename) : _qs(filename) {};
-            utils::FileQueryset<region_id, region_id, std::string> _qs;
-    };
 
-    RegionManager::RegionManager(const std::string& filename) : _impl(new Impl(filename)) {
+    namespace {
+        std::string regions_path() {
+            namespace fs = boost::filesystem;
+            fs::path full_path = ConfigStore::get().get_value_as<std::string>("db_path") / fs::path("regions.tsv");
+            return full_path.string();
+        }
     }
 
-    RegionManager::~RegionManager() {
-        delete _impl;
-    }
-
-    RegionManager::QuerySet RegionManager::all() const {
-        return QuerySet(_impl->_qs);
-    }
-    */
+    RegionManager::RegionManager() : BaseManager<region_id, region_id, std::string>(regions_path()) {}
 
     Region::Region() {
     }
-
-    Region::Region(const std::tuple<region_id, region_id, std::string>& data) {
-        _id = std::get<0>(data);
-        _parent = std::get<1>(data);
-        _name = std::get<2>(data);
+    Region::Region(const std::tuple<region_id, region_id, std::string>& data) : Region::BaseModel(data) {
     }
 
 }
