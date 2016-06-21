@@ -10,8 +10,6 @@
 #include "neutron/region.h"
 #include "neutron/word_use.h"
 
-#include "queryset/queryset.h"
-
 using namespace neutron;
 
 int main(int argc, char** argv){
@@ -56,12 +54,11 @@ int main(int argc, char** argv){
         std::cout << "== List of informers ==" << std::endl;
         auto informers = Informer::objects().all();
         //auto by_region = informers.groupBy<region_id>().get();
-        for (auto& region : informers.groupBy<region_id>()) {
+        for (auto& region : informers.groupBy<Region>()) {
             std::cout << region.first << ":" << std::endl;
             for (auto& informer : region.second) {
                 std::cout << "\t- " << informer << std::endl;
             }
-            //auto local_informers = region.second.value_list<informer_id>();
         }
 
         /*

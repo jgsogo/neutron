@@ -18,6 +18,10 @@ namespace neutron {
 
     Region::Region() {
     }
+
+    Region::Region(const Region& other) : Region::BaseModel(other) {
+    }
+
     Region::Region(const std::tuple<region_id, region_id, std::string>& data) : Region::BaseModel(data) {
     }
 

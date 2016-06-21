@@ -15,11 +15,11 @@ namespace neutron {
         }
     }
 
-    InformerManager::InformerManager() : BaseManager<informer_id, region_id, float>(informers_path()) {
+    InformerManager::InformerManager() : BaseManager<informer_id, Region, float>(informers_path()) {
     }
 
     Informer::Informer() {
     }
-    Informer::Informer(const std::tuple<informer_id, region_id, float>& data) : Informer::BaseModel(data) {
+    Informer::Informer(const std::tuple<informer_id, Region, float>& data) : Informer::BaseModel(data) {
     }
 }
