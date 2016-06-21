@@ -53,10 +53,15 @@ int main(int argc, char** argv){
         console->info("Configure Neutron: '{}'", settings);
         ConfigStore::get().parse_file(settings.string());
 
+        std::cout << "== List of informers ==" << std::endl;
         auto informers = Informer::objects().all();
-        auto by_region = informers.groupBy<region_id>().get();
-        for (auto& region : by_region) {
-            auto local_informers = region.second.value_list<informer_id>();
+        //auto by_region = informers.groupBy<region_id>().get();
+        for (auto& region : informers.groupBy<region_id>()) {
+            std::cout << region.first << ":" << std::endl;
+            for (auto& informer : region.second) {
+                std::cout << "\t- " << informer << std::endl;
+            }
+            //auto local_informers = region.second.value_list<informer_id>();
         }
 
         /*
