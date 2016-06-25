@@ -2,9 +2,11 @@
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string/join.hpp>
 
 #include "spdlog/spdlog.h"
 
+#include "log_level_param.hpp"
 #include "neutron/config_store.h"
 #include "neutron/informer.h"
 #include "neutron/region.h"
@@ -13,19 +15,19 @@
 using namespace neutron;
 
 int main(int argc, char** argv){
-    #ifdef SPDLOG_DEBUG_ON
-    spdlog::stdout_logger_mt("qs")->set_level(spdlog::level::debug);
-    #endif
-    auto console = spdlog::stdout_logger_mt("neutron");
-    console->set_level(spdlog::level::debug);
-
     std::cout << "== Compute informer order ==\n";
     try {
+        std::ostringstream s; s << "log level (";
+        std::copy(spdlog::level::level_names, 
+                  spdlog::level::level_names + spdlog::level::off, 
+                  std::ostream_iterator<std::string>(s, ", "));
+        s << ").";
         // Define and parse the program options
         namespace po = boost::program_options;
         po::options_description desc("Options");
         desc.add_options() 
-          ("help", "Print help messages") 
+          ("help", "Print help messages")
+          ("log-level,l", po::value<log_level>()->default_value(log_level(spdlog::level::info)), s.str().c_str())
           ("settings", po::value<std::string>()->required(), "path to settings file");
  
         po::variables_map vm;
@@ -45,6 +47,18 @@ int main(int argc, char** argv){
             return -1; 
         }
         
+        // Get logger level
+        spdlog::level::level_enum log_level = vm["log-level"].as<::log_level>()._level;
+        #ifdef SPDLOG_DEBUG_ON
+        spdlog::stdout_logger_mt("qs")->set_level(log_level);
+        #endif
+        auto console = spdlog::stdout_logger_mt("neutron");
+        console->set_level(log_level);
+
+
+
+
+        // Get settings
         namespace fs = boost::filesystem;
         fs::path settings = vm["settings"].as<std::string>();
         std::cout << " - path to settings: '" << settings << "'\n";
