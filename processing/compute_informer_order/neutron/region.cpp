@@ -1,6 +1,9 @@
 
-#include <boost/filesystem.hpp>
 #include "region.h"
+
+#include <boost/filesystem.hpp>
+
+#include "manager.h"
 #include "config_store.h"
 
 namespace neutron {
@@ -14,8 +17,8 @@ namespace neutron {
         }
     }
 
-    RegionManager::RegionManager() : BaseManager<region_id, region_id, std::string>(regions_path()) {}
-
+    RegionManager::RegionManager() : BaseManager<Region>(regions_path()) {}
+    
     Region::Region() {
     }
 
@@ -25,4 +28,8 @@ namespace neutron {
     Region::Region(const std::tuple<region_id, region_id, std::string>& data) : Region::BaseModel(data) {
     }
 
+    RegionManager& Region::objects() {
+        static RegionManager manager;
+        return manager;
+    }
 }

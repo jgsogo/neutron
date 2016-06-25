@@ -5,10 +5,10 @@
 
 namespace neutron {
 
-    template <typename... Args>
-    class BaseManager : public qs::FileManager<Args...> {
+    template <typename TModel>
+    class BaseManager : public qs::FileManager<TModel> {
         public:
-            BaseManager(const std::string& filename) : qs::FileManager<Args...>(filename) {}
+            BaseManager(const std::string& filename) : qs::FileManager<TModel>(filename) {}
 
     };
 

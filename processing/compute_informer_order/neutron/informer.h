@@ -3,23 +3,30 @@
 
 #include "queryset/models/model.h"
 #include "types.h"
-#include "manager.h"
 #include "region.h"
 
 namespace neutron {
 
-    class InformerManager : public BaseManager<informer_id, Region, float> {
-        public:
-            InformerManager();
+    class InformerManager;
+
+    class Informer : public qs::BaseModel<Informer, informer_id, Region, float> {
+        using BaseModel = qs::BaseModel<Informer, informer_id, Region, float>;
+    public:
+        Informer();
+        Informer(const BaseModel::tuple& data);
+        virtual ~Informer() {};
+
+        virtual void print(std::ostream& os) const {
+            os << "Informer[" << pk() << "]";
+        }
+
+        // with a custom manager
+        static InformerManager& objects();
     };
 
-    class Informer : public qs::BaseModel<InformerManager> {
-        using BaseModel = qs::BaseModel<InformerManager>;
+    class InformerManager : public BaseManager<Informer> {
         public:
-            Informer();
-            Informer(const InformerManager::tuple& data);
-            virtual ~Informer() {};
-
+            InformerManager();
     };
 }
 /*

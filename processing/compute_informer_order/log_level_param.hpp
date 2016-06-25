@@ -27,7 +27,6 @@ struct log_level {
             spdlog::level::level_names + spdlog::level::off + 1,
             std::ostream_iterator<std::string>(s, ", "));
         return s.str().substr(0, s.str().length() - 2);
-        //std::string log_level_help = "log level (" + s.str().substr(0, s.str().length() - 2) + ")";
     }
     spdlog::level::level_enum _level;
 };

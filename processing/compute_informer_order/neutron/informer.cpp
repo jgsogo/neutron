@@ -1,8 +1,11 @@
 
+#include "informer.h"
+
 #include <boost/filesystem.hpp>
 
-#include "informer.h"
+#include "manager.h"
 #include "config_store.h"
+
 
 namespace neutron {
 
@@ -15,11 +18,16 @@ namespace neutron {
         }
     }
 
-    InformerManager::InformerManager() : BaseManager<informer_id, Region, float>(informers_path()) {
-    }
+    InformerManager::InformerManager() : BaseManager<Informer>(informers_path()) {}
+    
 
     Informer::Informer() {
     }
     Informer::Informer(const std::tuple<informer_id, Region, float>& data) : Informer::BaseModel(data) {
+    }
+
+    InformerManager& Informer::objects() {
+        static InformerManager manager;
+        return manager;
     }
 }

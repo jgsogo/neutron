@@ -7,21 +7,29 @@
 
 namespace neutron {
 
-    class RegionManager : public BaseManager<region_id, region_id, std::string> {
-    public:
-        RegionManager();
-    };
+    class RegionManager;
 
-    class Region : public qs::BaseModel<RegionManager> {
-        using BaseModel = qs::BaseModel<RegionManager>;
+    class Region : public qs::BaseModel<Region, region_id, region_id, std::string> {
+        using BaseModel = qs::BaseModel<Region, region_id, region_id, std::string>;
         public:
             Region();
             Region(const Region& other);
-            Region(const RegionManager::tuple& data);
+            Region(const BaseModel::tuple& data);
             virtual ~Region() {};
 
+            virtual void print(std::ostream& os) const {
+                this->eval(); // To retrieve name (if not already retrieved)
+                os << std::get<2>(_data);
+            }
+
+            // with a custom manager
+            static RegionManager& objects();
         protected:
-            
+    };
+
+    class RegionManager : public BaseManager<Region> {
+        public:
+            RegionManager();
     };
 }
 /*
