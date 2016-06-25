@@ -31,11 +31,13 @@ namespace neutron {
         public:
             RegionManager();
     };
+
+
+    template<class Ch, class Tr>
+    std::basic_ostream<Ch, Tr>& operator<<(std::basic_ostream<Ch, Tr>& os, const neutron::Region& rhs) {
+        rhs.print(os);
+        return os;
+    }
+
 }
-/*
-template<class Ch, class Tr>
-std::basic_ostream<Ch, Tr>& operator<<(std::basic_ostream<Ch, Tr>& os, const neutron::Region& rhs) {
-    rhs.serialize(os);
-    return os;
-}
-*/
+
