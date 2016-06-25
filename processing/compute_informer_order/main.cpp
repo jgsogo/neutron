@@ -17,17 +17,12 @@ using namespace neutron;
 int main(int argc, char** argv){
     std::cout << "== Compute informer order ==\n";
     try {
-        std::ostringstream s; s << "log level (";
-        std::copy(spdlog::level::level_names, 
-                  spdlog::level::level_names + spdlog::level::off, 
-                  std::ostream_iterator<std::string>(s, ", "));
-        s << ").";
         // Define and parse the program options
         namespace po = boost::program_options;
         po::options_description desc("Options");
         desc.add_options() 
           ("help", "Print help messages")
-          ("log-level,l", po::value<log_level>()->default_value(log_level(spdlog::level::info)), s.str().c_str())
+          ("log-level,l", po::value<log_level>()->default_value(log_level(spdlog::level::info)), std::string("log level (" + log_level::options() + ")").c_str())
           ("settings", po::value<std::string>()->required(), "path to settings file");
  
         po::variables_map vm;
