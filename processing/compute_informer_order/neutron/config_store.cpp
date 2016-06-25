@@ -2,6 +2,7 @@
 #include "config_store.h"
 #include <vector>
 #include <sstream>
+#include <stdexcept>
 
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"

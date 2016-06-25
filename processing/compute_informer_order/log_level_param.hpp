@@ -7,7 +7,7 @@
 
 namespace _detail {
     template <typename Iter>
-    std::size_t index_of(Iter first, Iter last, typename const std::iterator_traits<Iter>::value_type& x)
+    std::size_t index_of(Iter first, Iter last, const typename std::iterator_traits<Iter>::value_type& x)
     {
         std::size_t i = 0;
         while (first != last && !boost::iequals(*first, x))
