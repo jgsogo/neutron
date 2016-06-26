@@ -13,8 +13,11 @@ namespace neutron {
         using BaseModel = qs::BaseModel<Informer, informer_id, Region, float>;
     public:
         Informer();
+        Informer(const informer_id& id);
         Informer(const BaseModel::tuple& data);
         virtual ~Informer() {};
+
+        operator informer_id() const { return pk();};
 
         virtual void print(std::ostream& os) const {
             os << "Informer[" << pk() << "]";
@@ -30,13 +33,11 @@ namespace neutron {
         public:
             InformerManager();
     };
+
+    template<class Ch, class Tr>
+    std::basic_ostream<Ch, Tr>& operator<<(std::basic_ostream<Ch, Tr>& os, const neutron::Informer& rhs) {
+        rhs.print(os);
+        return os;
+    }
 }
-/*
-template<class Ch, class Tr>
-std::basic_ostream<Ch, Tr>& operator<<(std::basic_ostream<Ch, Tr>& os,
-    const neutron::Informer& rhs)
-{
-    rhs.serialize(os);
-    return os;
-}
-*/
+

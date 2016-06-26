@@ -14,6 +14,19 @@
 
 using namespace neutron;
 
+template <class Iter>
+std::ostream& implode(Iter first, Iter last, std::ostream& os, const std::string& sep = ", ") {
+    if (first != last) {
+        --last;
+        while (first != last) {
+            os << *first << sep;
+            ++first;
+        }
+        os << *last;
+    }
+    return os;
+}
+
 int main(int argc, char** argv){
     std::cout << "== Compute informer order ==\n";
     try {
@@ -50,9 +63,6 @@ int main(int argc, char** argv){
         auto console = spdlog::stdout_logger_mt("neutron");
         console->set_level(log_level);
 
-
-
-
         // Get settings
         namespace fs = boost::filesystem;
         fs::path settings = vm["settings"].as<std::string>();
@@ -62,11 +72,26 @@ int main(int argc, char** argv){
 
         std::cout << "== List of informers ==" << std::endl;
         auto informers = Informer::objects().all();
-        //auto by_region = informers.groupBy<region_id>().get();
         for (auto& region : informers.groupBy<Region>()) {
             std::cout << region.first << ":" << std::endl;
             for (auto& informer : region.second) {
                 std::cout << "\t- " << informer << std::endl;
+            }
+        }
+
+        std::cout << "== Compute entropy for each region ==" << std::endl;
+        for (auto& region : Informer::objects().all().groupBy<Region>()) {
+            auto informers = region.second.value_list<informer_id>();
+            std::cout << region.first << ": ";
+            implode(informers.begin(), informers.end(), std::cout);
+            std::cout << std::endl;
+
+            // Data associated with the informers
+            auto data = WordUse::objects().all().filter<informer_id, Informer>(informers);
+            std::cout << " - data: " << data.count() << " samples." << std::endl;
+            
+            for (auto choice : data.groupBy<WordUseChoices>()) {
+                std::cout << "   + " << choice.first << ": " << choice.second.count() << std::endl;
             }
         }
 

@@ -23,6 +23,11 @@ namespace neutron {
 
     Informer::Informer() {
     }
+
+    Informer::Informer(const informer_id& id) {
+        std::get<0>(_data) = id;
+    }
+
     Informer::Informer(const std::tuple<informer_id, Region, float>& data) : Informer::BaseModel(data) {
     }
 
