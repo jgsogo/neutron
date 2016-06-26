@@ -46,7 +46,7 @@ script:
   - mkdir processing/compute_informer_order/build
   - cd processing/compute_informer_order/build
   - $CONAN_ENV conan install .. --build=missing -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION $CONAN_EXTRA
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && cmake --build .
+  - $CONAN_ENV cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && cmake --build .
   - ls -la bin/
   - ./bin/test_neutron_basic
 

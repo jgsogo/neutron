@@ -17,6 +17,10 @@ IF(SPDLOG_DEBUG_ON)
     ADD_DEFINITIONS(-DSPDLOG_DEBUG_ON)
 ENDIF(SPDLOG_DEBUG_ON)
 
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
+find_package(Boost COMPONENTS system filesystem REQUIRED)
+
 # Testing
 enable_testing()
 if (UNIX)
@@ -38,4 +42,8 @@ add_subdirectory(tests)
 add_executable(compute_informer_order main.cpp
                                       log_level_param.hpp)
 target_include_directories(compute_informer_order PUBLIC ${CONAN_INCLUDE_DIRS_QUERYSET-CPP})
-target_link_libraries(compute_informer_order ${CONAN_LIBS} neutron)
+target_link_libraries(compute_informer_order 
+                      ${CONAN_LIBS}
+                      neutron
+                      ${Boost_LIBRARIES}
+                      Threads::Threads)
