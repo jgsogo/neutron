@@ -20,6 +20,8 @@ namespace neutron {
             os << "Informer[" << pk() << "]";
         }
 
+        const float get_confidence() const;
+
         // with a custom manager
         static InformerManager& objects();
     };

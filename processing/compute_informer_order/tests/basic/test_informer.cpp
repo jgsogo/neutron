@@ -13,9 +13,9 @@ BOOST_AUTO_TEST_CASE(read)
     BOOST_CHECK_EQUAL(informers.all().count(), 2);
 
     auto i1 = informers.all()[0];
-    BOOST_CHECK_EQUAL(std::get<0>(i1), informer_id(1));
+    BOOST_CHECK_EQUAL(i1.pk(), informer_id(1));
     //BOOST_CHECK_EQUAL(std::get<1>(i1), Region(1));
-    BOOST_CHECK_EQUAL(std::get<2>(i1), 0.2f);
+    BOOST_CHECK_EQUAL(i1.get_confidence(), 0.2f);
 
 }
 

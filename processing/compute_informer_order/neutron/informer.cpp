@@ -30,4 +30,8 @@ namespace neutron {
         static InformerManager manager;
         return manager;
     }
+
+    const float Informer::get_confidence() const {
+        return std::get<2>(_data);
+    }
 }
