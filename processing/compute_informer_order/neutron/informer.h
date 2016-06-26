@@ -40,4 +40,3 @@ namespace neutron {
         return os;
     }
 }
-
