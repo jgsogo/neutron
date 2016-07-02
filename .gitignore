@@ -53,3 +53,5 @@ build_*/
 tmp/
 0_*.bat
 config_tests.h
+webapp/server/local_settings.py
+
