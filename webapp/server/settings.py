@@ -187,4 +187,5 @@ from .secret import *
 try:
     from .local_settings import *
 except ImportError:
+    print("Error importing local_settings")
     pass
