@@ -2,53 +2,41 @@
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/algorithm/string/join.hpp>
 
 #include "spdlog/spdlog.h"
 
+#include "log_level_param.hpp"
 #include "neutron/config_store.h"
 #include "neutron/informer.h"
 #include "neutron/region.h"
 #include "neutron/word_use.h"
 
-#include "queryset/queryset.h"
-
 using namespace neutron;
 
-int main(int argc, char** argv){
-    #ifdef SPDLOG_DEBUG_ON
-    spdlog::stdout_logger_mt("qs")->set_level(spdlog::level::debug);
-    #endif
-
-    auto console = spdlog::stdout_logger_mt("neutron");
-    console->set_level(spdlog::level::debug);
-
-    std::string settings = "config.json";
-    console->info("Configure Neutron: '{}'", settings);
-    ConfigStore::get().parse_data(settings);
-    /*
-    {
-        namespace fs = boost::filesystem;
-        fs::path full_path = fs::path("C:/Users/xe53859/src/neutron/processing/compute_informer_order/build/debug/bin/test_data") / fs::path("region.tsv");
-
-        std::cout << "Create regions manager" << std::endl;
-        std::cout << " - filename: " << full_path.string() << std::endl;
-        auto& region_manager = neutron::Region::objects(full_path.string());
-        std::cout << " - read success!" << std::endl;
-        for (auto& item: region_manager.all().get()) {
-            std::cout << "    + " << item << std::endl;
+template <class Iter>
+std::ostream& implode(Iter first, Iter last, std::ostream& os, const std::string& sep = ", ") {
+    if (first != last) {
+        --last;
+        while (first != last) {
+            os << *first << sep;
+            ++first;
         }
-        std::cout << "< done !" << std::endl;
+        os << *last;
     }
-    */
+    return os;
+}
 
+int main(int argc, char** argv){
     std::cout << "== Compute informer order ==\n";
     try {
         // Define and parse the program options
         namespace po = boost::program_options;
         po::options_description desc("Options");
         desc.add_options() 
-          ("help", "Print help messages") 
-          ("path", po::value<std::string>()->required(), "path to files");
+          ("help", "Print help messages")
+          ("log-level,l", po::value<log_level>()->default_value(log_level(spdlog::level::info)), std::string("log level (" + log_level::options() + ")").c_str())
+          ("settings", po::value<std::string>()->required(), "path to settings file");
  
         po::variables_map vm;
         try {
@@ -67,9 +55,47 @@ int main(int argc, char** argv){
             return -1; 
         }
         
+        // Get logger level
+        spdlog::level::level_enum log_level = vm["log-level"].as<::log_level>()._level;
+        #ifdef SPDLOG_DEBUG_ON
+        spdlog::stdout_logger_mt("qs")->set_level(log_level);
+        #endif
+        auto console = spdlog::stdout_logger_mt("neutron");
+        console->set_level(log_level);
+
+        // Get settings
         namespace fs = boost::filesystem;
-        fs::path path = vm["path"].as<std::string>();
-        std::cout << " - path to files: '" << path << "'\n";
+        fs::path settings = vm["settings"].as<std::string>();
+        std::cout << " - path to settings: '" << settings << "'\n";
+        console->info("Configure Neutron: '{}'", settings);
+        ConfigStore::get().parse_file(settings.string());
+
+        std::cout << "== List of informers ==" << std::endl;
+        auto informers = Informer::objects().all();
+        for (auto& region : informers.groupBy<Region>()) {
+            std::cout << region.first << ":" << std::endl;
+            for (auto& informer : region.second) {
+                std::cout << "\t- " << informer << std::endl;
+            }
+        }
+
+        std::cout << "== Compute entropy for each region ==" << std::endl;
+        for (auto& region : Informer::objects().all().groupBy<Region>()) {
+            auto informers_ = region.second.value_list<informer_id>();
+            std::vector<Informer> informers(informers_.begin(), informers_.end());
+            std::cout << region.first << ": ";
+            implode(informers.begin(), informers.end(), std::cout);
+            std::cout << std::endl;
+
+            // Data associated with the informers
+            auto data = WordUse::objects().all().filter<Informer>(informers);
+            std::cout << " - data: " << data.count() << " samples." << std::endl;
+            
+            for (auto choice : data.groupBy<WordUseChoices>()) {
+                std::cout << "   + " << choice.first << ": " << choice.second.count() << std::endl;
+            }
+        }
+
         /*
         // Parse informers
         fs::path informers_file = path / "data_informers.tsv";
