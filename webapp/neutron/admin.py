@@ -5,12 +5,14 @@ from django.contrib import admin
 from django.forms import TextInput, Textarea
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.html import format_html_join
 
 from mptt.admin import MPTTModelAdmin
 
 from .models import Word, Informer, Context, Datum, Region, Interface, CoarseWord, WordUse, Meaning, WordAlternate
 from .forms import MeaningForm, WordAlternateForm
 from .utils import null_filter
+from .utils.meaning_list import get_meaning_list
 
 
 class InformerAdmin(admin.ModelAdmin):
@@ -55,7 +57,21 @@ class WordAdmin(admin.ModelAdmin):
         return False
 
 
-admin.site.register(Region, MPTTModelAdmin)
+class RegionAdmin(MPTTModelAdmin):
+    readonly_fields = ('word_use_entropy', 'word_alternate_entropy',)
+
+    def word_use_entropy(self, object):
+        items = get_meaning_list(object, WordUse,)
+        meanings = [Meaning.objects.get(pk=it) for it in items[:20]]
+        return format_html_join('', "<strong>{}:</strong> {}</br>", ((m.word, m.definition) for m in meanings))
+
+    def word_alternate_entropy(self, object):
+        items = get_meaning_list(object, WordAlternate,)
+        meanings = [Meaning.objects.get(pk=it) for it in items[:20]]
+        return format_html_join('', "<strong>{}:</strong> {}</br>", ((m.word, m.definition) for m in meanings))
+
+
+admin.site.register(Region, RegionAdmin)
 admin.site.register(Informer, InformerAdmin)
 admin.site.register(Interface)
 admin.site.register(Datum, DatumAdmin)
