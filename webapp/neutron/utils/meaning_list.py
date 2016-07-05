@@ -12,7 +12,7 @@ import logging
 log = logging.getLogger(__name__)
 
 
-def get_meaning_list(region, model_class, limit=10, **kwargs):
+def get_meaning_list(region, model_class, limit=100, **kwargs):
     assert model_class in [WordUse, WordAlternate, ], "'get_meaning_list' unexpected model_class '{}'".format(model_class)
 
     cache_key = 'meaning-list-region-{}-game-{}'.format(region.pk, model_class.__name__.lower())
