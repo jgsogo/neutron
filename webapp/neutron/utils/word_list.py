@@ -63,6 +63,6 @@ def get_next_word_for_informer(informer, model_class, full_round_first=False, **
             log.info("Use words ordered by entropy")
             data = get_word_list(informer.region, model_class, **kwargs)
 
-    item = data.pop()
+    item = data.pop(0)
     cache.set(cache_key, data)  # TODO: ¡Actualizo la caché cada vez! Esto no me gusta
     return item
