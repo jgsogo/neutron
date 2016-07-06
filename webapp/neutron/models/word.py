@@ -17,7 +17,8 @@ class WordManager(models.Manager):
 
     def get_next_for_informer(self, *args, **kwargs):
         from ..utils.word_list import get_next_word_for_informer
-        return get_next_word_for_informer(*args, **kwargs)
+        next_data = get_next_word_for_informer(*args, **kwargs)
+        return self.get(pk=next_data[0])
 
 
 @python_2_unicode_compatible

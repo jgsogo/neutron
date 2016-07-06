@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 from django.contrib import admin
 from django.forms import TextInput, Textarea
 from django.db import models
@@ -13,6 +15,7 @@ from .models import Word, Informer, Context, Datum, Region, Interface, CoarseWor
 from .forms import MeaningForm, WordAlternateForm
 from .utils import null_filter
 from .utils.meaning_list import get_meaning_list
+from .utils.word_list import get_word_list
 
 
 class InformerAdmin(admin.ModelAdmin):
@@ -58,17 +61,25 @@ class WordAdmin(admin.ModelAdmin):
 
 
 class RegionAdmin(MPTTModelAdmin):
-    readonly_fields = ('word_use_entropy', 'word_alternate_entropy',)
+    entropy_precission_fmt = "{:6.4f}"
+    entropy_meaning_fmt = "{} | <strong>{}:</strong> {}<br/>"
+    entropy_word_fmt = "{} | <strong>{}:</strong><br/>"
+
+    readonly_fields = ('word_use_entropy', 'word_alternate_entropy', 'word_coarse',)
 
     def word_use_entropy(self, object):
         items = get_meaning_list(object, WordUse,)
-        meanings = [Meaning.objects.get(pk=it) for it in items[:20]]
-        return format_html_join('', "<strong>{}:</strong> {}</br>", ((m.word, m.definition) for m in meanings))
+        return format_html_join('', self.entropy_meaning_fmt, ((self.entropy_precission_fmt.format(it[1]), it[2], it[3]) for it in items))
 
     def word_alternate_entropy(self, object):
-        items = get_meaning_list(object, WordAlternate,)
-        meanings = [Meaning.objects.get(pk=it) for it in items[:20]]
-        return format_html_join('', "<strong>{}:</strong> {}</br>", ((m.word, m.definition) for m in meanings))
+        items = get_meaning_list(object, WordAlternate, )
+        return format_html_join('', self.entropy_meaning_fmt,
+                                ((self.entropy_precission_fmt.format(it[1]), it[2], it[3]) for it in items))
+
+    def word_coarse(self, object):
+        items = get_word_list(object, CoarseWord, )
+        return format_html_join('', self.entropy_word_fmt,
+                                ((self.entropy_precission_fmt.format(it[1]), it[2]) for it in items))
 
 
 admin.site.register(Region, RegionAdmin)

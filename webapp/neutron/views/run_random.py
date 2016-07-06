@@ -46,17 +46,17 @@ class RandomItemRun(UserPassesTestMixin, FormView):
         # assert self.request.method == 'GET', "RandomMeaningRun::get_meaning must be only called in GET"
         if not hasattr(self, '_item'):
             try:
+                print("!"*20)
                 extra_values = self.get_extra_values()
-                meaning_pk = self.model_item_class.objects.get_next_for_informer(self.request.user.as_informer(),
-                                                                                 self.model_class,
-                                                                                 extra_values=extra_values)
-                meaning = self.model_item_class.objects.get(pk=meaning_pk)
-                setattr(self, '_item', meaning)
+                item = self.model_item_class.objects.get_next_for_informer(self.request.user.as_informer(),
+                                                                           self.model_class,
+                                                                           extra_values=extra_values)
+                setattr(self, '_item', item)
             except self.model_item_class.DoesNotExist:
                 # TODO: Redirect to ¿?
                 pass
             except IndexError:
-                # TODO: There are no meanings for this informer
+                # TODO: There are no items for this informer, do what?
                 pass
         return getattr(self, '_item', None)
 
@@ -65,9 +65,10 @@ class RandomItemRun(UserPassesTestMixin, FormView):
 
     def get_initial(self):
         data = super(RandomItemRun, self).get_initial()
-        item = self.get_item()
-        if item:
-            data.update({'item': self.get_item().pk})
+        if self.request.method not in ('POST', 'PUT'):
+            item = self.get_item()
+            if item:
+                data.update({'item': self.get_item().pk})
         return data
 
     def get_context_data(self, **kwargs):
