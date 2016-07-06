@@ -15,6 +15,12 @@ log = logging.getLogger(__name__)
 # TODO: Merge with those functions in meaning_list
 
 
+def obliterate_word_list(region_pk, model_class):
+    assert model_class in [CoarseWord, ], "'get_word_list' unexpected model_class '{}'".format(model_class)
+    cache_key = 'word-list-region-{}-game-{}'.format(region_pk, model_class.__name__.lower())
+    cache.delete(cache_key)
+
+
 def get_word_list(region, model_class, limit=100, **kwargs):
     assert model_class in [CoarseWord, ], "'get_word_list' unexpected model_class '{}'".format(model_class)
 

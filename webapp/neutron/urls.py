@@ -29,4 +29,12 @@ urlpatterns = [
 
     # Telegram bot
     url(r'^bot/link/$', NutronBotLink.as_view(), name='bot_link'),
-    ]
+
+    # Admin actions
+    url(r'^admin/region/(?P<pk>\d+)/wordcoarse/obliterate/$', obliterate_word_coarse, name='action_obliterate_wordcoarse'),
+    url(r'^admin/region/(?P<pk>\d+)/worduse/obliterate/$', obliterate_word_use,
+        name='action_obliterate_worduse'),
+    url(r'^admin/region/(?P<pk>\d+)/wordalternate/obliterate/$', obliterate_word_alternates,
+        name='action_obliterate_wordalternates'),
+
+]
