@@ -69,32 +69,35 @@ class RegionAdmin(MPTTModelAdmin):
     readonly_fields = ('word_use_entropy', 'word_alternate_entropy', 'word_coarse',)
 
     def word_use_entropy(self, obj):
-        items = get_meaning_list(obj, WordUse,)
-        html = format_html_join('', self.entropy_meaning_fmt, ((self.entropy_precission_fmt.format(it[1]), it[2], it[3]) for it in items))
-        here = reverse('admin:neutron_region_change', args=(obj.pk,))
-        obliterate_button = '<a href="{}?next={}"><input type="button" value="{}"/></a>'.format(
-            reverse('neutron:action_obliterate_worduse', args=(obj.pk,)), here, _('Obliterate'))
-        html += format_html(obliterate_button)
-        return html
+        if obj and obj.pk:
+            items = get_meaning_list(obj, WordUse,)
+            html = format_html_join('', self.entropy_meaning_fmt, ((self.entropy_precission_fmt.format(it[1]), it[2], it[3]) for it in items))
+            here = reverse('admin:neutron_region_change', args=(obj.pk,))
+            obliterate_button = '<a href="{}?next={}"><input type="button" value="{}"/></a>'.format(
+                reverse('neutron:action_obliterate_worduse', args=(obj.pk,)), here, _('Obliterate'))
+            html += format_html(obliterate_button)
+            return html
 
     def word_alternate_entropy(self, obj):
-        items = get_meaning_list(obj, WordAlternate, )
-        html = format_html_join('', self.entropy_meaning_fmt,
-                                ((self.entropy_precission_fmt.format(it[1]), it[2], it[3]) for it in items))
-        here = reverse('admin:neutron_region_change', args=(obj.pk,))
-        obliterate_button = '<a href="{}?next={}"><input type="button" value="{}"/></a>'.format(
-            reverse('neutron:action_obliterate_wordalternates', args=(obj.pk,)), here, _('Obliterate'))
-        html += format_html(obliterate_button)
-        return html
+        if obj and obj.pk:
+            items = get_meaning_list(obj, WordAlternate, )
+            html = format_html_join('', self.entropy_meaning_fmt,
+                                    ((self.entropy_precission_fmt.format(it[1]), it[2], it[3]) for it in items))
+            here = reverse('admin:neutron_region_change', args=(obj.pk,))
+            obliterate_button = '<a href="{}?next={}"><input type="button" value="{}"/></a>'.format(
+                reverse('neutron:action_obliterate_wordalternates', args=(obj.pk,)), here, _('Obliterate'))
+            html += format_html(obliterate_button)
+            return html
 
     def word_coarse(self, obj):
-        items = get_word_list(obj, CoarseWord, )
-        html = format_html_join('', self.entropy_word_fmt,
-                                ((self.entropy_precission_fmt.format(it[1]), it[2]) for it in items))
-        here = reverse('admin:neutron_region_change', args=(obj.pk,))
-        obliterate_button = '<a href="{}?next={}"><input type="button" value="{}"/></a>'.format(reverse('neutron:action_obliterate_wordcoarse', args=(obj.pk,)), here, _('Obliterate'))
-        html += format_html(obliterate_button)
-        return html
+        if obj and obj.pk:
+            items = get_word_list(obj, CoarseWord, )
+            html = format_html_join('', self.entropy_word_fmt,
+                                    ((self.entropy_precission_fmt.format(it[1]), it[2]) for it in items))
+            here = reverse('admin:neutron_region_change', args=(obj.pk,))
+            obliterate_button = '<a href="{}?next={}"><input type="button" value="{}"/></a>'.format(reverse('neutron:action_obliterate_wordcoarse', args=(obj.pk,)), here, _('Obliterate'))
+            html += format_html(obliterate_button)
+            return html
 
 
 admin.site.register(Region, RegionAdmin)
