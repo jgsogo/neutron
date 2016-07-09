@@ -37,4 +37,9 @@ urlpatterns = [
     url(r'^admin/region/(?P<pk>\d+)/wordalternate/obliterate/$', obliterate_word_alternates,
         name='action_obliterate_wordalternates'),
 
+    url(r'^admin/informer/(?P<pk>\d+)/wordcoarse/obliterate/$', obliterate_informer_word_coarse, name='action_obliterate_informer_wordcoarse'),
+    url(r'^admin/informer/(?P<pk>\d+)/worduse/obliterate/$', obliterate_informer_word_use,
+        name='action_obliterate_informer_worduse'),
+    url(r'^admin/informer/(?P<pk>\d+)/wordalternate/obliterate/$', obliterate_informer_word_alternates,
+        name='action_obliterate_informer_wordalternates'),
 ]

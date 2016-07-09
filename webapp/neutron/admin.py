@@ -15,13 +15,18 @@ from mptt.admin import MPTTModelAdmin
 from .models import Word, Informer, Context, Datum, Region, Interface, CoarseWord, WordUse, Meaning, WordAlternate
 from .forms import MeaningForm, WordAlternateForm
 from .utils import null_filter
-from .utils.meaning_list import get_meaning_list
-from .utils.word_list import get_word_list
+from .utils.meaning_list import get_meaning_list, get_meaning_list_for_informer
+from .utils.word_list import get_word_list, get_word_list_for_informer
 
 
 class InformerAdmin(admin.ModelAdmin):
+    entropy_precission_fmt = "{:6.4f}"
+    entropy_meaning_fmt = "{} | <strong>{}:</strong> {}<br/>"
+    entropy_word_fmt = "{} | <strong>{}:</strong><br/>"
+
     list_display = ('__str__', 'region', 'searchable', 'mutable', 'privacy', )
     list_filter = ('region', 'searchable', 'mutable', 'privacy',)
+    readonly_fields = ('word_use_entropy', 'word_alternate_entropy', 'word_coarse',)
 
     def get_fields(self, request, obj=None):
         fields = super(InformerAdmin, self).get_fields(request, obj)
@@ -40,6 +45,37 @@ class InformerAdmin(admin.ModelAdmin):
         move_to_front('region')
 
         return fields
+
+    def word_use_entropy(self, obj):
+        if obj and obj.pk:
+            items = get_meaning_list_for_informer(obj, WordUse,)
+            html = format_html_join('', self.entropy_meaning_fmt, ((self.entropy_precission_fmt.format(it[1]), it[2], it[3]) for it in items))
+            here = reverse('admin:neutron_informer_change', args=(obj.pk,))
+            obliterate_button = '<a href="{}?next={}"><input type="button" value="{}"/></a>'.format(
+                reverse('neutron:action_obliterate_informer_worduse', args=(obj.pk,)), here, _('Obliterate'))
+            html += format_html(obliterate_button)
+            return html
+
+    def word_alternate_entropy(self, obj):
+        if obj and obj.pk:
+            items = get_meaning_list_for_informer(obj, WordAlternate, )
+            html = format_html_join('', self.entropy_meaning_fmt,
+                                    ((self.entropy_precission_fmt.format(it[1]), it[2], it[3]) for it in items))
+            here = reverse('admin:neutron_informer_change', args=(obj.pk,))
+            obliterate_button = '<a href="{}?next={}"><input type="button" value="{}"/></a>'.format(
+                reverse('neutron:action_obliterate_informer_wordalternates', args=(obj.pk,)), here, _('Obliterate'))
+            html += format_html(obliterate_button)
+            return html
+
+    def word_coarse(self, obj):
+        if obj and obj.pk:
+            items = get_word_list_for_informer(obj, CoarseWord, )
+            html = format_html_join('', self.entropy_word_fmt,
+                                    ((self.entropy_precission_fmt.format(it[1]), it[2]) for it in items))
+            here = reverse('admin:neutron_informer_change', args=(obj.pk,))
+            obliterate_button = '<a href="{}?next={}"><input type="button" value="{}"/></a>'.format(reverse('neutron:action_obliterate_informer_wordcoarse', args=(obj.pk,)), here, _('Obliterate'))
+            html += format_html(obliterate_button)
+            return html
 
 
 class DatumAdmin(admin.ModelAdmin):

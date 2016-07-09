@@ -25,6 +25,12 @@ def obliterate_word_list(region_pk, model_class):
     cache.delete(cache_key)
 
 
+def obliterate_informer_word_list(informer_pk, model_class):
+    assert model_class in [CoarseWord, ], "'get_word_list' unexpected model_class '{}'".format(model_class)
+    cache_key = word_list_informer_cache_key.format(informer_pk, model_class.__name__.lower())
+    cache.delete(cache_key)
+
+
 def get_word_list(region, model_class, limit=100, **kwargs):
     assert model_class in [CoarseWord, ], "'get_word_list' unexpected model_class '{}'".format(model_class)
 
@@ -54,7 +60,7 @@ def get_word_list(region, model_class, limit=100, **kwargs):
     return ordered_items
 
 
-def get_next_word_for_informer(informer, model_class, full_round_first=False, **kwargs):
+def get_word_list_for_informer(informer, model_class, full_round_first=False, **kwargs):
     assert model_class in [CoarseWord, ], "'get_next_word_for_informer' unexpected model_class '{}'".format(model_class)
     # TODO: ¿Qué pasa con la caché cuando hay varios hilos (pensar que esto lo ejecuto en servidor)?
     cache_key = word_list_informer_cache_key.format(informer.pk, model_class.__name__.lower())
@@ -73,6 +79,14 @@ def get_next_word_for_informer(informer, model_class, full_round_first=False, **
             log.info("Use words ordered by entropy")
             data = get_word_list(informer.region, model_class, **kwargs)
 
+        cache.set(cache_key, data)
+    return data
+
+
+def get_next_word_for_informer(informer, model_class, full_round_first=False, **kwargs):
+    cache_key = word_list_informer_cache_key.format(informer.pk, model_class.__name__.lower())
+
+    data = get_word_list_for_informer(informer, model_class, full_round_first, **kwargs)
     item = data.pop(0)
     cache.set(cache_key, data)  # TODO: ¡Actualizo la caché cada vez! Esto no me gusta
     return item
