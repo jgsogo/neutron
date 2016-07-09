@@ -54,4 +54,5 @@ tmp/
 0_*.bat
 config_tests.h
 webapp/server/local_settings.py
+webapp/server/settings_*.py
 
