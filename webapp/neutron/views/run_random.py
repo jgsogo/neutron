@@ -46,7 +46,6 @@ class RandomItemRun(UserPassesTestMixin, FormView):
         # assert self.request.method == 'GET', "RandomMeaningRun::get_meaning must be only called in GET"
         if not hasattr(self, '_item'):
             try:
-                print("!"*20)
                 extra_values = self.get_extra_values()
                 item = self.model_item_class.objects.get_next_for_informer(self.request.user.as_informer(),
                                                                            self.model_class,

@@ -12,17 +12,21 @@ import logging
 log = logging.getLogger(__name__)
 
 
+meaning_list_cache_key = 'meaning-list-region-{}-game-{}'
+meaning_list_informer_cache_key = 'meaning-list-informer-{}-game-{}'
+
+
 def obliterate_meaning_list(region_pk, model_class):
     assert model_class in [WordUse, WordAlternate, ], "'get_meaning_list' unexpected model_class '{}'".format(
         model_class)
-    cache_key = 'meaning-list-region-{}-game-{}'.format(region_pk, model_class.__name__.lower())
+    cache_key = meaning_list_cache_key.format(region_pk, model_class.__name__.lower())
     cache.delete(cache_key)
 
 
 def get_meaning_list(region, model_class, limit=100, **kwargs):
     assert model_class in [WordUse, WordAlternate, ], "'get_meaning_list' unexpected model_class '{}'".format(model_class)
 
-    cache_key = 'meaning-list-region-{}-game-{}'.format(region.pk, model_class.__name__.lower())
+    cache_key = meaning_list_cache_key.format(region.pk, model_class.__name__.lower())
     data = cache.get(cache_key)
     if data:
         return data
@@ -51,7 +55,7 @@ def get_meaning_list(region, model_class, limit=100, **kwargs):
 def get_next_meaning_for_informer(informer, model_class, full_round_first=False, **kwargs):
     assert model_class in [WordUse, WordAlternate, ], "'get_next_meaning_for_informer' unexpected model_class '{}'".format(model_class)
     # TODO: ¿Qué pasa con la caché cuando hay varios hilos (pensar que esto lo ejecuto en servidor)?
-    cache_key = 'meaning-list-informer-{}-game-{}'.format(informer.pk, model_class.__name__.lower())
+    cache_key = meaning_list_informer_cache_key.format(informer.pk, model_class.__name__.lower())
     data = cache.get(cache_key)
     if not data:
         log.info("Compute meaning_list for informer='{}' for game='{}'".format(informer.name, model_class.__name__.lower()))
