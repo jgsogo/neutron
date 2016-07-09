@@ -61,7 +61,7 @@ def get_meaning_list(region, model_class, limit=100, **kwargs):
 
 def get_meaning_list_for_informer(informer, model_class, full_round_first=False, **kwargs):
     assert model_class in [WordUse, WordAlternate, ], "'get_next_meaning_for_informer' unexpected model_class '{}'".format(model_class)
-    # TODO: ¿Qué pasa con la caché cuando hay varios hilos (pensar que esto lo ejecuto en servidor)?
+    # TODO: ¿Qué pasa con la caché cuando hay varios hilos (pensar que esto lo ejecuto en servidor)? ==> use memcached
     cache_key = meaning_list_informer_cache_key.format(informer.pk, model_class.__name__.lower())
     data = cache.get(cache_key)
     if not data:
