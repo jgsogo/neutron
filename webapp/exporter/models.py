@@ -21,9 +21,9 @@ from neutron.models import WordUse, CoarseWord
 from .utils.export import export
 from .utils.tempdir import tempdir
 
-AWS_S3_KEY = settings.AWS_S3['access_key']
-AWS_S3_SECRET = settings.AWS_S3['secret_access_key']
-AWS_BUCKET = settings.AWS_S3['bucket']
+AWS_S3_KEY = getattr(settings.AWS_S3, 'access_key', None)
+AWS_S3_SECRET = getattr(settings.AWS_S3, 'secret_access_key', None)
+AWS_BUCKET = getattr(settings.AWS_S3, 'bucket', None)
 
 import logging
 log = logging.getLogger(__name__)
