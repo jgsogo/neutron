@@ -5,9 +5,9 @@
     {% if item %}
         <h3>{{ item.word }}</h3>
         <p>
-            {% with item.first_context as first_context %}
-                {% if first_context %}
-                    {{ item.definition }}: <em>{{ first_context|capfirst }}.</em>
+            {% with item.context_set.all as contexts %}
+                {% if contexts %}
+                    {{ item.definition }}: <em>{{ contexts.0.text|capfirst }}.</em>
                 {% else %}
                     {{ item.definition }}.
                 {% endif %}
