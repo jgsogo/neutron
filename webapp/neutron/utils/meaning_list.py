@@ -17,11 +17,24 @@ meaning_list_cache_key = 'meaning-list-region-{}-game-{}'
 meaning_list_informer_cache_key = 'meaning-list-informer-{}-game-{}'
 
 
+def _get_meaning_queryset(region, model_class):
+    qs = None
+    if model_class == WordAlternate:
+        # Work only with the meanings that people from your region has marked as not recognized.
+        items = WordUse.objects.filter(informer__region=region, value=WordUse.USES.unrecognized).values('meaning_id')
+        qs = Meaning.objects.filter(pk__in=items)
+    elif model_class == WordUse:
+        # Each informer will work only with foreign meanings
+        qs = Meaning.objects.exclude(informer__region=region)
+    return qs
+
+
 def obliterate_meaning_list(region_pk, model_class):
     assert model_class in [WordUse, WordAlternate, ], "'get_meaning_list' unexpected model_class '{}'".format(
         model_class)
     cache_key = meaning_list_cache_key.format(region_pk, model_class.__name__.lower())
     cache.delete(cache_key)
+
 
 def obliterate_informer_meaning_list(informer_pk, model_class):
     assert model_class in [WordUse, WordAlternate, ], "'get_meaning_list' unexpected model_class '{}'".format(
@@ -42,7 +55,8 @@ def get_meaning_list(region, model_class, limit=100, **kwargs):
 
     result = []
     random_binary_entropy = 2*compute_information(0.5)  # Entropy for random binary variable
-    for i, meaning in enumerate(Meaning.objects.exclude(informer__region=region), 1):
+    qsm = _get_meaning_queryset(region, model_class)
+    for i, meaning in enumerate(qsm, 1):
         qs = model_class.objects.all().\
             filter(meaning=meaning, informer__region=region).\
             values_list('value', 'informer__region')
@@ -70,7 +84,8 @@ def get_meaning_list_for_informer(informer, model_class, full_round_first=False,
             log.info("Try to use meanings not yet informed (informer='{}')".format(informer.name))
             # Get meanings not informed by the user
             informed_meanings = model_class.objects.filter(informer=informer).values('meaning_id')
-            data = list(Meaning.objects.exclude(pk__in=informed_meanings).values_list('pk', flat=True))
+            qsm = _get_meaning_queryset(informer.region, model_class)
+            data = list(qsm.exclude(pk__in=informed_meanings).values_list('pk', flat=True))
             shuffle(data)
 
         if not data:
