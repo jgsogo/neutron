@@ -1,18 +1,12 @@
 {% extends 'wordalternate/home.html' %}
-{% load bootstrap3 %}
+{% load bootstrap3 i18n %}
 
 {% block wordalternate_content %}
     {% if item %}
-        <h3>{{ item.word }}</h3>
-        <p>
-            {% with item.first_context as first_context %}
-                {% if first_context %}
-                    {{ item.definition }}: <em>{{ first_context|capfirst }}.</em>
-                {% else %}
-                    {{ item.definition }}.
-                {% endif %}
-            {% endwith %}
-        </p>
+        {% blocktrans with meaning=item.definition region=item.informer.region word=item.word context "wordalternate question" %}
+            <p>What word do you use with the meaning <span>{{ meaning }}</span>? In <span>{{ region }}</span> it is used <span>{{ word }}</span>.</p>
+        {% endblocktrans %}
+
         <form method="post" class="form">
             {% csrf_token %}
             {% bootstrap_form form %}
