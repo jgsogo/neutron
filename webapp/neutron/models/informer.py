@@ -20,9 +20,17 @@ class Informer(models.Model):
                       (2, 'private', _('Private')),
                      )
 
+    KNOWN_US = Choices((0, 'calamo', _('Cálamo & Cran')),
+                       (1, 'university', _('University')),
+                       (2, 'other', _('Other')))
+
+    EDUCATION = Choices((0, 'basica', _('Ed. Básica')),
+                        (1, 'secundaria', _('Ed. Secundaria')),
+                        (2, 'university', _('Ed. Universitaria')))
+
     # Input data by the user himself
-    known_us = models.CharField(max_length=512, blank=True, null=True, help_text=_("How did he know about us"))
-    education = models.CharField(max_length=128, blank=True, null=True, help_text=_("Educational level"))
+    known_us = models.IntegerField(choices=KNOWN_US, blank=True, null=True, help_text=_("How did he know about us?"))
+    education = models.IntegerField(choices=EDUCATION, blank=True, null=True, help_text=_("Educational level"))
 
     # Validated data
     region = models.ForeignKey(Region, blank=True, null=True)

@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
 
-from neutron.models import Region
+from neutron.models import Region, Informer
 from neutron.models.word import MAX_WORD_LENGTH
 
 
@@ -22,18 +22,18 @@ class JoinForm(forms.Form):
     surname = forms.CharField(max_length=128)
     email = forms.EmailField()
     region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=_("(Select your nationality)"))
-    known_us = forms.CharField(max_length=512)
-    education = forms.CharField(max_length=128)
+    known_us = forms.ChoiceField(choices=Informer.KNOWN_US)
+    education = forms.ChoiceField(choices=Informer.EDUCATION)
 
     declaration = forms.BooleanField()
 
     def __init__(self, *args, **kwargs):
         super(JoinForm, self).__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update({'placeholder': _("Nombre*"),})
-        self.fields['surname'].widget.attrs.update({'placeholder': _("Apellidos*"),})
-        self.fields['email'].widget.attrs.update({'placeholder': _("Correo electrónico*"),})
-        self.fields['known_us'].widget.attrs.update({'placeholder': _("¿Cómo nos has conocido?* (Cálamo&Cran, Fundéu, universidad, otros)"),})
-        self.fields['education'].widget.attrs.update({'placeholder': _("Nivel de estudios* (ed. básica, ed. secundaria, ed. universitaria)"),})
+        self.fields['name'].widget.attrs.update({'placeholder': _("Nombre"),})
+        self.fields['surname'].widget.attrs.update({'placeholder': _("Apellidos"),})
+        self.fields['email'].widget.attrs.update({'placeholder': _("Correo electrónico"),})
+        self.fields['known_us'].widget.choices.insert(0, ('', _("How did you know us?")))
+        self.fields['education'].widget.choices.insert(0, ('', _("Tell us your educational level, please")))
 
     def clean_email(self):
         """
@@ -42,12 +42,12 @@ class JoinForm(forms.Form):
         """
         user_model = get_user_model()
         if user_model.objects.filter(email__iexact=self.cleaned_data['email']).exists():
-            raise forms.ValidationError(_("Duplicate email!"))
+            raise forms.ValidationError(_("Duplicate email!"), code='invalid')
         return self.cleaned_data['email']
 
     def clean_declaration(self):
         if not self.cleaned_data['declaration']:
-            raise forms.ValidationError(_("Check the declaration."))
+            raise forms.ValidationError(_("Check the declaration."), code='invalid')
         return self.cleaned_data['declaration']
 
 
