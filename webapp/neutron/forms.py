@@ -3,6 +3,8 @@
 
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
+
 from .models import Informer, Meaning, Word, WordUse, Definition
 
 
@@ -52,3 +54,39 @@ class WordAlternateForm(forms.ModelForm):
         cleaned_data['value'], _ = Word.objects.get_or_create(word=cleaned_data['value'])
         return cleaned_data
 
+
+class ProfileInformerUpdateForm(forms.ModelForm):
+    education = forms.ChoiceField(choices=Informer.EDUCATION, required=True)
+
+    class Meta:
+        model = Informer
+        fields = ('region', 'education',)
+
+    def __init__(self, instance, data=None, *args, **kwargs):
+        super(ProfileInformerUpdateForm, self).__init__(instance=instance, data=data, *args, **kwargs)
+
+        # Do not allow to modify the region once it is set (will affect how we compute data). View is hacked to
+        #   set the region in POST data because the browser doesn't post disabled fields
+        if instance.region:
+            self.fields['region'].widget.attrs['disabled'] = 'disabled'
+        else:
+            self.fields['region'].required = True
+
+        # Do not allow to modify the region once it is set (will affect how we compute confidence)
+        if not instance.education:
+            self.fields['education'].widget.choices.insert(0, ('', _("Tell us your educational level, please")))
+        else:
+            self.fields['education'].widget.attrs['disabled'] = 'disabled'
+            self.fields['education'].required = False
+
+    def clean_region(self):
+        if self.instance.region:
+            return self.instance.region
+        else:
+            return self.cleaned_data['region']
+
+    def clean_education(self):
+        if self.instance.education:
+            return self.instance.education
+        else:
+            return self.cleaned_data['education']
