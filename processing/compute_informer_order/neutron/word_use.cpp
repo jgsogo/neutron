@@ -21,6 +21,18 @@ namespace neutron {
     WordUseManager::WordUseManager() : BaseManager<WordUse>(word_use_path()) {}
 
 
+    std::ostream& operator << (std::ostream& os, const WordUseChoices& w) {
+        switch(w._choices) {
+            case WordUseChoices::OK: return os << "Ok";
+            case WordUseChoices::NOT_ME: return os << "Not me";
+            case WordUseChoices::UNKNOWN: return os << "Unknown";
+            case WordUseChoices::UNRECOGNIZED: return os << "Unrecognized";
+            default: return os << "None(" << w._choices << ")";
+        }
+    }
+
+
+
     WordUse::WordUse() {
     }
     WordUse::WordUse(const BaseModel::tuple& data) : WordUse::BaseModel(data) {

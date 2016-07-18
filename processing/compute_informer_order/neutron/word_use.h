@@ -12,7 +12,7 @@ namespace neutron {
     class WordUseManager;
 
     struct WordUseChoices {
-        enum Choices { OK, NOT_RECOGNIZED, NONE };
+        enum Choices { OK, NOT_ME, UNKNOWN, UNRECOGNIZED, NONE };
         WordUseChoices() : _choices(NONE) {}
         //WordUseChoices(const WordUseChoices& other) : _choices(other._choices) {}
         //WordUseChoices(const std::size_t& other) : _choices(static_cast<Choices>(other)) {}
@@ -35,10 +35,8 @@ namespace neutron {
         w._choices = static_cast<WordUseChoices::Choices>(token);
         return is;
     }
-    inline std::ostream& operator << (std::ostream& os, const WordUseChoices& w) {
-        os << w._choices;
-        return os;
-    }
+    std::ostream& operator << (std::ostream& os, const WordUseChoices& w);
+
 
     class WordUse : public qs::BaseModel<WordUse, Informer, std::size_t, std::string, float, meaning_id, WordUseChoices> {
         using BaseModel = qs::BaseModel<WordUse, Informer, std::size_t, std::string, float, meaning_id, WordUseChoices>;
