@@ -1,4 +1,3 @@
-Error importing local_settings
 [
 {
     "model": "neutron.region",
@@ -84,7 +83,7 @@ Error importing local_settings
     "fields": {
         "name": "Cuba",
         "parent": null,
-        "language_code": null,
+        "language_code": "es-CU",
         "lft": 1,
         "rght": 2,
         "tree_id": 6,
@@ -136,7 +135,7 @@ Error importing local_settings
     "fields": {
         "name": "Guinea Ecuatorial",
         "parent": null,
-        "language_code": null,
+        "language_code": "es-GQ",
         "lft": 1,
         "rght": 2,
         "tree_id": 11,

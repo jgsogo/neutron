@@ -115,12 +115,12 @@ LANGUAGES = [
     ('es-CL', _('Chile')),
     ('es-CO', _('Colombia')),
     ('es-CR', _('Costa Rica')),
-    #('es-CU', _('Cuba')),
+    ('es-CU', _('Cuba')),
     ('es-EC', _('Ecuador')),
     ('es-SV', _('El Salvador')),
     ('es-ES', _('España')),
     ('es-GT', _('Guatemala')),
-    #('es-GQ', _('Guinea Ecuatorial')),
+    ('es-GQ', _('Guinea Ecuatorial')),
     ('es-HN', _('Honduras')),
     ('es-MX', _('México')),
     ('es-NI', _('Nicaragua')),
@@ -218,5 +218,4 @@ from .secret import *
 try:
     from .local_settings import *
 except ImportError:
-    print("Error importing local_settings")
     pass
