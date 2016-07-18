@@ -102,6 +102,7 @@ class RegionAdmin(MPTTModelAdmin):
     entropy_meaning_fmt = "{} | <strong>{}:</strong> {}<br/>"
     entropy_word_fmt = "{} | <strong>{}:</strong><br/>"
 
+    list_display = ('name', 'language_code',)
     readonly_fields = ('word_use_entropy', 'word_alternate_entropy', 'word_coarse',)
 
     def word_use_entropy(self, obj):

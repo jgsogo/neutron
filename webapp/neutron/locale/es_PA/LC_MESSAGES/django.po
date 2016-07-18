@@ -1,0 +1,308 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-18 16:21+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\admin.py:55 .\admin.py:66 .\admin.py:76 .\admin.py:114 .\admin.py:125
+#: .\admin.py:135
+msgid "Obliterate"
+msgstr ""
+
+#: .\admin.py:200
+msgid "has alternative"
+msgstr ""
+
+#: .\admin.py:200
+msgid "Yes"
+msgstr ""
+
+#: .\admin.py:200
+msgid "No"
+msgstr ""
+
+#: .\forms.py:77
+msgid "Tell us your educational level, please"
+msgstr ""
+
+#: .\models\data.py:25
+msgid "Number of seconds for the user to answer the given question."
+msgstr ""
+
+#: .\models\data.py:28
+msgid "Datum"
+msgstr ""
+
+#: .\models\data.py:29
+msgid "Data"
+msgstr ""
+
+#: .\models\data.py:41
+msgid "Checked if the word has been marked as coarse."
+msgstr ""
+
+#: .\models\data.py:44
+msgid "Coarse word"
+msgstr ""
+
+#: .\models\data.py:45
+msgid "Coarse words"
+msgstr ""
+
+#: .\models\data.py:57
+msgid "Ok"
+msgstr ""
+
+#: .\models\data.py:58
+msgid "I don't use it, but I have heard it"
+msgstr ""
+
+#: .\models\data.py:59
+msgid "Neither use it, nor heard it before"
+msgstr ""
+
+#: .\models\data.py:60
+msgid "Do not recognize this meaning for this word"
+msgstr ""
+
+#: .\models\data.py:66
+msgid "Word use"
+msgstr ""
+
+#: .\models\data.py:67
+msgid "Words uses"
+msgstr ""
+
+#: .\models\data.py:79
+msgid "Alternate word/definition in the informer's dictionary"
+msgstr ""
+
+#: .\models\data.py:83
+msgid "Word alternate"
+msgstr ""
+
+#: .\models\data.py:84
+msgid "Word alternates"
+msgstr ""
+
+#: .\models\definition.py:13
+msgid "Text of the definition itself"
+msgstr ""
+
+#: .\models\definition.py:16 .\models\meaning.py:30
+msgid "Definition"
+msgstr ""
+
+#: .\models\definition.py:17
+msgid "Definitions"
+msgstr ""
+
+#: .\models\informer.py:18
+msgid "Public"
+msgstr ""
+
+#: .\models\informer.py:19
+msgid "Friends"
+msgstr ""
+
+#: .\models\informer.py:20
+msgid "Private"
+msgstr ""
+
+#: .\models\informer.py:23
+msgid "Cálamo & Cran"
+msgstr ""
+
+#: .\models\informer.py:24
+msgid "University"
+msgstr ""
+
+#: .\models\informer.py:25
+msgid "Other"
+msgstr ""
+
+#: .\models\informer.py:27
+msgid "Ed. Básica"
+msgstr ""
+
+#: .\models\informer.py:28
+msgid "Ed. Secundaria"
+msgstr ""
+
+#: .\models\informer.py:29
+msgid "Ed. Universitaria"
+msgstr ""
+
+#: .\models\informer.py:32
+msgid "How did he know about us?"
+msgstr ""
+
+#: .\models\informer.py:33
+msgid "Educational level"
+msgstr ""
+
+#: .\models\informer.py:39
+msgid "Informer identifier"
+msgstr ""
+
+#: .\models\informer.py:41
+msgid ""
+"Whether the words related to this informer are included in the search-form."
+msgstr ""
+
+#: .\models\informer.py:44
+msgid "Informers may or may not be users in the webapp"
+msgstr ""
+
+#: .\models\informer.py:46
+msgid ""
+"Define who can see this information: public (everyone), friends (only users "
+"registered), private (nobody, just in database dumps)."
+msgstr ""
+
+#: .\models\informer.py:50
+msgid "Confidence level for this informer for data in this region"
+msgstr ""
+
+#: .\models\informer.py:52
+msgid "Whether confidence attribute can be automatically reevaluated"
+msgstr ""
+
+#: .\models\informer.py:55
+msgid "Informer"
+msgstr ""
+
+#: .\models\informer.py:56
+msgid "Informers"
+msgstr ""
+
+#: .\models\interface.py:11
+msgid "Identifier of the interface"
+msgstr ""
+
+#: .\models\interface.py:14
+msgid "Interface"
+msgstr ""
+
+#: .\models\interface.py:15
+msgid "Interfaces"
+msgstr ""
+
+#: .\models\meaning.py:31
+msgid "Reference (remisión)"
+msgstr ""
+
+#: .\models\meaning.py:41
+msgid ""
+"If set, this meaning won't be shown to informers in WordUse and "
+"WordAlternate interfaces"
+msgstr ""
+
+#: .\models\meaning.py:46
+msgid "Meaning"
+msgstr ""
+
+#: .\models\meaning.py:47
+msgid "Meanings"
+msgstr ""
+
+#: .\models\meaning.py:60
+msgid "Context"
+msgstr ""
+
+#: .\models\meaning.py:61
+msgid "Contexts"
+msgstr ""
+
+#: .\models\region.py:21
+msgid "Name of the region"
+msgstr ""
+
+#: .\models\region.py:33 .\templates\neutron\word_detail.html:25
+msgid "Region"
+msgstr ""
+
+#: .\models\region.py:34
+msgid "Regions"
+msgstr ""
+
+#: .\models\word.py:29
+msgid "If set, this word won't be shown to informers in WordCoarse interface"
+msgstr ""
+
+#: .\models\word.py:34
+msgid "Word"
+msgstr ""
+
+#: .\models\word.py:35
+msgid "Words"
+msgstr ""
+
+#: .\templates\neutron\word_detail.html:19
+msgid "Word uses"
+msgstr ""
+
+#: .\templates\neutron\word_detail.html:26
+msgid "Same use"
+msgstr ""
+
+#: .\templates\neutron\word_detail.html:27
+msgid "Prefer other"
+msgstr ""
+
+#: .\templates\neutron\word_detail.html:28
+msgid "Unrecognized"
+msgstr ""
+
+#: .\templates\neutron\word_detail.html:29
+msgid "Total count"
+msgstr ""
+
+#: .\templates\neutron\word_detail.html:50
+msgid "There is no data for this meaning"
+msgstr ""
+
+#: .\templates\neutron\word_detail_search.html:5
+msgid "Consultar palabra"
+msgstr ""
+
+#: .\templates\neutron\word_detail_search.html:10
+msgid "Escribir palabra"
+msgstr ""
+
+#: .\templates\neutron\word_detail_search.html:11
+msgid "bucar"
+msgstr ""
+
+#: .\templates\profile\informer_form.html:6
+msgid "Datos de informante"
+msgstr ""
+
+#: .\templates\profile\informer_form.html:16
+#: .\templates\profile\user_form.html:20
+msgid "Update"
+msgstr ""
+
+#: .\templates\profile\stats.html:4
+msgid "Stats"
+msgstr ""
+
+#: .\templates\profile\user_form.html:15
+msgid "Personal data"
+msgstr ""
+
+#: .\views\lemma.py:32
+msgid "Word '{}' cannot be found in the application"
+msgstr ""

@@ -53,4 +53,7 @@ urlpatterns = [
 
     #Synthetic data
     url(r'^synthetic/', include('synthetic.urls', namespace='synthetic')),
+
+    # Rosetta
+    url(r'^rosetta/', include('rosetta.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 """
 Django settings for neutron project.
 
@@ -11,7 +14,10 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from __future__ import unicode_literals
+
 import os
+from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -38,8 +44,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'bootstrap3', # https://github.com/dyve/django-bootstrap3
+    'bootstrap3',  # https://github.com/dyve/django-bootstrap3
     'mptt',
+    'rosetta',  # http://django-rosetta.readthedocs.io/en/latest/installation.html
 
     'server',
     'neutron',
@@ -53,6 +60,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -100,7 +108,30 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-ES'
+LANGUAGES = [
+    ('es-AR', _('Argentina')),
+    ('es-BO', _('Bolivia')),
+    ('es-CL', _('Chile')),
+    ('es-CO', _('Colombia')),
+    ('es-CR', _('Costa Rica')),
+    #('es-', _('Cuba')),
+    ('es-EC', _('Ecuador')),
+    ('es-SV', _('El Salvador')),
+    ('es-ES', _('España')),
+    ('es-GT', _('Guatemala')),
+    #('es-', _('Guinea Ecuatorial')),
+    ('es-HN', _('Honduras')),
+    ('es-MX', _('México')),
+    ('es-NI', _('Nicaragua')),
+    ('es-PA', _('Panamá')),
+    ('es-PY', _('Paraguay')),
+    ('es-PE', _('Perú')),
+    ('es-PR', _('Puerto Rico')),
+    ('es-DO', _('República Dominicana')),
+    ('es-UY', _('Uruguay')),
+    ('es-VE', _('Venezuela')),
+]
 
 TIME_ZONE = 'UTC'
 

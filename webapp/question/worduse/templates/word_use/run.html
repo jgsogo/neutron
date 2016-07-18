@@ -1,5 +1,5 @@
 {% extends 'word_use/home.html' %}
-{% load bootstrap3 %}
+{% load bootstrap3 i18n %}
 
 {% block word_use_content %}
     {% if item %}
@@ -24,6 +24,6 @@
         </form>
     {% else %}
         <h3>Error!</h3>
-        <p>There are no meanings in the database.</p>
+        <p>{% trans "There are no meanings in the database" %}.</p>
     {% endif %}
 {% endblock %}

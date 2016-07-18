@@ -15,11 +15,13 @@ class RegionManager(models.Manager):
         except self.model.DoesNotExist:
             return None
 
+
 @python_2_unicode_compatible
 class Region(MPTTModel):
     name = models.CharField(max_length=255, unique=True, help_text=_('Name of the region'))
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
 
+    language_code = models.CharField(max_length=8, blank=True, null=True)
     # TODO: Añadir información GEO
 
     objects = RegionManager()
