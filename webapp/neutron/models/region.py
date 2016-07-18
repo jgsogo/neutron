@@ -21,7 +21,7 @@ class Region(MPTTModel):
     name = models.CharField(max_length=255, unique=True, help_text=_('Name of the region'))
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
 
-    language_code = models.CharField(max_length=8, blank=True, null=True)
+    _language_code = models.CharField(max_length=8, blank=True, null=True)
     # TODO: Añadir información GEO
 
     objects = RegionManager()
@@ -35,3 +35,12 @@ class Region(MPTTModel):
 
     def __str__(self):
         return self.name
+
+    @property
+    def language_code(self):
+        if self._language_code:
+            return self._language_code
+        elif self.parent:
+            return self.parent.language_code
+        else:
+            return None

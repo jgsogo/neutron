@@ -3,22 +3,9 @@
     "model": "neutron.region",
     "pk": 1,
     "fields": {
-        "name": "Espa\u00f1a",
-        "parent": null,
-        "language_code": "es-ES",
-        "lft": 1,
-        "rght": 2,
-        "tree_id": 9,
-        "level": 0
-    }
-},
-{
-    "model": "neutron.region",
-    "pk": 2,
-    "fields": {
         "name": "Argentina",
         "parent": null,
-        "language_code": "es-AR",
+        "_language_code": "es-AR",
         "lft": 1,
         "rght": 2,
         "tree_id": 1,
@@ -27,11 +14,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 3,
+    "pk": 2,
     "fields": {
         "name": "Bolivia",
         "parent": null,
-        "language_code": "es-BO",
+        "_language_code": "es-BO",
         "lft": 1,
         "rght": 2,
         "tree_id": 2,
@@ -40,11 +27,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 4,
+    "pk": 3,
     "fields": {
         "name": "Chile",
         "parent": null,
-        "language_code": "es-CL",
+        "_language_code": "es-CL",
         "lft": 1,
         "rght": 2,
         "tree_id": 3,
@@ -53,11 +40,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 5,
+    "pk": 4,
     "fields": {
         "name": "Colombia",
         "parent": null,
-        "language_code": "es-CO",
+        "_language_code": "es-CO",
         "lft": 1,
         "rght": 2,
         "tree_id": 4,
@@ -66,11 +53,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 6,
+    "pk": 5,
     "fields": {
         "name": "Costa Rica",
         "parent": null,
-        "language_code": "es-CR",
+        "_language_code": "es-CR",
         "lft": 1,
         "rght": 2,
         "tree_id": 5,
@@ -79,11 +66,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 7,
+    "pk": 6,
     "fields": {
         "name": "Cuba",
         "parent": null,
-        "language_code": "es-CU",
+        "_language_code": "es-CU",
         "lft": 1,
         "rght": 2,
         "tree_id": 6,
@@ -92,11 +79,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 8,
+    "pk": 7,
     "fields": {
         "name": "Ecuador",
         "parent": null,
-        "language_code": "es-EC",
+        "_language_code": "es-EC",
         "lft": 1,
         "rght": 2,
         "tree_id": 7,
@@ -105,11 +92,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 9,
+    "pk": 8,
     "fields": {
         "name": "El Salvador",
         "parent": null,
-        "language_code": "es-SV",
+        "_language_code": "es-SV",
         "lft": 1,
         "rght": 2,
         "tree_id": 8,
@@ -118,11 +105,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 10,
+    "pk": 9,
     "fields": {
         "name": "Guatemala",
         "parent": null,
-        "language_code": "es-GT",
+        "_language_code": "es-GT",
         "lft": 1,
         "rght": 2,
         "tree_id": 10,
@@ -131,11 +118,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 11,
+    "pk": 10,
     "fields": {
         "name": "Guinea Ecuatorial",
         "parent": null,
-        "language_code": "es-GQ",
+        "_language_code": "es-GQ",
         "lft": 1,
         "rght": 2,
         "tree_id": 11,
@@ -144,11 +131,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 12,
+    "pk": 11,
     "fields": {
         "name": "Honduras",
         "parent": null,
-        "language_code": "es-HN",
+        "_language_code": "es-HN",
         "lft": 1,
         "rght": 2,
         "tree_id": 12,
@@ -157,24 +144,24 @@
 },
 {
     "model": "neutron.region",
-    "pk": 13,
+    "pk": 12,
     "fields": {
         "name": "M\u00e9xico",
         "parent": null,
-        "language_code": "es-MX",
+        "_language_code": "es-MX",
         "lft": 1,
-        "rght": 2,
+        "rght": 4,
         "tree_id": 13,
         "level": 0
     }
 },
 {
     "model": "neutron.region",
-    "pk": 14,
+    "pk": 13,
     "fields": {
         "name": "Nicaragua",
         "parent": null,
-        "language_code": "es-NI",
+        "_language_code": "es-NI",
         "lft": 1,
         "rght": 2,
         "tree_id": 14,
@@ -183,11 +170,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 15,
+    "pk": 14,
     "fields": {
         "name": "Panam\u00e1",
         "parent": null,
-        "language_code": "es-PA",
+        "_language_code": "es-PA",
         "lft": 1,
         "rght": 2,
         "tree_id": 15,
@@ -196,11 +183,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 16,
+    "pk": 15,
     "fields": {
         "name": "Paraguay",
         "parent": null,
-        "language_code": "es-PY",
+        "_language_code": "es-PY",
         "lft": 1,
         "rght": 2,
         "tree_id": 16,
@@ -209,11 +196,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 17,
+    "pk": 16,
     "fields": {
         "name": "Per\u00fa",
         "parent": null,
-        "language_code": "es-PE",
+        "_language_code": "es-PE",
         "lft": 1,
         "rght": 2,
         "tree_id": 17,
@@ -222,11 +209,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 18,
+    "pk": 17,
     "fields": {
         "name": "Puerto Rico",
         "parent": null,
-        "language_code": "es-PR",
+        "_language_code": "es-PR",
         "lft": 1,
         "rght": 2,
         "tree_id": 18,
@@ -235,11 +222,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 19,
+    "pk": 18,
     "fields": {
         "name": "Rep\u00fablica Dominicana",
         "parent": null,
-        "language_code": "es-DO",
+        "_language_code": "es-DO",
         "lft": 1,
         "rght": 2,
         "tree_id": 19,
@@ -248,11 +235,11 @@
 },
 {
     "model": "neutron.region",
-    "pk": 20,
+    "pk": 19,
     "fields": {
         "name": "Uruguay",
         "parent": null,
-        "language_code": "es-UY",
+        "_language_code": "es-UY",
         "lft": 1,
         "rght": 2,
         "tree_id": 20,
@@ -261,15 +248,41 @@
 },
 {
     "model": "neutron.region",
-    "pk": 21,
+    "pk": 20,
     "fields": {
         "name": "Venezuela",
         "parent": null,
-        "language_code": "es-VE",
+        "_language_code": "es-VE",
         "lft": 1,
         "rght": 2,
         "tree_id": 21,
         "level": 0
+    }
+},
+{
+    "model": "neutron.region",
+    "pk": 21,
+    "fields": {
+        "name": "Espa\u00f1a",
+        "parent": null,
+        "_language_code": "es-ES",
+        "lft": 1,
+        "rght": 2,
+        "tree_id": 9,
+        "level": 0
+    }
+},
+{
+    "model": "neutron.region",
+    "pk": 22,
+    "fields": {
+        "name": "Oaxaca",
+        "parent": 12,
+        "_language_code": null,
+        "lft": 2,
+        "rght": 3,
+        "tree_id": 13,
+        "level": 1
     }
 }
 ]
