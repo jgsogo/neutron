@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 from builtins import str
 
 import os
+import json
 import codecs
 from neutron.models import Word, Definition, Interface, WordUse, Region, Informer, Meaning
 
@@ -20,6 +21,8 @@ FILENAMES = {'worduse_data': 'data_worduse.tsv',
              'interface': 'interface.tsv',
              'worduse': 'worduse.tsv',
              'region': 'region.tsv',
+
+             'settings': 'settings.json'
              }
 
 
@@ -69,6 +72,9 @@ def export(worduse_qs, wordalternate_qs, coarse_qs, path, do_export_aux=True, fi
     if do_export_aux:
         export_aux(path, filenames)
 
+    # Export settings
+    export_settings(path, filenames)
+
     return filenames
 
 
@@ -105,3 +111,11 @@ def export_aux(path, filenames=None):
             line(f, region.pk, region.parent.pk if region.parent else "", region.name)
 
     return filenames
+
+
+def export_settings(path, filenames):
+    data = {'db_path': os.path.abspath(path),
+            'files': filenames}
+
+    with codecs.open(os.path.join(path, filenames['settings']), 'w', 'utf-8') as f:
+        json.dump(data, f, indent=4)

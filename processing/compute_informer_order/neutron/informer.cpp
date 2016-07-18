@@ -12,7 +12,7 @@ namespace neutron {
     namespace {
         std::string informers_path() {
             namespace fs = boost::filesystem;
-            auto informers_filename = ConfigStore::get().get_value_as<std::string>("files/informers");
+            auto informers_filename = ConfigStore::get().get_value_as<std::string>("files/informers_data");
             fs::path full_path = ConfigStore::get().get_value_as<std::string>("db_path") / fs::path(informers_filename);
             return full_path.string();
         }
