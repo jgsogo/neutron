@@ -12,6 +12,8 @@
 #include "neutron/region.h"
 #include "neutron/word_use.h"
 
+#include "entropy.h"
+
 using namespace neutron;
 
 template <class Iter>
@@ -93,9 +95,16 @@ int main(int argc, char** argv){
 
             for (auto meaning: data.groupBy<meaning_id>()) {
                 std::cout << "   + meaning " << meaning.first << std::endl;
+                // Initialize counts with at least one observation of each variable
+                std::map<WordUseChoices, std::size_t> counts = {{WordUseChoices(WordUseChoices::OK), 1},
+                                                                {WordUseChoices(WordUseChoices::NOT_ME), 1},
+                                                                {WordUseChoices(WordUseChoices::UNKNOWN), 1},
+                                                                {WordUseChoices(WordUseChoices::UNRECOGNIZED), 1}};
                 for (auto choice: meaning.second.groupBy<WordUseChoices>()) {
                     std::cout << "     - " << choice.first << ": " << choice.second.count() << std::endl;
+                    counts[choice.first] = choice.second.count();
                 }
+                std::cout << "   => " << utils::compute_entropy(counts) << std::endl;
             }
 
             for (auto choice : data.groupBy<WordUseChoices>()) {

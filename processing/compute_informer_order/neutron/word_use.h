@@ -14,8 +14,7 @@ namespace neutron {
     struct WordUseChoices {
         enum Choices { OK, NOT_ME, UNKNOWN, UNRECOGNIZED, NONE };
         WordUseChoices() : _choices(NONE) {}
-        //WordUseChoices(const WordUseChoices& other) : _choices(other._choices) {}
-        //WordUseChoices(const std::size_t& other) : _choices(static_cast<Choices>(other)) {}
+        WordUseChoices(const Choices& c) : _choices(c) {}
 
         friend bool operator==(const WordUseChoices& lhs, const WordUseChoices& rhs) {
             return lhs._choices == rhs._choices;
@@ -24,8 +23,6 @@ namespace neutron {
         friend bool operator<(const WordUseChoices& lhs, const WordUseChoices& rhs) {
             return lhs._choices < rhs._choices;
         }
-
-
 
         Choices _choices;
     };
