@@ -17,5 +17,17 @@ configure_file(config_tests.h.cmake ${CMAKE_CURRENT_LIST_DIR}/config_tests.h)
 file(COPY data/informers.tsv DESTINATION ${TEST_DATA_PATH})
 file(COPY data/regions.tsv DESTINATION ${TEST_DATA_PATH})
 
-# Add subdirectories with tests
-add_subdirectory(basic)
+# All tests in one test project.
+file(GLOB basic_tests "basic/test_*.cpp")
+file(GLOB utils_tests "utils/test_*.cpp")
+
+add_executable (test_neutron_basic main.cpp
+                                   ${basic_tests}
+                                   ${utils_tests})
+target_link_libraries (test_neutron_basic
+                       neutron
+                       ${Boost_LIBRARIES}
+                       )
+
+add_test(NAME TestModels COMMAND $<TARGET_FILE:test_neutron_basic>)
+
