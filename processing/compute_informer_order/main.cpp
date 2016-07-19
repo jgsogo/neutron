@@ -90,45 +90,18 @@ int main(int argc, char** argv){
             // Data associated with the informers
             auto data = WordUse::objects().all().filter<Informer>(informers);
             std::cout << " - data: " << data.count() << " samples." << std::endl;
-            
+
+            for (auto meaning: data.groupBy<meaning_id>()) {
+                std::cout << "   + meaning " << meaning.first << std::endl;
+                for (auto choice: meaning.second.groupBy<WordUseChoices>()) {
+                    std::cout << "     - " << choice.first << ": " << choice.second.count() << std::endl;
+                }
+            }
+
             for (auto choice : data.groupBy<WordUseChoices>()) {
                 std::cout << "   + " << choice.first << ": " << choice.second.count() << std::endl;
             }
         }
-
-        /*
-        // Parse informers
-        fs::path informers_file = path / "data_informers.tsv";
-        neutron::InformerManager informers(informers_file.string());
-
-        // Parse worduse
-        fs::path word_use_file = path / "data_worduse.tsv";
-        neutron::WordUseManager word_uses(word_use_file.string());
-
-        // == Play a little bit with the data
-        std::cout << "Get all spaniards (region_id = 1)" << std::endl;
-        auto spaniards = informers.get_by_region(neutron::region_id(1));
-        for (auto& item : spaniards) {
-            std::cout << item << std::endl;
-        }
-        std::cout << "Get all spaniards (region_id = 1) -- version 2" << std::endl;
-        auto spaniards2 = ::utils::list<neutron::informer_id>(informers.filter(neutron::region_id(1)));
-        for (auto& item : spaniards2) {
-            std::cout << item << std::endl;
-        }
-        */
-        /*
-        auto word_use_data_all = word_uses.all();
-
-        auto spaniards_data = word_uses.filter(spaniards);
-        for (auto& item : spaniards_data) {
-            std::cout << item << std::endl;
-        }
-        */
-
-        // == Play with querysets
-        //QuerySet<neutron::informer_id, neutron::region_id> qs(informers.all());
-        //qs.filter(neutron::region_id(1));
     }
     catch(std::exception& e) {
         std::cerr << "Unhandled Exception reached the top of main: " 
