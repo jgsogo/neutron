@@ -96,23 +96,33 @@ int main(int argc, char** argv){
             // Compute entropy
             std::vector<std::pair<meaning_id, float>> entropy_data; // TODO: Initialize with size
             for (auto meaning: data.groupBy<meaning_id>()) {
-                std::cout << "   + meaning " << meaning.first << std::endl;
+                console->debug("   + meaning {}", meaning.first);
                 // Initialize counts with at least one observation of each variable
                 std::map<WordUseChoices, std::size_t> counts = {{WordUseChoices(WordUseChoices::OK), 1},
                                                                 {WordUseChoices(WordUseChoices::NOT_ME), 1},
                                                                 {WordUseChoices(WordUseChoices::UNKNOWN), 1},
                                                                 {WordUseChoices(WordUseChoices::UNRECOGNIZED), 1}};
                 for (auto choice: meaning.second.groupBy<WordUseChoices>()) {
-                    std::cout << "     - " << choice.first << ": " << choice.second.count() << std::endl;
+                    console->debug("     - {}: {}", choice.first, choice.second.count());
                     counts[choice.first] = choice.second.count();
                 }
                 auto entropy = utils::compute_entropy(counts);
                 entropy_data.push_back(std::make_pair(meaning.first, entropy));
-                std::cout << "   => " << entropy << std::endl;
+                console->debug("   => {}", entropy);
             }
 
             // Order by
+            std::sort(entropy_data.begin(), entropy_data.end(),
+                      [](const std::pair<meaning_id, float>& lhs, const std::pair<meaning_id, float>& rhs) {
+                            return lhs.second < rhs.second;
+                      });
 
+            // Write to file
+            std::ofstream ofs; ofs.open("data.tsv");
+            for (auto& item: entropy_data) {
+                ofs << item.first << "\t" << item.second << "\n";
+            }
+            ofs.close();
         }
     }
     catch(std::exception& e) {
