@@ -93,6 +93,8 @@ int main(int argc, char** argv){
             auto data = WordUse::objects().all().filter<Informer>(informers);
             std::cout << " - data: " << data.count() << " samples." << std::endl;
 
+            // Compute entropy
+            std::vector<std::pair<meaning_id, float>> entropy_data; // TODO: Initialize with size
             for (auto meaning: data.groupBy<meaning_id>()) {
                 std::cout << "   + meaning " << meaning.first << std::endl;
                 // Initialize counts with at least one observation of each variable
@@ -104,12 +106,13 @@ int main(int argc, char** argv){
                     std::cout << "     - " << choice.first << ": " << choice.second.count() << std::endl;
                     counts[choice.first] = choice.second.count();
                 }
-                std::cout << "   => " << utils::compute_entropy(counts) << std::endl;
+                auto entropy = utils::compute_entropy(counts);
+                entropy_data.push_back(std::make_pair(meaning.first, entropy));
+                std::cout << "   => " << entropy << std::endl;
             }
 
-            for (auto choice : data.groupBy<WordUseChoices>()) {
-                std::cout << "   + " << choice.first << ": " << choice.second.count() << std::endl;
-            }
+            // Order by
+
         }
     }
     catch(std::exception& e) {
