@@ -57,11 +57,11 @@ int main(int argc, char** argv){
             return -1; 
         }
         
-        // Get logger level
+        // Get logger level (initialize also child loggers)
         spdlog::level::level_enum log_level = vm["log-level"].as<::log_level>()._level;
-        #ifdef SPDLOG_DEBUG_ON
+        //#ifdef SPDLOG_DEBUG_ON
         spdlog::stdout_logger_mt("qs")->set_level(log_level);
-        #endif
+        //#endif
         auto console = spdlog::stdout_logger_mt("neutron");
         console->set_level(log_level);
 
@@ -74,7 +74,7 @@ int main(int argc, char** argv){
 
         std::cout << "== List of informers ==" << std::endl;
         auto informers = Informer::objects().all();
-        for (auto& region : informers.groupBy<Region>()) {
+        for (auto& region : informers.groupBy<Region>(false)) {
             std::cout << region.first << ":" << std::endl;
             for (auto& informer : region.second) {
                 std::cout << "\t- " << informer << std::endl;
@@ -109,16 +109,19 @@ int main(int argc, char** argv){
                 auto entropy = utils::compute_entropy(counts);
                 entropy_data.push_back(std::make_pair(meaning.first, entropy));
                 console->debug("   => {}", entropy);
+                console->info("   + meaning {}: {}", meaning.first, entropy);
             }
 
             // Order by
             std::sort(entropy_data.begin(), entropy_data.end(),
                       [](const std::pair<meaning_id, float>& lhs, const std::pair<meaning_id, float>& rhs) {
-                            return lhs.second < rhs.second;
+                            return lhs.second > rhs.second; // Reverse order.
                       });
 
             // Write to file
-            std::ofstream ofs; ofs.open("data.tsv");
+            std::ostringstream filename;
+            filename << "entropy_region_" << region.first.pk() << ".tsv";
+            std::ofstream ofs; ofs.open(filename.str());
             for (auto& item: entropy_data) {
                 ofs << item.first << "\t" << item.second << "\n";
             }
