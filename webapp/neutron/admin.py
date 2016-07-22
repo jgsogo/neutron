@@ -156,7 +156,7 @@ class ContextInline(admin.TabularInline):
 class MeaningAdmin(admin.ModelAdmin):
     form = MeaningForm
     list_display = ('word', 'informer', 'excluded',)
-    list_filter = ('excluded', )
+    list_filter = ('excluded', 'type', 'is_locution', )
     inlines = [ContextInline, ]
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '20'})},
