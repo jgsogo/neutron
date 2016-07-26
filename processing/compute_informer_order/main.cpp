@@ -38,7 +38,8 @@ int main(int argc, char** argv){
         desc.add_options() 
           ("help", "Print help messages")
           ("log-level,l", po::value<log_level>()->default_value(log_level(spdlog::level::info)), std::string("log level (" + log_level::options() + ")").c_str())
-          ("settings", po::value<std::string>()->required(), "path to settings file");
+          ("settings", po::value<std::string>()->required(), "path to settings file")
+          ("outpath", po::value<std::string>()->required(), "output path (last directory will be created if not exists)");
  
         po::variables_map vm;
         try {
@@ -71,6 +72,16 @@ int main(int argc, char** argv){
         std::cout << " - path to settings: '" << settings << "'\n";
         console->info("Configure Neutron: '{}'", settings);
         ConfigStore::get().parse_file(settings.string());
+
+        // Prepare output path
+        fs::path outpath = vm["outpath"].as<std::string>();
+        std::cout << " - output path: '" << outpath << "'\n";
+        try {
+            create_directory(outpath);
+        }
+        catch (fs::filesystem_error& e) {
+            std::cerr << "Cannot access/create directory'" << outpath.string() << "': " << e.what() << ".\n";
+        }
 
         std::cout << "== List of informers ==" << std::endl;
         auto informers = Informer::objects().all();
@@ -121,7 +132,8 @@ int main(int argc, char** argv){
             // Write to file
             std::ostringstream filename;
             filename << "entropy_region_" << region.first.pk() << ".tsv";
-            std::ofstream ofs; ofs.open(filename.str());
+            fs::path fullpath = outpath / fs::path(filename.str());
+            std::ofstream ofs; ofs.open(fullpath.string());
             for (auto& item: entropy_data) {
                 ofs << item.first << "\t" << item.second << "\n";
             }
