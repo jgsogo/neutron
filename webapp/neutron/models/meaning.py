@@ -14,15 +14,19 @@ from .definition import Definition
 from .informer import Informer
 
 
-
 class MeaningManager(models.Manager):
     def valid(self):
-        return self.filter(excluded=False)
+        return self.filter(models.Q(excluded=False) | ~models.Q(type=Meaning.TYPE.reference))
 
     def get_next_for_informer(self, *args, **kwargs):
         from ..utils.meaning_list import get_next_meaning_for_informer
         next_data = get_next_meaning_for_informer(*args, **kwargs)
-        return self.get(pk=next_data[0])
+        while next_data:
+            try:
+                return self.valid().get(pk=next_data[0])
+            except self.model.DoesNotExist:
+                next_data = get_next_meaning_for_informer(*args, **kwargs)
+        return None
 
 
 @python_2_unicode_compatible

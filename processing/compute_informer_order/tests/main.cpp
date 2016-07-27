@@ -3,8 +3,8 @@
 #include "spdlog/spdlog.h"
 #include <iostream>
 
-#include "../../neutron/config_store.h"
-#include "../config_tests.h"
+#include "../neutron/config_store.h"
+#include "config_tests.h"
 
 struct GlobalConfig {
     GlobalConfig() {
@@ -17,7 +17,7 @@ struct GlobalConfig {
             console->info("Logging Neutron: test neutron basic");
         #endif
     
-        std::string data = "{\"db_path\": \"" + test_data_dir.string() + "\", \"files\": { \"informers\" : \"informers.tsv\", \"regions\": \"regions.tsv\"}}";
+        std::string data = "{\"db_path\": \"" + test_data_dir.string() + "\", \"files\": { \"informers_data\" : \"informers.tsv\", \"region\": \"regions.tsv\"}}";
         neutron::ConfigStore::get().parse_data(data);        
     }
 
