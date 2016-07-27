@@ -9,12 +9,13 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-18 16:21+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2016-07-27 17:26+0000\n"
+"Last-Translator: b'Maria Varela <mariavarelar@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-rosetta 0.7.11\n"
 
 #: .\admin.py:55 .\admin.py:66 .\admin.py:76 .\admin.py:114 .\admin.py:125
 #: .\admin.py:135
@@ -27,19 +28,19 @@ msgstr ""
 
 #: .\admin.py:200
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: .\admin.py:200
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: .\forms.py:77
 msgid "Tell us your educational level, please"
-msgstr ""
+msgstr "¿Cuál es tu nivel de estudios?"
 
 #: .\models\data.py:25
 msgid "Number of seconds for the user to answer the given question."
-msgstr ""
+msgstr "Segundos que ha tardado en responder el informante"
 
 #: .\models\data.py:28
 msgid "Datum"
@@ -50,12 +51,14 @@ msgid "Data"
 msgstr ""
 
 #: .\models\data.py:41
+#, fuzzy
 msgid "Checked if the word has been marked as coarse."
-msgstr ""
+msgstr "Casilla activa si la palabra ha sido marcada como grosera."
 
 #: .\models\data.py:44
+#, fuzzy
 msgid "Coarse word"
-msgstr ""
+msgstr "Palabra grosera"
 
 #: .\models\data.py:45
 msgid "Coarse words"
@@ -63,19 +66,19 @@ msgstr ""
 
 #: .\models\data.py:57
 msgid "Ok"
-msgstr ""
+msgstr "Sí"
 
 #: .\models\data.py:58
 msgid "I don't use it, but I have heard it"
-msgstr ""
+msgstr "Yo no la uso, pero la he oído o leído algunas veces"
 
 #: .\models\data.py:59
 msgid "Neither use it, nor heard it before"
-msgstr ""
+msgstr "No la uso ni la había oído o leído antes"
 
 #: .\models\data.py:60
 msgid "Do not recognize this meaning for this word"
-msgstr ""
+msgstr "No conozco el significado"
 
 #: .\models\data.py:66
 msgid "Word use"
@@ -123,39 +126,39 @@ msgstr ""
 
 #: .\models\informer.py:23
 msgid "Cálamo & Cran"
-msgstr ""
+msgstr "Cálamo&Cran"
 
 #: .\models\informer.py:24
 msgid "University"
-msgstr ""
+msgstr "Universidad"
 
 #: .\models\informer.py:25
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
 #: .\models\informer.py:27
 msgid "Ed. Básica"
-msgstr ""
+msgstr "Ed. Básica"
 
 #: .\models\informer.py:28
 msgid "Ed. Secundaria"
-msgstr ""
+msgstr "Ed. Secundaria"
 
 #: .\models\informer.py:29
 msgid "Ed. Universitaria"
-msgstr ""
+msgstr "Ed. Universitaria"
 
 #: .\models\informer.py:32
 msgid "How did he know about us?"
-msgstr ""
+msgstr "¿Cómo nos has conocido?"
 
 #: .\models\informer.py:33
 msgid "Educational level"
-msgstr ""
+msgstr "Nivel de estudios"
 
 #: .\models\informer.py:39
 msgid "Informer identifier"
-msgstr ""
+msgstr "Identificador del informante"
 
 #: .\models\informer.py:41
 msgid ""
@@ -271,38 +274,39 @@ msgid "Total count"
 msgstr ""
 
 #: .\templates\neutron\word_detail.html:50
+#, fuzzy
 msgid "There is no data for this meaning"
-msgstr ""
+msgstr "Aún no hemos recopilado suficientes datos sobre esta entrada."
 
 #: .\templates\neutron\word_detail_search.html:5
 msgid "Consultar palabra"
-msgstr ""
+msgstr "Consultar palabra"
 
 #: .\templates\neutron\word_detail_search.html:10
 msgid "Escribir palabra"
-msgstr ""
+msgstr "Escribe una palabra."
 
 #: .\templates\neutron\word_detail_search.html:11
 msgid "bucar"
-msgstr ""
+msgstr "Buscar"
 
 #: .\templates\profile\informer_form.html:6
 msgid "Datos de informante"
-msgstr ""
+msgstr "Datos de informante"
 
 #: .\templates\profile\informer_form.html:16
 #: .\templates\profile\user_form.html:20
 msgid "Update"
-msgstr ""
+msgstr "Actualizar"
 
 #: .\templates\profile\stats.html:4
 msgid "Stats"
-msgstr ""
+msgstr "Estadísticas"
 
 #: .\templates\profile\user_form.html:15
 msgid "Personal data"
-msgstr ""
+msgstr "Datos personales"
 
 #: .\views\lemma.py:32
 msgid "Word '{}' cannot be found in the application"
-msgstr ""
+msgstr "La palabra '{}' no forma parte de nuestra base de datos."
