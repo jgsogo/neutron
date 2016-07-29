@@ -26,7 +26,9 @@ class Command(BaseCommand):
             help='Work over all words (even those already excluded)')
 
     def handle(self, *args, **options):
-        self.verbosity = options.get('verbosity')
+        test = options.get('test')
+        self.verbosity = options.get('verbosity') if not test else 3
+
         if self.verbosity == 0:
             log.setLevel(logging.WARN)
         elif self.verbosity == 1:  # default
@@ -36,10 +38,8 @@ class Command(BaseCommand):
         if self.verbosity > 2:
             log.setLevel(logging.DEBUG)
 
-        test = options.get('test')
         if test:
             self.stdout.write("Execute test:")
-            self.verbosity = 3
             r1, r2 = gender_split(test)
             self.stdout.write("{:>20} ==>\t{:>20}\t{:>20}".format(test, r1, r2))
             exit()
