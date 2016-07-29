@@ -24,10 +24,16 @@ class Command(BaseCommand):
             dest='all',
             default=False,
             help='Work over all words (even those already excluded)')
+        parser.add_argument('--dry-run',
+            action='store_true',
+            dest='dry_run',
+            default=False,
+            help='Simulate behaviour, do not modify DB')
 
     def handle(self, *args, **options):
         test = options.get('test')
         self.verbosity = options.get('verbosity') if not test else 3
+        self.dry_run = options.get('dry_run')
 
         if self.verbosity == 0:
             log.setLevel(logging.WARN)
@@ -57,7 +63,7 @@ class Command(BaseCommand):
 
             for w in qs:
                 r1, r2 = gender_split(w.word)
-                if r1 and r2:
+                if not self.dry_run and r1 and r2:
                     Word.objects.get_or_create(word=r1, defaults={'excluded': w.excluded})
                     Word.objects.get_or_create(word=r2, defaults={'excluded': w.excluded})
                     if not w.excluded:

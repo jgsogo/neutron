@@ -17,9 +17,9 @@ def gender_split(word):
     r2 = None
     try:
         w1, w2 = [it.strip() for it in word.split(',')]
-        if len(w1) > len(w2):
-            r1 = w1
+        r1 = w1
 
+        if len(w1) > len(w2):
             # Different rules for different words
             if w1.endswith('o') or (w1.endswith('os') and w1.endswith('as')):
                 r2 = regular_behave(w1, w2)
