@@ -87,10 +87,11 @@ class Command(BaseCommand):
             for w in qs:
                 r1, r2 = self.work_on(w.word)
                 if r1 and r2:
-                    Word.objects.get_or_create(word=r1)
-                    Word.objects.get_or_create(word=r2)
-                    w.excluded = True
-                    w.save()
+                    Word.objects.get_or_create(word=r1, defaults={'excluded': w.excluded})
+                    Word.objects.get_or_create(word=r2, defaults={'excluded': w.excluded})
+                    if not w.excluded:
+                        w.excluded = True
+                        w.save()
                     i += 1
 
         except KeyboardInterrupt:
