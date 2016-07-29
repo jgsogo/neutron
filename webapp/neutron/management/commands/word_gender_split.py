@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 from django.core.management.base import BaseCommand, CommandError
 from neutron.models import Word
+from neutron.utils.gender_split import gender_split
 
 import logging
 log = logging.getLogger(__name__)
@@ -24,37 +25,6 @@ class Command(BaseCommand):
             default=False,
             help='Work over all words (even those already excluded)')
 
-    def work_on(self, word):
-        r1 = None
-        r2 = None
-        try:
-            w1, w2 = [it.strip() for it in word.split(',')]
-            r1 = w1
-
-            if len(w1) > len(w2):
-
-                # Different rules for different words
-                if w1.endswith('o') or w1.endswith('os') or w1.endswith('tre'):
-                    r2 = w1[:len(w1)-len(w2)] + w2
-                elif w1.endswith('ón'):
-                    r2 = w1[:len(w1)-len(w2)] + 'o' + w2
-                elif w1.endswith('és'):
-                    r2 = w1[:len(w1)-len(w2)] + 'e' + w2
-                else:
-                    r2 = w1[:len(w1) - len(w2) + 1] + w2
-
-                if self.verbosity > 1:
-                    self.stdout.write("{:>20} ==>\t{:>20}\t{:>20}".format(word, r1, r2))
-            else:
-                r2 = w2
-                if self.verbosity > 0:
-                    self.stdout.write("{:>20} ==>\t{:>20}\t{:>20}".format(word, r1, r2))
-
-        except Exception as e:
-            log.error("Failed! {}. {}".format(word, e))
-            self.stderr.write("Failed! {}. {}".format(word, e))
-        return r1, r2
-
     def handle(self, *args, **options):
         self.verbosity = options.get('verbosity')
         if self.verbosity == 0:
@@ -70,7 +40,8 @@ class Command(BaseCommand):
         if test:
             self.stdout.write("Execute test:")
             self.verbosity = 3
-            self.work_on(test)
+            r1, r2 = gender_split(test)
+            self.stdout.write("{:>20} ==>\t{:>20}\t{:>20}".format(test, r1, r2))
             exit()
 
         qs = None
@@ -85,7 +56,7 @@ class Command(BaseCommand):
             i = 0
 
             for w in qs:
-                r1, r2 = self.work_on(w.word)
+                r1, r2 = gender_split(w.word)
                 if r1 and r2:
                     Word.objects.get_or_create(word=r1, defaults={'excluded': w.excluded})
                     Word.objects.get_or_create(word=r2, defaults={'excluded': w.excluded})
