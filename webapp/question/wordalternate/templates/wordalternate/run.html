@@ -3,9 +3,12 @@
 
 {% block wordalternate_content %}
     {% if item %}
-        {% blocktrans with meaning=item.definition region=item.informer.region word=item.word context "wordalternate question" %}
-            <p>What word do you use with the meaning <span>{{ meaning }}</span>? In <span>{{ region }}</span> it is used <span>{{ word }}</span>.</p>
-        {% endblocktrans %}
+
+        {% with item.context_set.all as contexts %}
+            {% blocktrans with meaning=item.definition region=item.informer.region word=item.word context=contexts.0.text|capfirst context "wordalternate question" %}
+                <p>What word do you use with the meaning <span>"{{ meaning }}"</span>? In <span>{{ region }}</span> it is used <span>"{{ word }}"</span> like in "{{ context }}".</p>
+            {% endblocktrans %}
+        {% endwith %}
 
         <form method="post" class="form">
             {% csrf_token %}
