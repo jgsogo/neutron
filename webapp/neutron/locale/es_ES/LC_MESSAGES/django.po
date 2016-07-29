@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-18 16:21+0200\n"
-"PO-Revision-Date: 2016-07-27 17:26+0000\n"
+"PO-Revision-Date: 2016-07-27 21:42+0000\n"
 "Last-Translator: b'Maria Varela <mariavarelar@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -274,7 +274,6 @@ msgid "Total count"
 msgstr ""
 
 #: .\templates\neutron\word_detail.html:50
-#, fuzzy
 msgid "There is no data for this meaning"
 msgstr "Aún no hemos recopilado suficientes datos sobre esta entrada."
 
