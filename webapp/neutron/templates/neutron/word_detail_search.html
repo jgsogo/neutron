@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load neutron_tags %}
 
 {% block content %}
     <h2>{% trans "Consultar palabra" %}</h2>
@@ -11,5 +12,20 @@
                 <button>{% trans "bucar" %}</button>
             </form>
         </div><!-- buscador-palabra -->
+
+        {% if suggestions %}
+            <h4>{% trans "Similar words" %}</h4>
+            {% split_list suggestions as chunked_data 3 %}
+            <div class="row">
+                {% for chunk in chunked_data %}
+                <div class="col-sm-4">
+                    {% for word in chunk %}
+                        <p><a href="{% url 'neutron:word_detail' pk=word.pk %}">{{ word }}</a></p>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
     </div>
 {% endblock %}

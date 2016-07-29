@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from random import shuffle
+
 from django.views.generic import DetailView, FormView, TemplateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.translation import ugettext_lazy as _
 
 from neutron.models import Meaning, Word, WordUse
 from neutron.forms import SearchWordForm
@@ -30,6 +33,13 @@ class SearchLemma(LoginRequiredMixin, FormView):
                 raise Word.DoesNotExist()
         except Word.DoesNotExist:
             messages.add_message(self.request, messages.ERROR, _("Word '{}' cannot be found in the application").format(word_str))
+            qs = Meaning.objects.filter(word__word__icontains=word_str, informer__searchable=True)
+            if len(qs):
+                suggestions = [it.word for it in qs]
+                shuffle(suggestions)
+                suggestions = suggestions[:9]
+                return self.render_to_response(self.get_context_data(form=form, suggestions=suggestions))
+
             return self.form_invalid(form)
 
 
