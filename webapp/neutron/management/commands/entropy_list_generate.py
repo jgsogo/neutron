@@ -60,7 +60,11 @@ class Command(BaseEntropyListCommand):
         outpath = os.path.join(self.get_working_path(), 'out')
         settings = os.path.join(self.get_working_path(), 'settings.json')
         log_level = {0:'off', 1:'error', 2:'info', 3:'debug'}[options.get('verbosity')]
-        cmd = [self.get_executable(), "--settings", settings, "--outpath", outpath, "-l", log_level]
+        cmd = [self.get_executable(),
+               "--game", game,
+               "--settings", settings,
+               "--outpath", outpath,
+               "-l", log_level]
         job = subprocess.Popen(cmd, stdout=self.stdout)
         out, err = job.communicate()
         if err:
@@ -70,4 +74,4 @@ class Command(BaseEntropyListCommand):
         self.stdout.write("=== Obliterate existing cached list for regions {!r}".format(regions))
 
         for region in regions:
-            call_command('entropy_list_obliterate', game, region=region, *args, **options)
+            call_command('entropy_list_obliterate', game, no_informers=True, region=region, *args, **options)

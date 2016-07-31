@@ -54,6 +54,3 @@ class BaseEntropyListCommand(BaseCommand):
 
         except KeyboardInterrupt:
             self.stdout.write('... user aborted, exit gracefully.')
-        self.stdout.write('Done!')
-
-

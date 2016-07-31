@@ -21,6 +21,16 @@ class Command(BaseEntropyListCommand):
             dest='informer',
             default=None,
             help='Informer')
+        parser.add_argument('--no-informers',
+            action='store_true',
+            dest='no_informers',
+            default=False,
+            help='Do not obliterate informers')
+        parser.add_argument('--no-regions',
+            action='store_true',
+            dest='no_regions',
+            default=False,
+            help='Do not obliterate regions')
 
     def get_informers(self, options):
         informer = options['informer']
@@ -35,18 +45,18 @@ class Command(BaseEntropyListCommand):
 
     def _handle(self, games, regions, *args, **options):
         informers = self.get_informers(options)
+        no_informers = options.pop('no_informers')
+        no_regions = options.pop('no_regions')
 
-        self.stdout.write("Obliterating cached lists for:")
         for game in games:
-            self.stdout.write(" - game: {}".format(game))
-            self.stdout.write("    - regions: {}".format(', '.join(map(str, regions))))
-            for region in regions:
-                cache.delete(meaning_list_cache_key.format(region, game))
-                cache.delete(word_list_cache_key.format(region, game))
+            if not no_regions and len(regions):
+                self.stdout.write("Obliterate game {!r} at regions {!r}".format(game, ', '.join(map(str, regions))))
+                for region in regions:
+                    cache.delete(meaning_list_cache_key.format(region, game))
+                    cache.delete(word_list_cache_key.format(region, game))
 
-            self.stdout.write("    - informers: {}".format(', '.join(map(str, informers))))
-            for informer in informers:
-                cache.delete(meaning_list_informer_cache_key.format(informer, game))
-                cache.delete(word_list_informer_cache_key.format(informer, game))
-
-
+            if not no_informers and len(informers):
+                self.stdout.write("Obliterate game {!r} for informers {!r}".format(game, ', '.join(map(str, informers))))
+                for informer in informers:
+                    cache.delete(meaning_list_informer_cache_key.format(informer, game))
+                    cache.delete(word_list_informer_cache_key.format(informer, game))
