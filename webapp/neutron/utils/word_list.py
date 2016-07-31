@@ -39,7 +39,7 @@ def get_word_list(region, model_class, limit=100, **kwargs):
     if data:
         return data
 
-    log.info("Compute word_list for region='{}' for game='{}'".format(region.name.encode('utf8', 'replace'), model_class.__name__.lower()))
+    log.warn("Compute word_list for region='{}' for game='{}'".format(region.name.encode('utf8', 'replace'), model_class.__name__.lower()))
 
     result = []
     random_binary_entropy = 2*compute_information(0.5)  # Entropy for random binary variable
