@@ -4,7 +4,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/join.hpp>
 
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 #include "log_level_param.hpp"
 #include "neutron/config_store.h"
