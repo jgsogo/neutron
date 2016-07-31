@@ -157,6 +157,7 @@ class MeaningAdmin(admin.ModelAdmin):
     form = MeaningForm
     list_display = ('word', 'informer', 'excluded',)
     list_filter = ('excluded', 'type', 'is_locution', )
+    search_fields = ('word__word',)
     inlines = [ContextInline, ]
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '20'})},
