@@ -40,8 +40,7 @@ add_subdirectory(tests)
 
 
 add_executable(compute_informer_order main.cpp
-                                      log_level_param.hpp
-                                      entropy.h)
+                                      log_level_param.hpp)
 target_include_directories(compute_informer_order PUBLIC ${CONAN_INCLUDE_DIRS_QUERYSET-CPP})
 target_link_libraries(compute_informer_order 
                       ${CONAN_LIBS}

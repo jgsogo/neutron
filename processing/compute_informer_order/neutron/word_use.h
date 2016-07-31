@@ -53,6 +53,7 @@ namespace neutron {
     class WordUseManager : public BaseManager<WordUse> {
         public:
             WordUseManager();
+            std::vector<std::pair<meaning_id, float>> gather_entropy_data(const std::vector<Informer>& informers);
     };
 
     template<class Ch, class Tr>
@@ -60,4 +61,5 @@ namespace neutron {
         rhs.print(os);
         return os;
     }
+
 }

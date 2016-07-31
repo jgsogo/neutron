@@ -2,13 +2,11 @@
 #pragma once
 
 #include <numeric>
+#include <map>
 
 namespace utils {
 
-    float compute_information(const float& value) {
-        assert(value >= 0.f && value <= 1.f); // It must be a  probability
-        return (value == 0.f) ? 0.f : -value*std::log2(value);
-    }
+    float compute_information(const float& value);
 
     template <typename T>
     float compute_entropy(const typename std::map<T, std::size_t>& data) {

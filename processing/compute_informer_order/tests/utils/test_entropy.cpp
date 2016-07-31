@@ -1,6 +1,6 @@
 
 #include <boost/test/unit_test.hpp>
-#include "../../entropy.h"
+#include "../../neutron/entropy.h"
 
 
 BOOST_AUTO_TEST_SUITE(entropy)

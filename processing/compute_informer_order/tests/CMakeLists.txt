@@ -26,8 +26,7 @@ add_executable (test_neutron_basic main.cpp
                                    ${utils_tests})
 target_link_libraries (test_neutron_basic
                        neutron
-                       ${Boost_LIBRARIES}
-                       )
+                       ${Boost_LIBRARIES})
 
 add_test(NAME TestModels COMMAND $<TARGET_FILE:test_neutron_basic>)
 
