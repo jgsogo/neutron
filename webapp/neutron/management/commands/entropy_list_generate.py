@@ -31,6 +31,12 @@ class Command(BaseEntropyListCommand):
             raise CommandError("Executable to compute entropy lists is not available. Please set variable 'settings.COMPUTE_ENTROPY'")
         return COMPUTE_ENTROPY.get('PATH')
 
+    @classmethod
+    def get_out_path(cls):
+        if not COMPUTE_ENTROPY:
+            raise CommandError("Executable to compute entropy lists is not available. Please set variable 'settings.COMPUTE_ENTROPY'")
+        return COMPUTE_ENTROPY.get('OUT')
+
     def _handle(self, games, regions, *args, **options):
         with singleton("export"):
             # 1) Export data
@@ -57,7 +63,7 @@ class Command(BaseEntropyListCommand):
 
     def compute_entropy_list(self, game, regions, *args, **options):
         self.stdout.write("=== Compute entropy list for {!r} at regions {!r}".format(game, regions))
-        outpath = os.path.join(self.get_working_path(), 'out')
+        outpath = self.get_out_path()
         settings = os.path.join(self.get_working_path(), 'settings.json')
         log_level = {0:'off', 1:'error', 2:'info', 3:'debug'}[options.get('verbosity')]
         cmd = [self.get_executable(),

@@ -2,15 +2,18 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+import os
 from random import shuffle
 
 from django.core.cache import cache
+from django.conf import settings
 
 from neutron.models import WordUse, Meaning, WordAlternate
 from .entropy import compute_entropy, compute_information
 
 import logging
 log = logging.getLogger(__name__)
+COMPUTE_ENTROPY = getattr(settings, 'COMPUTE_ENTROPY', None)
 
 
 meaning_list_cache_key = 'meaning-list-region-{}-game-{}'
@@ -51,6 +54,18 @@ def get_meaning_list(region, model_class, limit=100, **kwargs):
     if data:
         return data
 
+    # Try to get from file
+    if COMPUTE_ENTROPY:
+        outpath = COMPUTE_ENTROPY.get('OUT', None)
+        file_pattern = COMPUTE_ENTROPY.get(model_class.__name__.upper(), None)
+        if outpath and file_pattern:
+            fullpath = os.path.join(outpath, file_pattern.format(pk=region.pk))
+            if os.path.exists(fullpath):
+                data = [list(map(str.strip, line.split())) for line in open(fullpath, 'r').readlines()]
+                cache.set(cache_key, data, timeout=6*60*60)  # Cache for six hours
+                return data
+
+    # Compute!!!
     log.warn("Compute meaning_list for region='{}' for game='{}'".format(region.name.encode('utf8', 'replace'), model_class.__name__.lower()))
 
     result = []
@@ -63,7 +78,7 @@ def get_meaning_list(region, model_class, limit=100, **kwargs):
         h = compute_entropy(qs, **kwargs)
 
         entropy = h[region.pk][0] if len(h) else random_binary_entropy
-        result.append([meaning.pk, entropy, meaning.word.word, meaning.definition.definition, ])
+        result.append([meaning.pk, entropy, ])
 
         if limit and i >= limit:
             break

@@ -24,7 +24,7 @@ def compute_entropy(data, extra_values=None):
     :return:
     """
     if len(data) == 0:
-        log.warn("Compute entropy called with an empty data vector, nothing to do.")
+        log.debug("Compute entropy called with an empty data vector, nothing to do.")
         return {}
 
     # Count each value for each group
