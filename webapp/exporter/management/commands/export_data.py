@@ -20,9 +20,16 @@ class Command(BaseCommand):
             dest='outpath',
             default=None,
             help='Destination path (last folder will be created if not exists)')
+        parser.add_argument('--dry-run',
+            action='store_true',
+            dest='dry_run',
+            default=False,
+            help='Simulate behaviour, do not modify DB')
 
     def handle(self, *args, **options):
         outpath = options['outpath']
+        dry_run = options['dry_run']
+
         if not outpath:
             raise CommandError("Provide an output path")
 
@@ -30,7 +37,7 @@ class Command(BaseCommand):
         dirname = os.path.dirname(outpath)
         if not os.path.exists(dirname):
             raise CommandError("Base directory '{}' must exists.".format(dirname))
-        if not os.path.exists(outpath):
+        if not os.path.exists(outpath) and not dry_run:
             os.makedirs(outpath)
 
         # Gather data
@@ -38,6 +45,7 @@ class Command(BaseCommand):
         wordalternate_qs = WordAlternate.objects.all()
         coarse_data = CoarseWord.objects.all()
 
-        export(worduse_data, wordalternate_qs, coarse_data, outpath, do_export_aux=True)
+        if not dry_run:
+            export(worduse_data, wordalternate_qs, coarse_data, outpath, do_export_aux=True)
 
         self.stdout.write('Done!')
