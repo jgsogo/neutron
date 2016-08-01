@@ -13,6 +13,7 @@
 #include "neutron/region.h"
 #include "neutron/word_use.h"
 #include "neutron/word_coarse.h"
+#include "neutron/word_alternate.h"
 
 using namespace neutron;
 
@@ -43,7 +44,7 @@ int main(int argc, char** argv){
           ("log-level,l", po::value<log_level>()->default_value(log_level(spdlog::level::info)), std::string("log level (" + log_level::options() + ")").c_str())
           ("settings", po::value<std::string>()->required(), "path to settings file")
           ("outpath", po::value<std::string>()->required(), "output path (last directory will be created if not exists)")
-          ("game", po::value<std::string>()->required(), "game: WordUse or WordCoarse");  // TODO: Make choices
+          ("game", po::value<std::string>()->required(), "game: WordUse, WordCoarse, WordAlternate");  // TODO: Make choices
  
         po::variables_map vm;
         try {
@@ -114,6 +115,10 @@ int main(int argc, char** argv){
             else if (game=="WordCoarse") {
                 std::ostringstream os; os << "wordcoarse_region_" << region.first.pk() << ".tsv";
                 work_model<WordCoarse>(informers, outpath / fs::path(os.str()));
+            }
+            else if (game=="WordAlternate") {
+                std::ostringstream os; os << "wordalternate_region_" << region.first.pk() << ".tsv";
+                work_model<WordAlternate>(informers, outpath / fs::path(os.str()));
             }
 
         }
