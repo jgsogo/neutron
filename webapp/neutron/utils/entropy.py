@@ -24,7 +24,6 @@ def compute_entropy(data, extra_values=None):
     :return:
     """
     if len(data) == 0:
-        log.debug("Compute entropy called with an empty data vector, nothing to do.")
         return {}
 
     # Count each value for each group
@@ -38,11 +37,6 @@ def compute_entropy(data, extra_values=None):
         for group, values in aux_probs.items():
             for v in extra_values:
                 values[v[0]] = values.setdefault(v[0], v[1])
-
-    if log.getEffectiveLevel() == logging.DEBUG:
-        log.debug("Counting probabilities for each group:")
-        for group, values in aux_probs.items():
-            log.debug(" - {} => {}".format(group, values.items()))
 
     # Normalize probabilities
     probs = {}

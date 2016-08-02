@@ -25,10 +25,10 @@ def _get_meaning_queryset(region, model_class):
     if model_class == WordAlternate:
         # Work only with the meanings that people from your region has marked as not recognized.
         items = WordUse.objects.filter(informer__region=region, value=WordUse.USES.unrecognized).values('meaning_id')
-        qs = Meaning.objects.filter(pk__in=items)
+        qs = Meaning.objects.valid().filter(pk__in=items)
     elif model_class == WordUse:
         # Each informer will work only with foreign meanings
-        qs = Meaning.objects.exclude(informer__region=region)
+        qs = Meaning.objects.valid().exclude(informer__region=region)
     return qs
 
 
@@ -61,9 +61,20 @@ def get_meaning_list(region, model_class, limit=100, **kwargs):
         if outpath and file_pattern:
             fullpath = os.path.join(outpath, file_pattern.format(pk=region.pk))
             if os.path.exists(fullpath):
-                data = [list(map(str.strip, line.split())) for line in open(fullpath, 'r').readlines()]
+                file_data = [list(map(str.strip, line.split())) for line in open(fullpath, 'r').readlines()]
+                log.info("{} items read from file {!r}".format(len(file_data), fullpath))
+                not_informed_data = []
+                if model_class == WordUse:  # Preprend not informed meanings
+                    informed_meanings = model_class.objects.filter(informer__region=region).values('meaning_id')
+                    qsm = _get_meaning_queryset(region, model_class)
+                    not_informed_data = [(it, 0) for it in qsm.exclude(pk__in=informed_meanings).values_list('pk', flat=True)]
+                    shuffle(not_informed_data)
+                    log.info("{} meanings not yet informed (region='{}')".format(len(not_informed_data), region))
+                data = not_informed_data + file_data
                 cache.set(cache_key, data, timeout=6*60*60)  # Cache for six hours
                 return data
+            else:
+                log.warn("File {!r} to read entropy list for {!r} does not exists!".format(fullpath, model_class.__name__))
 
     # Compute!!!
     log.warn("Compute meaning_list for region='{}' for game='{}'".format(region.name.encode('utf8', 'replace'), model_class.__name__.lower()))
@@ -94,20 +105,8 @@ def get_meaning_list_for_informer(informer, model_class, full_round_first=False,
     cache_key = meaning_list_informer_cache_key.format(informer.pk, model_class.__name__.lower())
     data = cache.get(cache_key)
     if not data:
-        log.info("Compute meaning_list for informer='{}' for game='{}'".format(informer.name, model_class.__name__.lower()))
-        if full_round_first:
-            log.info("Try to use meanings not yet informed (informer='{}')".format(informer.name))
-            # Get meanings not informed by the user
-            informed_meanings = model_class.objects.filter(informer=informer).values('meaning_id')
-            qsm = _get_meaning_queryset(informer.region, model_class)
-            data = list(qsm.exclude(pk__in=informed_meanings).values_list('pk', flat=True))
-            shuffle(data)
-
-        if not data:
-            # Get meanings ordered by entropy for informer region
-            log.info("Use meanings ordered by entropy")
-            data = get_meaning_list(informer.region, model_class, **kwargs)
-
+        log.info("Get meanings ordered by entropy")
+        data = get_meaning_list(informer.region, model_class, **kwargs)
         cache.set(cache_key, data)
     return data
 
