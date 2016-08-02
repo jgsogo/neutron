@@ -734,3 +734,22 @@ footer {
   /* Set the fixed height of the footer here */
   height: 200px;
 }
+
+
+/* Customizations (outside SASS) :/
+------------------------------*/
+.dropdown-menu > form > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+}
+.dropdown-menu > form > li > a:hover,
+.dropdown-menu > form > li > a:focus {
+  color: #262626;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}

@@ -35,7 +35,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a href="{% url "home" %}"><img class="logo" src="{% static 'img/neutron_logo_600x143.png' %}" alt="logo neutron"></a>
+					<a href="{% url 'home' %}"><img class="logo" src="{% static 'img/neutron_logo_600x143.png' %}" alt="logo neutron"></a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
@@ -65,10 +65,10 @@
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{% url 'neutron:profile' %}">Profile</a></li>
-                                        <li><a href="{% url 'neutron:profile_stats' %}">My stats</a></li>
+                                        <li><a href="{% url 'neutron:profile' %}">{% trans "Profile" %}</a></li>
+                                        <li><a href="{% url 'neutron:profile_stats' %}">{% trans "My stats" %}</a></li>
                                         {% if user.is_staff %}
-                                            <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                                            <li><a href="{% url 'admin:index' %}">{% trans "Admin" %}</a></li>
                                         {% endif %}
                                         <li role="separator" class="divider"></li>
                                         <li><a href="{% url 'logout' %}">Logout</a></li>
@@ -78,7 +78,25 @@
                         {% else %}
                             <li><a href="{% url 'login' %}">{% trans "Login" %}</a></li>
                         {% endif %}
-					</ul>
+
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ LANGUAGE_CODE }} <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="">{% trans "Select interface language" %}</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    {% for language in LANGUAGES %}
+                                        <form id="set_language" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                                            <li><a href="#">{{language.0}} {{ language.1 }}</a></li>
+                                        </form>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </ul>
 				</div><!--/.nav-collapse -->
 			</div>
 		</nav>
