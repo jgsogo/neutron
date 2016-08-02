@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import logging
 from collections import Counter
+
+from django.contrib.staticfiles import finders
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.template import Library, Node, TemplateSyntaxError
 
+log = logging.getLogger(__name__)
 
 register = Library()
 
@@ -35,11 +40,21 @@ class SplitListNode(Node):
         context[self.new_list_name] = self.split_seq(context[self.list], int(self.chunk_size))
         return ''
 
+
 def split_list(parser, token):
     """<% split_list list as new_list 5 %>"""
     bits = token.contents.split()
     if len(bits) != 5:
         raise TemplateSyntaxError("split_list list as new_list 5")
     return SplitListNode(bits[1], bits[4], bits[3])
-
 split_list = register.tag(split_list)
+
+
+def flag_icon(language_code, size=24):
+    try:
+        id = language_code.split('-',1)[1]
+        return static('flags/flags_iso/{}/{}.png'.format(size, id.lower()))
+    except:
+        log.error("Flag for language_code {!r} not found.".format(language_code))
+    return ""
+register.assignment_tag(flag_icon, takes_context=False, name="flag_icon")

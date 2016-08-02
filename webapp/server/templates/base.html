@@ -1,4 +1,6 @@
 {% load static i18n %}
+{% load neutron_tags %}
+{% load staticfiles %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -83,12 +85,14 @@
                         {% get_available_languages as LANGUAGES %}
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ LANGUAGE_CODE }} <span class="caret"></span></a>
+                                {% flag_icon language_code=LANGUAGE_CODE size=16 as current_flag %}
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="{{ current_flag }}"/> <span class="caret"></span></a>
                                 <ul class="dropdown-menu" id="set_language">
                                     <li><a href="">{% trans "Select interface language" %}</a></li>
                                     <li role="separator" class="divider"></li>
                                     {% for language in LANGUAGES %}
-                                        <li><a class="lang_option" value="{{ language.0 }}" href="#">{{language.0}} {{ language.1 }}</a></li>
+                                        {% flag_icon language_code=language.0 size=16 as flag %}
+                                        <li><a class="lang_option" value="{{ language.0 }}" href="#"><img src="{{ flag }}"/> {{ language.1 }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </li>
