@@ -60,7 +60,7 @@ class ProfileInformerUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Informer
-        fields = ('region', 'education',)
+        fields = ('region', 'education', 'gender', 'birthday',)
 
     def __init__(self, instance, data=None, *args, **kwargs):
         super(ProfileInformerUpdateForm, self).__init__(instance=instance, data=data, *args, **kwargs)
