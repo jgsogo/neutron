@@ -199,6 +199,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
             },
+        'question': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+            },
         'exporter': {
             'handlers': ['file'],
             'level': 'DEBUG',
