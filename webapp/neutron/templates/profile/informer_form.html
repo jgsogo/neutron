@@ -13,6 +13,9 @@
                 {{ form.region.errors }}{{ form.region.label_tag }}{{ form.region }}
                 {{ form.education.errors }}{{ form.education.label_tag }}{{ form.education }}
                 {{ form.known_us.errors }}{{ form.known_us.label_tag }}{{ form.known_us }}
+                {{ form.gender.errors }}{{ form.gender.label_tag }}{{ form.gender }}
+                {{ form.birthday.errors }}{{ form.birthday.label_tag }}
+                <input id="id_birthday" name="birthday" type="text" {% if form.birthday.value %}value="{{ form.birthday.value|date:'d/m/Y' }}"{% endif %} placeholder="23/01/1900">
                 <button type="submit" class="b-yellow">{% trans "Update" %}</button>
             </form>
         </div>

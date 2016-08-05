@@ -4,15 +4,16 @@
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string/join.hpp>
 
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 #include "log_level_param.hpp"
 #include "neutron/config_store.h"
 #include "neutron/informer.h"
 #include "neutron/region.h"
 #include "neutron/word_use.h"
-
-#include "entropy.h"
+#include "neutron/word_coarse.h"
+#include "neutron/word_alternate.h"
 
 using namespace neutron;
 
@@ -29,6 +30,9 @@ std::ostream& implode(Iter first, Iter last, std::ostream& os, const std::string
     return os;
 }
 
+template <typename T>
+void work_model(const std::vector<Informer>& informers, const boost::filesystem::path& fullpath);
+
 int main(int argc, char** argv){
     std::cout << "== Compute informer order ==\n";
     try {
@@ -39,7 +43,8 @@ int main(int argc, char** argv){
           ("help", "Print help messages")
           ("log-level,l", po::value<log_level>()->default_value(log_level(spdlog::level::info)), std::string("log level (" + log_level::options() + ")").c_str())
           ("settings", po::value<std::string>()->required(), "path to settings file")
-          ("outpath", po::value<std::string>()->required(), "output path (last directory will be created if not exists)");
+          ("outpath", po::value<std::string>()->required(), "output path (last directory will be created if not exists)")
+          ("game", po::value<std::string>()->required(), "game: WordUse, WordCoarse, WordAlternate");  // TODO: Make choices
  
         po::variables_map vm;
         try {
@@ -73,6 +78,9 @@ int main(int argc, char** argv){
         console->info("Configure Neutron: '{}'", settings);
         ConfigStore::get().parse_file(settings.string());
 
+        // Get game:
+        fs::path game = vm["game"].as<std::string>();
+
         // Prepare output path
         fs::path outpath = vm["outpath"].as<std::string>();
         std::cout << " - output path: '" << outpath << "'\n";
@@ -100,44 +108,19 @@ int main(int argc, char** argv){
             implode(informers.begin(), informers.end(), std::cout);
             std::cout << std::endl;
 
-            // Data associated with the informers
-            auto data = WordUse::objects().all().filter<Informer>(informers);
-            std::cout << " - data: " << data.count() << " samples." << std::endl;
-
-            // Compute entropy
-            std::vector<std::pair<meaning_id, float>> entropy_data; // TODO: Initialize with size
-            for (auto meaning: data.groupBy<meaning_id>()) {
-                console->debug("   + meaning {}", meaning.first);
-                // Initialize counts with at least one observation of each variable
-                std::map<WordUseChoices, std::size_t> counts = {{WordUseChoices(WordUseChoices::OK), 1},
-                                                                {WordUseChoices(WordUseChoices::NOT_ME), 1},
-                                                                {WordUseChoices(WordUseChoices::UNKNOWN), 1},
-                                                                {WordUseChoices(WordUseChoices::UNRECOGNIZED), 1}};
-                for (auto choice: meaning.second.groupBy<WordUseChoices>()) {
-                    console->debug("     - {}: {}", choice.first, choice.second.count());
-                    counts[choice.first] = choice.second.count();
-                }
-                auto entropy = utils::compute_entropy(counts);
-                entropy_data.push_back(std::make_pair(meaning.first, entropy));
-                console->debug("   => {}", entropy);
-                console->info("   + meaning {}: {}", meaning.first, entropy);
+            if (game=="WordUse") {
+                std::ostringstream os; os << "worduse_region_" << region.first.pk() << ".tsv";
+                work_model<WordUse>(informers, outpath / fs::path(os.str()));
+            }
+            else if (game=="WordCoarse") {
+                std::ostringstream os; os << "wordcoarse_region_" << region.first.pk() << ".tsv";
+                work_model<WordCoarse>(informers, outpath / fs::path(os.str()));
+            }
+            else if (game=="WordAlternate") {
+                std::ostringstream os; os << "wordalternate_region_" << region.first.pk() << ".tsv";
+                work_model<WordAlternate>(informers, outpath / fs::path(os.str()));
             }
 
-            // Order by
-            std::sort(entropy_data.begin(), entropy_data.end(),
-                      [](const std::pair<meaning_id, float>& lhs, const std::pair<meaning_id, float>& rhs) {
-                            return lhs.second > rhs.second; // Reverse order.
-                      });
-
-            // Write to file
-            std::ostringstream filename;
-            filename << "entropy_region_" << region.first.pk() << ".tsv";
-            fs::path fullpath = outpath / fs::path(filename.str());
-            std::ofstream ofs; ofs.open(fullpath.string());
-            for (auto& item: entropy_data) {
-                ofs << item.first << "\t" << item.second << "\n";
-            }
-            ofs.close();
         }
     }
     catch(std::exception& e) {
@@ -146,5 +129,21 @@ int main(int argc, char** argv){
             return -1; 
     }
     return 0;
+}
 
+
+template <typename T>
+void work_model(const std::vector<Informer>& informers, const boost::filesystem::path& fullpath) {
+    std::vector<std::pair<meaning_id, float>> entropy_data = T::objects().gather_entropy_data(informers);
+    std::sort(entropy_data.begin(), entropy_data.end(),
+              [](const std::pair<meaning_id, float>& lhs, const std::pair<meaning_id, float>& rhs) {
+                    return lhs.second > rhs.second; // Reverse order.
+              });
+
+    // Write to file
+    std::ofstream ofs; ofs.open(fullpath.string());
+    for (auto& item: entropy_data) {
+        ofs << item.first << "\t" << item.second << "\n";
+    }
+    ofs.close();
 }
