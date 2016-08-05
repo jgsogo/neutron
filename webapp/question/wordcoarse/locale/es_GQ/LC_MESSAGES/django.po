@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 20:11+0200\n"
+"POT-Creation-Date: 2016-08-05 19:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,10 +21,14 @@ msgstr ""
 msgid "Word coarse"
 msgstr ""
 
-#: views/run_wordcoarse.py:34
+#: templates/wordcoarse/run.html:20
+msgid "Undo"
+msgstr ""
+
+#: views/run_wordcoarse.py:58
 msgid "Not coarse"
 msgstr ""
 
-#: views/run_wordcoarse.py:34
+#: views/run_wordcoarse.py:58
 msgid "Coarse"
 msgstr ""

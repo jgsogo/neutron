@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 20:10+0200\n"
+"POT-Creation-Date: 2016-08-05 19:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:55 admin.py:66 admin.py:76 admin.py:114 admin.py:125 admin.py:135
+#: admin.py:66 admin.py:76 admin.py:95 admin.py:144 admin.py:154 admin.py:172
 msgid "Obliterate"
 msgstr ""
 
-#: admin.py:200
+#: admin.py:238
 msgid "has alternative"
 msgstr ""
 
-#: admin.py:200
+#: admin.py:238
 msgid "Yes"
 msgstr ""
 
-#: admin.py:200
+#: admin.py:238
 msgid "No"
 msgstr ""
 
@@ -101,7 +101,7 @@ msgstr ""
 msgid "Text of the definition itself"
 msgstr ""
 
-#: models/definition.py:16 models/meaning.py:30
+#: models/definition.py:16 models/meaning.py:34
 msgid "Definition"
 msgstr ""
 
@@ -109,82 +109,90 @@ msgstr ""
 msgid "Definitions"
 msgstr ""
 
-#: models/informer.py:18
+#: models/informer.py:23
 msgid "Public"
 msgstr ""
 
-#: models/informer.py:19
+#: models/informer.py:24
 msgid "Friends"
 msgstr ""
 
-#: models/informer.py:20
+#: models/informer.py:25
 msgid "Private"
 msgstr ""
 
-#: models/informer.py:23
+#: models/informer.py:28
 msgid "Cálamo & Cran"
 msgstr ""
 
-#: models/informer.py:24
+#: models/informer.py:29
 msgid "University"
 msgstr ""
 
-#: models/informer.py:25
+#: models/informer.py:30
 msgid "Other"
 msgstr ""
 
-#: models/informer.py:27
+#: models/informer.py:32
 msgid "Ed. Básica"
 msgstr ""
 
-#: models/informer.py:28
+#: models/informer.py:33
 msgid "Ed. Secundaria"
 msgstr ""
 
-#: models/informer.py:29
+#: models/informer.py:34
 msgid "Ed. Universitaria"
 msgstr ""
 
-#: models/informer.py:32
+#: models/informer.py:35
+msgid "Male"
+msgstr ""
+
+#: models/informer.py:35
+msgid "Female"
+msgstr ""
+
+#: models/informer.py:38
 msgid "How did he know about us?"
 msgstr ""
 
-#: models/informer.py:33
+#: models/informer.py:39
 msgid "Educational level"
 msgstr ""
 
-#: models/informer.py:39
+#: models/informer.py:47
 msgid "Informer identifier"
 msgstr ""
 
-#: models/informer.py:41
+#: models/informer.py:49
 msgid ""
 "Whether the words related to this informer are included in the search-form."
 msgstr ""
 
-#: models/informer.py:44
+#: models/informer.py:52
 msgid "Informers may or may not be users in the webapp"
 msgstr ""
 
-#: models/informer.py:46
+#: models/informer.py:54
 msgid ""
 "Define who can see this information: public (everyone), friends (only users "
 "registered), private (nobody, just in database dumps)."
 msgstr ""
 
-#: models/informer.py:50
+#: models/informer.py:58
 msgid "Confidence level for this informer for data in this region"
 msgstr ""
 
-#: models/informer.py:52
+#: models/informer.py:60
 msgid "Whether confidence attribute can be automatically reevaluated"
 msgstr ""
 
-#: models/informer.py:55
+#: models/informer.py:63
 msgid "Informer"
 msgstr ""
 
-#: models/informer.py:56
+#: models/informer.py:64
 msgid "Informers"
 msgstr ""
 
@@ -200,29 +208,29 @@ msgstr ""
 msgid "Interfaces"
 msgstr ""
 
-#: models/meaning.py:31
+#: models/meaning.py:35
 msgid "Reference (remisión)"
 msgstr ""
 
-#: models/meaning.py:41
+#: models/meaning.py:45
 msgid ""
 "If set, this meaning won't be shown to informers in WordUse and "
 "WordAlternate interfaces"
 msgstr ""
 
-#: models/meaning.py:46
+#: models/meaning.py:50
 msgid "Meaning"
 msgstr ""
 
-#: models/meaning.py:47
+#: models/meaning.py:51
 msgid "Meanings"
 msgstr ""
 
-#: models/meaning.py:60
+#: models/meaning.py:64
 msgid "Context"
 msgstr ""
 
-#: models/meaning.py:61
+#: models/meaning.py:65
 msgid "Contexts"
 msgstr ""
 
@@ -230,7 +238,7 @@ msgstr ""
 msgid "Name of the region"
 msgstr ""
 
-#: models/region.py:33 templates/neutron/word_detail.html.py:25
+#: models/region.py:33 templates/neutron/word_detail.html:26
 msgid "Region"
 msgstr ""
 
@@ -250,47 +258,51 @@ msgstr ""
 msgid "Words"
 msgstr ""
 
-#: templates/neutron/word_detail.html:19
+#: templates/neutron/word_detail.html:20
 msgid "Word uses"
 msgstr ""
 
-#: templates/neutron/word_detail.html:26
+#: templates/neutron/word_detail.html:27
 msgid "Same use"
 msgstr ""
 
-#: templates/neutron/word_detail.html:27
+#: templates/neutron/word_detail.html:28
 msgid "Prefer other"
 msgstr ""
 
-#: templates/neutron/word_detail.html:28
+#: templates/neutron/word_detail.html:29
 msgid "Unrecognized"
 msgstr ""
 
-#: templates/neutron/word_detail.html:29
+#: templates/neutron/word_detail.html:30
 msgid "Total count"
 msgstr ""
 
-#: templates/neutron/word_detail.html:50
+#: templates/neutron/word_detail.html:51
 msgid "There is no data for this meaning"
 msgstr ""
 
-#: templates/neutron/word_detail_search.html:5
+#: templates/neutron/word_detail_search.html:6
 msgid "Consultar palabra"
 msgstr ""
 
-#: templates/neutron/word_detail_search.html:10
+#: templates/neutron/word_detail_search.html:11
 msgid "Escribir palabra"
 msgstr ""
 
-#: templates/neutron/word_detail_search.html:11
+#: templates/neutron/word_detail_search.html:12
 msgid "bucar"
+msgstr ""
+
+#: templates/neutron/word_detail_search.html:17
+msgid "Similar words"
 msgstr ""
 
 #: templates/profile/informer_form.html:6
 msgid "Datos de informante"
 msgstr ""
 
-#: templates/profile/informer_form.html:16 templates/profile/user_form.html:20
+#: templates/profile/informer_form.html:19 templates/profile/user_form.html:20
 msgid "Update"
 msgstr ""
 
@@ -302,6 +314,6 @@ msgstr ""
 msgid "Personal data"
 msgstr ""
 
-#: views/lemma.py:32
+#: views/lemma.py:35
 msgid "Word '{}' cannot be found in the application"
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-18 20:11+0200\n"
+"POT-Creation-Date: 2016-08-05 19:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -182,36 +182,52 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: templates/base.html:44
+#: templates/base.html:46
 msgid "Únete"
 msgstr ""
 
-#: templates/base.html:47 templates/join.html.py:4
+#: templates/base.html:49 templates/join.html:4
 msgid "Participa"
 msgstr ""
 
-#: templates/base.html:49
+#: templates/base.html:51
 msgid "Word use"
 msgstr ""
 
-#: templates/base.html:50
+#: templates/base.html:52
 msgid "Word coarse"
 msgstr ""
 
-#: templates/base.html:51
+#: templates/base.html:53
 msgid "Word alternate"
 msgstr ""
 
-#: templates/base.html:58
+#: templates/base.html:60
 msgid "Consulta"
 msgstr ""
 
-#: templates/base.html:61
+#: templates/base.html:63
 msgid "equipo y patrocinadores"
 msgstr ""
 
-#: templates/base.html:79
+#: templates/base.html:70
+msgid "Profile"
+msgstr ""
+
+#: templates/base.html:71
+msgid "My stats"
+msgstr ""
+
+#: templates/base.html:73
+msgid "Admin"
+msgstr ""
+
+#: templates/base.html:81
 msgid "Login"
+msgstr ""
+
+#: templates/base.html:91
+msgid "Select interface language"
 msgstr ""
 
 #: templates/faq.html:4
@@ -231,7 +247,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: templates/faq.html:62 templates/faq_ask.html.py:11
+#: templates/faq.html:62 templates/faq_ask.html:11
 msgid "¿Cómo podemos ayudarte?"
 msgstr ""
 
