@@ -13,7 +13,7 @@ matrix:
           packages:
             - g++-4.9
       env: 
-        - COMPILER=g++-4.9 COMPILER_NAME=gcc COMPILER_VERSION=4.9
+        - CONAN_ENV="env CC=gcc CXX=g++-4.9" COMPILER=g++-4.9 COMPILER_NAME=gcc COMPILER_VERSION=4.9
     - compiler: clang
       addons:
         apt:
