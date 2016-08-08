@@ -1,3 +1,5 @@
+{% load static i18n %}
+
 <!DOCTYPE html>
 <html class="no-js" lang="en-US">
 <head>
@@ -5,60 +7,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
-    <title>Proyecto Neutrón</title>
-    <link rel="alternate" type="application/rss+xml" title="Proyecto Neutrón &raquo; Feed"
-          href="http://proyectoneutron.org/feed/"/>
-    <link rel="alternate" type="application/rss+xml" title="Proyecto Neutrón &raquo; Comments Feed"
-          href="http://proyectoneutron.org/comments/feed/"/>
+    <title>{% trans "Proyecto Neutrón" %}</title>
     <script type="text/javascript">
 			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/proyectoneutron.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.5.3"}};
 			!function(a,b,c){function d(a){var c,d,e,f=b.createElement("canvas"),g=f.getContext&&f.getContext("2d"),h=String.fromCharCode;if(!g||!g.fillText)return!1;switch(g.textBaseline="top",g.font="600 32px Arial",a){case"flag":return g.fillText(h(55356,56806,55356,56826),0,0),f.toDataURL().length>3e3;case"diversity":return g.fillText(h(55356,57221),0,0),c=g.getImageData(16,16,1,1).data,d=c[0]+","+c[1]+","+c[2]+","+c[3],g.fillText(h(55356,57221,55356,57343),0,0),c=g.getImageData(16,16,1,1).data,e=c[0]+","+c[1]+","+c[2]+","+c[3],d!==e;case"simple":return g.fillText(h(55357,56835),0,0),0!==g.getImageData(16,16,1,1).data[0];case"unicode8":return g.fillText(h(55356,57135),0,0),0!==g.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
 
     </script>
     <style type="text/css">
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 .07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
 
     </style>
     <link rel='stylesheet' id='bootstrap-css'
-          href='http://proyectoneutron.org/wp-content/themes/colors-creative/assets/css/bootstrap.min.css?ver=1.4.5'
+          href='{% static 'proyectoneutron/wp-content/themes/colors-creative/assets/css/bootstrap.min.css' %}?ver=1.4.5'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='bootstrap-extends-css'
-          href='http://proyectoneutron.org/wp-content/themes/colors-creative/assets/css/bootstrap-extends.min.css?ver=1.4.5'
+          href='{% static 'proyectoneutron/wp-content/themes/colors-creative/assets/css/bootstrap-extends.min.css' %}?ver=1.4.5'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='theme-css'
-          href='http://proyectoneutron.org/wp-content/themes/colors-creative/assets/css/theme.min.css?ver=1.4.5'
+          href='{% static 'proyectoneutron/wp-content/themes/colors-creative/assets/css/theme.min.css' %}?ver=1.4.5'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='theme-visual-composer-css'
-          href='http://proyectoneutron.org/wp-content/themes/colors-creative/assets/css/visual-composer.min.css?ver=1.4.5'
+          href='{% static 'proyectoneutron/wp-content/themes/colors-creative/assets/css/visual-composer.min.css' %}?ver=1.4.5'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='ms-main-css'
-          href='http://proyectoneutron.org/wp-content/plugins/masterslider/public/assets/css/masterslider.main.css?ver=2.22.1'
+          href='{% static 'proyectoneutron/wp-content/plugins/masterslider/public/assets/css/masterslider.main.css' %}?ver=2.22.1'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='theme-masterslider-css'
-          href='http://proyectoneutron.org/wp-content/themes/colors-creative/assets/css/masterslider.min.css?ver=1.4.5'
+          href='{% static 'proyectoneutron/wp-content/themes/colors-creative/assets/css/masterslider.min.css' %}?ver=1.4.5'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='ionicons-css'
-          href='http://proyectoneutron.org/wp-content/themes/colors-creative/assets/css/ionicons.min.css?ver=1.4.5'
+          href='{% static 'proyectoneutron/wp-content/themes/colors-creative/assets/css/ionicons.min.css' %}?ver=1.4.5'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='photoswipe-css'
-          href='http://proyectoneutron.org/wp-content/themes/colors-creative/assets/css/photoswipe/photoswipe.css?ver=1.4.5'
+          href='{% static 'proyectoneutron/wp-content/themes/colors-creative/assets/css/photoswipe/photoswipe.css' %}?ver=1.4.5'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='cf7-style-frontend-style-css'
-          href='http://proyectoneutron.org/wp-content/plugins/contact-form-7-style/css/frontend.css?ver=3.0.5'
+          href='{% static 'proyectoneutron/wp-content/plugins/contact-form-7-style/css/frontend.css' %}?ver=3.0.5'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='cf7-style-responsive-style-css'
-          href='http://proyectoneutron.org/wp-content/plugins/contact-form-7-style/css/responsive.css?ver=3.0.5'
+          href='{% static 'proyectoneutron/wp-content/plugins/contact-form-7-style/css/responsive.css' %}?ver=3.0.5'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='tf-google-webfont-roboto-css'
           href='//fonts.googleapis.com/css?family=Roboto%3A400%2C300%2C200%2C100&#038;subset=latin%2Clatin-ext&#038;ver=4.5.3'
@@ -67,14 +65,14 @@ img.emoji {
           href='//fonts.googleapis.com/css?family=Source+Code+Pro%3A400&#038;subset=latin%2Clatin-ext&#038;ver=4.5.3'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='js_composer_front-css'
-          href='http://proyectoneutron.org/wp-content/plugins/js_composer/assets/css/js_composer.min.css?ver=4.8.1'
+          href='{% static 'proyectoneutron/wp-content/plugins/js_composer/assets/css/js_composer.min.css' %}?ver=4.8.1'
           type='text/css' media='all'/>
     <link rel='stylesheet' id='ms-custom-css'
-          href='http://proyectoneutron.org/wp-content/uploads/masterslider/custom.css?ver=8.4' type='text/css'
+          href='{% static 'proyectoneutron/wp-content/uploads/masterslider/custom.css' %}?ver=8.4' type='text/css'
           media='all'/>
-    <script type='text/javascript' src='http://proyectoneutron.org/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+    <script type='text/javascript' src='{% static 'proyectoneutron/wp-includes/js/jquery/jquery.js' %}?ver=1.12.4'></script>
     <script type='text/javascript'
-            src='http://proyectoneutron.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+            src='{% static 'proyectoneutron/wp-includes/js/jquery/jquery-migrate.min.js' %}?ver=1.4.1'></script>
     <script src="//cdn.jsdelivr.net/modernizr/2/modernizr.min.js"></script>
     <script>
         window.Modernizr||document.write('<script src="http://proyectoneutron.org/wp-content/themes/colors-creative/assets/js/vendor/modernizr.min.js?ver=4.5.3"><\/script>')
