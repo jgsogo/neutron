@@ -27,6 +27,8 @@ admin.site.site_header = 'Proyecto Neutrón'
 admin.site.index_title = 'Proyecto Neutrón'
 
 urlpatterns = [
+    url(r'^', include('home.urls')),
+
     url(r'^admin/', include(admin.site.urls)),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
@@ -35,8 +37,8 @@ urlpatterns = [
 
     url(r'^telegram/', include('telegram.urls', namespace='telegram')),
 
-    url(r'^$', HomeView.as_view()),
-    url(r'^home/$', HomeView.as_view(), name='home'),
+    #url(r'^$', HomeView.as_view()),
+    #url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^join/$', JoinView.as_view(template_name='join.html'), name='join'),
     url(r'^join/register/$', JoinRegister.as_view(template_name='users/register.html'), name='register'),
     url(r'^faq/$', QuestionList.as_view(template_name='faq.html'), name='faq'),
