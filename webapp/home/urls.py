@@ -6,6 +6,6 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='proyectoneutron.html')),
+    url(r'^$', TemplateView.as_view(template_name='proyectoneutron.html'), name='home'),
     ]
 

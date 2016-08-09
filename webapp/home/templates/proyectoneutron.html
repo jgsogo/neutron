@@ -225,17 +225,17 @@
 
             <div class="container">
                 <ul class="nav" role="menu">
-                    <li class="active"><a href="http://proyectoneutron.org/#que-es"
-                                          class=" menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">¿Qué
-                        es?</a></li>
-                    <li class="active"><a href="http://proyectoneutron.org/#como-funciona"
-                                          class=" menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">¿Cómo
-                        funciona?</a></li>
-                    <li class="active"><a href="http://proyectoneutron.org/#nos-ayudas"
-                                          class=" menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">¿Nos
-                        ayudas?</a></li>
-                    <li><a href="http://proyectoneutron.org/?page_id=389"
-                           class=" menu-item menu-item-type-post_type menu-item-object-page">Equipo y Patrocinadores</a>
+                    <li class="active">
+                        <a href="#que-es" class=" menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">{% trans "¿Qué es?" %}</a>
+                    </li>
+                    <li class="active">
+                        <a href="#como-funciona" class=" menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">{% trans "¿Cómo funciona?" %}</a>
+                    </li>
+                    <li class="active">
+                        <a href="#nos-ayudas" class=" menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">{% trans "¿Nos ayudas?" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'about' %}" class=" menu-item menu-item-type-post_type menu-item-object-page">{% trans "Equipo y Patrocinadores" %}</a>
                     </li>
                 </ul>
             </div>
@@ -579,7 +579,7 @@
                                         <figure class="wpb_wrapper vc_figure">
                                             <div class="vc_single_image-wrapper   vc_box_border_grey"><img width="100"
                                                                                                            height="18"
-                                                                                                           src="{% static 'proyectoneutron.org/wp-content/uploads/2015/12/Wave-of-neutron-e1450364555191.png' %}"
+                                                                                                           src="{% static 'proyectoneutron/wp-content/uploads/2015/12/Wave-of-neutron-e1450364555191.png' %}"
                                                                                                            class="vc_single_image-img attachment-full"
                                                                                                            alt="Wave of neutron"/>
                                             </div>
