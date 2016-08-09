@@ -93,14 +93,11 @@
     <meta name="pagescroll" content="outBack"/>
 
     <!--[if lte IE 9]>
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'proyectoneutron/wp-content/plugins/js_composer/assets/css/vc_lte_ie9.min.css' %}" media="screen">
+        <link rel="stylesheet" type="text/css" href="{% static 'proyectoneutron/wp-content/plugins/js_composer/assets/css/vc_lte_ie9.min.css' %}" media="screen">
     <![endif]--><!--[if IE  8]>
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'proyectoneutron/wp-content/plugins/js_composer/assets/css/vc-ie8.min.css' %}" media="screen">
+        <link rel="stylesheet" type="text/css" href="{% static 'proyectoneutron/wp-content/plugins/js_composer/assets/css/vc-ie8.min.css' %}" media="screen">
     <![endif]-->
-    <style class='cf7-style' media='screen' type='text/css'>
-    </style>
+    <style class='cf7-style' media='screen' type='text/css'></style>
 
     <link rel="icon"
           href="{% static 'proyectoneutron/wp-content/uploads/2015/12/cropped-neutron_logo_SQUARE_512x512-32x32.png' %}"
@@ -133,7 +130,6 @@
 
 <body class="home page page-id-321 page-template-default _masterslider _msp_version_2.22.1 wpb-js-composer js-comp-ver-4.8.1 vc_responsive"
       data-spy="scroll" data-target=".navmenu-nav" data-offset="80">
-
 
     <div class="splash" data-om-splash="400">
         <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
@@ -236,7 +232,7 @@
                    data-on-class="pre-in"
                    data-off-delay="400"
                    data-off-class="out">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only">{% trans "Toggle navigation" %}</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -292,16 +288,15 @@
 
                                         <div class="wpb_text_column wpb_content_element  vc_custom_1450371104505">
                                             <div class="wpb_wrapper">
-                                                <h3 style="text-align: center;">¿Qué es Neutrón?</h3>
-
+                                                <h3 style="text-align: center;">{% trans "¿Qué es Neutrón?" %}</h3>
                                             </div>
                                         </div>
 
                                         <div class="wpb_text_column wpb_content_element ">
                                             <div class="wpb_wrapper">
-                                                <h4 style="text-align: center;"><span style="color: #131313;">Neutrón es un proyecto de investigación y una herramienta de ayuda a la escritura, traducción y revisión de textos viajeros.</span>
+                                                <h4 style="text-align: center;">
+                                                    <span style="color: #131313;">{% trans "Neutrón es un proyecto de investigación y una herramienta de ayuda a la escritura, traducción y revisión de textos viajeros." %}</span>
                                                 </h4>
-
                                             </div>
                                         </div>
                                     </div>
@@ -327,8 +322,8 @@
                                     <div class="wpb_wrapper">
                                         <div class="wpb_text_column wpb_content_element ">
                                             <div class="wpb_wrapper">
-                                                <h4 style="text-align: right;"><span style="color: #131313;"><span
-                                                        style="background-color: #ffff66;">Sin ánimo de lucro</span>:</span>
+                                                <h4 style="text-align: right;">
+                                                    <span style="color: #131313;"><span style="background-color: #ffff66;">{% trans "Sin ánimo de lucro" %}</span>:</span>
                                                 </h4>
 
                                             </div>
@@ -336,9 +331,9 @@
 
                                         <div class="wpb_text_column wpb_content_element ">
                                             <div class="wpb_wrapper">
-                                                <h4 style="text-align: right;"><span style="color: #131313;"><span
-                                                        style="background-color: #ffff66;">Texto viajero</span></span>:</h4>
-
+                                                <h4 style="text-align: right;">
+                                                    <span style="color: #131313;"><span style="background-color: #ffff66;">{% trans "Texto viajero" %}</span>:</span>
+                                                </h4>
                                             </div>
                                         </div>
                                     </div>
@@ -347,17 +342,17 @@
                                     <div class="wpb_wrapper">
                                         <div class="wpb_text_column wpb_content_element ">
                                             <div class="wpb_wrapper">
-                                                <h4 style="text-align: left;"><span style="color: #131313;">haremos las cosas como creemos que se deben hacer.<br/>
-    </span></h4>
-
+                                                <h4 style="text-align: left;">
+                                                    <span style="color: #131313;">{% trans "haremos las cosas como creemos que se deben hacer." %}<br/></span>
+                                                </h4>
                                             </div>
                                         </div>
 
                                         <div class="wpb_text_column wpb_content_element ">
                                             <div class="wpb_wrapper">
-                                                <h4 style="text-align: left;">aquel cuyos autores y lectores son hablantes
-                                                    de variedades de español diferentes.</h4>
-
+                                                <h4 style="text-align: left;">
+                                                    <span>{% trans "aquel cuyos autores y lectores son hablantes de variedades de español diferentes." %}</span>
+                                                </h4>
                                             </div>
                                         </div>
                                     </div>
@@ -380,28 +375,36 @@
                                     <div class="wpb_wrapper">
                                         <div class="wpb_text_column wpb_content_element  vc_custom_1454834946603">
                                             <div class="wpb_wrapper">
-                                                <h2 style="text-align: center;">Neutrón: <span
-                                                        style="color: #131313; background-color: #ffff66;">el proyecto</span>
+                                                <h2 style="text-align: center;">Neutrón:
+                                                    <span style="color: #131313; background-color: #ffff66;">{% trans "el proyecto" %}</span>
                                                 </h2>
-
                                             </div>
                                         </div>
                                         <div class="vc_separator wpb_content_element vc_separator_align_center vc_sep_width_70 vc_sep_pos_align_center vc_separator_no_text">
-                                            <span class="vc_sep_holder vc_sep_holder_l"><span style="border-color:#131313;"
-                                                                                              class="vc_sep_line"></span></span><span
-                                                class="vc_sep_holder vc_sep_holder_r"><span style="border-color:#131313;"
-                                                                                            class="vc_sep_line"></span></span>
+                                            <span class="vc_sep_holder vc_sep_holder_l">
+                                                <span style="border-color:#131313;" class="vc_sep_line"></span>
+                                            </span>
+                                            <span class="vc_sep_holder vc_sep_holder_r">
+                                                <span style="border-color:#131313;" class="vc_sep_line"></span>
+                                            </span>
                                         </div>
                                         <div class="wpb_text_column wpb_content_element ">
                                             <div class="wpb_wrapper">
-                                                <p style="text-align: center;">Queremos identificar las diferencias que los
+                                                <p style="text-align: center;">
+                                                    {% blocktrans %}
+                                                    Queremos identificar las diferencias que los
                                                     hablantes de distintas variedades geográficas del español manifiestan en
-                                                    el uso del léxico.</p>
-                                                <p style="text-align: center;">Como resultado, a través del proyecto
+                                                    el uso del léxico.
+                                                    {% endblocktrans %}
+                                                </p>
+                                                <p style="text-align: center;">
+                                                    {% blocktrans %}
+                                                    Como resultado, a través del proyecto
                                                     obtendremos una base de datos de términos y acepciones etiquetados por
                                                     regiones que arrojará información sobre el uso de la lengua en cada
-                                                    punto del mapa.</p>
-
+                                                    punto del mapa.
+                                                    {% endblocktrans %}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -410,28 +413,36 @@
                                     <div class="wpb_wrapper">
                                         <div class="wpb_text_column wpb_content_element  vc_custom_1454834960243">
                                             <div class="wpb_wrapper">
-                                                <h2 style="text-align: center;">Neutrón: <span
-                                                        style="color: #131313; background-color: #ffff66;">la herramienta</span>
+                                                <h2 style="text-align: center;">Neutrón:
+                                                    <span style="color: #131313; background-color: #ffff66;">{% trans "la herramienta" %}</span>
                                                 </h2>
-
                                             </div>
                                         </div>
                                         <div class="vc_separator wpb_content_element vc_separator_align_center vc_sep_width_70 vc_sep_pos_align_center vc_separator_no_text">
-                                            <span class="vc_sep_holder vc_sep_holder_l"><span style="border-color:#131313;"
-                                                                                              class="vc_sep_line"></span></span><span
-                                                class="vc_sep_holder vc_sep_holder_r"><span style="border-color:#131313;"
-                                                                                            class="vc_sep_line"></span></span>
+                                            <span class="vc_sep_holder vc_sep_holder_l">
+                                                <span style="border-color:#131313;" class="vc_sep_line"></span>
+                                            </span>
+                                            <span class="vc_sep_holder vc_sep_holder_r">
+                                                <span style="border-color:#131313;" class="vc_sep_line"></span>
+                                            </span>
                                         </div>
                                         <div class="wpb_text_column wpb_content_element ">
                                             <div class="wpb_wrapper">
-                                                <p style="text-align: center;">Pondremos a disposición de profesionales y
+                                                <p style="text-align: center;">
+                                                    {% blocktrans %}
+                                                    Pondremos a disposición de profesionales y
                                                     usuarios de la lengua española una herramienta que facilite la
                                                     adaptación de los textos al español que su público objetivo realmente
-                                                    conoce y con el que se siente cómodo.</p>
-                                                <p style="text-align: center;">Con esta herramienta contribuiremos a que los
+                                                    conoce y con el que se siente cómodo.
+                                                    {% endblocktrans %}
+                                                </p>
+                                                <p style="text-align: center;">
+                                                    {% blocktrans %}
+                                                    Con esta herramienta contribuiremos a que los
                                                     textos viajeros sean mejor comprendidos y valorados por sus
-                                                    lectores.</p>
-
+                                                    lectores.
+                                                    {% endblocktrans %}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -458,9 +469,7 @@
                                     <div class="wpb_wrapper">
                                         <div class="wpb_text_column wpb_content_element  vc_custom_1454839282782">
                                             <div class="wpb_wrapper">
-                                                <h4 style="text-align: left;">Hablamos español en más de 20 países,
-                                                    ¡acerquémoslos!</h4>
-
+                                                <h4 style="text-align: left;">{% trans "Hablamos español en más de 20 países, ¡acerquémoslos!" %}</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -483,19 +492,17 @@
                                         <div class="wpb_single_image wpb_content_element vc_align_center">
 
                                             <figure class="wpb_wrapper vc_figure">
-                                                <div class="vc_single_image-wrapper   vc_box_border_grey"><img width="100"
-                                                                                                               height="18"
-                                                                                                               src="{% static 'proyectoneutron/wp-content/uploads/2015/12/Wave-of-neutron-e1450364555191.png' %}"
-                                                                                                               class="vc_single_image-img attachment-full"
-                                                                                                               alt="Wave of neutron"/>
+                                                <div class="vc_single_image-wrapper vc_box_border_grey">
+                                                    <img width="100" height="18"
+                                                         src="{% static 'proyectoneutron/wp-content/uploads/2015/12/Wave-of-neutron-e1450364555191.png' %}"
+                                                         class="vc_single_image-img attachment-full"
+                                                         alt="{% trans 'Wave of neutron' %}"/>
                                                 </div>
                                             </figure>
                                         </div>
-
                                         <div class="wpb_text_column wpb_content_element ">
                                             <div class="wpb_wrapper">
-                                                <h3 style="text-align: center;">¿Cómo funciona?</h3>
-
+                                                <h3 style="text-align: center;">{% trans "¿Cómo funciona?" %}</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -523,30 +530,31 @@
                                                 <div class="block-content">
                                                     <div class="wpb_text_column wpb_content_element ">
                                                         <div class="wpb_wrapper">
-                                                            <p style="text-align: left;">El proyecto Neutrón se alimentará
-                                                                de dos fuentes complementarias:</p>
-                                                            <p><span style="color: #131313; background-color: #ffff66;">Informantes</span>:
+                                                            <p style="text-align: left;">{% trans "El proyecto Neutrón se alimentará de dos fuentes complementarias:" %}</p>
+                                                            <p>
+                                                                <span style="color: #131313; background-color: #ffff66;">{% trans "Informantes" %}</span>:
+                                                                {% blocktrans %}
                                                                 hablantes de las distintas variedades geográficas del
                                                                 español recorrerán un glosario de términos y acepciones para
-                                                                etiquetarlos de acuerdo con su habla.</p>
-
+                                                                etiquetarlos de acuerdo con su habla.
+                                                                {% endblocktrans %}
+                                                            </p>
                                                         </div>
                                                     </div>
-
                                                     <div class="wpb_text_column wpb_content_element ">
                                                         <div class="wpb_wrapper">
-                                                            <p><span style="color: #131313; background-color: #ffff66;">Corpus</span>:
+                                                            <p>
+                                                                <span style="color: #131313; background-color: #ffff66;">{% trans "Corpus" %}</span>:
+                                                                {% blocktrans %}
                                                                 contrastaremos corpus procedentes de distintas variedades
                                                                 geográficas con el fin de identificar diferencias en la
-                                                                aparición de términos y en su colocación.</p>
-
+                                                                aparición de términos y en su colocación.
+                                                                {% endblocktrans %}
+                                                            </p>
                                                         </div>
                                                     </div>
-
                                                     <div class="wpb_text_column wpb_content_element ">
-                                                        <div class="wpb_wrapper">
-
-                                                        </div>
+                                                        <div class="wpb_wrapper"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -562,43 +570,30 @@
                                                 <div id="P_MS57a8a54b0f920" class="master-slider-parent ms-parent-id-5"
                                                      style="max-width:500px;">
 
-
                                                     <!-- MasterSlider Main -->
                                                     <div id="MS57a8a54b0f920" class="master-slider ms-skin-colors-creative">
-
                                                         <div class="ms-slide" data-delay="0.8" data-fill-mode="fill">
                                                             <img src="{% static 'proyectoneutron/wp-content/plugins/masterslider/public/assets/css/blank.gif' %}"
                                                                  alt="" title="neutron_header_2"
                                                                  data-src="{% static 'proyectoneutron/wp-content/uploads/2015/12/Vaqueros_INTERFAZ-500x300.png' %}"/>
-
-
                                                         </div>
                                                         <div class="ms-slide" data-delay="3" data-fill-mode="fill">
                                                             <img src="{% static 'proyectoneutron/wp-content/plugins/masterslider/public/assets/css/blank.gif' %}"
                                                                  alt="" title="Informantes_2_PC"
                                                                  data-src="{% static 'proyectoneutron/wp-content/uploads/2015/12/Informantes_2_PC-500x300.png' %}"/>
-
-
                                                         </div>
                                                         <div class="ms-slide" data-delay="3" data-fill-mode="fill">
                                                             <img src="{% static 'proyectoneutron/wp-content/plugins/masterslider/public/assets/css/blank.gif' %}"
                                                                  alt="" title="Informantes_1_PC"
                                                                  data-src="{% static 'proyectoneutron/wp-content/uploads/2015/12/Informantes_1_PC-500x300.png' %}"/>
-
-
                                                         </div>
                                                         <div class="ms-slide" data-delay="3" data-fill-mode="fill">
                                                             <img src="{% static 'proyectoneutron/wp-content/plugins/masterslider/public/assets/css/blank.gif' %}"
                                                                  alt="" title="informantes_3_PC"
                                                                  data-src="{% static 'proyectoneutron/wp-content/uploads/2015/12/informantes_3_PC-500x300.png' %}"/>
-
-
                                                         </div>
-
                                                     </div>
                                                     <!-- END MasterSlider Main -->
-
-
                                                 </div>
                                                 <!-- END MasterSlider -->
 
@@ -655,8 +650,6 @@
             })(jQuery);
 
                                                 </script>
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -665,6 +658,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="section section-half section-inside vc_row_2769a967 behavior-static background-light"
                      data-scroll-bg="#ececec" data-scroll-child-target=">.section-background-main" data-scroll-hook="0"
                      data-scroll-offset="height"
@@ -686,35 +680,25 @@
                                                 <div id="P_MS57a8a54b1224a" class="master-slider-parent ms-parent-id-6"
                                                      style="max-width:500px;">
 
-
                                                     <!-- MasterSlider Main -->
                                                     <div id="MS57a8a54b1224a" class="master-slider ms-skin-colors-creative">
-
                                                         <div class="ms-slide" data-delay="3" data-fill-mode="fill">
                                                             <img src="{% static 'proyectoneutron/wp-content/plugins/masterslider/public/assets/css/blank.gif' %}"
                                                                  alt="" title="Localizacion_1"
                                                                  data-src="{% static 'proyectoneutron/wp-content/uploads/2015/12/Localizacion_1-500x320.png' %}"/>
-
-
                                                         </div>
                                                         <div class="ms-slide" data-delay="3" data-fill-mode="fill">
                                                             <img src="{% static 'proyectoneutron/wp-content/plugins/masterslider/public/assets/css/blank.gif' %}"
                                                                  alt="" title="Localizacion_CHILE"
                                                                  data-src="{% static 'proyectoneutron/wp-content/uploads/2015/12/Localizacion_CHILE-1-500x320.png' %}"/>
-
-
                                                         </div>
                                                         <div class="ms-slide" data-delay="3" data-fill-mode="fill">
                                                             <img src="{% static 'proyectoneutron/wp-content/plugins/masterslider/public/assets/css/blank.gif' %}"
                                                                  alt="" title="Localizacion_NEUTRAL"
                                                                  data-src="{% static 'proyectoneutron/wp-content/uploads/2015/12/Localizacion_NEUTRAL-1-500x320.png' %}"/>
-
-
                                                         </div>
-
                                                     </div>
                                                     <!-- END MasterSlider Main -->
-
 
                                                 </div>
                                                 <!-- END MasterSlider -->
@@ -772,12 +756,11 @@
             })(jQuery);
 
                                                 </script>
-
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="wpb_column vc_column_container vc_col-sm-6 vc_custom_1450449331687">
                                     <div class="wpb_wrapper">
                                         <div class="block om_container_b6fd43ef block-top ">
@@ -791,23 +774,33 @@
 
                                                     <div class="wpb_text_column wpb_content_element ">
                                                         <div class="wpb_wrapper">
-                                                            <p>La herramienta Neutrón, previamente instalada en el editor de
+                                                            <p>
+                                                                {% blocktrans %}
+                                                                La herramienta Neutrón, previamente instalada en el editor de
                                                                 textos, facilitará dos tipos de adaptaciones, en función de
-                                                                la distribución que quiera dársele al escrito:</p>
-                                                            <p><span style="color: #131313; background-color: #ffff66;">Localización</span>:
+                                                                la distribución que quiera dársele al escrito:
+                                                                {% endblocktrans %}
+                                                            </p>
+                                                            <p>
+                                                                <span style="color: #131313; background-color: #ffff66;">{% trans "Localización" %}</span>:
+                                                                {% blocktrans %}
                                                                 modificación del texto para que su léxico refleje el habla
-                                                                del lector de una región específica.</p>
-
+                                                                del lector de una región específica.
+                                                                {% endblocktrans %}
+                                                            </p>
                                                         </div>
                                                     </div>
 
                                                     <div class="wpb_text_column wpb_content_element  vc_custom_1454835778304">
                                                         <div class="wpb_wrapper">
-                                                            <p><span style="color: #131313; background-color: #ffff66;">Neutralización</span>:
+                                                            <p>
+                                                                <span style="color: #131313; background-color: #ffff66;">{% trans "Neutralización" %}</span>:
+                                                                {% blocktrans %}
                                                                 modificación del texto para que su léxico sea reconocible y
                                                                 bien aceptado por la mayor cantidad posible de
-                                                                hispanohablantes en el mundo.</p>
-
+                                                                hispanohablantes en el mundo.
+                                                                {% endblocktrans %}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -832,34 +825,37 @@
                                     <div class="wpb_wrapper">
                                         <div class="wpb_text_column wpb_content_element ">
                                             <div class="wpb_wrapper">
-                                                <h3 style="text-align: left;">Nuestros informantes: cuéntanos cómo es tu
-                                                    español</h3>
-
+                                                <h3 style="text-align: left;">
+                                                    {% trans "Nuestros informantes: cuéntanos cómo es tu español" %}
+                                                </h3>
                                             </div>
                                         </div>
 
                                         <div class="wpb_text_column wpb_content_element  vc_custom_1454836978107">
                                             <div class="wpb_wrapper">
-                                                <p style="text-align: left;">Buscamos hablantes de español con ilusión por
+                                                <p style="text-align: left;">
+                                                    {% blocktrans %}
+                                                    Buscamos hablantes de español con ilusión por
                                                     reivindicar las peculiaridades de su habla y participar en un proyecto
-                                                    pionero.</p>
-                                                <p style="text-align: left;">Si cumples estos requisitos, te queremos a
-                                                    bordo:</p>
+                                                    pionero.
+                                                    {% endblocktrans %}
+                                                </p>
+                                                <p style="text-align: left;">
+                                                    {% trans "Si cumples estos requisitos, te queremos a bordo:" %}
+                                                </p>
                                                 <ul>
-                                                    <li style="text-align: left;">Eres hablante nativo.</li>
-                                                    <li style="text-align: left;">Has nacido y crecido en el mismo país
-                                                        (distinto de España) en el que resides.
-                                                    </li>
-                                                    <li style="text-align: left;">En los últimos dos años no has pasado más
-                                                        de seis meses en otro país hispanohablante.
-                                                    </li>
+                                                    <li style="text-align: left;">{% trans "Eres hablante nativo." %}</li>
+                                                    <li style="text-align: left;">{% trans "Has nacido y crecido en el mismo país en el que resides." %}</li>
+                                                    <li style="text-align: left;">{% trans "En los últimos dos años no has pasado más de seis meses en otro país hispanohablante." %}</li>
                                                 </ul>
-                                                <p style="text-align: left;">Nuestros informantes recibirán la <span
-                                                        style="color: #131313; background-color: #33cccc;">certificación Neutrón</span>,
+                                                <p style="text-align: left;">
+                                                    {% blocktrans %}
+                                                    Nuestros informantes recibirán la <span style="color: #131313; background-color: #33cccc;">certificación Neutrón</span>,
                                                     que expresa formalmente su participación en un proyecto de investigación
                                                     lingüística patrocinado por prestigiosas entidades públicas y del sector
-                                                    privado.</p>
-
+                                                    privado.
+                                                    {% endblocktrans %}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -877,23 +873,28 @@
                                                     <input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f326-p321-o2"/>
                                                     <input type="hidden" name="_wpnonce" value="a8694cddd7"/>
                                                 </div>
-                                                <div class="form-group your-name"><input
-                                                        class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control"
-                                                        name="your-name" type="text" value="" placeholder="Tu nombre"
-                                                        aria-invalid="false" aria-required="true" required></div>
-                                                <div class="form-group your-email"><input
-                                                        class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email form-control"
-                                                        name="your-email" type="email" value=""
-                                                        placeholder="Tu dirección de correo electrónico"
-                                                        aria-invalid="false" aria-required="true" required></div>
-                                                <div class="form-group your-message"><textarea
-                                                        class="wpcf7-form-control wpcf7-textarea form-control"
-                                                        name="your-message" rows="4" placeholder="Cuéntanos más sobre ti"
-                                                        aria-invalid="false"></textarea></div>
-                                                <p class="contact-submit">
+                                                <div class="form-group your-name">
+                                                    <input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control"
+                                                           name="your-name" type="text" value="" placeholder="{% trans 'Tu nombre' %}"
+                                                           aria-invalid="false" aria-required="true" required>
+                                                </div>
+                                                <div class="form-group your-email">
+                                                    <input class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email form-control"
+                                                           name="your-email" type="email" value=""
+                                                           placeholder="{% trans 'Tu dirección de correo electrónico' %}"
+                                                           aria-invalid="false" aria-required="true" required>
+                                                </div>
+                                                <div class="form-group your-message">
+                                                    <textarea class="wpcf7-form-control wpcf7-textarea form-control"
+                                                              name="your-message" rows="4" placeholder="{% trans 'Cuéntanos más sobre ti' %}"
+                                                              aria-invalid="false"></textarea>
+                                                </div>
+                                                <p class="contact-submit"></p>
                                                 <div class="form-group">
-                                                    <div><input class="wpcf7-form-control wpcf7-submit btn btn-primary"
-                                                                type="submit" value="¡Únete!"></div>
+                                                    <div>
+                                                        <input class="wpcf7-form-control wpcf7-submit btn btn-primary"
+                                                               type="submit" value="{% trans '¡Únete!' %}">
+                                                    </div>
                                                 </div>
                                                 <div class="wpcf7-response-output wpcf7-display-none alert"></div>
                                             </form>
@@ -918,21 +919,23 @@
                                         <div class="wpb_single_image wpb_content_element vc_align_center  vc_custom_1450720729166">
 
                                             <figure class="wpb_wrapper vc_figure">
-                                                <div class="vc_single_image-wrapper   vc_box_border_grey"><img
-                                                        class="vc_single_image-img "
-                                                        src="{% static 'proyectoneutron/wp-content/uploads/2015/12/neutron_logo_light_600x143-100x24.png' %}"
-                                                        width="100" height="24" alt="neutron_logo_light_600x143"
-                                                        title="neutron_logo_light_600x143"/></div>
+                                                <div class="vc_single_image-wrapper   vc_box_border_grey">
+                                                    <img class="vc_single_image-img "
+                                                         src="{% static 'proyectoneutron/wp-content/uploads/2015/12/neutron_logo_light_600x143-100x24.png' %}"
+                                                         width="100" height="24" alt="neutron_logo_light_600x143"
+                                                         title="neutron_logo_light_600x143"/>
+                                                </div>
                                             </figure>
                                         </div>
 
                                         <div class="wpb_text_column wpb_content_element ">
                                             <div class="wpb_wrapper">
-                                                <p style="text-align: center;"><span style="color: #cfcfcf;">©2015 Proyecto Neutrón</span>
+                                                <p style="text-align: center;">
+                                                    <span style="color: #cfcfcf;">©2015 Proyecto Neutrón</span>
                                                 </p>
-                                                <p style="text-align: center;"><span style="color: #cfcfcf;">Madrid &#8211; México DF &#8211; Frankfurt</span>
+                                                <p style="text-align: center;">
+                                                    <span style="color: #cfcfcf;">Madrid &#8211; México DF &#8211; Frankfurt</span>
                                                 </p>
-
                                             </div>
                                         </div>
                                     </div>
@@ -942,8 +945,6 @@
                     </div>
                 </div>
             </div>
-
-
         </article>
     </div>
 
