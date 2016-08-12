@@ -39,7 +39,7 @@ urlpatterns = [
 
     #url(r'^$', HomeView.as_view()),
     #url(r'^home/$', HomeView.as_view(), name='home'),
-    url(r'^join/$', JoinView.as_view(template_name='join.html'), name='join'),
+    url(r'^join/$', JoinStep2.as_view(template_name='join.html'), name='join'),
     url(r'^join/register/$', JoinRegister.as_view(template_name='users/register.html'), name='register'),
     url(r'^faq/$', QuestionList.as_view(template_name='faq.html'), name='faq'),
     url(r'^faq/ask$', QuestionMake.as_view(template_name='faq_ask.html'), name='faq_ask'),

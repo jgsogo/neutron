@@ -860,33 +860,28 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% if not request.user.is_authenticated %}
                                 <div class="wpb_column vc_column_container vc_col-sm-6">
                                     <div class="wpb_wrapper">
                                         <div role="form" class="wpcf7" id="wpcf7-f326-p321-o2" lang="es-ES" dir="ltr">
                                             <div class="screen-reader-response"></div>
-                                            <form action="/#wpcf7-f326-p321-o2" method="post"
+                                            <form action="{% url 'join' %}" method="post"
                                                   class="wpcf7-form cf7-style home-2" novalidate="novalidate">
-                                                <div style="display: none;">
-                                                    <input type="hidden" name="_wpcf7" value="326"/>
-                                                    <input type="hidden" name="_wpcf7_version" value="4.4.2"/>
-                                                    <input type="hidden" name="_wpcf7_locale" value="es_ES"/>
-                                                    <input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f326-p321-o2"/>
-                                                    <input type="hidden" name="_wpnonce" value="a8694cddd7"/>
-                                                </div>
+                                                {% csrf_token %}
                                                 <div class="form-group your-name">
                                                     <input class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control"
-                                                           name="your-name" type="text" value="" placeholder="{% trans 'Tu nombre' %}"
+                                                           name="name" type="text" value="" placeholder="{% trans 'Your name' %}"
                                                            aria-invalid="false" aria-required="true" required>
                                                 </div>
                                                 <div class="form-group your-email">
                                                     <input class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email form-control"
-                                                           name="your-email" type="email" value=""
+                                                           name="email" type="email" value=""
                                                            placeholder="{% trans 'Tu dirección de correo electrónico' %}"
                                                            aria-invalid="false" aria-required="true" required>
                                                 </div>
                                                 <div class="form-group your-message">
                                                     <textarea class="wpcf7-form-control wpcf7-textarea form-control"
-                                                              name="your-message" rows="4" placeholder="{% trans 'Cuéntanos más sobre ti' %}"
+                                                              name="data" rows="4" placeholder="{% trans 'Cuéntanos más sobre ti' %}"
                                                               aria-invalid="false"></textarea>
                                                 </div>
                                                 <p class="contact-submit"></p>
@@ -901,6 +896,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% else %}
+                                    =>>> TODO: ¿Qué metemos aquí cuando el usuario ya está registrado?
+                                {% endif %}
                             </div>
                         </div>
                     </div>
