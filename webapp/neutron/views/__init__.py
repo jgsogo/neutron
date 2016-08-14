@@ -9,3 +9,4 @@ from .run_random import WordAlternateRandomMeaningRun, WordUseRandomMeaningRun, 
 from .admin import obliterate_word_coarse, obliterate_word_use, obliterate_word_alternates, \
                    obliterate_informer_word_coarse, obliterate_informer_word_use, obliterate_informer_word_alternates
 
+from .honor_code import HonorCodeAcceptView

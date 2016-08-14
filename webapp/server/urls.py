@@ -16,10 +16,10 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
-from django.contrib import admin
 from django.conf import settings
+from django.conf.urls import include, url
 from django.conf.urls.static import static
+from django.contrib import admin
 
 from .views import *
 
@@ -40,8 +40,6 @@ urlpatterns = [
     #url(r'^$', HomeView.as_view()),
     #url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^join/$', JoinStep2.as_view(template_name='join.html'), name='join'),
-    url(r'^honorcode/$', HonorCodeAcceptView.as_view(template_name='honor_code.html'), name='honor_code'),
-    url(r'^honorcode/declined/$', TemplateView.as_view(template_name='honor_code_declined.html'), name='honor_code_declined'),
     url(r'^join/register/$', JoinRegister.as_view(template_name='users/register.html'), name='register'),
 
     url(r'^faq/$', QuestionList.as_view(template_name='faq.html'), name='faq'),

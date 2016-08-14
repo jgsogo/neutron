@@ -218,6 +218,13 @@
                         <li>
                             <a href="{% url 'about' %}" class=" menu-item menu-item-type-post_type menu-item-object-page">{% trans "Equipo y Patrocinadores" %}</a>
                         </li>
+                        <li>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'worduse:run' %}" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">{{ user }}</a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">{% trans "Login" %}</a>
+                        {% endif %}
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -897,7 +904,18 @@
                                     </div>
                                 </div>
                                 {% else %}
-                                    =>>> TODO: ¿Qué metemos aquí cuando el usuario ya está registrado?
+                                <div class="wpb_column vc_column_container vc_col-sm-6">
+                                    <div class="wpb_wrapper">
+                                        <div class="wpcf7" lang="es-ES" dir="ltr">
+                                            <div class="screen-reader-response"></div>
+                                            <ul>
+                                                <li><a href="{% url 'worduse:run' %}">{% trans "Word use" %}</a></li>
+                                                <li><a href="{% url 'wordcoarse:run' %}">{% trans "Word coarse" %}</a></li>
+                                                <li><a href="{% url 'wordalternate:run' %}">{% trans "Word alternates" %}</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                                 {% endif %}
                             </div>
                         </div>

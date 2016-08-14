@@ -3,17 +3,14 @@
 
 from collections import defaultdict, Counter
 
-from django.views.generic import DetailView, FormView, TemplateView
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.contrib import messages
+from django.views.generic import DetailView
 from django.db.models import Count
-from django.contrib.auth.mixins import LoginRequiredMixin
+from .honor_code import HonorCodeAcceptedMixin
 
 from neutron.models import Meaning, Informer, CoarseWord, WordUse
 
 
-class MeaningDetail(LoginRequiredMixin, DetailView):
+class MeaningDetail(HonorCodeAcceptedMixin, DetailView):
     model = Meaning
 
     def get_context_data(self, **kwargs):
@@ -34,7 +31,7 @@ class MeaningDetail(LoginRequiredMixin, DetailView):
         return context
 
 
-class MeaningCoarsityDetail(LoginRequiredMixin, DetailView):
+class MeaningCoarsityDetail(HonorCodeAcceptedMixin, DetailView):
     model = Meaning
     template_name = 'neutron/meaning_detail_coarsity.html'
 
@@ -49,7 +46,7 @@ class MeaningCoarsityDetail(LoginRequiredMixin, DetailView):
         return context
 
 
-class MeaningUsesDetail(LoginRequiredMixin, DetailView):
+class MeaningUsesDetail(HonorCodeAcceptedMixin, DetailView):
     model = Meaning
     template_name = 'neutron/meaning_detail_uses.html'
 

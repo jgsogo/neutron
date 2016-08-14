@@ -5,14 +5,14 @@ from __future__ import unicode_literals
 
 import logging
 
-from django.views.generic import FormView, TemplateView
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
-from django.utils.text import slugify
 from django.contrib.auth import login as auth_login, authenticate
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.utils.text import slugify
+from django.views.generic import FormView
 
-from server.forms import JoinFormStep1, JoinFormStep2, JoinRegisterForm
 from neutron.models import Informer, Region
+from server.forms import JoinFormStep1, JoinFormStep2, JoinRegisterForm
 
 log = logging.getLogger(__name__)
 
@@ -108,7 +108,7 @@ class JoinRegister(FormView):
                 informer.save()
 
             if not form.cleaned_data['honor_code']:
-                return HttpResponseRedirect(reverse('honor_code'))
+                return HttpResponseRedirect(reverse('neutron:honor_code'))
 
         # Redirection
         next = self.request.POST.get('next', None)
@@ -118,28 +118,3 @@ class JoinRegister(FormView):
 
 
 
-class HonorCodeAcceptView(TemplateView):
-    template_name = 'honor_code.html'
-
-    # Add support for browsers which only accept GET and POST for now.
-    def post(self, request, *args, **kwargs):
-        if 'accept' in request.POST:
-            _informer = request.user.as_informer()
-            _informer.honor_code = True
-            _informer.save()
-
-            # Redirection
-            next = self.request.POST.get('next', None)
-            if not next or len(next.strip()) == 0:
-                 next = reverse('faq')
-            return HttpResponseRedirect(next)
-
-        elif 'decline' in request.POST:
-            _informer = request.user.as_informer()
-            _informer.honor_code = False
-            _informer.save()
-            return HttpResponseRedirect(reverse('honor_code_declined'))
-
-        else:
-            # TODO: Set a message
-            return HttpResponseRedirect(reverse('honor_code'))

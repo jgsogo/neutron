@@ -3,21 +3,21 @@
 
 from random import shuffle
 
-from django.views.generic import DetailView, FormView, TemplateView
+from django.views.generic import DetailView, FormView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import ugettext_lazy as _
 
-from neutron.models import Meaning, Word, WordUse
+from neutron.models import Meaning, Word
 from neutron.forms import SearchWordForm
+from .honor_code import HonorCodeAcceptedMixin
 
 import logging
 log = logging.getLogger(__name__)
 
 
-class SearchLemma(LoginRequiredMixin, FormView):
+class SearchLemma(HonorCodeAcceptedMixin, FormView):
     form_class = SearchWordForm
     template_name = 'neutron/word_detail_search.html'
 
@@ -43,7 +43,7 @@ class SearchLemma(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
 
-class LemmaDetail(LoginRequiredMixin, DetailView):
+class LemmaDetail(HonorCodeAcceptedMixin, DetailView):
     model = Word
     template_name = 'neutron/word_detail.html'
 

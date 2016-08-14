@@ -5,7 +5,7 @@
 from django.views.generic import TemplateView
 from .authentication import login, logout, register
 from .faq import QuestionList, QuestionMake, question_delete
-from .join import JoinStep1, JoinStep2, JoinRegister, HonorCodeAcceptView
+from .join import JoinStep1, JoinStep2, JoinRegister
 
 
 class HomeView(TemplateView):
