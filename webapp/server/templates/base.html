@@ -69,6 +69,7 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="{% url 'neutron:profile' %}">{% trans "Profile" %}</a></li>
                                         <li><a href="{% url 'neutron:profile_stats' %}">{% trans "My stats" %}</a></li>
+                                        <li><a href="{% url 'neutron:honor_code' %}">{% trans "Honor code" %}</a></li>
                                         {% if user.is_staff %}
                                             <li><a href="{% url 'admin:index' %}">{% trans "Admin" %}</a></li>
                                         {% endif %}

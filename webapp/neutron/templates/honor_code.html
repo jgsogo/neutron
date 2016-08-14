@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Honor code" %}{% endblock %}
+
+{% block content %}
+    <h2>{% trans "Honor code" %}</h2>
+    <h3 class="cabecera-caja-fondo-gris-01 margin-top-tres">{% trans "What is it?" %}</h3>
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <p>TODO: El código de honor...</p>
+        </div><!-- caja-fondo-gris -->
+    </div><!-- content -->
+    <h3 class="cabecera-caja-fondo-gris-01 margin-top-tres">{% trans "Why do I have to accept it?" %}</h3>
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <p>TODO: Debes aceptarlo porque...</p>
+        </div><!-- caja-fondo-gris -->
+    </div><!-- content -->
+
+    {% if request.user.is_authenticated %}
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <form method="post" action="" class="form">{% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                <button class="b-yellow" name="accept" value="accept">{% trans "Accept" %}</button>
+                <button class="b-yellow" name="decline" value="decline">{% trans "Decline" %}</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+        <p>
+            {% url 'neutron:join' as join_url %}
+            {% blocktrans %}
+            To accept the honor code, you must <a href="{{ join_url }}">register</a> first.
+            {% endblocktrans %}
+        </p>
+    {% endif %}
+{% endblock %}

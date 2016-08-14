@@ -16,10 +16,10 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
-from django.contrib import admin
 from django.conf import settings
+from django.conf.urls import include, url
 from django.conf.urls.static import static
+from django.contrib import admin
 
 from .views import *
 
@@ -27,6 +27,8 @@ admin.site.site_header = 'Proyecto Neutrón'
 admin.site.index_title = 'Proyecto Neutrón'
 
 urlpatterns = [
+    url(r'^', include('home.urls')),
+
     url(r'^admin/', include(admin.site.urls)),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 
@@ -35,10 +37,11 @@ urlpatterns = [
 
     url(r'^telegram/', include('telegram.urls', namespace='telegram')),
 
-    url(r'^$', HomeView.as_view()),
-    url(r'^home/$', HomeView.as_view(), name='home'),
-    url(r'^join/$', JoinView.as_view(template_name='join.html'), name='join'),
+    #url(r'^$', HomeView.as_view()),
+    #url(r'^home/$', HomeView.as_view(), name='home'),
+    url(r'^join/$', JoinStep2.as_view(template_name='join.html'), name='join'),
     url(r'^join/register/$', JoinRegister.as_view(template_name='users/register.html'), name='register'),
+
     url(r'^faq/$', QuestionList.as_view(template_name='faq.html'), name='faq'),
     url(r'^faq/ask$', QuestionMake.as_view(template_name='faq_ask.html'), name='faq_ask'),
     url(r'^faq/delete$', question_delete, name='faq_delete'),

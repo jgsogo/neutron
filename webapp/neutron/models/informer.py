@@ -34,23 +34,25 @@ class Informer(models.Model):
                         (2, 'university', _('Ed. Universitaria')))
     GENDER = Choices((0, 'male', _('Male')), (1, 'female', _('Female')))
 
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
+                             help_text=_('Informers may or may not be users in the webapp'))
+
     # Input data by the user himself
     known_us = models.IntegerField(choices=KNOWN_US, blank=True, null=True, help_text=_("How did he know about us?"))
     education = models.IntegerField(choices=EDUCATION, blank=True, null=True, help_text=_("Educational level"))
     gender = models.IntegerField(choices=GENDER, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
+    honor_code = models.BooleanField(default=False, help_text=_("Honor code, needed to access data"))
 
     # Validated data
     region = models.ForeignKey(Region, blank=True, null=True)
 
     # Extra information (only shown in admin interface)
-    name = models.CharField(max_length=64, help_text=_("Informer identifier"))
+    name = models.CharField(max_length=64, help_text=_("Informer identifier (only in admin)"))
     comment = models.TextField()
     searchable = models.BooleanField(default=False, help_text=_('Whether the words related to this informer are included in the search-form.'))
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True,
-                             help_text=_('Informers may or may not be users in the webapp'))
-
+    # Computed data
     privacy = models.IntegerField(choices=PRIVACY, default=PRIVACY.public, help_text=_("Define who can see this information: public (everyone), friends (only users registered), private (nobody, just in database dumps)."))
     confidence = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
                                    blank=True,

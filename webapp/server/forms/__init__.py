@@ -17,42 +17,56 @@ class WordUseAlternateForm(forms.Form):
     alternate = forms.CharField(label=_('Alternate word'), max_length=MAX_WORD_LENGTH)
 
 
-class JoinForm(forms.Form):
+class JoinFormStep1(forms.Form):
+    """
+    This form is intended to grab attention from the visitor and gather emails
+    """
     name = forms.CharField(max_length=64)
-    surname = forms.CharField(max_length=128)
     email = forms.EmailField()
-    region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=_("(Select your nationality)"))
-    known_us = forms.ChoiceField(choices=Informer.KNOWN_US)
-    education = forms.ChoiceField(choices=Informer.EDUCATION)
+    # data = forms.Textarea()
 
-    declaration = forms.BooleanField()
-
-    def __init__(self, *args, **kwargs):
-        super(JoinForm, self).__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update({'placeholder': _("Nombre"),})
-        self.fields['surname'].widget.attrs.update({'placeholder': _("Apellidos"),})
-        self.fields['email'].widget.attrs.update({'placeholder': _("Correo electrónico"),})
-        self.fields['known_us'].widget.choices.insert(0, ('', _("How did you know us?")))
-        self.fields['education'].widget.choices.insert(0, ('', _("Tell us your educational level, please")))
+    def __init__(self, initial, *args, **kwargs):
+        super(JoinFormStep1, self).__init__(initial=initial, *args, **kwargs)
+        self.fields['name'].widget.attrs.update({'placeholder': _("Name"),})
+        self.fields['email'].widget.attrs.update({'placeholder': _("Email address"),})
+        if 'email' in initial:
+            self.fields['email'].disabled = True
 
     def clean_email(self):
         """
-        Validate that the supplied email address is unique for the
-        site.
+        Validate that the supplied email address is unique for the site.
         """
-        user_model = get_user_model()
-        if user_model.objects.filter(email__iexact=self.cleaned_data['email']).exists():
-            raise forms.ValidationError(_("Duplicate email!"), code='invalid')
-        return self.cleaned_data['email']
+        email = self.cleaned_data['email']
+        if not self.fields['email'].disabled:
+            user_model = get_user_model()
+            if user_model.objects.filter(email__iexact=email).exists():
+                raise forms.ValidationError(_("Duplicate email!"), code='invalid')
+        return email
 
+
+class JoinFormStep2(JoinFormStep1):
+    region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=_("(Select your nationality)"))
+    known_us = forms.ChoiceField(choices=Informer.KNOWN_US)
+    education = forms.ChoiceField(choices=Informer.EDUCATION)
+    # honor_code = forms.BooleanField()
+
+    def __init__(self, initial, *args, **kwargs):
+        super(JoinFormStep2, self).__init__(initial=initial, *args, **kwargs)
+        self.fields['known_us'].widget.choices.insert(0, ('', _("How did you know us?")))
+        self.fields['education'].widget.choices.insert(0, ('', _("Tell us your educational level, please")))
+        if 'region' in initial:
+            self.fields['region'] = forms.CharField(disabled=True)
+
+    """
     def clean_declaration(self):
-        if not self.cleaned_data['declaration']:
+        if not self.cleaned_data['honor_code']:
             raise forms.ValidationError(_("Check the declaration."), code='invalid')
-        return self.cleaned_data['declaration']
+        return self.cleaned_data['honor_code']
+    """
 
 
 class JoinRegisterForm(UserCreationForm):
-    honor_code = forms.BooleanField(label=_("Accept honor code"))
+    honor_code = forms.BooleanField(label=_("Accept honor code"), initial=False, required=False)
     email = forms.EmailField(help_text=_("Email account to get in touch with you"))
 
     def clean_email(self):
@@ -65,7 +79,9 @@ class JoinRegisterForm(UserCreationForm):
             raise forms.ValidationError(_("Duplicate email!"))
         return self.cleaned_data['email']
 
+    """
     def clean_honor_code(self):
         if not self.cleaned_data['honor_code']:
             raise forms.ValidationError(_("Honor code must be accepted in order to register"))
         return self.cleaned_data['honor_code']
+    """

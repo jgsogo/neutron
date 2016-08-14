@@ -34,25 +34,10 @@
             <form method="post" action="{% url 'join' %}#join_form">{% csrf_token %}
                 {{ form.non_field_errors }}
                 {{ form.name.errors }}{{ form.name }}
-                {{ form.surname.errors }}{{ form.surname }}
                 {{ form.email.errors }}{{ form.email }}
                 {{ form.region.errors }}{{ form.region }}
-                {{ form.known_us.errors }}{{ form.known_us }}
                 {{ form.education.errors }}{{ form.education }}
-                <p>
-                    {% blocktrans %}
-                        <strong>Declaro.-</strong> Al solicitar mi participación en el proyecto Neutrón, declaro que cumplo con
-                        los requisitos exigidos a los informantes: soy hablante nativo de español;
-                        nací y crecí en el país indicado, donde resido actualmente; durante los dos últimos años
-                        no he permanecido en otro país de habla hispana durante un tiempo superior a seis meses.
-                    {% endblocktrans %}
-                </p>
-                <input id="id_declaration" name="declaration" type="checkbox">
-                    {% trans "Acepto" %}.
-                    {% if form.declaration.errors %}
-                        <span class="b-orange">{% trans "This declaration must be accepted to continue." %}</span>
-                    {% endif %}
-                </input>
+                {{ form.known_us.errors }}{{ form.known_us }}
                 <button class="b-yellow">{% trans "Participar" %}</button>
             </form>
         </div><!-- caja-fondo-gris -->

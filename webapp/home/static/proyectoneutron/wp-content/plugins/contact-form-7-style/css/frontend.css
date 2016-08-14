@@ -1,0 +1,1511 @@
+/**
+ * Table of Contents:
+ *
+ * 0.0 Reset
+ * 1.0 - Valentine's Day
+ *   1.1 - Classic
+ *   1.2 - Roses
+ *   1.3 - Birds
+ *   1.4 - Blue Birds
+ * 2.0 - Xmas Style
+ *   2.1 - Classic
+ *   2.2 - Red
+ *   2.3 - Simple
+ * 3.0 - Simple Style
+ * ----------------------------------------------------------------------------- 
+ */
+
+
+/**
+ * Reset
+ *
+ * 0.0 - Reset
+ * ----------------------------------------------------------------------------- 
+ */
+
+.cf7-style input[type="text"],
+.cf7-style input[type="email"],
+.cf7-style input[type="url"],
+.cf7-style input[type="password"],
+.cf7-style input[type="search"],
+.cf7-style textarea {
+    width: 100%;
+}
+
+body .cf7-style input.wpcf7-form-control.wpcf7-submit {
+    text-align: center;
+}
+
+body .cf7-style input:focus,
+body .cf7-style textarea:focus,
+body .cf7-style input[type="submit"]:hover {
+    background: inherit;
+}
+
+body .cf7-style * {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+body .cf7-style div.wpcf7-response-output {
+    padding: 15px;
+    text-transform: none;
+}
+
+body .cf7-style div.wpcf7-validation-errors {
+    background: none;
+    color: red;
+    border: 2px solid red;
+}
+
+body .cf7-style div.wpcf7-response-output:before {
+    display: none;
+}
+
+body .cf7-style div.wpcf7-response-output.wpcf7-mail-sent-ok {
+    background: none;
+    color: green;
+    border: 2px solid green;
+}
+
+
+/**
+ * Valentine's Day
+ *
+ * 1.1 - Classic
+ * ----------------------------------------------------------------------------- 
+ */
+
+body .valentines-day-classic input.wpcf7-form-control.wpcf7-text,
+body .valentines-day-classic input.wpcf7-form-control.wpcf7-number,
+body .valentines-day-classic input.wpcf7-form-control.wpcf7-date,
+body .valentines-day-classic textarea.wpcf7-form-control.wpcf7-textarea,
+body .valentines-day-classic select.wpcf7-form-control.wpcf7-select,
+body .valentines-day-classic input.wpcf7-form-control.wpcf7-quiz,
+body .valentines-day-classic input.wpcf7-form-control.wpcf7-range,
+body .valentines-day-classic input.wpcf7-form-control.wpcf7-date,
+body .valentines-day-classic input.wpcf7-form-control.wpcf7-select,
+body .valentines-day-classic input.wpcf7-form-control.wpcf7-file {
+    margin: 5px 0 0;
+    padding: 15px 10px;
+    border-top: 0;
+    border-right: 0;
+    border-left: 1px solid #AAA;
+    border-bottom: 1px solid #AAA;
+    outline: 0;
+    resize: none;
+    font-size: 13px;
+    line-height: 17px;
+    background: rgba(255, 255, 255, 0.7);
+    color: #818181;
+    font-family: 'Raleway';
+    font-weight: normal;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body .valentines-day-classic input.wpcf7-form-control.wpcf7-submit:not([disabled]) {
+    border: none;
+}
+
+body .wpcf7 form.valentines-day-classic p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #222;
+}
+
+body .valentines-day-classic {
+    background: url('../images/vday-classic/hearted-bg.png') -45px 0 repeat;
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto 50px auto;
+    padding-bottom: 50px;
+}
+
+body .valentines-day-classic .heart {
+    position: absolute;
+    right: 0;
+    background: url('../images/vday-classic/big-heart.png') 0 0 no-repeat;
+    width: 136px;
+    height: 135px;
+    top: -90px;
+}
+
+body .valentines-day-classic p {
+    margin-bottom: 10px;
+    text-shadow: 1px 1px #FFF;
+}
+
+body .valentines-day-classic span.wpcf7-list-item {
+    display: inline-block;
+}
+
+body .valentines-day-classic input,
+body .valentines-day-classic textarea,
+body .valentines-day-classic select {
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-left: 1px solid #AAA;
+    border-bottom: 1px solid #AAA;
+    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+    -webkit-box-shadow: 5px 6px 10px -5px #999999;
+    -moz-box-shadow: 5px 6px 10px -5px #999999;
+    box-shadow: 5px 6px 10px -5px #999999;
+    margin-top: 3px;
+}
+
+body .valentines-day-classic input:focus,
+body .valentines-day-classic textarea:focus {
+    background: rgba(255, 255, 255, 0.7);
+    border-left: 1px solid #AAA;
+    border-bottom: 1px solid #AAA;
+}
+
+body .cf7-style.valentines-day-classic input.wpcf7-form-control.wpcf7-submit[disabled],
+body .cf7-style.valentines-day-classic input.wpcf7-form-control.wpcf7-submit:not([disabled]),
+body .cf7-style.valentines-day-classic .wpcf7-submit {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border: none;
+    line-height: 20px;
+    text-align: center;
+    padding: 10px 20px;
+    min-width: 90px;
+    background: rgb(125, 185, 232);
+    /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzdkYjllOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZDU0ZTRlIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMzklIiBzdG9wLWNvbG9yPSIjZDQwMDAwIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iODUlIiBzdG9wLWNvbG9yPSIjOTQwYTBhIiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+    background: -moz-linear-gradient(left, rgba(125, 185, 232, 1) 0%, rgba(213, 78, 78, 1) 0%, rgba(212, 0, 0, 1) 39%, rgba(148, 10, 10, 1) 85%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(125, 185, 232, 1)), color-stop(0%, rgba(213, 78, 78, 1)), color-stop(39%, rgba(212, 0, 0, 1)), color-stop(85%, rgba(148, 10, 10, 1)));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, rgba(125, 185, 232, 1) 0%, rgba(213, 78, 78, 1) 0%, rgba(212, 0, 0, 1) 39%, rgba(148, 10, 10, 1) 85%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, rgba(125, 185, 232, 1) 0%, rgba(213, 78, 78, 1) 0%, rgba(212, 0, 0, 1) 39%, rgba(148, 10, 10, 1) 85%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, rgba(125, 185, 232, 1) 0%, rgba(213, 78, 78, 1) 0%, rgba(212, 0, 0, 1) 39%, rgba(148, 10, 10, 1) 85%);
+    /* IE10+ */
+    background: linear-gradient(to right, rgba(125, 185, 232, 1) 0%, rgba(213, 78, 78, 1) 0%, rgba(212, 0, 0, 1) 39%, rgba(148, 10, 10, 1) 85%);
+    /* W3C */
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#7db9e8', endColorstr='#940a0a', GradientType=1);
+    /* IE6-8 */
+    color: #FFF;
+    float: right;
+    text-shadow: 1px 1px #555;
+    cursor: pointer;
+}
+
+body .valentines-day-classic input.wpcf7-form-control.wpcf7-submit:not([disabled]):focus,
+body .valentines-day-classic input.wpcf7-form-control.wpcf7-submit:not([disabled]):hover,
+body .valentines-day-classic .wpcf7-submit:hover {
+    opacity: 0.8;
+}
+
+body .valentines-day-classic div.wpcf7-response-output.wpcf7-validation-errors,
+body .valentines-day-classic div.wpcf7-response-output.wpcf7-mail-sent-ok {
+    background: none repeat scroll 0 0 rgba( 255, 255, 255, 0.6);
+    border: 1px solid #FF0000;
+    top: 30px;
+}
+
+body .valentines-day-classic div.wpcf7-response-output.wpcf7-validation-errors {
+    color: #ff0000;
+}
+
+body .valentines-day-classic div.wpcf7-response-output.wpcf7-mail-sent-ok {
+    color: green;
+    border: solid 1px green;
+}
+
+body .valentines-day-classic input[type="file"],
+body .valentines-day-classic input[type="range"],
+body .valentines-day-classic input[type="date"],
+body .valentines-day-classic select {
+    width: 100%;
+}
+
+body .valentines-day-classic input[type=range] {
+    -webkit-appearance: none;
+}
+
+body .valentines-day-classic input[type=range]::-webkit-slider-runnable-track {
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+
+body .valentines-day-classic input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #777;
+    margin-top: -4px;
+    cursor: pointer;
+}
+
+body .valentines-day-classic input[type=range]:focus {
+    outline: none;
+}
+
+body .valentines-day-classic input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+
+body .valentines-day-classic input[type=range] {
+    /* fix for FF unable to apply focus style bug  */
+    border: 1px solid white;
+    /*required for proper track sizing in FF*/
+    width: 100%;
+}
+
+body .valentines-day-classic input[type=range]::-moz-range-track {
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+
+body .valentines-day-classic input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #777;
+    cursor: pointer;
+}
+
+
+/*hide the outline behind the border*/
+
+body .valentines-day-classic input[type=range]:-moz-focusring {
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+body .valentines-day-classic input[type=range]:focus::-moz-range-track {
+    background: #ccc;
+}
+
+body .valentines-day-classic input[type=range]::-ms-track {
+    height: 5px;
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: transparent;
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0;
+    /*remove default tick marks*/
+    color: transparent;
+}
+
+body .valentines-day-classic input[type=range]::-ms-fill-lower {
+    background: #ddd;
+    border-radius: 10px;
+}
+
+body .valentines-day-classic input[type=range]::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 10px;
+}
+
+body .valentines-day-classic input[type=range]::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #777;
+    cursor: pointer;
+}
+
+body .valentines-day-classic input[type=range]:focus::-ms-fill-lower {
+    background: #ccc;
+}
+
+body .valentines-day-classic input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
+}
+
+
+/**
+ * Valentine's Day
+ *
+ * 1.2 - Roses
+ * ----------------------------------------------------------------------------- 
+ */
+
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-text,
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-number,
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-date,
+body .valentines-day-roses textarea.wpcf7-form-control.wpcf7-textarea,
+body .valentines-day-roses select.wpcf7-form-control.wpcf7-select,
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-quiz,
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-file {
+    margin: 5px 0 0;
+    padding: 15px 10px;
+    border-bottom: 1px solid #490706;
+    outline: 0;
+    resize: none;
+    font-size: 13px;
+    line-height: 17px;
+    background: none;
+    color: #000;
+    font-family: 'Raleway';
+    font-weight: normal;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body .valentines-day-roses select.wpcf7-form-control.wpcf7-select,
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-file,
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-range,
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-date {
+    width: 100%;
+}
+
+body .valentines-day-roses textarea.wpcf7-form-control.wpcf7-textarea,
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-submit:not([disabled]) {
+    border: none;
+}
+
+body .wpcf7 form.valentines-day-roses p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #000;
+}
+
+body .wpcf7 form.valentines-day-roses span.wpcf7-list-item {
+    display: inline-block;
+}
+
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-submit {
+    position: absolute;
+    right: 0;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-submit:not([disabled]):focus,
+body .valentines-day-roses input.wpcf7-form-control.wpcf7-submit:not([disabled]):hover {
+    background: #7F2A3A;
+    border: none;
+}
+
+body .valentines-day-roses {
+    background: url(../images/vday-rose/rose-bg-50percent.png) 0 0 no-repeat;
+    position: relative;
+    min-height: 380px;
+    width: 270px;
+    padding: 12px 0 0 200px;
+    -wekit-box-sizing: initial;
+    -moz-box-sizing: initial;
+    box-sizing: initial;
+}
+
+body .valentines-day-roses {
+    clear: both;
+}
+
+body .valentines-day-roses textarea {
+    width: 92%;
+}
+
+body .valentines-day-roses input {
+    padding-bottom: 2px;
+}
+
+body .valentines-day-roses input,
+body .valentines-day-roses input:hover,
+body .valentines-day-roses input:focus {
+    border-bottom: 1px solid #490706;
+}
+
+body .valentines-day-roses textarea {
+    width: 215px;
+    height: 140px;
+    resize: none;
+    padding-top: 0;
+    line-height: 32px;
+}
+
+body .valentines-day-roses p {
+    margin-bottom: 10px;
+}
+
+body .valentines-day-roses .letter-box {
+    background: #826e50 url(../images/vday-rose/contact-bg.png) 0 0 no-repeat;
+    width: 285px;
+    margin: 32px 0 0 -50px;
+    padding: 35px 15px 50px;
+}
+
+body .wpcf7 form.valentines-day-roses .letter-box p {
+    color: #000;
+}
+
+body .wpcf7 form.valentines-day-roses .wpcf7-submit {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    border: none;
+    padding: 7px 15px;
+    color: #fff;
+    box-shadow: none;
+}
+
+body .valentines-day-roses input[type="submit"]:hover,
+body .valentines-day-roses input[type="submit"]:focus {
+    background: #490706;
+}
+
+body .valentines-day-roses div.wpcf7-validation-errors,
+body .valentines-day-roses div.wpcf7-mail-sent-ok {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
+    border: none;
+    left: 115px;
+    position: absolute;
+    top: 145px;
+    width: 295px;
+}
+
+body .valentines-day-roses div.wpcf7-validation-errors {
+    color: #ff0000;
+}
+
+body .valentines-day-roses div.wpcf7-mail-sent-ok {
+    color: green;
+}
+
+body .valentines-day-roses div.wpcf7-response-output.wpcf7-validation-errors,
+body .valentines-day-roses div.wpcf7-response-output.wpcf7-mail-sent-ok {
+    background: none repeat scroll 0 0 rgba( 255, 255, 255, 0.6);
+    border: none;
+}
+
+
+/**
+ * Valentine's Day
+ *
+ * 1.3 - Birds
+ * ----------------------------------------------------------------------------- 
+ */
+
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-text,
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-number,
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-date,
+body .valentines-day-birds textarea.wpcf7-form-control.wpcf7-textarea,
+body .valentines-day-birds select.wpcf7-form-control.wpcf7-select,
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-quiz,
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-range,
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-file {
+    margin: 0 0 5px 0;
+    padding: 8px 10px;
+    border: 2px dashed #000;
+    outline: 0;
+    resize: none;
+    font-size: 13px;
+    line-height: 16px;
+    background: none;
+    color: #222;
+    font-family: inherit;
+    font-weight: normal;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body .valentines-day-birds input[type="text"],
+body .valentines-day-birds input[type="email"],
+body .valentines-day-birds input[type="url"],
+body .valentines-day-birds input[type="password"],
+body .valentines-day-birds input[type="search"],
+body .valentines-day-birds textarea,
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-text,
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-number,
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-date,
+body .valentines-day-birds textarea.wpcf7-form-control.wpcf7-textarea,
+body .valentines-day-birds select.wpcf7-form-control.wpcf7-select,
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-range {
+    width: 100%;
+}
+
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-submit:not([disabled]),
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-submit:not([disabled]):hover {
+    border: none;
+    background: none;
+}
+
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-submit:not([disabled]) {
+    color: #444;
+}
+
+body .valentines-day-birds input.wpcf7-form-control.wpcf7-submit:not([disabled]):hover {
+    color: #843A69;
+}
+
+body .valentines-day-birds div.wpcf7-response-output {
+    position: relative;
+    padding: 17px 42px;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 17px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 0;
+}
+
+body .valentines-day-birds div.wpcf7-response-output.wpcf7-validation-errors {
+    background: none;
+}
+
+body .valentines-day-birds div.wpcf7-response-output.wpcf7-validation-errors:before {
+    display: none;
+}
+
+body .valentines-day-birds span.wpcf7-list-item {
+    display: inline-block;
+}
+
+body .valentines-day-birds {
+    position: relative;
+    width: 280px;
+    margin: 234px 0 330px 97px;
+}
+
+body .valentines-day-birds-container {
+    background: url('../images/vday-birds/bg-middle.png') 63px 0 repeat-y;
+    width: 486px;
+    margin: 0 auto;
+}
+
+body .valentines-day-birds .bg-header,
+body .valentines-day-birds .bg-bottom {
+    width: 486px;
+}
+
+body .valentines-day-birds .bg-header {
+    background: url('../images/vday-birds/bg-top.png') 25px 0 no-repeat;
+    height: 234px;
+    left: -97px;
+    position: absolute;
+    top: -234px;
+}
+
+body .valentines-day-birds .bg-bottom {
+    background: url('../images/vday-birds/bg-bottom.png') 0 0 no-repeat;
+    bottom: -301px;
+    height: 301px;
+    left: -97px;
+    position: absolute;
+}
+
+body .wpcf7 form.valentines-day-birds p {
+    margin-bottom: 20px;
+    color: #222;
+    line-height: 1.5em;
+}
+
+body .valentines-day-birds input,
+body .valentines-day-birds textarea {
+    background: none;
+    border: 2px dashed #000;
+    resize: vertical;
+}
+
+body .valentines-day-birds textarea {
+    height: 120px;
+}
+
+body .valentines-day-birds input:hover,
+body .valentines-day-birds textarea:hover,
+body .valentines-day-birds input:focus,
+body .valentines-day-birds textarea:focus {
+    border: 2px dashed #000;
+}
+
+body .valentines-day-birds input {
+    margin-bottom: 5px;
+}
+
+body .valentines-day-birds input[type="submit"] {
+    font-size: 30px;
+    color: #444;
+    text-transform: capitalize;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    display: block;
+    margin: 0 auto;
+}
+
+body .valentines-day-birds input[type="submit"]:hover,
+body .valentines-day-birds input[type="submit"]:focus {
+    background: none;
+    color: #000;
+}
+
+body .valentines-day-birds div.wpcf7-response-output {
+    width: 265px;
+    margin: 0 0 0 -36px;
+    border: none;
+}
+
+body .valentines-day-birds .wpcf7-validation-errors {
+    color: #ff0000;
+}
+
+body .valentines-day-birds .wpcf7-mail-sent-ok {
+    color: green;
+}
+
+
+/**
+ * Valentine's Day
+ *
+ * 1.4 - Blue Birds
+ * ----------------------------------------------------------------------------- 
+ */
+
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-text,
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-number,
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-date,
+body .valentines-day-blue-birds textarea.wpcf7-form-control.wpcf7-textarea,
+body .valentines-day-blue-birds select.wpcf7-form-control.wpcf7-select,
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-quiz,
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-file {
+    margin: 5px 0 0;
+    padding: 15px;
+    border: 0;
+    outline: 0;
+    resize: none;
+    font-size: 13px;
+    line-height: 17px;
+    background: #dad3c2;
+    color: #818181;
+    font-family: 'Raleway';
+    font-weight: normal;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-date,
+body .valentines-day-blue-birds select.wpcf7-form-control.wpcf7-select,
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-file,
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-range {
+    width: 100%;
+}
+
+body .valentines-day-blue-birds .wpcf7-list-item,
+body .valentines-day-blue-birds .wpcf7-list-item-label {
+    display: inline-block;
+}
+
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-submit:not([disabled]) {
+    border: none;
+}
+
+body .wpcf7 form.valentines-day-blue-birds p {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-submit {
+    position: absolute;
+    right: 40px;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-submit:hover,
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-submit:focus,
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-submit:not([disabled]):focus,
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-submit:not([disabled]):hover {
+    background: url("../images/vday-blue-birds/submit.png") no-repeat top right;
+    border: none;
+    color: #7F2A3A;
+}
+
+body .valentines-day-blue-birds {
+    position: relative;
+    background: url("../images/vday-blue-birds/pattern.jpg") repeat;
+    color: #100804;
+}
+
+body .valentines-day-blue-birds .header {
+    background: url("../images/vday-blue-birds/header.png") no-repeat top center;
+    height: 260px;
+    width: 100%;
+}
+
+body .valentines-day-blue-birds textarea {
+    width: 100%;
+    display: inline-block;
+    background: #dad3c2;
+    border: none;
+}
+
+body .valentines-day-blue-birds input:focus,
+body .valentines-day-blue-birds textarea:focus {
+    background: #dad3c2;
+}
+
+body .valentines-day-blue-birds input.wpcf7-form-control.wpcf7-submit {
+    background: url("../images/vday-blue-birds/submit.png") no-repeat top right;
+    line-height: 50px;
+    font-size: 30px;
+    display: inline;
+    text-transform: none;
+    width: auto;
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    color: #100804;
+    box-shadow: none;
+}
+
+body .valentines-day-blue-birds span.wpcf7-not-valid-tip,
+body .valentines-day-blue-birds .wpcf7-submit:hover {
+    color: #7f2a3a;
+}
+
+body .valentines-day-blue-birds textarea {
+    height: 75px;
+}
+
+body .valentines-day-blue-birds p {
+    width: 290px;
+    margin: 7px auto;
+    position: relative;
+}
+
+body .valentines-day-blue-birds .footer {
+    background: url("../images/vday-blue-birds/footer.png") no-repeat bottom center;
+    height: 145px;
+    width: 100%;
+}
+
+body .valentines-day-blue-birds div.wpcf7-mail-sent-ok,
+body .valentines-day-blue-birds div.wpcf7-validation-errors {
+    border: none;
+    background: rgba( 127, 42, 58, .9);
+    position: absolute;
+    bottom: 0;
+    color: #fff;
+    margin: 0;
+    padding: 10px 20px;
+    right: 0;
+}
+
+body .valentines-day-blue-birds div.wpcf7-mail-sent-ok {
+    background: rgba( 9, 94, 0, .9);
+}
+
+
+/**
+ * Xmas
+ *
+ * 2.1 - Classic
+ * ----------------------------------------------------------------------------- 
+ */
+
+body .christmas-classic input.wpcf7-form-control.wpcf7-text,
+body .christmas-classic input.wpcf7-form-control.wpcf7-number,
+body .christmas-classic input.wpcf7-form-control.wpcf7-date,
+body .christmas-classic textarea.wpcf7-form-control.wpcf7-textarea,
+body .christmas-classic select.wpcf7-form-control.wpcf7-select,
+body .christmas-classic input.wpcf7-form-control.wpcf7-quiz,
+body .christmas-classic input.wpcf7-form-control.wpcf7-file {
+    margin: 5px 0 0;
+    padding: 3px 10px;
+    border: 1px dotted #b2a28e;
+    outline: 0;
+    resize: none;
+    font-size: 14px;
+    line-height: 20px;
+    background: #f3eadf;
+    color: #707070;
+    color: rgba(51, 51, 51, 0.7);
+    font-family: 'Raleway';
+    font-weight: normal;
+    height: 40px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body .christmas-classic select.wpcf7-form-control.wpcf7-select[multiple] {
+    height: auto;
+}
+
+body .christmas-classic textarea.wpcf7-form-control.wpcf7-textarea {
+    padding: 5px 10px;
+    height: 140px;
+}
+
+body .christmas-classic input.wpcf7-form-control.wpcf7-file {
+    padding: 8px 10px;
+}
+
+body .christmas-classic span.wpcf7-list-item {
+    margin: 0.5em;
+    display: inline-block;
+}
+
+body .christmas-classic input.wpcf7-form-control.wpcf7-submit:not([disabled]) {
+    border: none;
+}
+
+body .christmas-classic {
+    position: relative;
+}
+
+body .christmas-classic-container {
+    background: url("../images/xmas-classic/bg-repeat.png") repeat-y scroll 1px 1px rgba(0, 0, 0, 0);
+    display: block;
+    margin: auto;
+    margin-bottom: 260px;
+    text-align: center;
+    width: 403px;
+}
+
+body .christmas-classic .header {
+    background: url("../images/xmas-classic/top_border.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 23px;
+    width: 100%;
+}
+
+body .christmas-classic .left {
+    background: url("../images/xmas-classic/left_part_bg.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    bottom: 0;
+    height: 129px;
+    left: -73px;
+    position: absolute;
+    width: 99px;
+}
+
+body .christmas-classic p {
+    color: #482C09;
+    margin-bottom: 20px;
+    margin-left: 27px;
+    width: 350px;
+}
+
+body .christmas-classic .footer {
+    background: url("../images/xmas-classic/bottombg.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 255px;
+    width: 474px;
+    position: absolute;
+    bottom: -255px;
+    margin: 0 0 0 -70px;
+    padding: 0;
+}
+
+body .christmas-classic input,
+body .christmas-classic textarea {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    background: #f3eadf;
+    border: 1px dotted #b2a28e;
+}
+
+body .christmas-classic input {
+    height: 28px;
+    padding: 3px 5px;
+    line-height: 28px;
+}
+
+body .christmas-classic input:focus,
+body .christmas-classic textarea:focus {
+    background: #f3eadf;
+    border: 1px dotted #b2a28e;
+}
+
+body .christmas-classic .wpcf7-form-control-wrap input,
+body .christmas-classic .wpcf7-form-control-wrap textarea {
+    display: block;
+    width: 100%;
+}
+
+body .christmas-classic form textarea {
+    resize: vertical;
+    margin-bottom: 10px;
+}
+
+body .christmas-classic input.wpcf7-form-control.wpcf7-submit:not([disabled]),
+body .christmas-classic .wpcf7-submit {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: medium none;
+    bottom: -246px;
+    height: 86px;
+    left: 21px;
+    position: absolute;
+    text-indent: -9999px;
+    width: 95px;
+    z-index: 10;
+}
+
+body .christmas-classic input.wpcf7-form-control.wpcf7-submit:not([disabled]):hover,
+body .christmas-classic .wpcf7-submit:hover {
+    background-color: rgba(255, 255, 255, .3);
+}
+
+body .christmas-classic div.wpcf7-response-output {
+    width: 84%;
+    margin: 0 auto;
+}
+
+body .christmas-classic span.wpcf7-list-item-label {
+    display: inline-block;
+}
+
+
+/**
+ * Xmas
+ *
+ * 2.2 - Red
+ * ----------------------------------------------------------------------------- 
+ */
+
+body .christmas-red .wpcf7-form-control-wrap {
+    display: inherit;
+}
+
+body .christmas-red input.wpcf7-form-control.wpcf7-text,
+body .christmas-red input.wpcf7-form-control.wpcf7-number,
+body .christmas-red input.wpcf7-form-control.wpcf7-date,
+body .christmas-red textarea.wpcf7-form-control.wpcf7-textarea,
+body .christmas-red select.wpcf7-form-control.wpcf7-select,
+body .christmas-red input.wpcf7-form-control.wpcf7-quiz {
+    margin: 5px 0 0;
+    padding: 15px 10px;
+    border: none;
+    outline: 0;
+    resize: none;
+    font-size: 17px;
+    line-height: normal;
+    background: #fff;
+    background: rgba(255, 255, 255, 0.9);
+    color: #818181;
+    font-family: 'Raleway';
+    font-weight: normal;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body .christmas-red select.wpcf7-form-control.wpcf7-select[multiple] {
+    height: auto;
+    padding: 5px 10px;
+}
+
+body .christmas-red input.wpcf7-form-control.wpcf7-acceptance {
+    display: inline-block;
+    width: auto;
+}
+
+body .christmas-red textarea.wpcf7-form-control.wpcf7-textarea,
+body .christmas-red input.wpcf7-form-control.wpcf7-submit:not([disabled]) {
+    border: none;
+}
+
+body .wpcf7 form.christmas-red p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #fff;
+}
+
+body .christmas-red-container {
+    color: #fff;
+    font-size: 17px;
+    width: 600px;
+    margin: 0 auto;
+    background: url(../images/xmas-red/middle.png ) repeat-y top center;
+    position: relative;
+}
+
+body .christmas-red {
+    margin: 94px 0 125px;
+}
+
+body .christmas-red .header {
+    display: block;
+    background: url(../images/xmas-red/header.png ) no-repeat 32px top;
+    width: 600px;
+    height: 94px;
+    position: absolute;
+    top: -94px;
+}
+
+body .christmas-red .footer {
+    display: block;
+    background: url(../images/xmas-red/footer.png ) no-repeat top center;
+    width: 600px;
+    height: 94px;
+    bottom: -94px;
+    position: absolute;
+}
+
+body .christmas-red p {
+    max-width: 370px;
+    margin: 0 auto;
+}
+
+body .christmas-red input,
+body .christmas-red textarea {
+    color: #222;
+    width: 100%;
+    font-size: 16px;
+    margin: 0;
+}
+
+body .christmas-red input[type="text"],
+body .christmas-red input[type="email"],
+body .christmas-red input[type="url"],
+body .christmas-red input[type="password"],
+body .christmas-red input[type="search"],
+body .christmas-red textarea,
+body .christmas-red select {
+    width: 100%;
+}
+
+body .christmas-red input[type="radio"],
+body .christmas-red input[type="checkbox"] {
+    width: auto;
+}
+
+body .christmas-red input:focus,
+body .christmas-red textarea:focus {
+    background: #fff;
+}
+
+body .christmas-red textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+body .christmas-red input.wpcf7-form-control.wpcf7-submit:not([disabled]),
+body .christmas-red .wpcf7-submit {
+    display: block;
+    width: 232px;
+    height: 126px;
+    background: url(../images/xmas-red/send.png) no-repeat top center;
+    position: absolute;
+    bottom: -125px;
+    right: 0;
+    text-indent: -9999px;
+    border: none;
+    z-index: 10;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+body .christmas-red .wpcf7-validation-errors,
+body .christmas-red .wpcf7-mail-sent-ok,
+body .christmas-classic-validation-errors,
+body .christmas-classic-mail-sent-ok {
+    border: none;
+    max-width: 350px;
+    font-size: 22px;
+    color: #FC8181;
+    margin-left: 25px;
+    padding: 0;
+}
+
+body .christmas-red .wpcf7-mail-sent-ok,
+body .christmas-classic-mail-sent-ok {
+    color: #73C94E;
+}
+
+body .christmas-red span.wpcf7-not-valid-tip,
+body .christmas-classic span.wpcf7-not-valid-tip {
+    left: 0;
+    top: 0;
+    padding: 5px 10px;
+    width: 368px;
+    font-size: 16px;
+    border: none;
+    display: block;
+    color: #FC8181;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+body .christmas-red span.wpcf7-list-item,
+.wpcf7-form-control .wpcf7-radio {
+    display: inline-block;
+    height: 32px;
+    margin-left: 1em;
+    position: relative;
+}
+
+body .christmas-red .wpcf7-radio .wpcf7-list-item-label:before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 32px;
+    height: 32px;
+    background: url(../images/xmas-red/radio.png) no-repeat 0 2px;
+    z-index: 1;
+}
+
+body .christmas-red .wpcf7-radio input + .wpcf7-list-item-label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 32px;
+    height: 32px;
+    background: url(../images/xmas-red/radio.png) no-repeat 0 2px;
+    z-index: 1;
+}
+
+body .christmas-red .wpcf7-radio .wpcf7-list-item.active .wpcf7-list-item-label:before,
+body .christmas-red .wpcf7-radio .wpcf7-list-item .active .wpcf7-list-item-label:before {
+    background-position: 0 -31px;
+}
+
+body .christmas-red .wpcf7-radio .wpcf7-list-item-label {
+    display: inline-block;
+    vertical-align: top;
+}
+
+body .christmas-red span.wpcf7-list-item input[type="radio"] {
+    position: relative;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    /* IE 5-7 */
+    filter: alpha(opacity=0);
+    /* Netscape */
+    -moz-opacity: 0;
+    /* Safari 1.x */
+    -khtml-opacity: 0;
+    /* Good browsers */
+    opacity: 0;
+}
+
+body .christmas-red .wpcf7-response-output {
+    position: relative;
+    margin: 0 auto;
+}
+
+body .christmas-red input.wpcf7-form-control.wpcf7-submit:not([disabled]):focus,
+body .christmas-red input.wpcf7-form-control.wpcf7-submit:not([disabled]):hover,
+body .christmas-red .wpcf7-submit:hover {
+    opacity: 0.8;
+}
+
+body .christmas-red div.wpcf7-response-output.wpcf7-validation-errors,
+body .christmas-red div.wpcf7-response-output.wpcf7-mail-sent-ok {
+    background: none;
+    border: none;
+    font-size: 17px;
+}
+
+body .christmas-red div.wpcf7-response-output.wpcf7-validation-errors {
+    color: #FC8181;
+}
+
+body .christmas-red div.wpcf7-response-output.wpcf7-mail-sent-ok {
+    color: rgb(4, 192, 4);
+}
+
+body .christmas-red span.wpcf7-not-valid-tip {
+    padding: 5px 10px 5px 0;
+}
+
+
+/**
+ * Xmas
+ *
+ * 2.3 - Simple
+ * ----------------------------------------------------------------------------- 
+ */
+
+body .christmas-simple {
+    width: 410px;
+    padding: 50px 20px 15px 20px;
+    margin-bottom: 20px;
+    color: #1b0a00;
+    position: relative;
+    margin: 75px 0 35px;
+}
+
+body .christmas-simple-container {
+    width: 425px;
+    margin: 0 auto;
+    border-left: dashed 2px #542c0e;
+    border-right: dashed 2px #542c0e;
+    background: url(../images/xmas-simple/middle.png) repeat-y center top;
+}
+
+body .christmas-simple p {
+    width: 325px;
+    margin: 15px auto;
+}
+
+body .christmas-simple p input[type="text"],
+body .christmas-simple p input[type="email"],
+body .christmas-simple p input[type="tel"],
+body .christmas-simple p input[type="range"],
+body .christmas-simple p input[type="url"],
+body .christmas-simple p input[type="number"],
+body .christmas-simple p input[type="date"],
+body .christmas-simple p input[type="file"],
+body .christmas-simple p select,
+body .christmas-simple p textarea,
+body .christmas-simple p input[type="text"]:hover,
+body .christmas-simple p input[type="email"]:hover,
+body .christmas-simple p input[type="tel"]:hover,
+body .christmas-simple p textarea:hover,
+body .christmas-simple p input[type="text"]:focus,
+body .christmas-simple p input[type="email"]:focus,
+body .christmas-simple p input[type="tel"]:focus,
+body .christmas-simple p textarea:focus {
+    width: 94%;
+    background: transparent;
+    border: dashed 2px #7d5f48;
+    padding: 0.625em 0.4375em;
+}
+
+body .christmas-simple span.wpcf7-list-item {
+    display: inline-block;
+    margin-left: 1em;
+}
+
+body .christmas-simple input[type="checkbox"],
+body .christmas-simple input[type="radio"] {
+    margin-right: 0;
+}
+
+body .christmas-simple textarea {
+    height: 110px;
+    resize: vertical;
+}
+
+body .christmas-simple .header,
+body .christmas-simple .footer {
+    width: 425px;
+    height: 35px;
+    margin: 0 auto;
+    background: url('../images/xmas-simple/header.png') no-repeat center bottom;
+    border: dashed 2px #542c0e;
+    border-bottom: none;
+    position: absolute;
+    left: -2px;
+}
+
+body .christmas-simple .header {
+    background-position: 1px 1px;
+    border-radius: 12px 12px 0 0;
+    left: -2px;
+    top: -35px;
+    width: 421px;
+}
+
+body .christmas-simple .footer {
+    background: url('../images/xmas-simple/footer.png') no-repeat center top;
+    border-bottom: 2px dashed #542c0e;
+    border-radius: 0 0 20px 20px;
+    border-top: medium none;
+    bottom: -35px;
+    padding-bottom: 3px;
+    width: 425px;
+}
+
+body .christmas-simple .ribbon {
+    width: 182px;
+    height: 202px;
+    position: absolute;
+    background: url('../images/xmas-simple/ribbon.png') no-repeat;
+    right: -118px;
+    top: -85px;
+}
+
+body .christmas-simple div.wpcf7-response-output {
+    width: 360px;
+    margin: 0 auto;
+    border: none;
+    color: #ee0000;
+}
+
+body .christmas-simple .wpcf7-submit,
+body .christmas-simple input[type="submit"] {
+    background: #e7e3d0;
+    color: #555;
+    border-top: solid 1px #fff;
+    font-size: 14px;
+    padding: 0px 40px;
+    height: 40px;
+    -webkit-border-radius: 15px 18px 7px 9px;
+    -moz-border-radius: 15px 18px 7px 9px;
+    border-radius: 15px 18px 7px 9px;
+    -webkit-box-shadow: -3px 3px 9px 1px #999;
+    box-shadow: -3px 3px 9px 1px #999;
+}
+
+body .christmas-simple input[type='submit']:hover {
+    border-top: solid 1px #fff;
+    background: #e7e3d0;
+    color: #000;
+}
+
+
+/**
+ *  Fix Error tooltips position
+ */
+
+body .christmas-simple span.wpcf7-not-valid-tip {
+    top: -4px;
+    left: 2px;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 9px;
+    width: 335px;
+    color: #ee0000;
+    background: #fff;
+    border: none;
+}
+
+
+/*Christmas clasic - unique*/
+
+body .christmas-classic .wpcf7-not-valid-tip {
+    width: 100%;
+    background: transparent;
+}
+
+
+/***
+ * SIMPLE
+ *
+ * 3.1 - Twenty fiffteen like
+ * ----------------------------------------------------------------------------- 
+ */
+
+body .twenty-fifteen-pattern {
+    padding-top: 1.6842em;
+}
+
+body .twenty-fifteen-pattern p {
+    font-size: 1.6rem;
+    margin-bottom: 1.6842em;
+    color: rgba(51, 51, 51, 0.7);
+    display: block;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+body .twenty-fifteen-pattern input[type="text"],
+body .twenty-fifteen-pattern input[type="email"],
+body .twenty-fifteen-pattern input[type="url"],
+body .twenty-fifteen-pattern input[type="submit"],
+body .twenty-fifteen-pattern textarea {
+    width: 100%;
+    padding: 0.5278em;
+    line-height: normal;
+    font-size: 1.9rem;
+    border: 1px solid rgba(51, 51, 51, 0.1);
+    color: rgba(51, 51, 51, 0.7);
+    background: #f7f7f7;
+    border-radius: 0;
+    margin: 0;
+    max-width: 100%;
+    vertical-align: baseline;
+    font-family: "Noto Serif", serif;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body .twenty-fifteen-pattern input:focus,
+body .twenty-fifteen-pattern textarea:focus {
+    border: 1px solid rgba(51, 51, 51, 0.3);
+    color: #333;
+    background: #fff;
+}
+
+body .twenty-fifteen-pattern button,
+body .twenty-fifteen-pattern input[type="button"],
+body .twenty-fifteen-pattern input[type="reset"],
+body .twenty-fifteen-pattern input[type="submit"] {
+    font-size: 1.6rem;
+    padding: 0.8125em 1.625em;
+    background: #333;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+body .twenty-fifteen-pattern button:hover,
+body .twenty-fifteen-pattern input[type="button"]:hover,
+body .twenty-fifteen-pattern input[type="reset"]:hover,
+body .twenty-fifteen-pattern input[type="submit"]:hover {
+    background: rgba(51, 51, 51, 0.7);
+    outline: 0 none;
+}
+
+.logged-in div.wpcf7 {
+    position: relative;
+    margin-top: 70px;
+}
+
+.logged-in .frontend-edit-style-link { 
+    position: absolute;
+    left: 0; 
+    top: -50px;
+    z-index: 9;
+    display: block;
+    padding: 5px 10px;
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    text-decoration: none;
+    background: #E74C3C;
+    color: #FFF;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #E74C3C;
+    font-size: 13px;
+    line-height: 135%;
+}
+
+.logged-in .frontend-edit-style-link:hover {
+    background-color: #fff;
+    color: #E74C3C;
+}
