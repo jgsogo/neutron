@@ -12,7 +12,6 @@ app_name = 'neutron'
 urlpatterns = [
     # Honor code
     url(r'^honorcode/$', HonorCodeAcceptView.as_view(template_name='honor_code.html'), name='honor_code'),
-    url(r'^honorcode/declined/$', TemplateView.as_view(template_name='honor_code_declined.html'), name='honor_code_declined'),
 
     # Lemmas
     url(r'^$', SearchLemma.as_view(), name='word_detail_search'),

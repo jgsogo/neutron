@@ -220,7 +220,7 @@
                         </li>
                         <li>
                         {% if user.is_authenticated %}
-                            <a href="{% url 'worduse:run' %}" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">{{ user }}</a>
+                            <a href="{% url 'worduse:run' %}" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">{% trans "GO!" %}</a>
                         {% else %}
                             <a href="{% url 'login' %}" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home">{% trans "Login" %}</a>
                         {% endif %}
