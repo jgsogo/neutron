@@ -66,7 +66,7 @@ class JoinFormStep2(JoinFormStep1):
 
 
 class JoinRegisterForm(UserCreationForm):
-    honor_code = forms.BooleanField(label=_("Accept honor code"))
+    honor_code = forms.BooleanField(label=_("Accept honor code"), initial=False, required=False)
     email = forms.EmailField(help_text=_("Email account to get in touch with you"))
 
     def clean_email(self):
@@ -79,7 +79,9 @@ class JoinRegisterForm(UserCreationForm):
             raise forms.ValidationError(_("Duplicate email!"))
         return self.cleaned_data['email']
 
+    """
     def clean_honor_code(self):
         if not self.cleaned_data['honor_code']:
             raise forms.ValidationError(_("Honor code must be accepted in order to register"))
         return self.cleaned_data['honor_code']
+    """

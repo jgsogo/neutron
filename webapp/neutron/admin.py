@@ -24,8 +24,8 @@ class InformerAdmin(admin.ModelAdmin):
     entropy_meaning_fmt = "{} | <strong>{}:</strong> {}<br/>"
     entropy_word_fmt = "{} | <strong>{}:</strong><br/>"
 
-    list_display = ('__str__', 'region', 'searchable', 'mutable', 'privacy', )
-    list_filter = ('region', 'searchable', 'mutable', 'privacy', 'education', 'known_us',)
+    list_display = ('__str__', 'region', 'searchable', 'mutable', 'privacy', 'honor_code',)
+    list_filter = ('region', 'searchable', 'mutable', 'privacy', 'education', 'known_us', 'honor_code',)
     readonly_fields = ('word_use_entropy', 'word_alternate_entropy', 'word_coarse',)
 
     def get_fields(self, request, obj=None):

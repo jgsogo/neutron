@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Honor code" %}{% endblock %}
+
+{% block content %}
+    <h2>{% trans "Honor code" %}</h2>
+    <p>blablabjlajlas</p>
+
+    {% if request.user.is_authenticated %}
+        <form method="post" action="{% url 'honor_code' %}#join_form">{% csrf_token %}
+            <button name="accept" value="accept">{% trans "Accept" %}</button>
+            <button name="decline" value="decline">{% trans "Decline" %}</button>
+        </form>
+    {% else %}
+        <p>
+            {% blocktrans %}
+            To accept the honor code, you must register first.
+            {% endblocktrans %}
+        </p>
+    {% endif %}
+
+{% endblock %}
