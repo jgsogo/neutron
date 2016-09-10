@@ -55,6 +55,7 @@ class Command(BaseCommand):
         interface, _ = Interface.objects.get_or_create(name='import_sm')
         return interface
 
+    @classmethod
     def work_on_ficha(self, node):
         lema = None
         data = []  # [(lema, numero, is_def, definicion, ejemplo), ...]
