@@ -51,7 +51,6 @@ class Command(BaseCommand):
 
         except KeyboardInterrupt:
             self.stdout.write('... user aborted, exit gracefully.')
-        # self.stdout.write('Done for %d words (%d skipped). %d meanings processed.' % (i, i_skipped, i_meanings))
 
     def handle_single(self, filename, verbosity, remove):
         tqdm.write("Work on {!r}".format(filename))
@@ -69,7 +68,7 @@ class Command(BaseCommand):
             data = [it[0] for it in data]
             for it in data:
                 try:
-                    w = Word.objects.get(word=it)  # TODO: Cache this
+                    w = Word.objects.get(word=it.encode('utf-8'))
                     words[w.pk]['words'].add(it)
                     words[w.pk]['fichas'].append((filename, ficha.attrib['ID'], ficha))
                 except Word.DoesNotExist:
