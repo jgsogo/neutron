@@ -15,7 +15,6 @@ from neutron.models import Word
 from .import_sm import Command as ImportSM, to_console
 
 
-
 class Command(BaseCommand):
     help = 'Detect duplicates words coming from input file'
 
@@ -77,9 +76,13 @@ class Command(BaseCommand):
         # Detect duplicates!
         dupes = {k: v for k, v in words.items() if len(v['words']) > 1}
         if dupes:
-            tqdm.write("...found {} duplicates".format(len(dupes)))
+            remove_msg = " (will be removed!)"
+            tqdm.write("...found {} duplicates{}".format(len(dupes), remove_msg))
             for w, values in dupes.items():
-                tqdm.write(" - pk: {!r}: {}".format(w, Word.objects.get(pk=w)))
+                word = Word.objects.get(pk=w)
+                tqdm.write(" - pk: {!r}: {}".format(w, word))
                 for ficha in values['fichas']:
                     tqdm.write("   + {}: [ID={!r}] {}".format(ficha[0], ficha[1], ''.join(ficha[2].find('./lema').itertext()).strip()))
 
+                if remove:
+                    word.delete()
