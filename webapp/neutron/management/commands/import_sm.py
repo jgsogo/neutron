@@ -179,10 +179,12 @@ class Command(BaseCommand):
                             c.save()
 
                         # WordUse
-                        WordUse.objects.get_or_create(meaning=meaning,
-                                                      value=WordUse.USES.ok,
-                                                      interface=interface,
-                                                      informer=informer)
+                        word_use_data = {'meaning': meaning,
+                                         'value': WordUse.USES.ok,
+                                         'interface': interface,
+                                         'informer': informer}
+                        if not WordUse.objects.exists(**word_use_data):
+                            WordUse.objects.create(**word_use_data)
                     else:
                         if verbosity > 1:
                             try:
