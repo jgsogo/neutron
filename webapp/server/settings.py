@@ -48,7 +48,6 @@ INSTALLED_APPS = (
     'mptt',
     'rosetta',  # http://django-rosetta.readthedocs.io/en/latest/installation.html
 
-    'home',
     'server',
     'neutron',
     'question.worduse',  # Game WordUse
