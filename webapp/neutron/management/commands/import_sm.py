@@ -183,7 +183,7 @@ class Command(BaseCommand):
                                          'value': WordUse.USES.ok,
                                          'interface': interface,
                                          'informer': informer}
-                        if not WordUse.objects.exists(**word_use_data):
+                        if not WordUse.objects.filter(**word_use_data).exists():
                             WordUse.objects.create(**word_use_data)
                     else:
                         if verbosity > 1:
