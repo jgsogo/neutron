@@ -24,6 +24,7 @@ class WordManager(models.Manager):
 @python_2_unicode_compatible
 class Word(models.Model):
     word = models.CharField(max_length=MAX_WORD_LENGTH, db_index=True)
+    word_bin = models.CharField(max_length=MAX_WORD_LENGTH, db_index=True)
 
     excluded = models.BooleanField(default=False,
                                    help_text=_("If set, this word won't be shown to informers in WordCoarse interface"))
@@ -36,3 +37,7 @@ class Word(models.Model):
 
     def __str__(self):
         return u"%s" % (self.word)
+
+    def save(self, *args, **kwargs):
+        self.word_bin = self.word
+        super(Word, self).save(*args, **kwargs)

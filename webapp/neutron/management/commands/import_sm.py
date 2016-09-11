@@ -154,7 +154,7 @@ class Command(BaseCommand):
 
                     if not test:
                         # The data itself
-                        word_instance, _ = Word.objects.get_or_create(word=it[0])  # TODO: Cache this
+                        word_instance, _ = Word.objects.get_or_create(word_bin=it[0], defaults={'word': it[0],})
                         definition, _ = Definition.objects.get_or_create(definition=it[4])
                         meaning, _ = Meaning.objects.get_or_create(word=word_instance,
                                                                    definition=definition,
