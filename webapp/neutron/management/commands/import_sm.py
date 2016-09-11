@@ -155,12 +155,12 @@ class Command(BaseCommand):
             if pass_filter:
                 data = self.work_on_ficha(ficha)
                 if verbosity > 1:
-                    self.stdout(' + %s' % to_console(lemma))
+                    self.stdout.write(' + %s' % to_console(lemma))
                 for it in data:
                     i_meanings += 1
 
                     if verbosity > 2:
-                        self.stdout('\t{}'.format(', '.join(map(to_console, it))))
+                        self.stdout.write('\t{}'.format(', '.join(map(to_console, it))))
 
                     if not test:
                         # The data itself
@@ -187,5 +187,5 @@ class Command(BaseCommand):
             else:
                 i_skipped += 1
                 if verbosity > 1:
-                    self.stdout(' = %s' % to_console(lemma))
+                    self.stdout.write(' = %s' % to_console(lemma))
         return i, i_skipped, i_meanings
