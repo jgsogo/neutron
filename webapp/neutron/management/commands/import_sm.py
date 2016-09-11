@@ -146,7 +146,7 @@ class Command(BaseCommand):
         n_fichas = len(fichas)
         ficha_format = "%s [%%0%dd/%%d]" % (basename, len(str(n_fichas)))
         i = i_skipped = i_meanings = 0
-        for ficha in tqdm(fichas, desc=basename, leave=False):
+        for ficha in tqdm(fichas, desc=basename, leave=verbosity>1):
             i += 1
             lemma = ''.join(ficha.find('./lema').itertext()).strip()
             pass_filter = filter.match(lemma)
