@@ -39,6 +39,10 @@ def migrate_informers(apps, schema_editor):
         informer.save()
 
 
+def nothing(*args, **kwargs):
+    pass
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -46,5 +50,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(migrate_informers, lambda u, v: None),
+        migrations.RunPython(migrate_informers, nothing),
     ]

@@ -11,6 +11,9 @@ def populate_word_bin(apps, schema_editor):
         w.word_bin = w.word
         w.save()  # Populate 'word_bin' field
 
+def nothing(apps, schema_editor):
+    pass
+
 
 class Migration(migrations.Migration):
 
@@ -19,5 +22,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(populate_word_bin, lambda u,v: None),
+        migrations.RunPython(populate_word_bin, nothing),
     ]
