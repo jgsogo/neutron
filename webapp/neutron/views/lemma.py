@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from random import shuffle
+from random import sample
 
 from django.views.generic import DetailView, FormView
 from django.core.urlresolvers import reverse
@@ -33,11 +33,10 @@ class SearchLemma(HonorCodeAcceptedMixin, FormView):
                 raise Word.DoesNotExist()
         except Word.DoesNotExist:
             messages.add_message(self.request, messages.ERROR, _("Word '{}' cannot be found in the application").format(word_str))
-            qs = Meaning.objects.filter(word__word__icontains=word_str, informer__searchable=True)
+            qs = Meaning.objects.filter(word__word_general_ci__icontains=word_str, informer__searchable=True)
             if len(qs):
                 suggestions = [it.word for it in qs]
-                shuffle(suggestions)
-                suggestions = suggestions[:9]
+                suggestions = sample(suggestions, 9)
                 return self.render_to_response(self.get_context_data(form=form, suggestions=suggestions))
 
             return self.form_invalid(form)
