@@ -36,7 +36,7 @@ class SearchLemma(HonorCodeAcceptedMixin, FormView):
             qs = Meaning.objects.filter(word__word_general_ci__icontains=word_str, informer__searchable=True)
             if len(qs):
                 suggestions = [it.word for it in qs]
-                suggestions = sample(suggestions, 9)
+                suggestions = sample(suggestions, min(9, len(suggestions)))
                 return self.render_to_response(self.get_context_data(form=form, suggestions=suggestions))
 
             return self.form_invalid(form)
