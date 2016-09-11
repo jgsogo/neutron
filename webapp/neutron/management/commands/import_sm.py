@@ -7,6 +7,8 @@ import os
 import re
 import lxml.etree as ET
 import fnmatch
+
+from tqdm import tqdm
 from django.core.management.base import BaseCommand, CommandError
 
 from neutron.models import Definition, Informer, Context, Word, Meaning, WordUse, Interface
@@ -28,7 +30,11 @@ class Command(BaseCommand):
         parser.add_argument('--informer',
             dest='informer',
             default=None,
-            help='Informer name (default is filename) to assign this data to')
+            help='Informer name (if not "informer_id") (default is filename) to assign this data to')
+        parser.add_argument('--informer_id',
+            dest='informer_id',
+            default=None,
+            help='Informer id (if not set will fallback to "informer" argument) to assign this data to')
         parser.add_argument('--test',
             action='store_true',
             dest='test',
@@ -44,11 +50,15 @@ class Command(BaseCommand):
             help='Pattern to match files in directory (only if input is dir)')
 
     def get_informer(self, options):
-        dict_name = options['informer']
-        if not dict_name:
-            workon = options['file']
-            dict_name = os.path.splitext(workon)[0] if os.path.isfile(workon) else os.path.basename(workon)
-        informer, created = Informer.objects.get_or_create(name=dict_name)
+        dict_id = options['informer_id']
+        if dict_id:
+            informer = Informer.objects.get(pk=dict_id)
+        else:
+            dict_name = options['informer']
+            if not dict_name and not dict_id:
+                workon = options['file']
+                dict_name = os.path.splitext(workon)[0] if os.path.isfile(workon) else os.path.basename(workon)
+            informer, created = Informer.objects.get_or_create(name=dict_name)
         return informer
 
     def get_interface(self, options):
@@ -118,7 +128,7 @@ class Command(BaseCommand):
             self.stdout.write(" - informer: %s" % informer)
             self.stdout.write(" - interface: %s" % interface)
 
-            for filename in filenames:
+            for filename in tqdm(filenames, desc='Files'):
                 i2, i_skipped2, i_meanings2 = self.handle_single(filename, informer, interface, filter, verbosity=verbosity, test=test)
                 i += i2; i_skipped += i_skipped2; i_meanings += i_meanings2
 
@@ -136,21 +146,21 @@ class Command(BaseCommand):
         n_fichas = len(fichas)
         ficha_format = "%s [%%0%dd/%%d]" % (basename, len(str(n_fichas)))
         i = i_skipped = i_meanings = 0
-        for ficha in fichas:
+        for ficha in tqdm(fichas, desc=basename, leave=False):
             i += 1
             lemma = ''.join(ficha.find('./lema').itertext()).strip()
             pass_filter = filter.match(lemma)
             if verbosity > 1:
-                self.stdout.write(('\n' if verbosity > 2 and pass_filter else '') + ficha_format % (i, n_fichas), ending='')
+                tqdm.write(('\n' if verbosity > 2 and pass_filter else '') + ficha_format % (i, n_fichas), ending='')
             if pass_filter:
                 data = self.work_on_ficha(ficha)
                 if verbosity > 1:
-                    self.stdout.write(' + %s' % to_console(lemma))
+                    tqdm.write(' + %s' % to_console(lemma))
                 for it in data:
                     i_meanings += 1
 
                     if verbosity > 2:
-                        self.stdout.write('\t{}'.format(', '.join(map(to_console, it))))
+                        tqdm.write('\t{}'.format(', '.join(map(to_console, it))))
 
                     if not test:
                         # The data itself
@@ -177,5 +187,5 @@ class Command(BaseCommand):
             else:
                 i_skipped += 1
                 if verbosity > 1:
-                    self.stdout.write(' = %s' % to_console(lemma))
+                    tqdm.write(' = %s' % to_console(lemma))
         return i, i_skipped, i_meanings
