@@ -183,7 +183,12 @@ class Command(BaseCommand):
                                                value=WordUse.USES.ok,
                                                interface=interface,
                                                informer=informer)
-
+                    else:
+                        if verbosity > 1:
+                            try:
+                                Word.objects.get(word=it[0])
+                            except Word.DoesNotExist:
+                                self.stdout.write("\twill be added >> {!r}: {}".format(it[0], it[4]))
             else:
                 i_skipped += 1
                 if verbosity > 1:
