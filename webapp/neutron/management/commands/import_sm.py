@@ -151,16 +151,16 @@ class Command(BaseCommand):
             lemma = ''.join(ficha.find('./lema').itertext()).strip()
             pass_filter = filter.match(lemma)
             if verbosity > 1:
-                tqdm.write(('\n' if verbosity > 2 and pass_filter else '') + ficha_format % (i, n_fichas), ending='')
+                self.stdout.write(('\n' if verbosity > 2 and pass_filter else '') + ficha_format % (i, n_fichas), ending='')
             if pass_filter:
                 data = self.work_on_ficha(ficha)
                 if verbosity > 1:
-                    tqdm.write(' + %s' % to_console(lemma))
+                    self.stdout(' + %s' % to_console(lemma))
                 for it in data:
                     i_meanings += 1
 
                     if verbosity > 2:
-                        tqdm.write('\t{}'.format(', '.join(map(to_console, it))))
+                        self.stdout('\t{}'.format(', '.join(map(to_console, it))))
 
                     if not test:
                         # The data itself
@@ -187,5 +187,5 @@ class Command(BaseCommand):
             else:
                 i_skipped += 1
                 if verbosity > 1:
-                    tqdm.write(' = %s' % to_console(lemma))
+                    self.stdout(' = %s' % to_console(lemma))
         return i, i_skipped, i_meanings
