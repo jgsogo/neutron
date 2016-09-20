@@ -1,8 +1,48 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans "About" %}{% endblock %}
 
+{% block extra_css %}
+    <style>
+        .team td {
+            text-align: center;
+            padding: 10px;
+        }
+        .team img {
+            height: 160px;
+            width: 160px;
+            object-fit: cover;
+        }
+        .team .social {
+            margin-left: 5px;
+        }
+        .team .social img {
+            height: 12px;
+            width: 12px;
+            display: inline-block;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-    //webapp/server/templates/about.html
+    <h2>{% trans "Our team" %}</h2>
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <table class="team">
+                <tr class="img">
+                    <td><img src="{% static 'team/maria_varela.jpg' %}"/></td>
+                    <td><img src="{% static 'team/antonio_martin.jpg' %}"/></td>
+                    <td><img src="{% static 'team/miguel_varela.jpg' %}"/></td>
+                    <td><img src="{% static 'team/alberto_gomez_font.jpg' %}"/></td>
+                </tr>
+                <tr class="info">
+                    <td>María Varela <span class="social"><a href="#"><img src="{% static 'img/linkedin256.png' %}"/></a></span></td>
+                    <td>Antonio Martín</td>
+                    <td>Miguel Varela</td>
+                    <td>Alberto Gómez Font</td>
+                </tr>
+            </table>
+        </div><!-- caja-fondo-gris -->
+    </div><!-- content -->
 {% endblock %}
