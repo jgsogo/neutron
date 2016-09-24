@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^faq/$', QuestionList.as_view(template_name='faq.html'), name='faq'),
     url(r'^faq/ask/$', QuestionMake.as_view(template_name='faq_ask.html'), name='faq_ask'),
     url(r'^faq/delete/$', question_delete, name='faq_delete'),
-    url(r'^about/$', TemplateView.as_view(template_name='about.html'), name='about'),
+    url(r'^about/$', AboutView.as_view(), name='about'),
 
     url(r'^neutron/', include('neutron.urls', namespace='neutron')),
 

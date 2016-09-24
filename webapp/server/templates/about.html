@@ -30,17 +30,23 @@
     <div class="content">
         <div class="caja-fondo-gris">
             <table class="team">
+                <tr>{% trans "...in random order of appearance." %}</tr>
                 <tr class="img">
-                    <td><img src="{% static 'team/maria_varela.jpg' %}"/></td>
-                    <td><img src="{% static 'team/antonio_martin.jpg' %}"/></td>
-                    <td><img src="{% static 'team/miguel_varela.jpg' %}"/></td>
-                    <td><img src="{% static 'team/alberto_gomez_font.jpg' %}"/></td>
+                    {% for member in team %}
+                        <td><img src="{{ member.1 }}" alt="{{ member.0 }}"/></td>
+                    {% endfor %}
                 </tr>
                 <tr class="info">
-                    <td>María Varela <span class="social"><a href="#"><img src="{% static 'img/linkedin256.png' %}"/></a></span></td>
-                    <td>Antonio Martín</td>
-                    <td>Miguel Varela</td>
-                    <td>Alberto Gómez Font</td>
+                    {% for member in team %}
+                        <td>{{ member.0 }}
+                            {% if member.2 or member.3 %}
+                                <span class="social">
+                                    {% if member.2 %}<a href="{{ member.2 }}"><img src="{% static 'img/linkedin256.png '%}"/></a>{% endif %}
+                                    {% if member.3 %}<a href="{{ member.3 }}"><img src="{% static 'img/twitter256.png '%}"/></a>{% endif %}
+                                </span>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
                 </tr>
             </table>
         </div><!-- caja-fondo-gris -->

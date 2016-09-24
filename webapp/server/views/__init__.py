@@ -9,6 +9,7 @@ from .authentication import login, logout, register
 from .faq import QuestionList, QuestionMake, question_delete
 from .join import JoinStep1, JoinStep2, JoinRegister
 from server.forms import HomeAskForm
+from .about import AboutView
 
 
 class HomeView(TemplateView):
