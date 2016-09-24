@@ -112,6 +112,12 @@ class WordAdmin(admin.ModelAdmin):
     search_fields = ('word', )
     readonly_fields = ('word',)
 
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser:
+            return ()
+        else:
+            return self.readonly_fields
+
     def has_add_permission(self, request):
         return False
 
@@ -195,6 +201,7 @@ class MeaningAdmin(admin.ModelAdmin):
     list_display = ('word', 'informer', 'excluded',)
     list_filter = ('excluded', 'type', 'is_locution', )
     search_fields = ('word__word',)
+    readonly_fields = ('word',)
     inlines = [ContextInline, ]
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size': '20'})},

@@ -48,16 +48,15 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Participa" %} <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{% url 'worduse:run' %}">{% trans "Word use" %}</a></li>
-                                    <li><a href="{% url 'wordcoarse:run' %}">{% trans "Word coarse" %}</a></li>
-                                    <li><a href="{% url 'wordalternate:run' %}">{% trans "Word alternate" %}</a></li>
+                                    <li><a href="{% url 'worduse:run' %}">{% trans "Game 1" %}</a></li>
+                                    <li><a href="{% url 'wordalternate:run' %}">{% trans "Game 2" %}</a></li>
+                                    <li><a href="{% url 'wordcoarse:run' %}">{% trans "Game 3" %}</a></li>
                                 </ul>
                             </li>
-    						<li><a href="{% url 'faq' %}">FAQ's</a></li>
-                        {% endif %}
-
-                        {% if user.is_authenticated %}
+                            {% comment %}
                             <li><a href="{% url 'neutron:word_detail_search' %}">{% trans "Consulta" %}</a></li>
+                            {% endcomment %}
+    						<li><a href="{% url 'faq' %}">FAQ's</a></li>
                         {% endif %}
 
                         <li class="equipo"><a href="{% url 'about' %}">{% trans "equipo y patrocinadores" %}</a></li>
@@ -68,7 +67,9 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="{% url 'neutron:profile' %}">{% trans "Profile" %}</a></li>
+                                        {% comment %}
                                         <li><a href="{% url 'neutron:profile_stats' %}">{% trans "My stats" %}</a></li>
+                                        {% endcomment %}
                                         <li><a href="{% url 'neutron:honor_code' %}">{% trans "Honor code" %}</a></li>
                                         {% if user.is_staff %}
                                             <li><a href="{% url 'admin:index' %}">{% trans "Admin" %}</a></li>
@@ -82,6 +83,7 @@
                             <li><a href="{% url 'login' %}">{% trans "Login" %}</a></li>
                         {% endif %}
 
+                        {% comment %}
                         {% get_current_language as LANGUAGE_CODE %}
                         {% get_available_languages as LANGUAGES %}
                         <ul class="nav navbar-nav navbar-right">
@@ -98,6 +100,7 @@
                                 </ul>
                             </li>
                         </ul>
+                        {% endcomment %}
 
                     </ul>
 				</div><!--/.nav-collapse -->

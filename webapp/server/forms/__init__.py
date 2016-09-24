@@ -85,3 +85,7 @@ class JoinRegisterForm(UserCreationForm):
             raise forms.ValidationError(_("Honor code must be accepted in order to register"))
         return self.cleaned_data['honor_code']
     """
+
+
+class HomeAskForm(forms.Form):
+    user_input = forms.Textarea()
