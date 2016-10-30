@@ -3,16 +3,19 @@
 
 {% block word_use_content %}
     {% if item %}
-        <h3>{{ item.word }}</h3>
+        {% with item.context_set.all as contexts %}
         <p>
-            {% with item.context_set.all as contexts %}
-                {% if contexts %}
-                    {{ item.definition }}: <em>{{ contexts.0.text|capfirst }}.</em>
-                {% else %}
-                    {{ item.definition }}.
-                {% endif %}
-            {% endwith %}
+            {% blocktrans with meaning=item.definition word=item.word context "word use question" %}
+                Do you use the word <span>"{{ word }}"</span> with the meaning <span>"{{ meaning }}"</span>?
+            {% endblocktrans %}
+            {% if contexts %}
+                {% blocktrans with context=contexts.0.text|capfirst %}
+                <span>"{{ context }}".</span>
+                {% endblocktrans %}
+            {% endif %}
         </p>
+        {% endwith %}
+
         <form method="post" class="form">
             {% csrf_token %}
             {% bootstrap_form form %}
