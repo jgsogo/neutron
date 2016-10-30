@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-    <h2>Error: Not an informer!</h2>
-    <p>It seems that you are not registered as an informer, please fill the needed data on your profile.</p>
+    <h2>{% trans "Error: Not an informer!" %}</h2>
+    <p>{% trans "It seems that you are not registered as an informer, please fill the needed data on your profile" %}.</p>
     <a class="btn btn-success" href="{% url 'neutron:profile_informer' %}">Go!</a>
 {% endblock %}
