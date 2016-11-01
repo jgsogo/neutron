@@ -9,9 +9,7 @@
                 Do you use the word <span>"{{ word }}"</span> with the meaning <span>"{{ meaning }}"</span>?
             {% endblocktrans %}
             {% if contexts %}
-                {% blocktrans with context=contexts.0.text|capfirst %}
-                <span>"{{ context }}".</span>
-                {% endblocktrans %}
+                <span>"{{ contexts.0.text|capfirst }}".</span>
             {% endif %}
         </p>
         {% endwith %}

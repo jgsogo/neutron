@@ -8,29 +8,29 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-05 19:01+0000\n"
+"POT-Creation-Date: 2016-11-01 18:07+0100\n"
 "PO-Revision-Date: 2016-10-30 15:02+0000\n"
 "Last-Translator: b'Maria Varela <mariavarelar@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Translated-Using: django-rosetta 0.7.11\n"
 
-#: admin.py:66 admin.py:76 admin.py:95 admin.py:144 admin.py:154 admin.py:172
+#: admin.py:66 admin.py:76 admin.py:95 admin.py:150 admin.py:160 admin.py:178
 msgid "Obliterate"
 msgstr "Anular"
 
-#: admin.py:238
+#: admin.py:245
 msgid "has alternative"
 msgstr "Tiene alternativa."
 
-#: admin.py:238
+#: admin.py:245
 msgid "Yes"
 msgstr "Sí"
 
-#: admin.py:238
+#: admin.py:245
 msgid "No"
 msgstr "No"
 
@@ -155,51 +155,57 @@ msgid "Female"
 msgstr "Mujer"
 
 #: models/informer.py:38
+msgid "Informers may or may not be users in the webapp"
+msgstr "Los informantes pueden ser o no usuarios de la aplicación."
+
+#: models/informer.py:41
 msgid "How did he know about us?"
 msgstr "¿Cómo nos has conocido?"
 
-#: models/informer.py:39
+#: models/informer.py:42
 msgid "Educational level"
 msgstr "Nivel de estudios"
 
-#: models/informer.py:47
-msgid "Informer identifier"
+#: models/informer.py:45
+msgid "Honor code, needed to access data"
+msgstr ""
+
+#: models/informer.py:51
+#, fuzzy
+#| msgid "Informer identifier"
+msgid "Informer identifier (only in admin)"
 msgstr "Identificador del informante"
 
-#: models/informer.py:49
+#: models/informer.py:53
 msgid ""
 "Whether the words related to this informer are included in the search-form."
 msgstr ""
 "¿Se incluyen las alternativas proporcionadas por este informante en el "
 "formulario de búsqueda?"
 
-#: models/informer.py:52
-msgid "Informers may or may not be users in the webapp"
-msgstr "Los informantes pueden ser o no usuarios de la aplicación."
-
-#: models/informer.py:54
+#: models/informer.py:56
 msgid ""
 "Define who can see this information: public (everyone), friends (only users "
 "registered), private (nobody, just in database dumps)."
 msgstr ""
 "Determina quién puede ver esta información: pública (cualquiera), amigos "
-"(solo usuarios registrados) o privada (nadie, solo en la papelera de la base"
-" de datos)."
+"(solo usuarios registrados) o privada (nadie, solo en la papelera de la base "
+"de datos)."
 
-#: models/informer.py:58
+#: models/informer.py:60
 msgid "Confidence level for this informer for data in this region"
 msgstr ""
 "Nivel de confianza en los datos que este informante aporta para su región"
 
-#: models/informer.py:60
+#: models/informer.py:62
 msgid "Whether confidence attribute can be automatically reevaluated"
 msgstr "¿Puede ser reevaluado el nivel de confianza de manera automática?"
 
-#: models/informer.py:63
+#: models/informer.py:65
 msgid "Informer"
 msgstr "Informante"
 
-#: models/informer.py:64
+#: models/informer.py:66
 msgid "Informers"
 msgstr "Informantes"
 
@@ -245,7 +251,7 @@ msgstr "Contextos"
 msgid "Name of the region"
 msgstr "Nombre del país"
 
-#: models/region.py:33 templates/neutron/word_detail.html:26
+#: models/region.py:33 templates/neutron/word_detail.html.py:26
 msgid "Region"
 msgstr "País"
 
@@ -253,18 +259,72 @@ msgstr "País"
 msgid "Regions"
 msgstr "Países"
 
-#: models/word.py:29
+#: models/word.py:30
 msgid "If set, this word won't be shown to informers in WordCoarse interface"
 msgstr ""
 "Si se activa, este lema no se mostrará a los informantes en el juego 3."
 
-#: models/word.py:34
+#: models/word.py:35
 msgid "Word"
 msgstr "Significante"
 
-#: models/word.py:35
+#: models/word.py:36
 msgid "Words"
 msgstr "Significantes"
+
+#: templates/error/no_informer.html:5
+msgid "Error: Not an informer!"
+msgstr ""
+
+#: templates/error/no_informer.html:6
+msgid ""
+"It seems that you are not registered as an informer, please fill the needed "
+"data on your profile"
+msgstr ""
+
+#: templates/honor_code.html:4 templates/honor_code.html.py:7
+msgid "Honor code"
+msgstr ""
+
+#: templates/honor_code.html:8
+msgid "What is it?"
+msgstr ""
+
+#: templates/honor_code.html:14
+msgid "Why do I have to accept it?"
+msgstr ""
+
+#: templates/honor_code.html:26
+msgid "Accept"
+msgstr ""
+
+#: templates/honor_code.html:27
+msgid "Decline"
+msgstr ""
+
+#: templates/honor_code.html:34
+#, python-format
+msgid ""
+"\n"
+"            To accept the honor code, you must <a href=\"%(join_url)s"
+"\">register</a> first.\n"
+"            "
+msgstr ""
+
+#: templates/honor_code_declined.html:4
+msgid "Honor code declined"
+msgstr ""
+
+#: templates/honor_code_declined.html:7
+msgid "You have declined the honor code"
+msgstr ""
+
+#: templates/honor_code_declined.html:9
+msgid ""
+"\n"
+"        TODO: Explain why and what for.\n"
+"        "
+msgstr ""
 
 #: templates/neutron/word_detail.html:20
 msgid "Word uses"
@@ -321,6 +381,16 @@ msgstr "Estadísticas"
 #: templates/profile/user_form.html:15
 msgid "Personal data"
 msgstr "Datos personales"
+
+#: views/honor_code.py:40
+msgid "Honor code accepted! Welcome to Neutrón."
+msgstr ""
+
+#: views/honor_code.py:47
+msgid ""
+"You have declined the HONOR_CODE! You won't be able to navigate this site "
+"completely."
+msgstr ""
 
 #: views/lemma.py:35
 msgid "Word '{}' cannot be found in the application"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-05 19:04+0000\n"
+"POT-Creation-Date: 2016-11-01 18:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,48 +21,36 @@ msgstr ""
 msgid "Alternate word"
 msgstr ""
 
-#: forms/__init__.py:24
-msgid "(Select your nationality)"
+#: forms/__init__.py:30
+msgid "Name"
 msgstr ""
 
-#: forms/__init__.py:32
-msgid "Nombre"
+#: forms/__init__.py:31
+msgid "Email address"
 msgstr ""
 
-#: forms/__init__.py:33
-msgid "Apellidos"
-msgstr ""
-
-#: forms/__init__.py:34
-msgid "Correo electrónico"
-msgstr ""
-
-#: forms/__init__.py:35
-msgid "How did you know us?"
-msgstr ""
-
-#: forms/__init__.py:36
-msgid "Tell us your educational level, please"
-msgstr ""
-
-#: forms/__init__.py:45 forms/__init__.py:65
+#: forms/__init__.py:43 forms/__init__.py:79
 msgid "Duplicate email!"
 msgstr ""
 
-#: forms/__init__.py:50
-msgid "Check the declaration."
+#: forms/__init__.py:48
+msgid "(Select your nationality)"
 msgstr ""
 
 #: forms/__init__.py:55
-msgid "Accept honor code"
+msgid "How did you know us?"
 msgstr ""
 
 #: forms/__init__.py:56
-msgid "Email account to get in touch with you"
+msgid "Tell us your educational level, please"
+msgstr ""
+
+#: forms/__init__.py:69
+msgid "Accept honor code"
 msgstr ""
 
 #: forms/__init__.py:70
-msgid "Honor code must be accepted in order to register"
+msgid "Email account to get in touch with you"
 msgstr ""
 
 #: models/faq.py:23
@@ -182,76 +170,76 @@ msgstr ""
 msgid "About"
 msgstr ""
 
+#: templates/about.html:29
+msgid "Our team"
+msgstr ""
+
+#: templates/about.html:33
+msgid "...in random order of appearance."
+msgstr ""
+
 #: templates/base.html:46
 msgid "Únete"
 msgstr ""
 
-#: templates/base.html:49 templates/join.html:4
+#: templates/base.html:49 templates/join.html.py:4
 msgid "Participa"
 msgstr ""
 
 #: templates/base.html:51
-msgid "Word use"
+msgid "Game 1"
 msgstr ""
 
 #: templates/base.html:52
-msgid "Word coarse"
+msgid "Game 2"
 msgstr ""
 
 #: templates/base.html:53
-msgid "Word alternate"
-msgstr ""
-
-#: templates/base.html:60
-msgid "Consulta"
+msgid "Game 3"
 msgstr ""
 
 #: templates/base.html:63
-msgid "equipo y patrocinadores"
+msgid "Equipo y patrocinadores"
 msgstr ""
 
 #: templates/base.html:70
 msgid "Profile"
 msgstr ""
 
-#: templates/base.html:71
-msgid "My stats"
+#: templates/base.html:75 templates/users/register.html.py:44
+msgid "Honor code"
 msgstr ""
 
-#: templates/base.html:73
+#: templates/base.html:77
 msgid "Admin"
 msgstr ""
 
-#: templates/base.html:81
+#: templates/base.html:85
 msgid "Login"
-msgstr ""
-
-#: templates/base.html:91
-msgid "Select interface language"
 msgstr ""
 
 #: templates/faq.html:4
 msgid "FAQ's"
 msgstr ""
 
-#: templates/faq.html:38
+#: templates/faq.html:105
 msgid "Your pending questions"
 msgstr ""
 
-#: templates/faq.html:41
+#: templates/faq.html:108
 #, python-format
 msgid "On %(timestamp)s you asked:"
 msgstr ""
 
-#: templates/faq.html:49
+#: templates/faq.html:116
 msgid "Delete"
 msgstr ""
 
-#: templates/faq.html:62 templates/faq_ask.html:11
+#: templates/faq.html:129 templates/faq_ask.html.py:11
 msgid "¿Cómo podemos ayudarte?"
 msgstr ""
 
-#: templates/faq.html:63
+#: templates/faq.html:130 templates/home.html.py:93
 msgid "Enviar"
 msgstr ""
 
@@ -267,33 +255,140 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
+#: templates/home.html:7
+msgid "¡Hola! Somos Neutrón"
+msgstr ""
+
+#: templates/home.html:9
+msgid ""
+"Queremos mejorar la comunicación entre 470 millones de hispanohablantes."
+msgstr ""
+
+#: templates/home.html:10
+msgid ""
+"Para conseguirlo, necesitamos conocer el uso que los hablantes nativos de "
+"distintos países hacen de la lengua española. Necesitamos que tú formes "
+"parte del proyecto."
+msgstr ""
+
+#: templates/home.html:13
+msgid "¿Cómo lo vamos a hacer?"
+msgstr ""
+
+#: templates/home.html:16
+msgid ""
+"\n"
+"            Vamos a centrarnos en el léxico, que es el componente de la "
+"lengua que\n"
+"            más diferencias presenta entre unos países y otros y el que no "
+"puede reducirse a reglas.\n"
+"            "
+msgstr ""
+
+#: templates/home.html:23
+msgid "¿Por qué queremos hacerlo?"
+msgstr ""
+
+#: templates/home.html:26
+msgid "Por dos razones:"
+msgstr ""
+
+#: templates/home.html:29
+msgid ""
+"\n"
+"                    En primer lugar, porque no podemos creer que un proyecto "
+"como Neutrón no haya sido\n"
+"                    abordado y completado antes: ¡a todos nos gusta "
+"identificar diferencias entre variedades de\n"
+"                    español! Disfrutamos conociendo nuestro idioma y "
+"comprendiendo lo que hay detrás de sus\n"
+"                    diferentes manifestaciones. La lengua es única "
+"despertando nuestra curiosidad.\n"
+"                    "
+msgstr ""
+
+#: templates/home.html:37
+msgid ""
+"\n"
+"                    En segundo lugar, porque el análisis de los datos "
+"obtenidos tiene una aplicación inmediata y\n"
+"                    enriquecedora: ya sea porque queremos llegar al mayor "
+"número de hablantes de español\n"
+"                    posible o porque queremos acercarnos a una comunidad "
+"específica, solo el conocimiento\n"
+"                    del uso del léxico en cada región nos permitirá alcanzar "
+"nuestro objetivo de forma óptima.\n"
+"                    "
+msgstr ""
+
+#: templates/home.html:48
+msgid "¿Por qué no lo conseguiremos sin tu ayuda?"
+msgstr ""
+
+#: templates/home.html:52
+msgid ""
+"\n"
+"                La primera vez que nos reunimos para hablar de Neutrón "
+"pensamos en contrastar libros y diarios\n"
+"                publicados en diferentes países hispanohablantes; aplicando "
+"la tecnología adecuada y un buen\n"
+"                análisis de datos, ¿no obtendríamos todas las respuestas con "
+"respecto al uso del vocabulario en\n"
+"                distintos puntos del mapa? La idea era tentadora, pero le "
+"faltaba algo fundamental: frescura. Los\n"
+"                textos publicados tienden a ofrecer una selección "
+"cuidadosamente meditada del léxico, muchas\n"
+"                veces por su vocación universal o de integración en un "
+"determinado estándar. El vocabulario que\n"
+"                queremos conocer y que de verdad nos va a ayudar a completar "
+"el mapa del español en el mundo es\n"
+"                el que tú utilizas de forma espontánea, sin filtros.\n"
+"                "
+msgstr ""
+
+#: templates/home.html:66
+msgid "¿Qué tecnología aplicaremos?"
+msgstr ""
+
+#: templates/home.html:70
+msgid ""
+"\n"
+"                ¿Tecnología? Se trata de un proyecto lingüístico, así que "
+"intentamos que la tecnología se\n"
+"                note lo menos posible, pero que sepas que utilizamos toda la "
+"que está a nuestro alcance para\n"
+"                simplificar tu tarea como informante.\n"
+"                "
+msgstr ""
+
+#: templates/home.html:77
+msgid ""
+"\n"
+"                Si quieres saber más, te diremos que utilizamos Python/"
+"Django para el <i>backend</i>,\n"
+"                C++ para los cálculos más duros y algo de JavaScript en el "
+"<i>front</i>. Todo ello montado en\n"
+"                Amazon EC2 con una base de datos relacional. ¿Te interesa? "
+"Pues pásate por nuestro\n"
+"                <a href=\"https://github.com/jgsogo/neutron\" target=\"_blank"
+"\">repositorio en Github</a> y colabora, ¡no\n"
+"                sólo de informantes vive el proyecto!\n"
+"                "
+msgstr ""
+
+#: templates/home.html:88
+msgid "¿Quieres saber más?"
+msgstr ""
+
+#: templates/home.html:92
+msgid "Háblanos de ti y cuéntanos qué te gustaría saber, somos todo oídos."
+msgstr ""
+
 #: templates/join.html:31
 msgid "Formulario"
 msgstr ""
 
-#: templates/join.html:43
-msgid ""
-"\n"
-"                        <strong>Declaro.-</strong> Al solicitar mi "
-"participación en el proyecto Neutrón, declaro que cumplo con\n"
-"                        los requisitos exigidos a los informantes: soy "
-"hablante nativo de español;\n"
-"                        nací y crecí en el país indicado, donde resido "
-"actualmente; durante los dos últimos años\n"
-"                        no he permanecido en otro país de habla hispana "
-"durante un tiempo superior a seis meses.\n"
-"                    "
-msgstr ""
-
-#: templates/join.html:51
-msgid "Acepto"
-msgstr ""
-
-#: templates/join.html:53
-msgid "This declaration must be accepted to continue."
-msgstr ""
-
-#: templates/join.html:56
+#: templates/join.html:41
 msgid "Participar"
 msgstr ""
 
@@ -310,10 +405,6 @@ msgstr ""
 msgid ""
 "If you don't have an account, please <a href=\"%(register_url)s\">join</a> "
 "first"
-msgstr ""
-
-#: templates/users/register.html:44
-msgid "Honor code"
 msgstr ""
 
 #: templates/users/register.html:46

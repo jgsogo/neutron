@@ -8,18 +8,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-05 19:03+0000\n"
+"POT-Creation-Date: 2016-11-01 18:13+0100\n"
 "PO-Revision-Date: 2016-10-30 18:31+0000\n"
 "Last-Translator: b'Maria Varela <mariavarelar@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Translated-Using: django-rosetta 0.7.11\n"
 
+#: templates/word_use/run.html:8
+#, python-format
+msgctxt "word use question"
+msgid ""
+"\n"
+"                Do you use the word <span>\"%(word)s\"</span> with the "
+"meaning <span>\"%(meaning)s\"</span>?\n"
+"            "
+msgstr ""
+
 #: templates/word_use/run.html:27
-msgid "There are no meanings in the database"
+#, fuzzy
+#| msgid "There are no meanings in the database"
+msgid "Ooops! There are no meanings in the database"
 msgstr ""
 "Activaremos este juego cuando hayamos recopilado datos suficientes. ¡Vuelve "
 "pronto!"

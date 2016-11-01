@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-05 19:03+0000\n"
+"POT-Creation-Date: 2016-11-01 18:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: templates/word_use/run.html:8
+#, python-format
+msgctxt "word use question"
+msgid ""
+"\n"
+"                Do you use the word <span>\"%(word)s\"</span> with the "
+"meaning <span>\"%(meaning)s\"</span>?\n"
+"            "
+msgstr ""
+
 #: templates/word_use/run.html:27
-msgid "There are no meanings in the database"
+msgid "Ooops! There are no meanings in the database"
 msgstr ""
