@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 
 
 @sensitive_post_parameters()
@@ -36,8 +37,8 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    context = {'title': _('Logged out')}
-    return TemplateResponse(request, 'users/logout.html', context)
+    messages.info(request, _("Thanks for working with Neutron! Come back soon!"))
+    return HttpResponseRedirect(reverse('home'))
 
 
 def register(request):
