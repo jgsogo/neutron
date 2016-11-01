@@ -25,6 +25,7 @@ class EmailManager(models.Manager):
 
     def send(self, limit=None):
         qs = self.filter(sent__isnull=True)[:limit]
+        log.debug("Sending {} mails".format(len(qs)))
         with get_connection() as connection:
             return sum(email.send(connection) for email in qs)
 
@@ -45,6 +46,8 @@ class Email(models.Model):
 
     sent = models.DateTimeField(blank=True, null=True)
     fail_count = models.IntegerField(default=0)
+
+    objects = EmailManager()
 
     @property
     def is_sent(self):
@@ -75,6 +78,7 @@ class Email(models.Model):
                            connection=connection,
                            )
         try:
+            log.debug("Send mail to {!r}: {}".format(self.recipient, self.subject))
             obj.send(fail_silently=False)
             self.message = text
             self.sent = now()

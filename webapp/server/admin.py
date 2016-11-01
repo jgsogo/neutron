@@ -11,7 +11,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class EmailAdmin(admin.ModelAdmin):
-    list_display = ('recipient', 'subject', 'sent', 'staff_recipient')
+    list_display = ('recipient', 'subject', 'sent', 'staff_recipient', 'fail_count')
     list_filter = ('sent', 'staff_recipient')
     readonly_fields = ('text',)
 
