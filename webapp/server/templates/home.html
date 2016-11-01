@@ -88,8 +88,9 @@
     <h3 class="cabecera-caja-fondo-gris-02">{% trans "¿Quieres saber más?" %}</h3>
     <div class="content">
         <div class="caja-fondo-gris">
-            <form method="post" action="{% url 'home_ask' %}">{% csrf_token %}
-                <textarea id="id_user_input" name="user_input" cols="30" rows="10" placeholder="{% trans "Háblanos de ti y cuéntanos qué te gustaría saber, somos todo oídos." %}"></textarea>
+            <form method="post" action="{% url 'home' %}">{% csrf_token %}
+                {{ form.user_input.errors }}{{ form.user_input }}
+                {{ form.email.errors }}{{ form.email }}
                 <button class="b-yellow">{% trans "Enviar" %}</button>
             </form>
         </div>
