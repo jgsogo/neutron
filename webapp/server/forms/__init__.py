@@ -45,6 +45,9 @@ class JoinFormStep1(forms.Form):
 
 
 class JoinFormStep2(JoinFormStep1):
+    is_native_speaker = forms.BooleanField()
+    is_living_region = forms.BooleanField()
+    is_no_abroad = forms.BooleanField()
     region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=_("(Select your nationality)"))
     known_us = forms.ChoiceField(choices=Informer.KNOWN_US)
     education = forms.ChoiceField(choices=Informer.EDUCATION)
@@ -55,7 +58,8 @@ class JoinFormStep2(JoinFormStep1):
         self.fields['known_us'].widget.choices.insert(0, ('', _("How did you know us?")))
         self.fields['education'].widget.choices.insert(0, ('', _("Tell us your educational level, please")))
         if 'region' in initial:
-            self.fields['region'] = forms.CharField(disabled=True)
+            self.fields['region'].disabled = True
+            # self.fields['region'] = forms.CharField(disabled=True)
 
     """
     def clean_declaration(self):

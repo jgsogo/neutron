@@ -38,6 +38,19 @@
                 {{ form.region.errors }}{{ form.region }}
                 {{ form.education.errors }}{{ form.education }}
                 {{ form.known_us.errors }}{{ form.known_us }}
+                <p><h5>{% trans "Before joining you must confirm" %}:</h5></p>
+                <p>
+                    {{ form.is_native_speaker.errors }}{{ form.is_native_speaker }}
+                    {% trans "I'm a native spanish speaker" %}
+                </p>
+                <p>
+                    {{ form.is_living_region.errors }}{{ form.is_living_region }}
+                    {% trans "I'm currently living in the region stated above" %}
+                </p>
+                <p>
+                    {{ form.is_no_abroad.errors }}{{ form.is_no_abroad }}
+                    {% trans "I haven't lived for more than 6 months during the last 2 years in another spanish speaking country" %}
+                </p>
                 <button class="b-yellow">{% trans "Participar" %}</button>
             </form>
         </div><!-- caja-fondo-gris -->
