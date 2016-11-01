@@ -7,12 +7,18 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage, get_connection
 from django.utils.timezone import now
 from django.conf import settings
+from django.utils.safestring import mark_safe
 
 from model_utils.choices import Choices
 from jsonfield import JSONField
 
 import logging
 log = logging.getLogger(__name__)
+
+
+MANAGERS_MAILS = [it[1] for it in getattr(settings, 'MANAGERS', [])]
+ADMIN_MAILS = [it[1] for it in getattr(settings, 'ADMINS', [])]
+NEUTRON_EMAIL = getattr(settings, "NEUTRON_EMAIL")
 
 
 class EmailManager(models.Manager):
@@ -24,12 +30,13 @@ class EmailManager(models.Manager):
 
 
 class Email(models.Model):
-    STAFF_RECIPIENTS = Choices((0, 'managers', _("Managers")),
-                               (1, 'admins', _("Admins")))
+    STAFF_RECIPIENTS = Choices((0, 'managers', "Managers"),
+                               (1, 'admins', "Admins"))
 
     subject = models.CharField(max_length=256)
     recipient = models.EmailField()
-    staff_recipient = models.IntegerField(choices=STAFF_RECIPIENTS)
+    staff_recipient = models.IntegerField(choices=STAFF_RECIPIENTS,
+                                          help_text=mark_safe("Managers: {}</br>Admins: {}".format(', '.join(MANAGERS_MAILS), ', '.join(ADMIN_MAILS))))
 
     message = models.TextField()
 
@@ -50,15 +57,21 @@ class Email(models.Model):
         else:
             return self.message
 
-    def send(self, connection=None):
-        # TODO: Get these data from settings
-        staff_recipients = []
-        from_email = None
+    def _get_recipients(self):
+        recipients = [self.recipient]
+        if self.staff_recipient is Email.STAFF_RECIPIENTS.managers:
+            recipients += MANAGERS_MAILS
+        elif self.staff_recipient is Email.STAFF_RECIPIENTS.admins:
+            recipients += ADMIN_MAILS
+        else:
+            raise ValueError("Do not recognize given staff recipients: {!r}".format(self.staff_recipient))
+        return recipients
 
+    def send(self, connection=None):
         text = self.text
         obj = EmailMessage(self.subject, text,
-                           from_email=from_email,
-                           to=[self.recipient] + staff_recipients,
+                           from_email=NEUTRON_EMAIL,
+                           to=self._get_recipients(),
                            connection=connection,
                            )
         try:

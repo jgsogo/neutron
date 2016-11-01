@@ -12,7 +12,8 @@ class QuestionAdmin(admin.ModelAdmin):
 
 class EmailAdmin(admin.ModelAdmin):
     list_display = ('recipient', 'subject', 'sent', 'staff_recipient')
-    list_filter = ('sent',)
+    list_filter = ('sent', 'staff_recipient')
+    readonly_fields = ('text',)
 
 
 admin.site.register(Question, QuestionAdmin)
