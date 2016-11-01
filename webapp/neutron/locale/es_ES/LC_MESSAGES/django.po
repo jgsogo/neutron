@@ -9,22 +9,22 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-05 19:01+0000\n"
-"PO-Revision-Date: 2016-07-27 21:42+0000\n"
+"PO-Revision-Date: 2016-10-30 15:02+0000\n"
 "Last-Translator: b'Maria Varela <mariavarelar@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Translated-Using: django-rosetta 0.7.11\n"
 
 #: admin.py:66 admin.py:76 admin.py:95 admin.py:144 admin.py:154 admin.py:172
 msgid "Obliterate"
-msgstr ""
+msgstr "Anular"
 
 #: admin.py:238
 msgid "has alternative"
-msgstr ""
+msgstr "Tiene alternativa."
 
 #: admin.py:238
 msgid "Yes"
@@ -44,25 +44,23 @@ msgstr "Segundos que ha tardado en responder el informante"
 
 #: models/data.py:28
 msgid "Datum"
-msgstr ""
+msgstr "Dato"
 
 #: models/data.py:29
 msgid "Data"
-msgstr ""
+msgstr "Datos"
 
 #: models/data.py:41
-#, fuzzy
 msgid "Checked if the word has been marked as coarse."
 msgstr "Casilla activa si la palabra ha sido marcada como grosera."
 
 #: models/data.py:44
-#, fuzzy
 msgid "Coarse word"
 msgstr "Palabra grosera"
 
 #: models/data.py:45
 msgid "Coarse words"
-msgstr ""
+msgstr "Palabras groseras"
 
 #: models/data.py:57
 msgid "Ok"
@@ -82,47 +80,47 @@ msgstr "No conozco el significado"
 
 #: models/data.py:66
 msgid "Word use"
-msgstr ""
+msgstr "Conocimiento y uso del significante"
 
 #: models/data.py:67
 msgid "Words uses"
-msgstr ""
+msgstr "Conocimiento y uso de los significantes"
 
 #: models/data.py:79
 msgid "Alternate word/definition in the informer's dictionary"
-msgstr ""
+msgstr "Significante alternativo/significado en el glosario del informante"
 
 #: models/data.py:83
 msgid "Word alternate"
-msgstr ""
+msgstr "Significante alternativo"
 
 #: models/data.py:84
 msgid "Word alternates"
-msgstr ""
+msgstr "Significantes alternativos"
 
 #: models/definition.py:13
 msgid "Text of the definition itself"
-msgstr ""
+msgstr "Texto que define el significado"
 
 #: models/definition.py:16 models/meaning.py:34
 msgid "Definition"
-msgstr ""
+msgstr "Significado"
 
 #: models/definition.py:17
 msgid "Definitions"
-msgstr ""
+msgstr "Significados"
 
 #: models/informer.py:23
 msgid "Public"
-msgstr ""
+msgstr "Público"
 
 #: models/informer.py:24
 msgid "Friends"
-msgstr ""
+msgstr "Amigos"
 
 #: models/informer.py:25
 msgid "Private"
-msgstr ""
+msgstr "Privado"
 
 #: models/informer.py:28
 msgid "Cálamo & Cran"
@@ -150,11 +148,11 @@ msgstr "Ed. Universitaria"
 
 #: models/informer.py:35
 msgid "Male"
-msgstr ""
+msgstr "Hombre"
 
 #: models/informer.py:35
 msgid "Female"
-msgstr ""
+msgstr "Mujer"
 
 #: models/informer.py:38
 msgid "How did he know about us?"
@@ -172,114 +170,121 @@ msgstr "Identificador del informante"
 msgid ""
 "Whether the words related to this informer are included in the search-form."
 msgstr ""
+"¿Se incluyen las alternativas proporcionadas por este informante en el "
+"formulario de búsqueda?"
 
 #: models/informer.py:52
 msgid "Informers may or may not be users in the webapp"
-msgstr ""
+msgstr "Los informantes pueden ser o no usuarios de la aplicación."
 
 #: models/informer.py:54
 msgid ""
 "Define who can see this information: public (everyone), friends (only users "
 "registered), private (nobody, just in database dumps)."
 msgstr ""
+"Determina quién puede ver esta información: pública (cualquiera), amigos "
+"(solo usuarios registrados) o privada (nadie, solo en la papelera de la base"
+" de datos)."
 
 #: models/informer.py:58
 msgid "Confidence level for this informer for data in this region"
 msgstr ""
+"Nivel de confianza en los datos que este informante aporta para su región"
 
 #: models/informer.py:60
 msgid "Whether confidence attribute can be automatically reevaluated"
-msgstr ""
+msgstr "¿Puede ser reevaluado el nivel de confianza de manera automática?"
 
 #: models/informer.py:63
 msgid "Informer"
-msgstr ""
+msgstr "Informante"
 
 #: models/informer.py:64
 msgid "Informers"
-msgstr ""
+msgstr "Informantes"
 
 #: models/interface.py:11
 msgid "Identifier of the interface"
-msgstr ""
+msgstr "Identificador de la interfaz"
 
 #: models/interface.py:14
 msgid "Interface"
-msgstr ""
+msgstr "Interfaz"
 
 #: models/interface.py:15
 msgid "Interfaces"
-msgstr ""
+msgstr "Interfaces"
 
 #: models/meaning.py:35
 msgid "Reference (remisión)"
-msgstr ""
+msgstr "Referencia (remisión)"
 
 #: models/meaning.py:45
 msgid ""
 "If set, this meaning won't be shown to informers in WordUse and "
 "WordAlternate interfaces"
-msgstr ""
+msgstr "Si se activa, esta acepción se ocultará en los juegos 1 y 3."
 
 #: models/meaning.py:50
 msgid "Meaning"
-msgstr ""
+msgstr "Significado"
 
 #: models/meaning.py:51
 msgid "Meanings"
-msgstr ""
+msgstr "Acepciones"
 
 #: models/meaning.py:64
 msgid "Context"
-msgstr ""
+msgstr "Contexto"
 
 #: models/meaning.py:65
 msgid "Contexts"
-msgstr ""
+msgstr "Contextos"
 
 #: models/region.py:21
 msgid "Name of the region"
-msgstr ""
+msgstr "Nombre del país"
 
 #: models/region.py:33 templates/neutron/word_detail.html:26
 msgid "Region"
-msgstr ""
+msgstr "País"
 
 #: models/region.py:34
 msgid "Regions"
-msgstr ""
+msgstr "Países"
 
 #: models/word.py:29
 msgid "If set, this word won't be shown to informers in WordCoarse interface"
 msgstr ""
+"Si se activa, este lema no se mostrará a los informantes en el juego 3."
 
 #: models/word.py:34
 msgid "Word"
-msgstr ""
+msgstr "Significante"
 
 #: models/word.py:35
 msgid "Words"
-msgstr ""
+msgstr "Significantes"
 
 #: templates/neutron/word_detail.html:20
 msgid "Word uses"
-msgstr ""
+msgstr "Conocimiento y uso del significante"
 
 #: templates/neutron/word_detail.html:27
 msgid "Same use"
-msgstr ""
+msgstr "Uso idéntico"
 
 #: templates/neutron/word_detail.html:28
 msgid "Prefer other"
-msgstr ""
+msgstr "Uso de otro significante"
 
 #: templates/neutron/word_detail.html:29
 msgid "Unrecognized"
-msgstr ""
+msgstr "Significado no reconocido"
 
 #: templates/neutron/word_detail.html:30
 msgid "Total count"
-msgstr ""
+msgstr "Total"
 
 #: templates/neutron/word_detail.html:51
 msgid "There is no data for this meaning"
@@ -299,7 +304,7 @@ msgstr "Buscar"
 
 #: templates/neutron/word_detail_search.html:17
 msgid "Similar words"
-msgstr ""
+msgstr "Entradas similares"
 
 #: templates/profile/informer_form.html:6
 msgid "Datos de informante"
