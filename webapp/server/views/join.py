@@ -31,6 +31,10 @@ class JoinStep1(FormView):
         self.request.session['join_data'] = form.cleaned_data
         return HttpResponseRedirect(reverse('join'))
 
+    def get(self, request, *args, **kwargs):
+        self.request.session.pop('join_data', None)
+        return super(JoinStep1, self).get(request, *args, **kwargs)
+
 
 class JoinStep2(JoinStep1):
     form_class = JoinFormStep2
@@ -57,7 +61,11 @@ class JoinStep2(JoinStep1):
             _informer, created = Informer.objects.get_or_create(user=self.request.user,
                                                                 defaults={'region': join_data['region'],
                                                                           'education': join_data['education'],
-                                                                          'known_us': join_data['known_us']})
+                                                                          'known_us': join_data['known_us'],
+                                                                          'is_native_speaker': join_data['is_native_speaker'],
+                                                                          'is_living_region': join_data['is_living_region'],
+                                                                          'is_no_abroad': join_data['is_no_abroad'],
+                                                                          })
             if not _informer.honor_code:
                 return HttpResponseRedirect(reverse('honor_code'))
 
@@ -102,6 +110,9 @@ class JoinRegister(FormView):
                 informer = Informer(user=new_user)
                 informer.name = join_data['name']
                 informer.region = Region.objects.get(pk=join_data['region'])
+                informer.is_native_speaker = join_data['is_native_speaker']
+                informer.is_living_region = join_data['is_living_region']
+                informer.is_no_abroad = join_data['is_no_abroad']
                 informer.known_us = join_data['known_us']
                 informer.education = join_data['education']
                 informer.honor_code = form.cleaned_data['honor_code']

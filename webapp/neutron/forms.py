@@ -13,7 +13,7 @@ class SearchWordForm(forms.Form):
 
 
 class MeaningForm(forms.ModelForm):
-    word = forms.CharField()
+    word = forms.CharField(help_text=_("Changing this word will affect only this definition"))
     definition = forms.CharField()
 
     class Meta:

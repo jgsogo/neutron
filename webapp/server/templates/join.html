@@ -19,9 +19,9 @@
             <h4>¿Qué tendrías que hacer?</h4>
             <p>Necesitamos que recorras un glosario de palabras definidas de forma sencilla e ilustradas con ejemplos y que respondas a tres tipos de preguntas:</p>
             <ul>
-                <li>¿Te resulta malsonante esta palabra?</li>
-                <li>¿La usas para expresar este significado?</li>
-                <li>Si no la usas, ¿prefieres utilizar otra?</li>
+                <li>Juego 1: ¿usas esta palabra con este significado?</li>
+                <li>Juego 2: si no la usas, ¿qué palabra usas?</li>
+                <li>Juego 3: ¿te resulta grosera?</li>
             </ul>
             <h4>¿Qué puedes obtener a cambio?</h4>
             <p>Nuestros informantes reciben el <span class="color-orange">certificado Neutrón</span>, que expresa formalmente su participación en un proyecto de investigación lingüística patrocinado por prestigiosas entidades públicas y del sector privado.</p>
@@ -38,6 +38,19 @@
                 {{ form.region.errors }}{{ form.region }}
                 {{ form.education.errors }}{{ form.education }}
                 {{ form.known_us.errors }}{{ form.known_us }}
+                <p><h5>{% trans "Before joining you must confirm" %}:</h5></p>
+                <p>
+                    {{ form.is_native_speaker.errors }}{{ form.is_native_speaker }}
+                    {% trans "I'm a native spanish speaker" %}
+                </p>
+                <p>
+                    {{ form.is_living_region.errors }}{{ form.is_living_region }}
+                    {% trans "I'm currently living in the region stated above" %}
+                </p>
+                <p>
+                    {{ form.is_no_abroad.errors }}{{ form.is_no_abroad }}
+                    {% trans "I haven't lived for more than 6 months during the last 2 years in another spanish speaking country" %}
+                </p>
                 <button class="b-yellow">{% trans "Participar" %}</button>
             </form>
         </div><!-- caja-fondo-gris -->

@@ -4,11 +4,18 @@
 {% block wordalternate_content %}
     {% if item %}
 
+        <p>
         {% with item.context_set.all as contexts %}
-            {% blocktrans with meaning=item.definition region=item.informer.region word=item.word context=contexts.0.text|capfirst context "wordalternate question" %}
-                <p>What word do you use with the meaning <span>"{{ meaning }}"</span>? In <span>{{ region }}</span> it is used <span>"{{ word }}"</span> like in "{{ context }}".</p>
+            {% blocktrans with meaning=item.definition context "wordalternate question" %}
+                What word do you use with the meaning <span>"{{ meaning }}"</span>?
             {% endblocktrans %}
+            {% if contexts %}
+                {% blocktrans with region=item.informer.region word=item.word context=contexts.0.text|capfirst %}
+                In <span>{{ region }}</span> it is used <span>"{{ word }}"</span> like in "{{ context }}".
+                {% endblocktrans %}
+            {% endif %}
         {% endwith %}
+        </p>
 
         <form method="post" class="form">
             {% csrf_token %}
@@ -20,7 +27,6 @@
             {% endbuttons %}
         </form>
     {% else %}
-        <h3>Error!</h3>
-        <p>There are no meanings in the database.</p>
+        <p>{% trans "Ooops! There are no meanings in the database" %}.</p>
     {% endif %}
 {% endblock %}

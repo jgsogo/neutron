@@ -46,6 +46,9 @@ class Informer(models.Model):
 
     # Validated data
     region = models.ForeignKey(Region, blank=True, null=True)
+    is_native_speaker = models.NullBooleanField(help_text=_("The informer is native speaker"))
+    is_living_region = models.NullBooleanField(help_text=_("The informer is currently living in his birth region"))
+    is_no_abroad = models.NullBooleanField(help_text=_("The informer hasn't lived abroad for more than 6 months in the last 2 years"))
 
     # Extra information (only shown in admin interface)
     name = models.CharField(max_length=64, help_text=_("Informer identifier (only in admin)"))

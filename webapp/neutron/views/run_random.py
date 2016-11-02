@@ -10,12 +10,13 @@ from django.db.utils import OperationalError
 from django.conf import settings
 
 from neutron.models import Meaning, Interface, WordUse, WordAlternate, Word, CoarseWord
+from neutron.views.honor_code import HonorCodeAcceptedMixin
 
 import logging
 log = logging.getLogger(__name__)
 
 
-class RandomItemRun(UserPassesTestMixin, FormView):
+class RandomItemRun(UserPassesTestMixin, HonorCodeAcceptedMixin, FormView):
     model_item_class = None
     model_class = None
     extra_values = None

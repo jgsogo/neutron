@@ -13,6 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 class _HonorCodeAccepted(object):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_informer() or not request.user.as_informer().honor_code:
+            messages.warning(request, _("You have to accept the honor code to be able to access this view"))
             return HttpResponseRedirect("{}?{}".format(reverse('neutron:honor_code'), urlencode({'next': request.path })))
         return super(_HonorCodeAccepted, self).dispatch(request, *args, **kwargs)
 
