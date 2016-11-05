@@ -42,7 +42,7 @@ install:
   - sudo dpkg -i conan.deb
   - rm conan.deb
   # Install dependencies for Python
-  - pip install -r webapp/requirements.txt
+  - sudo pip install -r webapp/requirements.txt
   
 script:
   # Compile and run tests for C++
