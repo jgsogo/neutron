@@ -24,7 +24,7 @@ build_script:
 
 test_script:
   # Ŕun C++ tests
-  - cmd: build-release/bin/test_neutron_basic.exe
+  - cmd: build-release\bin\test_neutron_basic.exe
   # Run Python tests
   - cmd: python -m unittest discover -s webapp
 
