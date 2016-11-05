@@ -3,3 +3,4 @@
 
 
 from .faq import Question
+from .email import Email

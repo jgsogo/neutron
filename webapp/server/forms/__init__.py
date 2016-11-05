@@ -92,4 +92,13 @@ class JoinRegisterForm(UserCreationForm):
 
 
 class HomeAskForm(forms.Form):
-    user_input = forms.Textarea()
+    user_input = forms.CharField(widget=forms.Textarea)
+    email = forms.EmailField()
+
+    def __init__(self, initial, *args, **kwargs):
+        super(HomeAskForm, self).__init__(initial=initial, *args, **kwargs)
+        self.fields['email'].widget.attrs.update({'placeholder': "you@email.com",})
+        self.fields['user_input'].widget.attrs.update({'placeholder': _("Háblanos de ti y cuéntanos qué te gustaría saber, somos todo oídos")})
+
+
+
