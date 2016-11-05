@@ -72,7 +72,7 @@ class Question(models.Model):
         obj.recipient = MANAGERS_MAILS[0]  # TODO: Who to send question to?
         obj.staff_recipient = Email.STAFF_RECIPIENTS.managers
         obj.template = 'email/question.txt'
-        obj.json = {'user': self.user,
+        obj.json = {'user': str(self.user),
                     'timestamp': self.timestamp,
                     'text': self.user_input,
                     }
@@ -88,7 +88,7 @@ class Question(models.Model):
             obj.staff_recipient = Email.STAFF_RECIPIENTS.managers
             obj.template = 'email/answer.txt'
             obj.json = {'question_pk': self.pk,
-                        'user': self.user,
+                        'user': str(self.user),
                         'timestamp': self.timestamp,
                         'question': self.user_input,
                         'answer': self.answer,
