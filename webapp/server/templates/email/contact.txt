@@ -1,0 +1,4 @@
+Contact template
+
+Email provided: {{ email }}
+User input: {{ user_input }}

@@ -33,9 +33,8 @@ class QuestionMake(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.user = self.request.user
-        obj.save()
-        # TODO: Send a mail (or enqueu it), or make a daemon run over all unresolved questions
-        messages.add_message(self.request, messages.SUCCESS, _("Thanks for your question! We will answer you soon using your mail {}").format(self.request.user.email))
+        obj.save(notify=True)
+        messages.add_message(self.request, messages.SUCCESS, _("Thanks for your question! We will answer you soon to your mail address"))
         return HttpResponseRedirect(reverse('faq'))
 
 
