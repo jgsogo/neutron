@@ -5,11 +5,7 @@ platform:
 
 install:
   # Needed for C++
-  - cmd: echo "Downloading conan..."
-  - ps: wget http://downloads.conan.io/latest_windows -OutFile conan_installer.exe
-  - cmd: conan_installer.exe /VERYSILENT
-  - cmd: set PATH=%PATH%;C:\Program Files (x86)\Conan\conan
-  - cmd: conan --version
+  - cmd: pip install conan
   # Needed for Python
   - cmd: pip install -r webapp/requirements.txt
 
