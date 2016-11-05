@@ -11,6 +11,7 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
+            - cmake
             - g++-4.9
       env: 
         - CONAN_ENV="env CC=gcc CXX=g++-4.9" COMPILER=g++-4.9 COMPILER_NAME=gcc COMPILER_VERSION=4.9
@@ -21,32 +22,30 @@ matrix:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.6
           packages:
+            - cmake
             - clang-3.6
       env: 
         - CONAN_ENV="env CC=clang CXX=clang++-3.6" COMPILER=clang++-3.6 COMPILER_NAME=clang COMPILER_VERSION=3.6 CONAN_EXTRA="-s compiler.libcxx=libstdc++11"
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y python-dev
         
 install:
-  # install cmake 2.8.12 manually, see
-  #     * https://github.com/travis-ci-tester/travis-test-cmake
-  - wget http://www.cmake.org/files/v3.6/cmake-3.6.1.tar.gz
-  - tar xf cmake-3.6.1.tar.gz
-  - cd cmake-3.6.1
-  - ./bootstrap --system-curl
-  - make
-  - sudo make install
-  - cd ..
-  # -- end
-  
-  # Download conan
-  - wget http://downloads.conan.io/latest_debian -O conan.deb
-  - sudo dpkg -i conan.deb
-  - rm conan.deb
+  # Install conan
+  - pip install --user conan
+  # Install dependencies for Python
+  - sudo pip install -r webapp/requirements.txt
   
 script:
-  - mkdir processing/compute_informer_order/build
-  - cd processing/compute_informer_order/build
-  - $CONAN_ENV conan install .. --build=missing -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION $CONAN_EXTRA
-  - $CONAN_ENV cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && cmake --build .
-  - ls -la bin/
-  - ./bin/test_neutron_basic
+  # Compile and run tests for C++
+  - mkdir build
+  - cd build
+  - $CONAN_ENV conan install ../processing/compute_informer_order --build=missing -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION $CONAN_EXTRA
+  - $CONAN_ENV cmake -DCMAKE_CXX_COMPILER=$COMPILER ../processing/compute_informer_order && cmake --build .
+  - cd ..
+  # Run C++ tests
+  - ./build/bin/test_neutron_basic
+  # Run python tests
+  - python -m unittest discover -s webapp
 
