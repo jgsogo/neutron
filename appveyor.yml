@@ -4,20 +4,23 @@ platform:
   - x64
 
 install:
-  - cmd: echo "Downloading conan..."
-  - ps: wget http://downloads.conan.io/latest_windows -OutFile conan_installer.exe
-  - cmd: conan_installer.exe /VERYSILENT
-  - cmd: set PATH=%PATH%;C:\Program Files (x86)\Conan\conan
-  - cmd: conan --version
+  # Needed for C++
+  - cmd: pip install conan
+  # Needed for Python
+  - cmd: pip install -r webapp/requirements.txt
 
 build_script:
-  - cmd: cd processing/compute_informer_order
-  - cmd: mkdir build
-  - cmd: cd build
-  - cmd: conan install .. --build=missing
-  - cmd: cmake ../ -DBUILD_TEST=TRUE  -G "Visual Studio 14 2015 Win64"
+  # Build C++
+  - cmd: mkdir build-release
+  - cmd: cd build-release
+  - cmd: conan install ../processing/compute_informer_order --build=missing
+  - cmd: cmake ../processing/compute_informer_order -DBUILD_TEST=TRUE  -G "Visual Studio 14 2015 Win64"
   - cmd: cmake --build . --config Release
+  - cmd: cd ..
 
 test_script:
-  - cmd: cd bin
-  - cmd: test_neutron_basic.exe
+  # Ŕun C++ tests
+  - cmd: build-release\bin\test_neutron_basic.exe
+  # Run Python tests
+  - cmd: python -m unittest discover -s webapp
+
