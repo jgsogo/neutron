@@ -16,7 +16,10 @@ from .informer import Informer
 
 class MeaningManager(models.Manager):
     def valid(self):
-        return self.filter(models.Q(excluded=False) | ~models.Q(type=Meaning.TYPE.reference))
+        return self.filter(models.Q(excluded=False) &
+                           ~models.Q(type=Meaning.TYPE.reference) &
+                           models.Q(word__excluded=False)
+                           )
 
     def get_next_for_informer(self, *args, **kwargs):
         from ..utils.meaning_list import get_next_meaning_for_informer
