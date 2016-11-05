@@ -48,7 +48,7 @@ script:
   # Compile and run tests for C++
   - mkdir build
   - cd build
-  - $CONAN_ENV conan install ../processing/compute_infromer_order --build=missing -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION $CONAN_EXTRA
+  - $CONAN_ENV conan install ../processing/compute_informer_order --build=missing -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION $CONAN_EXTRA
   - $CONAN_ENV cmake -DCMAKE_CXX_COMPILER=$COMPILER ../processing/compute_informer_order && cmake --build .
   - ./bin/test_neutron_basic
   - cd ..
