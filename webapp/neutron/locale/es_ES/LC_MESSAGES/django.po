@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-01 18:07+0100\n"
+"POT-Creation-Date: 2016-11-05 17:56+0100\n"
 "PO-Revision-Date: 2016-10-30 15:02+0000\n"
 "Last-Translator: b'Maria Varela <mariavarelar@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,17 +22,21 @@ msgstr ""
 msgid "Obliterate"
 msgstr "Anular"
 
-#: admin.py:245
+#: admin.py:244
 msgid "has alternative"
 msgstr "Tiene alternativa."
 
-#: admin.py:245
+#: admin.py:244
 msgid "Yes"
 msgstr "Sí"
 
-#: admin.py:245
+#: admin.py:244
 msgid "No"
 msgstr "No"
+
+#: forms.py:16
+msgid "Changing this word will affect only this definition"
+msgstr ""
 
 #: forms.py:77
 msgid "Tell us your educational level, please"
@@ -102,7 +106,7 @@ msgstr "Significantes alternativos"
 msgid "Text of the definition itself"
 msgstr "Texto que define el significado"
 
-#: models/definition.py:16 models/meaning.py:34
+#: models/definition.py:16 models/meaning.py:37
 msgid "Definition"
 msgstr "Significado"
 
@@ -170,20 +174,33 @@ msgstr "Nivel de estudios"
 msgid "Honor code, needed to access data"
 msgstr ""
 
+#: models/informer.py:49
+msgid "The informer is native speaker"
+msgstr ""
+
+#: models/informer.py:50
+msgid "The informer is currently living in his birth region"
+msgstr ""
+
 #: models/informer.py:51
+msgid ""
+"The informer hasn't lived abroad for more than 6 months in the last 2 years"
+msgstr ""
+
+#: models/informer.py:54
 #, fuzzy
 #| msgid "Informer identifier"
 msgid "Informer identifier (only in admin)"
 msgstr "Identificador del informante"
 
-#: models/informer.py:53
+#: models/informer.py:56
 msgid ""
 "Whether the words related to this informer are included in the search-form."
 msgstr ""
 "¿Se incluyen las alternativas proporcionadas por este informante en el "
 "formulario de búsqueda?"
 
-#: models/informer.py:56
+#: models/informer.py:59
 msgid ""
 "Define who can see this information: public (everyone), friends (only users "
 "registered), private (nobody, just in database dumps)."
@@ -192,20 +209,20 @@ msgstr ""
 "(solo usuarios registrados) o privada (nadie, solo en la papelera de la base "
 "de datos)."
 
-#: models/informer.py:60
+#: models/informer.py:63
 msgid "Confidence level for this informer for data in this region"
 msgstr ""
 "Nivel de confianza en los datos que este informante aporta para su región"
 
-#: models/informer.py:62
+#: models/informer.py:65
 msgid "Whether confidence attribute can be automatically reevaluated"
 msgstr "¿Puede ser reevaluado el nivel de confianza de manera automática?"
 
-#: models/informer.py:65
+#: models/informer.py:68
 msgid "Informer"
 msgstr "Informante"
 
-#: models/informer.py:66
+#: models/informer.py:69
 msgid "Informers"
 msgstr "Informantes"
 
@@ -221,29 +238,29 @@ msgstr "Interfaz"
 msgid "Interfaces"
 msgstr "Interfaces"
 
-#: models/meaning.py:35
+#: models/meaning.py:38
 msgid "Reference (remisión)"
 msgstr "Referencia (remisión)"
 
-#: models/meaning.py:45
+#: models/meaning.py:48
 msgid ""
 "If set, this meaning won't be shown to informers in WordUse and "
 "WordAlternate interfaces"
 msgstr "Si se activa, esta acepción se ocultará en los juegos 1 y 3."
 
-#: models/meaning.py:50
+#: models/meaning.py:53
 msgid "Meaning"
 msgstr "Significado"
 
-#: models/meaning.py:51
+#: models/meaning.py:54
 msgid "Meanings"
 msgstr "Acepciones"
 
-#: models/meaning.py:64
+#: models/meaning.py:67
 msgid "Context"
 msgstr "Contexto"
 
-#: models/meaning.py:65
+#: models/meaning.py:68
 msgid "Contexts"
 msgstr "Contextos"
 
@@ -382,11 +399,15 @@ msgstr "Estadísticas"
 msgid "Personal data"
 msgstr "Datos personales"
 
-#: views/honor_code.py:40
+#: views/honor_code.py:16
+msgid "You have to accept the honor code to be able to access this view"
+msgstr ""
+
+#: views/honor_code.py:41
 msgid "Honor code accepted! Welcome to Neutrón."
 msgstr ""
 
-#: views/honor_code.py:47
+#: views/honor_code.py:48
 msgid ""
 "You have declined the HONOR_CODE! You won't be able to navigate this site "
 "completely."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-01 18:07+0100\n"
+"POT-Creation-Date: 2016-11-05 17:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,28 +29,36 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: forms/__init__.py:43 forms/__init__.py:79
+#: forms/__init__.py:43 forms/__init__.py:83
 msgid "Duplicate email!"
 msgstr ""
 
-#: forms/__init__.py:48
+#: forms/__init__.py:51
 msgid "(Select your nationality)"
 msgstr ""
 
-#: forms/__init__.py:55
+#: forms/__init__.py:58
 msgid "How did you know us?"
 msgstr ""
 
-#: forms/__init__.py:56
+#: forms/__init__.py:59
 msgid "Tell us your educational level, please"
 msgstr ""
 
-#: forms/__init__.py:69
+#: forms/__init__.py:73
 msgid "Accept honor code"
 msgstr ""
 
-#: forms/__init__.py:70
+#: forms/__init__.py:74
 msgid "Email account to get in touch with you"
+msgstr ""
+
+#: forms/__init__.py:100
+msgid "you@email.com"
+msgstr ""
+
+#: forms/__init__.py:101
+msgid "Háblanos de ti y cuéntanos qué te gustaría saber, somos todo oídos"
 msgstr ""
 
 #: models/faq.py:23
@@ -239,7 +247,7 @@ msgstr ""
 msgid "¿Cómo podemos ayudarte?"
 msgstr ""
 
-#: templates/faq.html:130 templates/home.html.py:93
+#: templates/faq.html:130 templates/home.html.py:94
 msgid "Enviar"
 msgstr ""
 
@@ -380,15 +388,29 @@ msgstr ""
 msgid "¿Quieres saber más?"
 msgstr ""
 
-#: templates/home.html:92
-msgid "Háblanos de ti y cuéntanos qué te gustaría saber, somos todo oídos."
-msgstr ""
-
 #: templates/join.html:31
 msgid "Formulario"
 msgstr ""
 
 #: templates/join.html:41
+msgid "Before joining you must confirm"
+msgstr ""
+
+#: templates/join.html:44
+msgid "I'm a native spanish speaker"
+msgstr ""
+
+#: templates/join.html:48
+msgid "I'm currently living in the region stated above"
+msgstr ""
+
+#: templates/join.html:52
+msgid ""
+"I haven't lived for more than 6 months during the last 2 years in another "
+"spanish speaking country"
+msgstr ""
+
+#: templates/join.html:54
 msgid "Participar"
 msgstr ""
 
@@ -425,8 +447,13 @@ msgid ""
 "If you already have an account, please <a href=\"%(login_url)s\">login</a>"
 msgstr ""
 
-#: views/authentication.py:39
-msgid "Logged out"
+#: views/__init__.py:32
+msgid ""
+"Thanks for your message, we'll come back to you soon in the email provided"
+msgstr ""
+
+#: views/authentication.py:40
+msgid "Thanks for working with Neutron! Come back soon!"
 msgstr ""
 
 #: views/faq.py:38

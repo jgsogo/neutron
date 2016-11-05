@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-01 18:07+0100\n"
+"POT-Creation-Date: 2016-11-05 17:56+0100\n"
 "PO-Revision-Date: 2016-10-30 18:11+0000\n"
 "Last-Translator: b'Maria Varela <mariavarelar@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,29 +30,37 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: forms/__init__.py:43 forms/__init__.py:79
+#: forms/__init__.py:43 forms/__init__.py:83
 msgid "Duplicate email!"
 msgstr "¡Este correo electrónico ya está en nuestra base de datos!"
 
-#: forms/__init__.py:48
+#: forms/__init__.py:51
 msgid "(Select your nationality)"
 msgstr "País de nacimiento"
 
-#: forms/__init__.py:55
+#: forms/__init__.py:58
 msgid "How did you know us?"
 msgstr "¿Cómo nos has conocido?"
 
-#: forms/__init__.py:56
+#: forms/__init__.py:59
 msgid "Tell us your educational level, please"
 msgstr "¿Cuál es tu nivel de estudios?"
 
-#: forms/__init__.py:69
+#: forms/__init__.py:73
 msgid "Accept honor code"
 msgstr "Aceptar el código ético."
 
-#: forms/__init__.py:70
+#: forms/__init__.py:74
 msgid "Email account to get in touch with you"
 msgstr "Correo electrónico en el que recibir notificaciones"
+
+#: forms/__init__.py:100
+msgid "you@email.com"
+msgstr ""
+
+#: forms/__init__.py:101
+msgid "Háblanos de ti y cuéntanos qué te gustaría saber, somos todo oídos"
+msgstr ""
 
 #: models/faq.py:23
 msgid "User who asked the question"
@@ -243,7 +251,7 @@ msgstr "Eliminar"
 msgid "¿Cómo podemos ayudarte?"
 msgstr "¿Cómo podemos ayudarte?"
 
-#: templates/faq.html:130 templates/home.html.py:93
+#: templates/faq.html:130 templates/home.html.py:94
 msgid "Enviar"
 msgstr "Enviar"
 
@@ -386,15 +394,29 @@ msgstr ""
 msgid "¿Quieres saber más?"
 msgstr ""
 
-#: templates/home.html:92
-msgid "Háblanos de ti y cuéntanos qué te gustaría saber, somos todo oídos."
-msgstr ""
-
 #: templates/join.html:31
 msgid "Formulario"
 msgstr "Formulario"
 
 #: templates/join.html:41
+msgid "Before joining you must confirm"
+msgstr ""
+
+#: templates/join.html:44
+msgid "I'm a native spanish speaker"
+msgstr ""
+
+#: templates/join.html:48
+msgid "I'm currently living in the region stated above"
+msgstr ""
+
+#: templates/join.html:52
+msgid ""
+"I haven't lived for more than 6 months during the last 2 years in another "
+"spanish speaking country"
+msgstr ""
+
+#: templates/join.html:54
 msgid "Participar"
 msgstr "Participar"
 
@@ -439,9 +461,18 @@ msgstr ""
 "Si ya eres un usuario registrado, <a href=\"%(login_url)s\">inicia sesión</"
 "a>."
 
-#: views/authentication.py:39
-msgid "Logged out"
-msgstr "Sesión cerrada"
+#: views/__init__.py:32
+#, fuzzy
+#| msgid "Thanks for your question! We will answer you soon using your mail {}"
+msgid ""
+"Thanks for your message, we'll come back to you soon in the email provided"
+msgstr ""
+"¡Gracias por tu pregunta! En breve recibirás nuestra respuesta en tu correo "
+"electrónico {}."
+
+#: views/authentication.py:40
+msgid "Thanks for working with Neutron! Come back soon!"
+msgstr ""
 
 #: views/faq.py:38
 msgid "Thanks for your question! We will answer you soon using your mail {}"
@@ -456,6 +487,9 @@ msgstr "La pregunta ha sido eliminada."
 #: views/faq.py:50
 msgid "You cannot delete that question."
 msgstr "No puedes borrar esa pregunta."
+
+#~ msgid "Logged out"
+#~ msgstr "Sesión cerrada"
 
 #~ msgid "Nombre"
 #~ msgstr "Nombre"
