@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-05 17:56+0100\n"
+"POT-Creation-Date: 2016-11-05 19:04+0100\n"
 "PO-Revision-Date: 2016-10-30 18:11+0000\n"
 "Last-Translator: b'Maria Varela <mariavarelar@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,43 +54,55 @@ msgstr "Aceptar el código ético."
 msgid "Email account to get in touch with you"
 msgstr "Correo electrónico en el que recibir notificaciones"
 
-#: forms/__init__.py:100
-msgid "you@email.com"
-msgstr ""
-
 #: forms/__init__.py:101
 msgid "Háblanos de ti y cuéntanos qué te gustaría saber, somos todo oídos"
 msgstr ""
 
-#: models/faq.py:23
+#: models/faq.py:37
 msgid "User who asked the question"
 msgstr "Usuario que realizó la pregunta"
 
-#: models/faq.py:25
+#: models/faq.py:39
 msgid ""
 "Whether this question will be shown to everybody or only to the who asked it."
 msgstr ""
 "¿Debe mostrarse esta pregunta a todos los usuarios o solo a quien la realizó?"
 
-#: models/faq.py:26
+#: models/faq.py:40
 msgid "Whether this question will be shown in the interface."
 msgstr "¿Debe mostrarse esta pregunta en la interfaz?"
 
-#: models/faq.py:30
+#: models/faq.py:44
 msgid "Text that show as question"
 msgstr "Texto de la pregunta"
 
-#: models/faq.py:31
-msgid "Answer"
-msgstr "Respuesta"
+#: models/faq.py:45
+msgid "Answer. Will send email to user"
+msgstr ""
 
-#: models/faq.py:36
+#: models/faq.py:48
+msgid "Whether a mail has been enqueued with the response to the user."
+msgstr ""
+
+#: models/faq.py:53
 msgid "Question"
 msgstr "Pregunta"
 
-#: models/faq.py:37
+#: models/faq.py:54
 msgid "Questions"
 msgstr "Preguntas"
+
+#: models/faq.py:71
+#, fuzzy, python-brace-format
+#| msgid "User who asked the question"
+msgid "{user} asked a question"
+msgstr "Usuario que realizó la pregunta"
+
+#: models/faq.py:86
+#, fuzzy
+#| msgid "Question has been deleted."
+msgid "Your question has been answered!"
+msgstr "La pregunta ha sido eliminada."
 
 #: settings.py:113
 msgid "Argentina"
@@ -461,7 +473,11 @@ msgstr ""
 "Si ya eres un usuario registrado, <a href=\"%(login_url)s\">inicia sesión</"
 "a>."
 
-#: views/__init__.py:32
+#: views/__init__.py:34
+msgid "Define subject"
+msgstr ""
+
+#: views/__init__.py:43
 #, fuzzy
 #| msgid "Thanks for your question! We will answer you soon using your mail {}"
 msgid ""
@@ -474,19 +490,24 @@ msgstr ""
 msgid "Thanks for working with Neutron! Come back soon!"
 msgstr ""
 
-#: views/faq.py:38
-msgid "Thanks for your question! We will answer you soon using your mail {}"
+#: views/faq.py:37
+#, fuzzy
+#| msgid "Thanks for your question! We will answer you soon using your mail {}"
+msgid "Thanks for your question! We will answer you soon to your mail address"
 msgstr ""
 "¡Gracias por tu pregunta! En breve recibirás nuestra respuesta en tu correo "
 "electrónico {}."
 
-#: views/faq.py:48
+#: views/faq.py:47
 msgid "Question has been deleted."
 msgstr "La pregunta ha sido eliminada."
 
-#: views/faq.py:50
+#: views/faq.py:49
 msgid "You cannot delete that question."
 msgstr "No puedes borrar esa pregunta."
+
+#~ msgid "Answer"
+#~ msgstr "Respuesta"
 
 #~ msgid "Logged out"
 #~ msgstr "Sesión cerrada"

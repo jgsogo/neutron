@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-05 17:56+0100\n"
+"POT-Creation-Date: 2016-11-05 19:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,41 +53,50 @@ msgstr ""
 msgid "Email account to get in touch with you"
 msgstr ""
 
-#: forms/__init__.py:100
-msgid "you@email.com"
-msgstr ""
-
 #: forms/__init__.py:101
 msgid "Háblanos de ti y cuéntanos qué te gustaría saber, somos todo oídos"
 msgstr ""
 
-#: models/faq.py:23
+#: models/faq.py:37
 msgid "User who asked the question"
 msgstr ""
 
-#: models/faq.py:25
+#: models/faq.py:39
 msgid ""
 "Whether this question will be shown to everybody or only to the who asked it."
 msgstr ""
 
-#: models/faq.py:26
+#: models/faq.py:40
 msgid "Whether this question will be shown in the interface."
 msgstr ""
 
-#: models/faq.py:30
+#: models/faq.py:44
 msgid "Text that show as question"
 msgstr ""
 
-#: models/faq.py:31
-msgid "Answer"
+#: models/faq.py:45
+msgid "Answer. Will send email to user"
 msgstr ""
 
-#: models/faq.py:36
+#: models/faq.py:48
+msgid "Whether a mail has been enqueued with the response to the user."
+msgstr ""
+
+#: models/faq.py:53
 msgid "Question"
 msgstr ""
 
-#: models/faq.py:37
+#: models/faq.py:54
 msgid "Questions"
+msgstr ""
+
+#: models/faq.py:71
+#, python-brace-format
+msgid "{user} asked a question"
+msgstr ""
+
+#: models/faq.py:86
+msgid "Your question has been answered!"
 msgstr ""
 
 #: settings.py:113
@@ -447,7 +456,11 @@ msgid ""
 "If you already have an account, please <a href=\"%(login_url)s\">login</a>"
 msgstr ""
 
-#: views/__init__.py:32
+#: views/__init__.py:34
+msgid "Define subject"
+msgstr ""
+
+#: views/__init__.py:43
 msgid ""
 "Thanks for your message, we'll come back to you soon in the email provided"
 msgstr ""
@@ -456,14 +469,14 @@ msgstr ""
 msgid "Thanks for working with Neutron! Come back soon!"
 msgstr ""
 
-#: views/faq.py:38
-msgid "Thanks for your question! We will answer you soon using your mail {}"
+#: views/faq.py:37
+msgid "Thanks for your question! We will answer you soon to your mail address"
 msgstr ""
 
-#: views/faq.py:48
+#: views/faq.py:47
 msgid "Question has been deleted."
 msgstr ""
 
-#: views/faq.py:50
+#: views/faq.py:49
 msgid "You cannot delete that question."
 msgstr ""
