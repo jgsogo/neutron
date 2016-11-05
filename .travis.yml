@@ -41,12 +41,17 @@ install:
   - wget http://downloads.conan.io/latest_debian -O conan.deb
   - sudo dpkg -i conan.deb
   - rm conan.deb
+  # Install dependencies for Python
+  - pip install -r webapp/requirements.txt
   
 script:
-  - mkdir processing/compute_informer_order/build
-  - cd processing/compute_informer_order/build
-  - $CONAN_ENV conan install .. --build=missing -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION $CONAN_EXTRA
-  - $CONAN_ENV cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && cmake --build .
-  - ls -la bin/
+  # Compile and run tests for C++
+  - mkdir build
+  - cd build
+  - $CONAN_ENV conan install ../processing/compute_infromer_order --build=missing -s compiler=$COMPILER_NAME -s compiler.version=$COMPILER_VERSION $CONAN_EXTRA
+  - $CONAN_ENV cmake -DCMAKE_CXX_COMPILER=$COMPILER ../processing/compute_informer_order && cmake --build .
   - ./bin/test_neutron_basic
+  - cd ..
+  # Run python tests
+  - python -m unittest discover -s webapp
 
