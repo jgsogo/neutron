@@ -8,19 +8,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-26 21:43+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-11-05 19:04+0100\n"
+"PO-Revision-Date: 2016-10-30 18:11+0000\n"
+"Last-Translator: b'Maria Varela <mariavarelar@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.7.11\n"
 
 #: forms/__init__.py:17
 msgid "Alternate word"
-msgstr ""
+msgstr "Juego 2"
 
 #: forms/__init__.py:30
 msgid "Name"
@@ -32,27 +32,27 @@ msgstr ""
 
 #: forms/__init__.py:43 forms/__init__.py:83
 msgid "Duplicate email!"
-msgstr ""
+msgstr "¡Este correo electrónico ya está en nuestra base de datos!"
 
 #: forms/__init__.py:51
 msgid "(Select your nationality)"
-msgstr ""
+msgstr "País de nacimiento"
 
 #: forms/__init__.py:58
 msgid "How did you know us?"
-msgstr ""
+msgstr "¿Cómo nos has conocido?"
 
 #: forms/__init__.py:59
 msgid "Tell us your educational level, please"
-msgstr ""
+msgstr "¿Cuál es tu nivel de estudios?"
 
 #: forms/__init__.py:73
 msgid "Accept honor code"
-msgstr ""
+msgstr "Aceptar el código ético."
 
 #: forms/__init__.py:74
 msgid "Email account to get in touch with you"
-msgstr ""
+msgstr "Correo electrónico en el que recibir notificaciones"
 
 #: forms/__init__.py:101
 msgid "Háblanos de ti y cuéntanos qué te gustaría saber, somos todo oídos"
@@ -60,20 +60,21 @@ msgstr ""
 
 #: models/faq.py:37
 msgid "User who asked the question"
-msgstr ""
+msgstr "Usuario que realizó la pregunta"
 
 #: models/faq.py:39
 msgid ""
 "Whether this question will be shown to everybody or only to the who asked it."
 msgstr ""
+"¿Debe mostrarse esta pregunta a todos los usuarios o solo a quien la realizó?"
 
 #: models/faq.py:40
 msgid "Whether this question will be shown in the interface."
-msgstr ""
+msgstr "¿Debe mostrarse esta pregunta en la interfaz?"
 
 #: models/faq.py:44
 msgid "Text that show as question"
-msgstr ""
+msgstr "Texto de la pregunta"
 
 #: models/faq.py:45
 msgid "Answer. Will send email to user"
@@ -85,112 +86,111 @@ msgstr ""
 
 #: models/faq.py:53
 msgid "Question"
-msgstr ""
+msgstr "Pregunta"
 
 #: models/faq.py:54
 msgid "Questions"
-msgstr ""
+msgstr "Preguntas"
 
 #: models/faq.py:71
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid "User who asked the question"
 msgid "{user} asked a question"
-msgstr ""
+msgstr "Usuario que realizó la pregunta"
 
 #: models/faq.py:86
+#, fuzzy
+#| msgid "Question has been deleted."
 msgid "Your question has been answered!"
-msgstr ""
+msgstr "La pregunta ha sido eliminada."
 
 #: settings.py:113
-msgid "Español (genérico)"
-msgstr ""
+msgid "Argentina"
+msgstr "Argentina"
 
 #: settings.py:114
-msgid "Argentina"
-msgstr ""
+msgid "Bolivia"
+msgstr "Bolivia"
 
 #: settings.py:115
-msgid "Bolivia"
-msgstr ""
+msgid "Chile"
+msgstr "Chile"
 
 #: settings.py:116
-msgid "Chile"
-msgstr ""
+msgid "Colombia"
+msgstr "Colombia"
 
 #: settings.py:117
-msgid "Colombia"
-msgstr ""
+msgid "Costa Rica"
+msgstr "Costa Rica"
 
 #: settings.py:118
-msgid "Costa Rica"
-msgstr ""
+msgid "Cuba"
+msgstr "Cuba"
 
 #: settings.py:119
-msgid "Cuba"
-msgstr ""
+msgid "Ecuador"
+msgstr "Ecuador"
 
 #: settings.py:120
-msgid "Ecuador"
-msgstr ""
+msgid "El Salvador"
+msgstr "El Salvador"
 
 #: settings.py:121
-msgid "El Salvador"
-msgstr ""
+msgid "España"
+msgstr "España"
 
 #: settings.py:122
-msgid "España"
-msgstr ""
+msgid "Guatemala"
+msgstr "Guatemala"
 
 #: settings.py:123
-msgid "Guatemala"
-msgstr ""
+msgid "Guinea Ecuatorial"
+msgstr "Guinea Ecuatorial"
 
 #: settings.py:124
-msgid "Guinea Ecuatorial"
-msgstr ""
+msgid "Honduras"
+msgstr "Honduras"
 
 #: settings.py:125
-msgid "Honduras"
-msgstr ""
+msgid "México"
+msgstr "México"
 
 #: settings.py:126
-msgid "México"
-msgstr ""
+msgid "Nicaragua"
+msgstr "Nicaragua"
 
 #: settings.py:127
-msgid "Nicaragua"
-msgstr ""
+msgid "Panamá"
+msgstr "Panamá"
 
 #: settings.py:128
-msgid "Panamá"
-msgstr ""
+msgid "Paraguay"
+msgstr "Paraguay"
 
 #: settings.py:129
-msgid "Paraguay"
-msgstr ""
+msgid "Perú"
+msgstr "Perú"
 
 #: settings.py:130
-msgid "Perú"
-msgstr ""
+msgid "Puerto Rico"
+msgstr "Puerto Rico"
 
 #: settings.py:131
-msgid "Puerto Rico"
-msgstr ""
+msgid "República Dominicana"
+msgstr "República Dominicana"
 
 #: settings.py:132
-msgid "República Dominicana"
-msgstr ""
+msgid "Uruguay"
+msgstr "Uruguay"
 
 #: settings.py:133
-msgid "Uruguay"
-msgstr ""
-
-#: settings.py:134
 msgid "Venezuela"
-msgstr ""
+msgstr "Venezuela"
 
 #: templates/about.html:4
 msgid "About"
-msgstr ""
+msgstr "Sobre el proyecto"
 
 #: templates/about.html:29
 msgid "Our team"
@@ -202,11 +202,11 @@ msgstr ""
 
 #: templates/base.html:46
 msgid "Únete"
-msgstr ""
+msgstr "Únete"
 
 #: templates/base.html:49 templates/join.html.py:4
 msgid "Participa"
-msgstr ""
+msgstr "Participa"
 
 #: templates/base.html:51
 msgid "Game 1"
@@ -221,61 +221,63 @@ msgid "Game 3"
 msgstr ""
 
 #: templates/base.html:63
+#, fuzzy
+#| msgid "equipo y patrocinadores"
 msgid "Equipo y patrocinadores"
-msgstr ""
+msgstr "Equipo y patrocinadores"
 
 #: templates/base.html:70
 msgid "Profile"
-msgstr ""
+msgstr "Perfil"
 
 #: templates/base.html:75 templates/users/register.html.py:44
 msgid "Honor code"
-msgstr ""
+msgstr "Código ético"
 
 #: templates/base.html:77
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #: templates/base.html:85
 msgid "Login"
-msgstr ""
+msgstr "Acceso"
 
 #: templates/faq.html:4
 msgid "FAQ's"
-msgstr ""
+msgstr "Preguntas frecuentes"
 
 #: templates/faq.html:105
 msgid "Your pending questions"
-msgstr ""
+msgstr "Preguntas pendientes"
 
 #: templates/faq.html:108
 #, python-format
 msgid "On %(timestamp)s you asked:"
-msgstr ""
+msgstr "El %(timestamp)s preguntaste:"
 
 #: templates/faq.html:116
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: templates/faq.html:129 templates/faq_ask.html.py:11
 msgid "¿Cómo podemos ayudarte?"
-msgstr ""
+msgstr "¿Cómo podemos ayudarte?"
 
 #: templates/faq.html:130 templates/home.html.py:94
 msgid "Enviar"
-msgstr ""
+msgstr "Enviar"
 
 #: templates/faq_ask.html:4
 msgid "Make a new question"
-msgstr ""
+msgstr "Hacer una nueva pregunta"
 
 #: templates/faq_ask.html:7
 msgid "Tell us your doubts"
-msgstr ""
+msgstr "Cuéntanos tus dudas"
 
 #: templates/home.html:4
 msgid "Home"
-msgstr ""
+msgstr "Inicio"
 
 #: templates/home.html:7
 msgid "¡Hola! Somos Neutrón"
@@ -294,8 +296,10 @@ msgid ""
 msgstr ""
 
 #: templates/home.html:13
+#, fuzzy
+#| msgid "¿Cómo podemos ayudarte?"
 msgid "¿Cómo lo vamos a hacer?"
-msgstr ""
+msgstr "¿Cómo podemos ayudarte?"
 
 #: templates/home.html:16
 msgid ""
@@ -404,7 +408,7 @@ msgstr ""
 
 #: templates/join.html:31
 msgid "Formulario"
-msgstr ""
+msgstr "Formulario"
 
 #: templates/join.html:41
 msgid "Before joining you must confirm"
@@ -426,15 +430,15 @@ msgstr ""
 
 #: templates/join.html:54
 msgid "Participar"
-msgstr ""
+msgstr "Participar"
 
 #: templates/users/login.html:42
 msgid "Please sign in"
-msgstr ""
+msgstr "Por favor, inicia sesión."
 
 #: templates/users/login.html:48
 msgid "Sign in"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: templates/users/login.html:54
 #, python-format
@@ -442,46 +446,128 @@ msgid ""
 "If you don't have an account, please <a href=\"%(register_url)s\">join</a> "
 "first"
 msgstr ""
+"Si no eres un usuario registrado, <a href=\"%(register_url)s\">únete</a>."
 
 #: templates/users/register.html:46
 msgid "No voy a comunicar publicamene... BLABLABABLA"
 msgstr ""
+"Nuestra web se alimenta del contenido del Diccionario Básico de la Lengua "
+"Española. Primaria, cedido por SM para el desarrollo del proyecto Neutrón. "
+"Al marcar esta casilla te comprometes a rechazar cualquier forma de "
+"reproducción, distribución, comunicación pública o transformación de esta "
+"obra."
 
 #: templates/users/register.html:50
 msgid "Please register"
-msgstr ""
+msgstr "Por favor, regístrate."
 
 #: templates/users/register.html:60
 msgid "Create account"
-msgstr ""
+msgstr "Crear cuenta"
 
 #: templates/users/register.html:66
 #, python-format
 msgid ""
 "If you already have an account, please <a href=\"%(login_url)s\">login</a>"
 msgstr ""
+"Si ya eres un usuario registrado, <a href=\"%(login_url)s\">inicia sesión</"
+"a>."
 
 #: views/__init__.py:34
 msgid "Define subject"
 msgstr ""
 
 #: views/__init__.py:43
+#, fuzzy
+#| msgid "Thanks for your question! We will answer you soon using your mail {}"
 msgid ""
 "Thanks for your message, we'll come back to you soon in the email provided"
 msgstr ""
+"¡Gracias por tu pregunta! En breve recibirás nuestra respuesta en tu correo "
+"electrónico {}."
 
 #: views/authentication.py:40
 msgid "Thanks for working with Neutron! Come back soon!"
 msgstr ""
 
 #: views/faq.py:37
+#, fuzzy
+#| msgid "Thanks for your question! We will answer you soon using your mail {}"
 msgid "Thanks for your question! We will answer you soon to your mail address"
 msgstr ""
+"¡Gracias por tu pregunta! En breve recibirás nuestra respuesta en tu correo "
+"electrónico {}."
 
 #: views/faq.py:47
 msgid "Question has been deleted."
-msgstr ""
+msgstr "La pregunta ha sido eliminada."
 
 #: views/faq.py:49
 msgid "You cannot delete that question."
-msgstr ""
+msgstr "No puedes borrar esa pregunta."
+
+#~ msgid "Answer"
+#~ msgstr "Respuesta"
+
+#~ msgid "Logged out"
+#~ msgstr "Sesión cerrada"
+
+#~ msgid "Nombre"
+#~ msgstr "Nombre"
+
+#~ msgid "Apellidos"
+#~ msgstr "Apellido"
+
+#~ msgid "Correo electrónico"
+#~ msgstr "Correo electrónico"
+
+#~ msgid "Check the declaration."
+#~ msgstr "Cumplo los requisitos exigidos a los informantes."
+
+#~ msgid "Honor code must be accepted in order to register"
+#~ msgstr "Para continuar debes aceptar el código ético."
+
+#~ msgid "Word use"
+#~ msgstr "Juego 1"
+
+#~ msgid "Word coarse"
+#~ msgstr "Juego 3"
+
+#~ msgid "Word alternate"
+#~ msgstr "Juego 2"
+
+#~ msgid "Consulta"
+#~ msgstr "Consulta"
+
+#~ msgid "My stats"
+#~ msgstr "Mis estadísticas"
+
+#~ msgid "Select interface language"
+#~ msgstr "Idioma de la interfaz"
+
+#~ msgid ""
+#~ "\n"
+#~ "                        <strong>Declaro.-</strong> Al solicitar mi "
+#~ "participación en el proyecto Neutrón, declaro que cumplo con\n"
+#~ "                        los requisitos exigidos a los informantes: soy "
+#~ "hablante nativo de español;\n"
+#~ "                        nací y crecí en el país indicado, donde resido "
+#~ "actualmente; durante los dos últimos años\n"
+#~ "                        no he permanecido en otro país de habla hispana "
+#~ "durante un tiempo superior a seis meses.\n"
+#~ "                    "
+#~ msgstr ""
+#~ "\n"
+#~ "Marca esta casilla si cumples los tres requisitos exigidos a los "
+#~ "informantes: eres hablante nativo de español; creciste y resides en el "
+#~ "país que has indicado como lugar de nacimiento, y durante los dos últimos "
+#~ "años no has permanecido en otro país de habla hispana durante un tiempo "
+#~ "superior a seis meses."
+
+#~ msgid "Acepto"
+#~ msgstr "Acepto"
+
+#~ msgid "This declaration must be accepted to continue."
+#~ msgstr ""
+#~ "Solo los usuarios que cumplan los tres requisitos exigidos a los "
+#~ "informantes podrán continuar con el registro."
