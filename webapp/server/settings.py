@@ -108,7 +108,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'es-ES'
+LANGUAGE_CODE = 'es_ES'
 LANGUAGES = [
     ('es-AR', _('Argentina')),
     ('es-BO', _('Bolivia')),
