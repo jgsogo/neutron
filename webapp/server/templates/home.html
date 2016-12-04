@@ -7,7 +7,12 @@
     <h2>{% trans "¡Hola! Somos Neutrón" %}</h2>
     <div class="content">
         <p>{% trans "Queremos mejorar la comunicación entre 470 millones de hispanohablantes." %}</p>
-        <p>{% trans "Para conseguirlo, necesitamos conocer el uso que los hablantes nativos de distintos países hacen de la lengua española. Necesitamos que tú formes parte del proyecto." %}</p>
+        <p>
+            {% blocktrans %}
+            Para conseguirlo, necesitamos conocer el uso que los hablantes nativos de distintos países hacen de la lengua española.
+            <span class="color-orange">Necesitamos que tú formes parte del proyecto</span>.
+            {% endblocktrans %}
+        </p>
     </div>
 
     <h3 class="cabecera-caja-fondo-gris-01 margin-top-tres">{% trans "¿Cómo lo vamos a hacer?" %}</h3>
