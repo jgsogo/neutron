@@ -4,8 +4,8 @@
 {% block title %}{% trans "Participa" %}{% endblock %}
 
 {% block content %}
-    <h2>Súmate al proyecto</h2>
-    <h3 class="cabecera-caja-fondo-gris-01 margin-top-tres">Llamada a la acción</h3>
+    <h2>{% trans "Súmate al proyecto" %}</h2>
+    <h3 class="cabecera-caja-fondo-gris-01 margin-top-tres">{% trans "Llamada a la acción" %}</h3>
     <div class="content">
         <div class="caja-fondo-gris">
             <h4>Únete a nosotros y cuéntanos cómo es tu español</h4>
@@ -25,13 +25,14 @@
             </ul>
             <h4>¿Qué puedes obtener a cambio?</h4>
             <p>Nuestros informantes reciben el <span class="color-orange">certificado Neutrón</span>, que expresa formalmente su participación en un proyecto de investigación lingüística patrocinado por prestigiosas entidades públicas y del sector privado.</p>
-        </div><!-- caja-fondo-gris -->
-    </div><!-- content -->
+        </div>
+    </div>
 
+    {% if not user.is_authenticated %}
     <h3 id="join_form" class="cabecera-caja-fondo-gris-02">{% trans "Formulario" %}</h3>
     <div class="content">
         <div class="caja-fondo-gris">
-            <form method="post" action="{% url 'join' %}#join_form">{% csrf_token %}
+            <form method="post" action="{% url 'join' %}">{% csrf_token %}
                 {{ form.non_field_errors }}
                 {{ form.name.errors }}{{ form.name }}
                 {{ form.email.errors }}{{ form.email }}
@@ -55,5 +56,8 @@
             </form>
         </div><!-- caja-fondo-gris -->
     </div><!-- content -->
+    {% else %}
+        <h2>{% trans "You are already part of the project. Thanks!" %}</h2>
+    {% endif %}
 
 {% endblock %}

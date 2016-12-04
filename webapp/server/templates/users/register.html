@@ -2,45 +2,49 @@
 {% load i18n %}
 
 {% block content %}
-    <h3 id="join_form" class="cabecera-caja-fondo-gris-02">{% trans "Register data" %}</h3>
-    <div class="content">
-        <div class="caja-fondo-gris">
-            <form method="post" action="{% url 'register' %}">{% csrf_token %}
-                <h4 class="form-signin-heading">{% trans "Honor code" %}</h4>
-                <p>
-                    {% blocktrans %}
-                        Las entradas que presentamos en la interfaz de Neutrón, sus definiciones y los ejemplos que las acompañan son propiedad intelectual de la editorial SM. Al aceptar el código ético te comprometes a rechazar cualquier forma de reproducción, distribución, comunicación pública o transformación de este contenido.
-                    {% endblocktrans %}
-                </p>
-                {{ form.honor_code.errors }}{{ form.honor_code }}
-                {% trans "I accept the honor code" %}
-                <br/><br/>
-                <h4 class="form-signin-heading">{% trans "User and password" %}</h4>
+    {% if not user.is_authenticated %}
+        <h3 id="join_form" class="cabecera-caja-fondo-gris-02">{% trans "Register data" %}</h3>
+        <div class="content">
+            <div class="caja-fondo-gris">
+                <form method="post" action="{% url 'register' %}">{% csrf_token %}
+                    <h4 class="form-signin-heading">{% trans "Honor code" %}</h4>
+                    <p>
+                        {% blocktrans %}
+                            Las entradas que presentamos en la interfaz de Neutrón, sus definiciones y los ejemplos que las acompañan son propiedad intelectual de la editorial SM. Al aceptar el código ético te comprometes a rechazar cualquier forma de reproducción, distribución, comunicación pública o transformación de este contenido.
+                        {% endblocktrans %}
+                    </p>
+                    {{ form.honor_code.errors }}{{ form.honor_code }}
+                    {% trans "I accept the honor code" %}
+                    <br/><br/>
+                    <h4 class="form-signin-heading">{% trans "User and password" %}</h4>
 
-                <br/>
-                <p><h5>{% trans "Username" %}:</h5></p>
-                <small>{{ form.username.help_text }}</small>
-                {{ form.username.errors }}{{ form.username }}
+                    <br/>
+                    <p><h5>{% trans "Username" %}:</h5></p>
+                    <small>{{ form.username.help_text }}</small>
+                    {{ form.username.errors }}{{ form.username }}
 
-                <p><h5>{% trans "Password" %}:</h5></p>
-                <small>{{ form.password1.help_text }}</small>
-                {{ form.password1.errors }}{{ form.password1 }}
+                    <p><h5>{% trans "Password" %}:</h5></p>
+                    <small>{{ form.password1.help_text }}</small>
+                    {{ form.password1.errors }}{{ form.password1 }}
 
-                <p><h5>{% trans "Confirm password" %}:</h5></p>
-                <small>{{ form.password2.help_text }}</small>
-                {{ form.password2.errors }}{{ form.password2 }}
+                    <p><h5>{% trans "Confirm password" %}:</h5></p>
+                    <small>{{ form.password2.help_text }}</small>
+                    {{ form.password2.errors }}{{ form.password2 }}
 
-                <p><h5>{% trans "Email" %}:</h5></p>
-                <small>{{ form.email.help_text }}</small>
-                {{ form.email.errors }}{{ form.email }}
+                    <p><h5>{% trans "Email" %}:</h5></p>
+                    <small>{{ form.email.help_text }}</small>
+                    {{ form.email.errors }}{{ form.email }}
 
-                <input type="hidden" name="next" value="{{ next }}" />
-                <button class="b-yellow">{% trans "Create account" %}</button>
-                {% url 'login' as login_url %}
-                <p>
-                    {% blocktrans %}If you already have an account, please <a href="{{ login_url }}">login</a>{% endblocktrans %}.
-                </p>
-            </form>
+                    <input type="hidden" name="next" value="{{ next }}" />
+                    <button class="b-yellow">{% trans "Create account" %}</button>
+                    {% url 'login' as login_url %}
+                    <p>
+                        {% blocktrans %}If you already have an account, please <a href="{{ login_url }}">login</a>{% endblocktrans %}.
+                    </p>
+                </form>
+            </div>
         </div>
-    </div>
+    {% else %}
+        <h2>{% trans "You are already part of the project. Thanks!" %}</h2>
+    {% endif %}
 {% endblock %}
