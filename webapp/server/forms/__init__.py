@@ -27,8 +27,8 @@ class JoinFormStep1(forms.Form):
 
     def __init__(self, initial, *args, **kwargs):
         super(JoinFormStep1, self).__init__(initial=initial, *args, **kwargs)
-        self.fields['name'].widget.attrs.update({'placeholder': _("Name"),})
-        self.fields['email'].widget.attrs.update({'placeholder': _("Email address"),})
+        self.fields['name'].widget.attrs.update({'placeholder': _("Name"), })
+        self.fields['email'].widget.attrs.update({'placeholder': _("Email address"), })
         if 'email' in initial:
             self.fields['email'].disabled = True
 
@@ -97,7 +97,7 @@ class HomeAskForm(forms.Form):
 
     def __init__(self, initial, *args, **kwargs):
         super(HomeAskForm, self).__init__(initial=initial, *args, **kwargs)
-        self.fields['email'].widget.attrs.update({'placeholder': "you@email.com",})
+        self.fields['email'].widget.attrs.update({'placeholder': "you@email.com", })
         self.fields['user_input'].widget.attrs.update({'placeholder': _("Háblanos de ti y cuéntanos qué te gustaría saber, somos todo oídos")})
 
 
