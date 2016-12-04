@@ -31,7 +31,7 @@
     <h3 id="join_form" class="cabecera-caja-fondo-gris-02">{% trans "Formulario" %}</h3>
     <div class="content">
         <div class="caja-fondo-gris">
-            <form method="post" action="{% url 'join' %}#join_form">{% csrf_token %}
+            <form method="post" action="{% url 'join' %}">{% csrf_token %}
                 {{ form.non_field_errors }}
                 {{ form.name.errors }}{{ form.name }}
                 {{ form.email.errors }}{{ form.email }}
