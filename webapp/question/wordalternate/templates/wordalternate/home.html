@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-    <h2>{% trans "Word alternate" %}</h2>
+    <h2>{% trans "Word alternate" context "game name" %}</h2>
     {% block wordalternate_content %}
         <p>Objetivo de la interfaz, cómo usarla,...</p>
         <p><a href="{% url 'wordalternate:run' %}">Go!</a></p>
