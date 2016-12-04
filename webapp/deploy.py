@@ -2,16 +2,28 @@
 
 import os
 from subprocess import call
+from contextlib import contextmanager
 
 import logging
 log = logging.getLogger(__name__)
+
+
+@contextmanager
+def working_directory(path):
+    prev_cwd = os.getcwd()
+    os.chdir(path)
+    try:
+        yield
+    finally:
+        os.chdir(prev_cwd)
 
 
 def makemessages(dir):
     locale_dir = os.path.join(dir, 'locale')
     if os.path.exists(locale_dir):
         log.debug("\t\t + {}".format(locale_dir))
-        call(['django-admin', 'makemessages', '--all'])
+        with working_directory(dir):
+            call(['django-admin', 'makemessages', '--all'])
 
 
 def deploy():

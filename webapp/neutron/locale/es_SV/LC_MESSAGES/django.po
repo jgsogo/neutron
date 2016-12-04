@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-04 13:08+0000\n"
+"POT-Creation-Date: 2016-12-04 16:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -236,7 +236,7 @@ msgstr ""
 #: models/meaning.py:48
 msgid ""
 "If set, this meaning won't be shown to informers in WordUse and "
-"WordAlternate interfaces"
+"WordAlternate games."
 msgstr ""
 
 #: models/meaning.py:53
@@ -268,7 +268,7 @@ msgid "Regions"
 msgstr ""
 
 #: models/word.py:30
-msgid "If set, this word won't be shown to informers in WordCoarse interface"
+msgid "If set, this word won't be shown to informers in any game."
 msgstr ""
 
 #: models/word.py:35

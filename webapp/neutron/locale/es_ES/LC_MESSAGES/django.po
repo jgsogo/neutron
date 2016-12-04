@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-04 13:08+0000\n"
+"POT-Creation-Date: 2016-12-04 16:00+0000\n"
 "PO-Revision-Date: 2016-12-04 13:16+0000\n"
 "Last-Translator: b'Javier G. Sogo <jgsogo@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Translated-Using: django-rosetta 0.7.11\n"
 
 #: admin.py:66 admin.py:76 admin.py:95 admin.py:150 admin.py:160 admin.py:178
@@ -210,13 +210,12 @@ msgid ""
 "registered), private (nobody, just in database dumps)."
 msgstr ""
 "Determina quién puede ver esta información: pública (cualquiera), amigos "
-"(solo usuarios registrados) o privada (nadie, solo en volcados de la base de"
-" datos)."
+"(solo usuarios registrados) o privada (nadie, solo en volcados de la base de "
+"datos)."
 
 #: models/informer.py:63
 msgid "Confidence level for this informer for data in this region"
-msgstr ""
-"Nivel de confianza en los datos que este informante aporta a este país"
+msgstr "Nivel de confianza en los datos que este informante aporta a este país"
 
 #: models/informer.py:65
 msgid "Whether confidence attribute can be automatically reevaluated"
@@ -250,10 +249,10 @@ msgstr "Referencia (remisión)"
 #, fuzzy
 msgid ""
 "If set, this meaning won't be shown to informers in WordUse and "
-"WordAlternate interfaces"
+"WordAlternate games."
 msgstr ""
-"Si se activa, esta acepción no se mostrará a los informantes en los juegos 1"
-" (WordUse) y 2 (WordAlternate)."
+"Si se activa, esta acepción no se mostrará a los informantes en los juegos 1 "
+"(WordUse) y 2 (WordAlternate)."
 
 #: models/meaning.py:53
 msgid "Meaning"
@@ -285,10 +284,10 @@ msgstr "Países"
 
 #: models/word.py:30
 #, fuzzy
-msgid "If set, this word won't be shown to informers in WordCoarse interface"
+msgid "If set, this word won't be shown to informers in any game."
 msgstr ""
-"Si se activa, este significante no se mostrará a los informantes en el juego"
-" 3 (WordCoarse)"
+"Si se activa, este significante no se mostrará a los informantes en el juego "
+"3 (WordCoarse)"
 
 #: models/word.py:35
 msgid "Word"
@@ -334,7 +333,8 @@ msgstr "Declinar"
 #, python-format
 msgid ""
 "\n"
-"            To accept the honor code, you must <a href=\"%(join_url)s\">register</a> first.\n"
+"            To accept the honor code, you must <a href=\"%(join_url)s"
+"\">register</a> first.\n"
 "            "
 msgstr ""
 "\n"
@@ -355,7 +355,10 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"Al aceptar el código ético te comprometes a rechazar cualquier forma de reproducción, distribución, comunicación pública o transformación de las entradas que conforman el glosario del que se alimenta la interfaz de Neutrón: lemas, definiciones y ejemplos."
+"Al aceptar el código ético te comprometes a rechazar cualquier forma de "
+"reproducción, distribución, comunicación pública o transformación de las "
+"entradas que conforman el glosario del que se alimenta la interfaz de "
+"Neutrón: lemas, definiciones y ejemplos."
 
 #: templates/neutron/word_detail.html:20
 msgid "Word uses"

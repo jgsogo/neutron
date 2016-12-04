@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-04 13:08+0000\n"
+"POT-Creation-Date: 2016-12-04 16:00+0000\n"
 "PO-Revision-Date: 2016-07-18 18:22+0000\n"
 "Last-Translator:   <jgsogo@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -225,7 +225,7 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: templates/base.html:75 templates/users/register.html.py:44
+#: templates/base.html:75 templates/users/register.html.py:10
 msgid "Honor code"
 msgstr ""
 
@@ -399,30 +399,42 @@ msgstr ""
 msgid "¿Quieres saber más?"
 msgstr ""
 
-#: templates/join.html:31
+#: templates/join.html:7
+msgid "Súmate al proyecto"
+msgstr ""
+
+#: templates/join.html:8
+msgid "Llamada a la acción"
+msgstr ""
+
+#: templates/join.html:32
 msgid "Formulario"
 msgstr ""
 
-#: templates/join.html:41
+#: templates/join.html:42
 msgid "Before joining you must confirm"
 msgstr ""
 
-#: templates/join.html:44
+#: templates/join.html:45
 msgid "I'm a native spanish speaker"
 msgstr ""
 
-#: templates/join.html:48
+#: templates/join.html:49
 msgid "I'm currently living in the region stated above"
 msgstr ""
 
-#: templates/join.html:52
+#: templates/join.html:53
 msgid ""
 "I haven't lived for more than 6 months during the last 2 years in another "
 "spanish speaking country"
 msgstr ""
 
-#: templates/join.html:54
+#: templates/join.html:55
 msgid "Participar"
+msgstr ""
+
+#: templates/join.html:60 templates/users/register.html.py:48
+msgid "You are already part of the project. Thanks!"
 msgstr ""
 
 #: templates/users/login.html:42
@@ -440,19 +452,50 @@ msgid ""
 "first"
 msgstr ""
 
-#: templates/users/register.html:46
-msgid "No voy a comunicar publicamene... BLABLABABLA"
+#: templates/users/register.html:6
+msgid "Register data"
 msgstr ""
 
-#: templates/users/register.html:50
-msgid "Please register"
+#: templates/users/register.html:12
+msgid ""
+"\n"
+"                            Las entradas que presentamos en la interfaz de "
+"Neutrón, sus definiciones y los ejemplos que las acompañan son propiedad "
+"intelectual de la editorial SM. Al aceptar el código ético te comprometes a "
+"rechazar cualquier forma de reproducción, distribución, comunicación pública "
+"o transformación de este contenido.\n"
+"                        "
 msgstr ""
 
-#: templates/users/register.html:60
+#: templates/users/register.html:17
+msgid "I accept the honor code"
+msgstr ""
+
+#: templates/users/register.html:19
+msgid "User and password"
+msgstr ""
+
+#: templates/users/register.html:22
+msgid "Username"
+msgstr ""
+
+#: templates/users/register.html:26
+msgid "Password"
+msgstr ""
+
+#: templates/users/register.html:30
+msgid "Confirm password"
+msgstr ""
+
+#: templates/users/register.html:34
+msgid "Email"
+msgstr ""
+
+#: templates/users/register.html:39
 msgid "Create account"
 msgstr ""
 
-#: templates/users/register.html:66
+#: templates/users/register.html:42
 #, python-format
 msgid ""
 "If you already have an account, please <a href=\"%(login_url)s\">login</a>"
