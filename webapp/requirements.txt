@@ -10,3 +10,4 @@ requests==2.8.1
 six==1.10.0
 wheel==0.24.0
 jsonfield==1.0.3
+rosetta-0.3
