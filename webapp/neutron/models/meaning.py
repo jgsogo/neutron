@@ -45,7 +45,7 @@ class Meaning(models.Model):
     type = models.IntegerField(choices=TYPE, default=TYPE.definition)
     is_locution = models.BooleanField(default=False)
 
-    excluded = models.BooleanField(default=False, help_text=_("If set, this meaning won't be shown to informers in WordUse and WordAlternate interfaces"))
+    excluded = models.BooleanField(default=False, help_text=_("If set, this meaning won't be shown to informers in WordUse and WordAlternate games."))
 
     objects = MeaningManager()
 
