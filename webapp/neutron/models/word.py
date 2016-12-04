@@ -27,7 +27,7 @@ class Word(models.Model):
     word_general_ci = models.CharField(max_length=MAX_WORD_LENGTH, editable=False)
 
     excluded = models.BooleanField(default=False,
-                                   help_text=_("If set, this word won't be shown to informers in WordCoarse interface"))
+                                   help_text=_("If set, this word won't be shown to informers in any game."))
 
     objects = WordManager()
 
