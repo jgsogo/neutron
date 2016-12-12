@@ -48,7 +48,41 @@
                         </td>
                     {% endfor %}
                 </tr>
+
+                <tr class="img">
+                    {% for member in team2 %}
+                        <td><img src="{{ member.1 }}" alt="{{ member.0 }}"/></td>
+                    {% endfor %}
+                </tr>
+                <tr class="info">
+                    {% for member in team2 %}
+                        <td>{{ member.0 }}
+                            {% if member.2 or member.3 %}
+                                <span class="social">
+                                    {% if member.2 %}<a href="{{ member.2 }}"><img src="{% static 'img/linkedin256.png '%}"/></a>{% endif %}
+                                    {% if member.3 %}<a href="{{ member.3 }}"><img src="{% static 'img/twitter256.png '%}"/></a>{% endif %}
+                                </span>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
             </table>
-        </div><!-- caja-fondo-gris -->
-    </div><!-- content -->
+        </div>
+    </div>
+
+    <h2>{% trans "Our sponsors" %}</h2>
+    <div class="content">
+        <div class="caja-fondo-gris">
+            <table class="team">
+                <tr class="img">
+                    <td><img src="{% static 'sponsors/calamo_cran.jpg' %}" alt="Cálamo&Cran"/></td>
+                    <td><img src="{% static 'sponsors/sm.jpg' %}" alt="Ediciones SM"/></td>
+                </tr>
+                <tr class="info">
+                    <td>Cálamo&Cran</td>
+                    <td>Ediciones SM</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 {% endblock %}

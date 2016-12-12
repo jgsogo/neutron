@@ -20,20 +20,29 @@
 
                     <br/>
                     <p><h5>{% trans "Username" %}:</h5></p>
-                    <small>{{ form.username.help_text }}</small>
+                    <!--<small>{{ form.username.help_text }}</small>-->
                     {{ form.username.errors }}{{ form.username }}
 
                     <p><h5>{% trans "Password" %}:</h5></p>
-                    <small>{{ form.password1.help_text }}</small>
+                    <!--<small>{{ form.password1.help_text }}</small>-->
                     {{ form.password1.errors }}{{ form.password1 }}
 
                     <p><h5>{% trans "Confirm password" %}:</h5></p>
-                    <small>{{ form.password2.help_text }}</small>
+                    <!--<small>{{ form.password2.help_text }}</small>-->
                     {{ form.password2.errors }}{{ form.password2 }}
 
                     <p><h5>{% trans "Email" %}:</h5></p>
-                    <small>{{ form.email.help_text }}</small>
+                    <!--<small>{{ form.email.help_text }}</small>-->
                     {{ form.email.errors }}{{ form.email }}
+
+                    <p>
+                        {% blocktrans %}
+                        Tus datos personales están seguros con nosotros, nos comprometemos a garantizar tu
+                        derecho a la privacidad e intimidad. No recibirás comunicaciones publicitarias ni
+                        sobre ningún asunto que no esté directamente relacionado con tu participación en
+                        el proyecto Neutrón.
+                        {% endblocktrans %}
+                    </p>
 
                     <input type="hidden" name="next" value="{{ next }}" />
                     <button class="b-yellow">{% trans "Create account" %}</button>
