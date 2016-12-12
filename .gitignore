@@ -45,6 +45,8 @@ webapp/static
 *.json
 basico_sm.tsv
 logs
+db*
+*sqlite3
 
 # Cpp stuff
 processing/*/build

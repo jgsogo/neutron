@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-01 18:08+0100\n"
-"PO-Revision-Date: 2016-10-30 09:58+0000\n"
-"Last-Translator: b'Maria Varela <mariavarelar@gmail.com>'\n"
+"POT-Creation-Date: 2016-12-04 16:00+0000\n"
+"PO-Revision-Date: 2016-12-04 13:13+0000\n"
+"Last-Translator: b'Javier G. Sogo <jgsogo@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,18 +19,12 @@ msgstr ""
 "X-Translated-Using: django-rosetta 0.7.11\n"
 
 #: templates/wordalternate/home.html:5
+msgctxt "game name"
 msgid "Word alternate"
 msgstr "Juego 2"
 
 #: templates/wordalternate/run.html:9
-#, fuzzy, python-format
-#| msgctxt "wordalternate question"
-#| msgid ""
-#| "\n"
-#| "                <p>What word do you use with the meaning <span>"
-#| "\"%(meaning)s\"</span>? In <span>%(region)s</span> it is used <span>"
-#| "\"%(word)s\"</span> like in \"%(context)s\".</p>\n"
-#| "            "
+#, python-format
 msgctxt "wordalternate question"
 msgid ""
 "\n"
@@ -39,19 +33,10 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"<p>¿Qué palabra usarías para el significado <span>%(meaning)s?</span> En "
-"<span>%(region)s</span> se puede usar <span>%(word)s</span>. <i>%(context)s</"
-"i></p>"
+"<p>¿Qué palabra usarías para el significado <span>\"%(meaning)s\"</span>?"
 
 #: templates/wordalternate/run.html:13
-#, fuzzy, python-format
-#| msgctxt "wordalternate question"
-#| msgid ""
-#| "\n"
-#| "                <p>What word do you use with the meaning <span>"
-#| "\"%(meaning)s\"</span>? In <span>%(region)s</span> it is used <span>"
-#| "\"%(word)s\"</span> like in \"%(context)s\".</p>\n"
-#| "            "
+#, python-format
 msgid ""
 "\n"
 "                In <span>%(region)s</span> it is used <span>\"%(word)s\"</"
@@ -59,13 +44,12 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"<p>¿Qué palabra usarías para el significado <span>%(meaning)s?</span> En "
-"<span>%(region)s</span> se puede usar <span>%(word)s</span>. <i>%(context)s</"
-"i></p>"
+"En <span>%(region)s</span> se puede usar <span>\"%(word)s\"</span>. <i>"
+"%(context)s</i>"
 
 #: templates/wordalternate/run.html:30
 msgid "Ooops! There are no meanings in the database"
-msgstr ""
+msgstr "¡Vaya! Aún no hay entradas en la base de datos. ¡Vuelve más adelante!"
 
 #: views/run_wordalternate.py:50
 msgid "Set alternate"

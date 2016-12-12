@@ -52,9 +52,11 @@ split_list = register.tag(split_list)
 
 def flag_icon(language_code, size=24):
     try:
-        id = language_code.split('-',1)[1]
+        id = language_code.split('-', 1)[1]
         return static('flags/flags_iso/{}/{}.png'.format(size, id.lower()))
-    except:
+    except IndexError as e:
+        return static('flags/flags_iso/{}/{}.png'.format(size, language_code.lower()))
+    except Exception as e:
         log.error("Flag for language_code {!r} not found.".format(language_code))
     return ""
 register.assignment_tag(flag_icon, takes_context=False, name="flag_icon")
