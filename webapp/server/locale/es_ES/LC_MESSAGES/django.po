@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-04 16:00+0000\n"
+"POT-Creation-Date: 2016-12-13 20:21+0000\n"
 "PO-Revision-Date: 2016-11-16 09:30+0000\n"
 "Last-Translator: b'Maria Varela <mariavarelar@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,8 +23,8 @@ msgid "Alternate word"
 msgstr "Juego 2"
 
 #: forms/__init__.py:30
-msgid "Name"
-msgstr "Nombre"
+msgid "Name and surname"
+msgstr ""
 
 #: forms/__init__.py:31
 msgid "Email address"
@@ -197,6 +197,14 @@ msgstr "Nuestro equipo"
 msgid "...in random order of appearance."
 msgstr "(Ordenados de forma aleatoria)."
 
+#: templates/about.html:57
+msgid "También quisieron estar aquí"
+msgstr ""
+
+#: templates/about.html:79
+msgid "Our sponsors"
+msgstr ""
+
 #: templates/base.html:46
 msgid "Únete"
 msgstr "Únete"
@@ -216,6 +224,12 @@ msgstr "Juego 2"
 #: templates/base.html:53
 msgid "Game 3"
 msgstr "Juego 3"
+
+#: templates/base.html:60
+#, fuzzy
+#| msgid "FAQ's"
+msgid "FAQ"
+msgstr "Preguntas frecuentes"
 
 #: templates/base.html:63
 msgid "Equipo y patrocinadores"
@@ -258,7 +272,7 @@ msgstr "Eliminar"
 msgid "¿Cómo podemos ayudarte?"
 msgstr "¿Cómo podemos ayudarte?"
 
-#: templates/faq.html:130 templates/home.html.py:94
+#: templates/faq.html:130 templates/home.html.py:100
 msgid "Enviar"
 msgstr "Enviar"
 
@@ -284,21 +298,29 @@ msgid ""
 msgstr ""
 "Queremos mejorar la comunicación entre 470 millones de hispanohablantes."
 
-#: templates/home.html:10
+#: templates/home.html:11
+#, fuzzy
+#| msgid ""
+#| "Para conseguirlo, necesitamos conocer el uso que los hablantes nativos de "
+#| "distintos países hacen de la lengua española. Necesitamos que tú formes "
+#| "parte del proyecto."
 msgid ""
-"Para conseguirlo, necesitamos conocer el uso que los hablantes nativos de "
-"distintos países hacen de la lengua española. Necesitamos que tú formes "
-"parte del proyecto."
+"\n"
+"            Para conseguirlo, necesitamos conocer el uso que los hablantes "
+"nativos de distintos países hacen de la lengua española.\n"
+"            <span class=\"color-orange\">Necesitamos que tú formes parte del "
+"proyecto.</span>\n"
+"            "
 msgstr ""
 "Para conseguirlo, necesitamos conocer el uso que los hablantes nativos de "
 "distintos países hacen de la lengua española. Necesitamos que tú formes "
 "parte del proyecto."
 
-#: templates/home.html:13
+#: templates/home.html:18
 msgid "¿Cómo lo vamos a hacer?"
 msgstr "¿Cómo lo vamos a hacer?"
 
-#: templates/home.html:16
+#: templates/home.html:21
 msgid ""
 "\n"
 "            Vamos a centrarnos en el léxico, que es el componente de la "
@@ -312,15 +334,15 @@ msgstr ""
 "más diferencias presenta entre unos países y otros y el que no puede "
 "reducirse a reglas."
 
-#: templates/home.html:23
+#: templates/home.html:28
 msgid "¿Por qué queremos hacerlo?"
 msgstr "¿Por qué queremos hacerlo?"
 
-#: templates/home.html:26
+#: templates/home.html:31
 msgid "Por dos razones:"
 msgstr "Por dos razones:"
 
-#: templates/home.html:29
+#: templates/home.html:34
 msgid ""
 "\n"
 "                    En primer lugar, porque no podemos creer que un proyecto "
@@ -340,7 +362,7 @@ msgstr ""
 "idioma y comprendiendo lo que hay detrás de sus diferentes manifestaciones. "
 "La lengua es única despertando nuestra curiosidad."
 
-#: templates/home.html:37
+#: templates/home.html:42
 msgid ""
 "\n"
 "                    En segundo lugar, porque el análisis de los datos "
@@ -360,11 +382,30 @@ msgstr ""
 "comunidad específica, solo el conocimiento del uso del léxico en cada región "
 "nos permitirá alcanzar nuestro objetivo de forma óptima."
 
-#: templates/home.html:48
+#: templates/home.html:53
 msgid "¿Por qué no lo conseguiremos sin tu ayuda?"
 msgstr "¿Por qué no lo conseguiremos sin tu ayuda?"
 
-#: templates/home.html:52
+#: templates/home.html:57
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                La primera vez que nos reunimos para hablar de Neutrón "
+#| "pensamos en contrastar libros y diarios\n"
+#| "                publicados en diferentes países hispanohablantes; "
+#| "aplicando la tecnología adecuada y un buen\n"
+#| "                análisis de datos, ¿no obtendríamos todas las respuestas "
+#| "con respecto al uso del vocabulario en\n"
+#| "                distintos puntos del mapa? La idea era tentadora, pero le "
+#| "faltaba algo fundamental: frescura. Los\n"
+#| "                textos publicados tienden a ofrecer una selección "
+#| "cuidadosamente meditada del léxico, muchas\n"
+#| "                veces por su vocación universal o de integración en un "
+#| "determinado estándar. El vocabulario que\n"
+#| "                queremos conocer y que de verdad nos va a ayudar a "
+#| "completar el mapa del español en el mundo es\n"
+#| "                el que tú utilizas de forma espontánea, sin filtros.\n"
+#| "                "
 msgid ""
 "\n"
 "                La primera vez que nos reunimos para hablar de Neutrón "
@@ -378,10 +419,11 @@ msgid ""
 "                textos publicados tienden a ofrecer una selección "
 "cuidadosamente meditada del léxico, muchas\n"
 "                veces por su vocación universal o de integración en un "
-"determinado estándar. El vocabulario que\n"
+"determinado estándar.\n"
+"                <span class=\"color-orange\">El vocabulario que\n"
 "                queremos conocer y que de verdad nos va a ayudar a completar "
 "el mapa del español en el mundo es\n"
-"                el que tú utilizas de forma espontánea, sin filtros.\n"
+"                el que tú utilizas de forma espontánea, sin filtros.</span>\n"
 "                "
 msgstr ""
 "\n"
@@ -397,17 +439,26 @@ msgstr ""
 "nos va a ayudar a completar el mapa del español en el mundo es el que tú "
 "utilizas de forma espontánea, sin filtros."
 
-#: templates/home.html:66
+#: templates/home.html:72
 msgid "¿Qué tecnología aplicaremos?"
 msgstr "¿Qué tecnología aplicaremos?"
 
-#: templates/home.html:70
+#: templates/home.html:76
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                ¿Tecnología? Se trata de un proyecto lingüístico, así que "
+#| "intentamos que la tecnología se\n"
+#| "                note lo menos posible, pero que sepas que utilizamos toda "
+#| "la que está a nuestro alcance para\n"
+#| "                simplificar tu tarea como informante.\n"
+#| "                "
 msgid ""
 "\n"
 "                ¿Tecnología? Se trata de un proyecto lingüístico, así que "
 "intentamos que la tecnología se\n"
-"                note lo menos posible, pero que sepas que utilizamos toda la "
-"que está a nuestro alcance para\n"
+"                note lo menos posible, pero que sepas que usamos toda la que "
+"está a nuestro alcance para\n"
 "                simplificar tu tarea como informante.\n"
 "                "
 msgstr ""
@@ -416,7 +467,7 @@ msgstr ""
 "tecnología se note lo menos posible, pero que sepas que utilizamos toda la "
 "que está a nuestro alcance para simplificar tu tarea como informante."
 
-#: templates/home.html:77
+#: templates/home.html:83
 msgid ""
 "\n"
 "                Si quieres saber más, te diremos que utilizamos Python/"
@@ -438,7 +489,7 @@ msgstr ""
 "com/jgsogo/neutron\" target=\"_blank\">repositorio en Github</a> y colabora, "
 "¡no solo de informantes vive el proyecto!"
 
-#: templates/home.html:88
+#: templates/home.html:94
 msgid "¿Quieres saber más?"
 msgstr "¿Quieres saber más?"
 
@@ -450,23 +501,23 @@ msgstr ""
 msgid "Llamada a la acción"
 msgstr ""
 
-#: templates/join.html:32
-msgid "Formulario"
-msgstr "Formulario"
+#: templates/join.html:36
+msgid "Datos personales"
+msgstr ""
 
-#: templates/join.html:42
+#: templates/join.html:46
 msgid "Before joining you must confirm"
 msgstr "Para unirte debes confirmar que cumples estos requisitos:"
 
-#: templates/join.html:45
+#: templates/join.html:49
 msgid "I'm a native spanish speaker"
 msgstr "Soy hablante nativo de español."
 
-#: templates/join.html:49
+#: templates/join.html:53
 msgid "I'm currently living in the region stated above"
 msgstr "Actualmente vivo en el mismo país en el que nací."
 
-#: templates/join.html:53
+#: templates/join.html:57
 msgid ""
 "I haven't lived for more than 6 months during the last 2 years in another "
 "spanish speaking country"
@@ -474,11 +525,11 @@ msgstr ""
 "En los últimos dos años no he pasado más de seis meses en otro país "
 "hispanohablante."
 
-#: templates/join.html:55
+#: templates/join.html:59
 msgid "Participar"
 msgstr "Participar"
 
-#: templates/join.html:60 templates/users/register.html.py:48
+#: templates/join.html:64 templates/users/register.html.py:57
 msgid "You are already part of the project. Thanks!"
 msgstr ""
 
@@ -499,7 +550,7 @@ msgstr ""
 "Si no eres un usuario registrado, <a href=\"%(register_url)s\">únete</a>."
 
 #: templates/users/register.html:6
-msgid "Register data"
+msgid "Form: username and password"
 msgstr ""
 
 #: templates/users/register.html:12
@@ -539,10 +590,23 @@ msgid "Email"
 msgstr ""
 
 #: templates/users/register.html:39
+msgid ""
+"\n"
+"                        Tus datos personales están seguros con nosotros, nos "
+"comprometemos a garantizar tu\n"
+"                        derecho a la privacidad e intimidad. No recibirás "
+"comunicaciones publicitarias ni\n"
+"                        sobre ningún asunto que no esté directamente "
+"relacionado con tu participación en\n"
+"                        el proyecto Neutrón.\n"
+"                        "
+msgstr ""
+
+#: templates/users/register.html:48
 msgid "Create account"
 msgstr "Crear cuenta"
 
-#: templates/users/register.html:42
+#: templates/users/register.html:51
 #, python-format
 msgid ""
 "If you already have an account, please <a href=\"%(login_url)s\">login</a>"
@@ -578,6 +642,12 @@ msgstr "La pregunta ha sido eliminada."
 #: views/faq.py:49
 msgid "You cannot delete that question."
 msgstr "No puedes borrar esa pregunta."
+
+#~ msgid "Name"
+#~ msgstr "Nombre"
+
+#~ msgid "Formulario"
+#~ msgstr "Formulario"
 
 #~ msgid "No voy a comunicar publicamene... BLABLABABLA"
 #~ msgstr ""
