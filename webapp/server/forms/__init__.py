@@ -27,7 +27,7 @@ class JoinFormStep1(forms.Form):
 
     def __init__(self, initial, *args, **kwargs):
         super(JoinFormStep1, self).__init__(initial=initial, *args, **kwargs)
-        self.fields['name'].widget.attrs.update({'placeholder': _("Name"), })
+        self.fields['name'].widget.attrs.update({'placeholder': _("Name and surname"), })
         self.fields['email'].widget.attrs.update({'placeholder': _("Email address"), })
         if 'email' in initial:
             self.fields['email'].disabled = True

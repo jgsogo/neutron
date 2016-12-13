@@ -3,7 +3,7 @@
 
 {% block content %}
     {% if not user.is_authenticated %}
-        <h3 id="join_form" class="cabecera-caja-fondo-gris-02">{% trans "Register data" %}</h3>
+        <h3 id="join_form" class="cabecera-caja-fondo-gris-02">{% trans "Form: username and password" %}</h3>
         <div class="content">
             <div class="caja-fondo-gris">
                 <form method="post" action="{% url 'register' %}">{% csrf_token %}
@@ -19,21 +19,30 @@
                     <h4 class="form-signin-heading">{% trans "User and password" %}</h4>
 
                     <br/>
-                    <p><h5>{% trans "Username" %}:</h5></p>
-                    <small>{{ form.username.help_text }}</small>
+                    <p><h5>{% trans "Username" %}</h5></p>
+                    <!--<small>{{ form.username.help_text }}</small>-->
                     {{ form.username.errors }}{{ form.username }}
 
-                    <p><h5>{% trans "Password" %}:</h5></p>
-                    <small>{{ form.password1.help_text }}</small>
+                    <p><h5>{% trans "Password" %}</h5></p>
+                    <!--<small>{{ form.password1.help_text }}</small>-->
                     {{ form.password1.errors }}{{ form.password1 }}
 
-                    <p><h5>{% trans "Confirm password" %}:</h5></p>
-                    <small>{{ form.password2.help_text }}</small>
+                    <p><h5>{% trans "Confirm password" %}</h5></p>
+                    <!--<small>{{ form.password2.help_text }}</small>-->
                     {{ form.password2.errors }}{{ form.password2 }}
 
-                    <p><h5>{% trans "Email" %}:</h5></p>
-                    <small>{{ form.email.help_text }}</small>
+                    <p><h5>{% trans "Email" %}</h5></p>
+                    <!--<small>{{ form.email.help_text }}</small>-->
                     {{ form.email.errors }}{{ form.email }}
+
+                    <p>
+                        {% blocktrans %}
+                        Tus datos personales están seguros con nosotros, nos comprometemos a garantizar tu
+                        derecho a la privacidad e intimidad. No recibirás comunicaciones publicitarias ni
+                        sobre ningún asunto que no esté directamente relacionado con tu participación en
+                        el proyecto Neutrón.
+                        {% endblocktrans %}
+                    </p>
 
                     <input type="hidden" name="next" value="{{ next }}" />
                     <button class="b-yellow">{% trans "Create account" %}</button>
