@@ -48,7 +48,13 @@
                         </td>
                     {% endfor %}
                 </tr>
+            </table>
+        </div>
 
+        <hr/>
+        <div class="caja-fondo-gris">
+            <table class="team">
+                <tr>{% trans "También quisieron estar aquí" %}</tr>
                 <tr class="img">
                     {% for member in team2 %}
                         <td><img src="{{ member.1 }}" alt="{{ member.0 }}"/></td>
