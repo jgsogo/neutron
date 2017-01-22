@@ -19,7 +19,6 @@ class AboutView(TemplateView):
 
         team2 = [('Miguel Varela', static('team/miguel_varela.jpg'), None, None),
                  ('Elena Bazán', static('team/elena_bazan.jpg'), 'https://www.linkedin.com/in/elenabazan', None),
-                 ('Javier Calvo Martín', static('team/javier_calvo.jpg'), 'https://www.linkedin.com/in/javiercalvomartin', None),
                 ]
         shuffle(team)
         return super(AboutView, self).get_context_data(team=team, team2=team2, **kwargs)
